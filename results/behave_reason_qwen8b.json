@@ -1,0 +1,36 @@
+{
+ "nearest/direct/familiar": {
+  "n": 920,
+  "parsed": 1.0,
+  "hit_rate_1m": 0.3423913043478261,
+  "median_error_m": 1.520673730905981,
+  "random_hit_rate": 0.12449473505434783,
+  "picks_facing_same_way": 0.7815217391304348
+ },
+ "nearest/direct/novel": {
+  "n": 104,
+  "parsed": 1.0,
+  "hit_rate_1m": 0.019230769230769232,
+  "median_error_m": 2.557160480937374,
+  "random_hit_rate": 0.0625751201923077,
+  "picks_facing_same_way": 0.7211538461538461
+ },
+ "choice/direct/familiar": {
+  "n": 920,
+  "parsed": 1.0,
+  "valid": 1.0,
+  "accuracy": 0.6228260869565218,
+  "pixel_match_accuracy": 0.6565217391304348,
+  "accuracy_when_pixels_favour_far": 0.4525316455696203,
+  "n_pixels_favour_far": 316
+ },
+ "choice/direct/novel": {
+  "n": 104,
+  "parsed": 1.0,
+  "valid": 1.0,
+  "accuracy": 0.34615384615384615,
+  "pixel_match_accuracy": 0.5769230769230769,
+  "accuracy_when_pixels_favour_far": 0.29545454545454547,
+  "n_pixels_favour_far": 44
+ }
+}

@@ -1,0 +1,114 @@
+{
+ "novel": {
+  "ordered": [
+   94,
+   102
+  ],
+  "shuffled": [
+   51,
+   102
+  ],
+  "relabel": [
+   51,
+   102
+  ],
+  "nowalk": [
+   54,
+   102
+  ],
+  "walk256": [
+   81,
+   102
+  ],
+  "base": [
+   51,
+   102
+  ],
+  "shuffled vs ordered": {
+   "better": 4,
+   "worse": 47,
+   "p": 2.4163071543625847e-10
+  },
+  "relabel vs ordered": {
+   "better": 4,
+   "worse": 47,
+   "p": 2.4163071543625847e-10
+  },
+  "relabel vs nowalk": {
+   "better": 20,
+   "worse": 23,
+   "p": 0.7607916425613439
+  },
+  "ordered vs base": {
+   "better": 44,
+   "worse": 1,
+   "p": 2.6147972675971687e-12
+  },
+  "ordered vs nowalk": {
+   "better": 43,
+   "worse": 3,
+   "p": 4.6219383875722997e-10
+  },
+  "walk256 vs ordered": {
+   "better": 3,
+   "worse": 16,
+   "p": 0.004425048828125
+  }
+ },
+ "familiar": {
+  "ordered": [
+   82,
+   90
+  ],
+  "shuffled": [
+   46,
+   90
+  ],
+  "relabel": [
+   49,
+   90
+  ],
+  "nowalk": [
+   50,
+   90
+  ],
+  "walk256": [
+   77,
+   90
+  ],
+  "base": [
+   51,
+   90
+  ],
+  "shuffled vs ordered": {
+   "better": 1,
+   "worse": 37,
+   "p": 2.837623469531536e-10
+  },
+  "relabel vs ordered": {
+   "better": 2,
+   "worse": 35,
+   "p": 1.0244548320770264e-08
+  },
+  "relabel vs nowalk": {
+   "better": 16,
+   "worse": 17,
+   "p": 1
+  },
+  "ordered vs base": {
+   "better": 36,
+   "worse": 5,
+   "p": 7.84157236921601e-07
+  },
+  "ordered vs nowalk": {
+   "better": 33,
+   "worse": 1,
+   "p": 4.0745362639427185e-09
+  },
+  "walk256 vs ordered": {
+   "better": 3,
+   "worse": 8,
+   "p": 0.2265625
+  }
+ }
+}

@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spatialcells"
+version = "0.1.0"
+description = "Place and grid cells in vision-language models: single-unit, probing, behavioural and causal tests"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Molin Zhao" }]
+dependencies = [
+    "numpy",
+    "scipy",
+    "scikit-image",
+    "scikit-learn",
+    "matplotlib",
+    "pillow",
+    "torch",
+]
+
+[project.optional-dependencies]
+# Model extraction, behaviour tests, VGGT and LoRA fine-tuning (CUDA; see docs/gpu_host.md).
+gpu = [
+    "torchvision",
+    "transformers>=4.57",
+    "accelerate",
+    "qwen-vl-utils",
+    "peft",
+    "flash-linear-attention",
+]
+# The Claude two-choice test (spatialcells/claude_test.py).
+claude = ["anthropic"]
+
+[project.urls]
+Repository = "https://github.com/molinzhao27/vlm-place-cells"
+
+[tool.setuptools]
+packages = ["spatialcells"]

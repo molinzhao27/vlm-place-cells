@@ -1,0 +1,25 @@
+# Environments, caches and build output
+.venv*/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+.DS_Store
+
+# Generated data: rendered walks, activations, checkpoints (see README "Reproducing")
+data/
+
+# GPU host settings (start from scripts/vast1/host.env.example)
+scripts/vast1/host.env
+
+# Large or regenerable results, archived separately with the preprint
+results/behave/qwen38-reason.npz
+results/export/claude/
+results/export/human/
+results/figs/*
+!results/figs/vggt-single_L19.png
+results/**/*.bak
+results/**/*.log
+
+# Working notes
+NEXT_EXPERIMENTS.md

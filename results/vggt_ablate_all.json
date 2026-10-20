@@ -1,0 +1,31 @@
+{
+ "n_frames": 768,
+ "K": {
+  "L15": 547,
+  "L19": 532,
+  "L23": 910
+ },
+ "conditions": {
+  "none": {
+   "median_pos_err_m": 0.4226410029783584,
+   "mean_pos_err_m": 0.6160222592438084,
+   "frac_within_1m": 0.8776041666666666,
+   "median_heading_err_deg": 1.9270690108533455,
+   "median_increase_m": 0.0
+  },
+  "block 19: all neurons": {
+   "median_pos_err_m": 0.4284650322138732,
+   "mean_pos_err_m": 0.6191686927062697,
+   "frac_within_1m": 0.87109375,
+   "median_heading_err_deg": 1.9112189206385137,
+   "median_increase_m": 0.0007346790702576003
+  },
+  "blocks 15+19+23: all neurons": {
+   "median_pos_err_m": 0.48351434747273836,
+   "mean_pos_err_m": 0.6744042073193581,
+   "frac_within_1m": 0.8463541666666666,
+   "median_heading_err_deg": 1.8840166940874987,
+   "median_increase_m": 0.022869107685138668
+  }
+ }
+}

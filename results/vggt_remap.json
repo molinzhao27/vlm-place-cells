@@ -1,0 +1,168 @@
+{
+ "camera_error_m_roomA": 0.42113732809930315,
+ "camera_error_m_roomB": 0.8545613713311289,
+ "L9": {
+  "place": {
+   "n_poles": 994,
+   "stability_in_A_median": 0.9281606078147888,
+   "map_corr_A_vs_B_median": 0.6906149983406067,
+   "map_corr_A_vs_B_frac_over_0.5": 0.6911468505859375,
+   "map_corr_random_pairs_median": 0.5379348993301392,
+   "also_place_in_B": 0.6116700201207244,
+   "chance_place_in_B": 0.30536016821861267,
+   "mean_rate_B_over_A_median": 1.0125638246536255,
+   "frac_nearly_silent_in_B": 0.007042253389954567
+  },
+  "invariant_place": {
+   "n_poles": 100,
+   "stability_in_A_median": 0.9416353702545166,
+   "map_corr_A_vs_B_median": 0.6767846941947937,
+   "map_corr_A_vs_B_frac_over_0.5": 0.6800000071525574,
+   "map_corr_random_pairs_median": 0.5144234299659729,
+   "also_place_in_B": 0.69,
+   "chance_place_in_B": 0.30536016821861267,
+   "mean_rate_B_over_A_median": 1.009185791015625,
+   "frac_nearly_silent_in_B": 0.0
+  },
+  "decoding_raw": {
+   "A->A": 0.6374199390411377,
+   "A->B": 3.8442890644073486,
+   "B->A": 5.740045547485352,
+   "B->B": 0.5874473452568054
+  },
+  "decoding_room_mean_removed": {
+   "A->A": 0.6373999118804932,
+   "A->B": 4.004412651062012,
+   "B->A": 3.624666213989258,
+   "B->B": 0.574524462223053
+  },
+  "population_vectors": {
+   "same_spot_across_rooms": 0.6860150694847107,
+   "spots_over_3m_apart_across_rooms": -0.11652534455060959,
+   "same_spot_within_A_even_vs_odd": 0.8182650804519653
+  }
+ },
+ "L15": {
+  "place": {
+   "n_poles": 1270,
+   "stability_in_A_median": 0.9321005940437317,
+   "map_corr_A_vs_B_median": 0.8715231418609619,
+   "map_corr_A_vs_B_frac_over_0.5": 0.9173228144645691,
+   "map_corr_random_pairs_median": 0.1778712123632431,
+   "also_place_in_B": 0.7338582677165354,
+   "chance_place_in_B": 0.35208046436309814,
+   "mean_rate_B_over_A_median": 0.9507657289505005,
+   "frac_nearly_silent_in_B": 0.04724409431219101
+  },
+  "invariant_place": {
+   "n_poles": 568,
+   "stability_in_A_median": 0.9605426788330078,
+   "map_corr_A_vs_B_median": 0.9043848514556885,
+   "map_corr_A_vs_B_frac_over_0.5": 0.9823943376541138,
+   "map_corr_random_pairs_median": 0.19666971266269684,
+   "also_place_in_B": 0.7640845070422535,
+   "chance_place_in_B": 0.35208046436309814,
+   "mean_rate_B_over_A_median": 0.9443501830101013,
+   "frac_nearly_silent_in_B": 0.01232394389808178
+  },
+  "decoding_raw": {
+   "A->A": 0.17347320914268494,
+   "A->B": 1.3070755004882812,
+   "B->A": 1.185758352279663,
+   "B->B": 0.21391281485557556
+  },
+  "decoding_room_mean_removed": {
+   "A->A": 0.17342694103717804,
+   "A->B": 1.0670866966247559,
+   "B->A": 1.122776985168457,
+   "B->B": 0.21421459317207336
+  },
+  "population_vectors": {
+   "same_spot_across_rooms": 0.7748790979385376,
+   "spots_over_3m_apart_across_rooms": -0.17698034644126892,
+   "same_spot_within_A_even_vs_odd": 0.7824587821960449
+  }
+ },
+ "L19": {
+  "place": {
+   "n_poles": 1502,
+   "stability_in_A_median": 0.9544460773468018,
+   "map_corr_A_vs_B_median": 0.9500324130058289,
+   "map_corr_A_vs_B_frac_over_0.5": 0.9860185980796814,
+   "map_corr_random_pairs_median": 0.16844449937343597,
+   "also_place_in_B": 0.8668442077230359,
+   "chance_place_in_B": 0.46685877442359924,
+   "mean_rate_B_over_A_median": 0.9270355105400085,
+   "frac_nearly_silent_in_B": 0.003994673490524292
+  },
+  "invariant_place": {
+   "n_poles": 957,
+   "stability_in_A_median": 0.9704902172088623,
+   "map_corr_A_vs_B_median": 0.9655601978302002,
+   "map_corr_A_vs_B_frac_over_0.5": 0.9968651533126831,
+   "map_corr_random_pairs_median": 0.14873328804969788,
+   "also_place_in_B": 0.9028213166144201,
+   "chance_place_in_B": 0.46685877442359924,
+   "mean_rate_B_over_A_median": 0.9464987516403198,
+   "frac_nearly_silent_in_B": 0.0010449320543557405
+  },
+  "decoding_raw": {
+   "A->A": 0.1525145173072815,
+   "A->B": 0.7370582818984985,
+   "B->A": 0.711372971534729,
+   "B->B": 0.19504781067371368
+  },
+  "decoding_room_mean_removed": {
+   "A->A": 0.1525535136461258,
+   "A->B": 0.7739982008934021,
+   "B->A": 0.8396667242050171,
+   "B->B": 0.1950509250164032
+  },
+  "population_vectors": {
+   "same_spot_across_rooms": 0.8230509161949158,
+   "spots_over_3m_apart_across_rooms": -0.20947441458702087,
+   "same_spot_within_A_even_vs_odd": 0.8183654546737671
+  }
+ },
+ "L23": {
+  "place": {
+   "n_poles": 3148,
+   "stability_in_A_median": 0.8429933786392212,
+   "map_corr_A_vs_B_median": 0.8638342022895813,
+   "map_corr_A_vs_B_frac_over_0.5": 0.9844345450401306,
+   "map_corr_random_pairs_median": 0.2806430459022522,
+   "also_place_in_B": 0.804002541296061,
+   "chance_place_in_B": 0.6761526465415955,
+   "mean_rate_B_over_A_median": 0.9905636310577393,
+   "frac_nearly_silent_in_B": 0.004447267856448889
+  },
+  "invariant_place": {
+   "n_poles": 913,
+   "stability_in_A_median": 0.9047144055366516,
+   "map_corr_A_vs_B_median": 0.9158360362052917,
+   "map_corr_A_vs_B_frac_over_0.5": 0.9978094696998596,
+   "map_corr_random_pairs_median": 0.24832816421985626,
+   "also_place_in_B": 0.8849945235487404,
+   "chance_place_in_B": 0.6761526465415955,
+   "mean_rate_B_over_A_median": 0.9513406157493591,
+   "frac_nearly_silent_in_B": 0.00219058059155941
+  },
+  "decoding_raw": {
+   "A->A": 0.11515700072050095,
+   "A->B": 0.6376516819000244,
+   "B->A": 0.6000343561172485,
+   "B->B": 0.1523553878068924
+  },
+  "decoding_room_mean_removed": {
+   "A->A": 0.11528769880533218,
+   "A->B": 0.7470194697380066,
+   "B->A": 0.8661072850227356,
+   "B->B": 0.15232041478157043
+  },
+  "population_vectors": {
+   "same_spot_across_rooms": 0.6672557592391968,
+   "spots_over_3m_apart_across_rooms": -0.1546163260936737,
+   "same_spot_within_A_even_vs_odd": 0.6662264466285706
+  }
+ }
+}

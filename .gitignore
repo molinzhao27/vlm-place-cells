@@ -23,3 +23,7 @@ results/**/*.log
 
 # Working notes
 NEXT_EXPERIMENTS.md
+
+# Unpublished post drafts (delete these lines when the post goes out)
+writeup/probe_post/post.md
+writeup/probe_post/draft_*.md

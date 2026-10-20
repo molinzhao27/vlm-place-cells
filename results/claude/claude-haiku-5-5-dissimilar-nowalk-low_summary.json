@@ -1,0 +1,32 @@
+{
+ "choice/reasoning/familiar": {
+  "n": 90,
+  "valid": 1.0,
+  "accuracy": 0.4888888888888889,
+  "pixel_match_accuracy": 0.4666666666666667,
+  "accuracy_when_pixels_favour_far": 0.4583333333333333,
+  "picked_option_facing_like_probe": 0.6222222222222222,
+  "human_page_trials": [
+   0,
+   0
+  ],
+  "median_output_tokens": 560,
+  "accuracy_when_frame_order_favours_far": 0.35294117647058826,
+  "cost_usd": 0.03
+ },
+ "choice/reasoning/novel": {
+  "n": 102,
+  "valid": 1.0,
+  "accuracy": 0.5882352941176471,
+  "pixel_match_accuracy": 0.5294117647058824,
+  "accuracy_when_pixels_favour_far": 0.6875,
+  "picked_option_facing_like_probe": 0.5980392156862745,
+  "human_page_trials": [
+   27,
+   43
+  ],
+  "median_output_tokens": 568,
+  "accuracy_when_frame_order_favours_far": 0.5714285714285714,
+  "cost_usd": 0.03
+ }
+}

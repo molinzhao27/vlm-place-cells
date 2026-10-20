@@ -1,0 +1,72 @@
+{
+ "n_test": 8,
+ "clean_error_m": 0.4971883605848946,
+ "target_donor_distance_m": 4.7054505858759255,
+ "blocks": {
+  "19": {
+   "probe_r2": {
+    "position 2": 0.9795886874198914,
+    "position 10": 0.8232567310333252,
+    "heading 2": 0.9876585006713867
+   },
+   "token_norm_median": 49.60383605957031,
+   "full": {
+    "moved_m_median": 2.2792569621387924,
+    "error_m_median": 2.925743845618726,
+    "transfer_mean": 0.44585747862086034,
+    "transfer_sem": 0.04052144192127958,
+    "transfer_median": 0.4519327837154572
+   },
+   "position 2": {
+    "moved_m_median": 0.5916909309803615,
+    "error_m_median": 1.131320652072962,
+    "transfer_mean": 0.12001946660311379,
+    "transfer_sem": 0.008124666934351628,
+    "transfer_median": 0.11868149012916428
+   },
+   "position 10": {
+    "moved_m_median": 0.7226846220100652,
+    "error_m_median": 1.2823939539752307,
+    "transfer_mean": 0.1650583839677346,
+    "transfer_sem": 0.009743509879290447,
+    "transfer_median": 0.16143620323879487
+   },
+   "heading 2": {
+    "moved_m_median": 0.18223822436202763,
+    "error_m_median": 0.6011258821208114,
+    "transfer_mean": 0.02041300017146528,
+    "transfer_sem": 0.01124021574313572,
+    "transfer_median": 0.011734681510352021
+   },
+   "random 10": {
+    "moved_m_median": 0.03340138866646264,
+    "error_m_median": 0.5175597257776647,
+    "transfer_mean": -0.00032101342638905827,
+    "transfer_sem": 0.003047976344224,
+    "transfer_median": 0.0026206053509969375
+   },
+   "all but position": {
+    "moved_m_median": 1.2144372018032308,
+    "error_m_median": 1.6526435707778888,
+    "transfer_mean": 0.24065586501458763,
+    "transfer_sem": 0.04316026951593284,
+    "transfer_median": 0.2435170125227225
+   },
+   "erase position 10": {
+    "moved_m_median": 0.5473729186383076,
+    "error_m_median": 0.982394642373832
+   },
+   "erase random 10": {
+    "moved_m_median": 0.03173019179004745,
+    "error_m_median": 0.4855622371476587
+   }
+  }
+ },
+ "head input": {
+  "moved_m_median": 4.569058707976195,
+  "error_m_median": 5.142370453600838,
+  "transfer_mean": 0.9832219964541008,
+  "transfer_sem": 0.0116260313782407,
+  "transfer_median": 0.9758683165439457
+ }
+}

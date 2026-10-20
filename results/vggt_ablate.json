@@ -1,0 +1,73 @@
+{
+ "n_frames": 768,
+ "K": {
+  "L15": 547,
+  "L19": 532,
+  "L23": 910
+ },
+ "conditions": {
+  "none": {
+   "median_pos_err_m": 0.4226410029783584,
+   "mean_pos_err_m": 0.6160222592438084,
+   "frac_within_1m": 0.8776041666666666,
+   "median_heading_err_deg": 1.9270690108533455,
+   "median_increase_m": 0.0
+  },
+  "block 19: invariant": {
+   "median_pos_err_m": 0.42634892055912543,
+   "mean_pos_err_m": 0.6169628583417649,
+   "frac_within_1m": 0.8776041666666666,
+   "median_heading_err_deg": 1.9211510999455128,
+   "median_increase_m": 0.0007950468579910747
+  },
+  "block 19: heading-specific": {
+   "median_pos_err_m": 0.4221742162620463,
+   "mean_pos_err_m": 0.6143975582464744,
+   "frac_within_1m": 0.8802083333333334,
+   "median_heading_err_deg": 1.9715817283302253,
+   "median_increase_m": -0.0006505971501436156
+  },
+  "block 19: random 1": {
+   "median_pos_err_m": 0.4198676488362657,
+   "mean_pos_err_m": 0.613799744317422,
+   "frac_within_1m": 0.87890625,
+   "median_heading_err_deg": 1.9251574560918387,
+   "median_increase_m": -0.0008086733886559228
+  },
+  "block 19: random 2": {
+   "median_pos_err_m": 0.42260098178213723,
+   "mean_pos_err_m": 0.615572262816524,
+   "frac_within_1m": 0.87890625,
+   "median_heading_err_deg": 1.9346653771879645,
+   "median_increase_m": -0.00010374665551618478
+  },
+  "blocks 15+19+23: invariant": {
+   "median_pos_err_m": 0.45263271822853984,
+   "mean_pos_err_m": 0.6451189174442871,
+   "frac_within_1m": 0.8606770833333334,
+   "median_heading_err_deg": 1.7847542003363306,
+   "median_increase_m": 0.010414153112372287
+  },
+  "blocks 15+19+23: heading-specific": {
+   "median_pos_err_m": 0.4312872008727249,
+   "mean_pos_err_m": 0.6195843753826814,
+   "frac_within_1m": 0.875,
+   "median_heading_err_deg": 1.9097432551913824,
+   "median_increase_m": -0.00019917479611528122
+  },
+  "blocks 15+19+23: random 1": {
+   "median_pos_err_m": 0.4349973416408046,
+   "mean_pos_err_m": 0.6224133371232684,
+   "frac_within_1m": 0.8697916666666666,
+   "median_heading_err_deg": 1.915761572320143,
+   "median_increase_m": 0.0020048992636308577
+  },
+  "blocks 15+19+23: random 2": {
+   "median_pos_err_m": 0.4347628678313844,
+   "mean_pos_err_m": 0.6263553197837565,
+   "frac_within_1m": 0.8684895833333334,
+   "median_heading_err_deg": 1.8635749742592493,
+   "median_increase_m": 0.0004956594049579516
+  }
+ }
+}

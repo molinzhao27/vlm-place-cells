@@ -1,0 +1,392 @@
+{
+ "qwen": {
+  "all": {
+   "n": 3072,
+   "parsed": 1.0,
+   "model": {
+    "median_error_m": 2.38509585941313,
+    "hit_rate_1m": 0.18196614583333334
+   },
+   "pixel_match": {
+    "median_error_m": 0.8156744607963311,
+    "hit_rate_1m": 0.5901692708333334
+   },
+   "random": {
+    "median_error_m": 3.236327843404284,
+    "hit_rate_1m": 0.1106859842936198
+   },
+   "best": {
+    "median_error_m": 0.10469234925731563,
+    "hit_rate_1m": 1.0
+   },
+   "same_as_pixel_match": 0.020833333333333332,
+   "heading_diff_deg_median": 52.13224672664918,
+   "picks_facing_same_way": 0.439453125
+  },
+  "familiar": {
+   "n": 2690,
+   "parsed": 1.0,
+   "model": {
+    "median_error_m": 2.246362632661456,
+    "hit_rate_1m": 0.20408921933085503
+   },
+   "pixel_match": {
+    "median_error_m": 0.712266745933984,
+    "hit_rate_1m": 0.6691449814126395
+   },
+   "random": {
+    "median_error_m": 3.1487062629502978,
+    "hit_rate_1m": 0.1178307969330855
+   },
+   "best": {
+    "median_error_m": 0.10347086932663929,
+    "hit_rate_1m": 1.0
+   },
+   "same_as_pixel_match": 0.021561338289962824,
+   "heading_diff_deg_median": 51.49228258130889,
+   "picks_facing_same_way": 0.441635687732342
+  },
+  "novel": {
+   "n": 382,
+   "parsed": 1.0,
+   "model": {
+    "median_error_m": 3.3391938997725177,
+    "hit_rate_1m": 0.02617801047120419
+   },
+   "pixel_match": {
+    "median_error_m": 2.1174729362570766,
+    "hit_rate_1m": 0.034031413612565446
+   },
+   "random": {
+    "median_error_m": 3.872432721627959,
+    "hit_rate_1m": 0.06037303664921466
+   },
+   "best": {
+    "median_error_m": 0.11435076844459144,
+    "hit_rate_1m": 1.0
+   },
+   "same_as_pixel_match": 0.015706806282722512,
+   "heading_diff_deg_median": 55.532707386757785,
+   "picks_facing_same_way": 0.42408376963350786
+  },
+  "top_answers": {
+   "256": 412,
+   "177": 243,
+   "188": 130,
+   "110": 127,
+   "248": 89
+  }
+ },
+ "qwen8b": {
+  "all": {
+   "n": 3072,
+   "parsed": 1.0,
+   "model": {
+    "median_error_m": 1.6482100157055974,
+    "hit_rate_1m": 0.3030598958333333
+   },
+   "pixel_match": {
+    "median_error_m": 0.8156744607963311,
+    "hit_rate_1m": 0.5901692708333334
+   },
+   "random": {
+    "median_error_m": 3.236327843404284,
+    "hit_rate_1m": 0.1106859842936198
+   },
+   "best": {
+    "median_error_m": 0.10469234925731563,
+    "hit_rate_1m": 1.0
+   },
+   "same_as_pixel_match": 0.08951822916666667,
+   "heading_diff_deg_median": 22.686716722987512,
+   "picks_facing_same_way": 0.7679036458333334
+  },
+  "familiar": {
+   "n": 2690,
+   "parsed": 1.0,
+   "model": {
+    "median_error_m": 1.4529438703780722,
+    "hit_rate_1m": 0.3442379182156134
+   },
+   "pixel_match": {
+    "median_error_m": 0.712266745933984,
+    "hit_rate_1m": 0.6691449814126395
+   },
+   "random": {
+    "median_error_m": 3.1487062629502978,
+    "hit_rate_1m": 0.1178307969330855
+   },
+   "best": {
+    "median_error_m": 0.10347086932663929,
+    "hit_rate_1m": 1.0
+   },
+   "same_as_pixel_match": 0.08996282527881042,
+   "heading_diff_deg_median": 22.021393987048075,
+   "picks_facing_same_way": 0.779182156133829
+  },
+  "novel": {
+   "n": 382,
+   "parsed": 1.0,
+   "model": {
+    "median_error_m": 2.605099733813809,
+    "hit_rate_1m": 0.013089005235602094
+   },
+   "pixel_match": {
+    "median_error_m": 2.1174729362570766,
+    "hit_rate_1m": 0.034031413612565446
+   },
+   "random": {
+    "median_error_m": 3.872432721627959,
+    "hit_rate_1m": 0.06037303664921466
+   },
+   "best": {
+    "median_error_m": 0.11435076844459144,
+    "hit_rate_1m": 1.0
+   },
+   "same_as_pixel_match": 0.08638743455497382,
+   "heading_diff_deg_median": 30.546155489205844,
+   "picks_facing_same_way": 0.6884816753926701
+  },
+  "top_answers": {
+   "256": 273,
+   "1": 87,
+   "200": 66,
+   "246": 64,
+   "255": 52
+  }
+ },
+ "qwen32b": {
+  "all": {
+   "n": 3072,
+   "parsed": 1.0,
+   "model": {
+    "median_error_m": 1.345529358702623,
+    "hit_rate_1m": 0.3818359375
+   },
+   "pixel_match": {
+    "median_error_m": 0.8156744607963311,
+    "hit_rate_1m": 0.5901692708333334
+   },
+   "random": {
+    "median_error_m": 3.236327843404284,
+    "hit_rate_1m": 0.1106859842936198
+   },
+   "best": {
+    "median_error_m": 0.10469234925731563,
+    "hit_rate_1m": 1.0
+   },
+   "same_as_pixel_match": 0.1298828125,
+   "heading_diff_deg_median": 18.737487744825188,
+   "picks_facing_same_way": 0.8238932291666666
+  },
+  "familiar": {
+   "n": 2690,
+   "parsed": 1.0,
+   "model": {
+    "median_error_m": 1.1589388232486222,
+    "hit_rate_1m": 0.4345724907063197
+   },
+   "pixel_match": {
+    "median_error_m": 0.712266745933984,
+    "hit_rate_1m": 0.6691449814126395
+   },
+   "random": {
+    "median_error_m": 3.1487062629502978,
+    "hit_rate_1m": 0.1178307969330855
+   },
+   "best": {
+    "median_error_m": 0.10347086932663929,
+    "hit_rate_1m": 1.0
+   },
+   "same_as_pixel_match": 0.13122676579925652,
+   "heading_diff_deg_median": 17.481237892918948,
+   "picks_facing_same_way": 0.8434944237918216
+  },
+  "novel": {
+   "n": 382,
+   "parsed": 1.0,
+   "model": {
+    "median_error_m": 2.564226567258184,
+    "hit_rate_1m": 0.010471204188481676
+   },
+   "pixel_match": {
+    "median_error_m": 2.1174729362570766,
+    "hit_rate_1m": 0.034031413612565446
+   },
+   "random": {
+    "median_error_m": 3.872432721627959,
+    "hit_rate_1m": 0.06037303664921466
+   },
+   "best": {
+    "median_error_m": 0.11435076844459144,
+    "hit_rate_1m": 1.0
+   },
+   "same_as_pixel_match": 0.12041884816753927,
+   "heading_diff_deg_median": 30.870973052756618,
+   "picks_facing_same_way": 0.6858638743455497
+  },
+  "top_answers": {
+   "255": 73,
+   "256": 46,
+   "1": 44,
+   "140": 41,
+   "70": 37
+  }
+ },
+ "qwen38": {
+  "all": {
+   "n": 3072,
+   "parsed": 1.0,
+   "model": {
+    "median_error_m": 0.9759919907327603,
+    "hit_rate_1m": 0.5100911458333334
+   },
+   "pixel_match": {
+    "median_error_m": 0.8156744607963311,
+    "hit_rate_1m": 0.5901692708333334
+   },
+   "random": {
+    "median_error_m": 3.236327843404284,
+    "hit_rate_1m": 0.1106859842936198
+   },
+   "best": {
+    "median_error_m": 0.10469234925731563,
+    "hit_rate_1m": 1.0
+   },
+   "same_as_pixel_match": 0.24479166666666666,
+   "heading_diff_deg_median": 12.137513581191698,
+   "picks_facing_same_way": 0.9254557291666666
+  },
+  "familiar": {
+   "n": 2690,
+   "parsed": 1.0,
+   "model": {
+    "median_error_m": 0.8525813289643841,
+    "hit_rate_1m": 0.5817843866171004
+   },
+   "pixel_match": {
+    "median_error_m": 0.712266745933984,
+    "hit_rate_1m": 0.6691449814126395
+   },
+   "random": {
+    "median_error_m": 3.1487062629502978,
+    "hit_rate_1m": 0.1178307969330855
+   },
+   "best": {
+    "median_error_m": 0.10347086932663929,
+    "hit_rate_1m": 1.0
+   },
+   "same_as_pixel_match": 0.2587360594795539,
+   "heading_diff_deg_median": 11.144815938100825,
+   "picks_facing_same_way": 0.9438661710037175
+  },
+  "novel": {
+   "n": 382,
+   "parsed": 1.0,
+   "model": {
+    "median_error_m": 2.28262534439426,
+    "hit_rate_1m": 0.005235602094240838
+   },
+   "pixel_match": {
+    "median_error_m": 2.1174729362570766,
+    "hit_rate_1m": 0.034031413612565446
+   },
+   "random": {
+    "median_error_m": 3.872432721627959,
+    "hit_rate_1m": 0.06037303664921466
+   },
+   "best": {
+    "median_error_m": 0.11435076844459144,
+    "hit_rate_1m": 1.0
+   },
+   "same_as_pixel_match": 0.14659685863874344,
+   "heading_diff_deg_median": 23.839838953268103,
+   "picks_facing_same_way": 0.7958115183246073
+  },
+  "top_answers": {
+   "110": 39,
+   "131": 34,
+   "255": 33,
+   "243": 31,
+   "143": 31
+  }
+ },
+ "sn8b": {
+  "all": {
+   "n": 3072,
+   "parsed": 1.0,
+   "model": {
+    "median_error_m": 1.708582987820194,
+    "hit_rate_1m": 0.28515625
+   },
+   "pixel_match": {
+    "median_error_m": 0.8156744607963311,
+    "hit_rate_1m": 0.5901692708333334
+   },
+   "random": {
+    "median_error_m": 3.236327843404284,
+    "hit_rate_1m": 0.1106859842936198
+   },
+   "best": {
+    "median_error_m": 0.10469234925731563,
+    "hit_rate_1m": 1.0
+   },
+   "same_as_pixel_match": 0.07291666666666667,
+   "heading_diff_deg_median": 21.739290308981563,
+   "picks_facing_same_way": 0.7913411458333334
+  },
+  "familiar": {
+   "n": 2690,
+   "parsed": 1.0,
+   "model": {
+    "median_error_m": 1.5144237566148013,
+    "hit_rate_1m": 0.3252788104089219
+   },
+   "pixel_match": {
+    "median_error_m": 0.712266745933984,
+    "hit_rate_1m": 0.6691449814126395
+   },
+   "random": {
+    "median_error_m": 3.1487062629502978,
+    "hit_rate_1m": 0.1178307969330855
+   },
+   "best": {
+    "median_error_m": 0.10347086932663929,
+    "hit_rate_1m": 1.0
+   },
+   "same_as_pixel_match": 0.0758364312267658,
+   "heading_diff_deg_median": 20.855190850242735,
+   "picks_facing_same_way": 0.8100371747211896
+  },
+  "novel": {
+   "n": 382,
+   "parsed": 1.0,
+   "model": {
+    "median_error_m": 2.9251106480700684,
+    "hit_rate_1m": 0.002617801047120419
+   },
+   "pixel_match": {
+    "median_error_m": 2.1174729362570766,
+    "hit_rate_1m": 0.034031413612565446
+   },
+   "random": {
+    "median_error_m": 3.872432721627959,
+    "hit_rate_1m": 0.06037303664921466
+   },
+   "best": {
+    "median_error_m": 0.11435076844459144,
+    "hit_rate_1m": 1.0
+   },
+   "same_as_pixel_match": 0.05235602094240838,
+   "heading_diff_deg_median": 29.66360712965035,
+   "picks_facing_same_way": 0.6596858638743456
+  },
+  "top_answers": {
+   "1": 226,
+   "255": 99,
+   "249": 47,
+   "256": 47,
+   "114": 42
+  }
+ }
+}

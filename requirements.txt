@@ -1,0 +1,10 @@
+# Installed on top of the image's torch 2.14+cu132 / numpy / scipy /
+# scikit-image / scikit-learn (venv uses --system-site-packages).
+--extra-index-url https://download.pytorch.org/whl/cu132
+torchvision==0.29.*  # matches torch 2.14; needed by the Qwen3-VL video processor
+transformers>=4.57
+accelerate
+matplotlib
+qwen-vl-utils
+flash-linear-attention  # fast kernels for Qwen3.8's linear-attention layers
+peft  # LoRA fine-tuning (experiment 9)

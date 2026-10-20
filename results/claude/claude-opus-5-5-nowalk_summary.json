@@ -1,0 +1,16 @@
+{
+ "choice/reasoning/novel": {
+  "n": 104,
+  "valid": 1.0,
+  "accuracy": 0.6634615384615384,
+  "pixel_match_accuracy": 0.5769230769230769,
+  "accuracy_when_pixels_favour_far": 0.6363636363636364,
+  "picked_option_facing_like_probe": 0.47115384615384615,
+  "human_page_trials": [
+   29,
+   45
+  ],
+  "median_output_tokens": 557,
+  "cost_usd": 1.36
+ }
+}

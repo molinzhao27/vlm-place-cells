@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this code or the trial sets, please cite it as below."
+title: "Place and grid cells in vision-language models"
+type: software
+authors:
+  - family-names: Zhao
+    given-names: Molin
+repository-code: "https://github.com/molinzhao27/vlm-place-cells"
+license: MIT
+version: 0.1.0
+date-released: "2026-10-20"
+keywords:
+  - mechanistic interpretability
+  - vision-language models
+  - place cells
+  - grid cells
+  - spatial cognition

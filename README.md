@@ -43,7 +43,7 @@ rendered rooms, so every frame's true position and heading are known.
    With reference views it places 98% of novel views within 1 m. Its late blocks hold
    heading-invariant place units with broad fields and decode position across headings to
    0.97 m from a single frame. Activation patching finds a 10-dimensional residual-stream
-   subspace that carries the position its camera head uses (86% transfer at block 21). Ablating
+   subspace that carries the position its camera head uses (85% transfer at block 21). Ablating
    or steering the place *neurons* barely moves the camera, and the code does not remap in a
    new room. ([Exp 4](docs/experiments.md#experiment-4-does-a-model-that-knows-where-it-is-have-place-cells-vggt),
    [Exp 8](docs/experiments.md#experiment-8-can-we-steer-vggts-place-neurons))
@@ -103,6 +103,7 @@ scripts/                 the exact job scripts behind each experiment (run_*.sh)
 results/                 summaries (JSON/CSV), per-trial answers (JSONL) and figures
   export/dissimilar/     the 192 lure-free trials (probes + trials.json)
 docs/experiments.md      full write-up of experiments 1-9
+writeup/probe_post/      figures for a post on probe vs causal directions in VGGT (make_figs.py)
 ```
 
 ## Reproducing

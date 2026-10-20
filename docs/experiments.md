@@ -351,7 +351,7 @@ subspace.
 | written into the target's token | share | block 15 | block 19 | block 21 |
 |---|---|---|---|---|
 | the whole token | 100% | 0.03 | 0.41 | **0.87** |
-| position PCA, 10 of 1,024 dims | 93% | 0.03 | 0.40 | **0.86** |
+| position PCA, 10 of 1,024 dims | 93% | 0.03 | 0.40 | **0.85** |
 | everything except pose PCA 30 | 2% | 0.00 | 0.00 | 0.00 |
 | heading PCA, 6 dims | 58-69% | 0.00 | 0.07 | 0.32 |
 | probe directions for (x, y), 2 dims | 0.1% | 0.00 | 0.00 | 0.00 |
@@ -364,7 +364,7 @@ global-attention half patched. Patching what the camera head reads (both halves
 after block 23) transfers 1.00.
 
 - **A 10-dimensional position code carries what the camera head uses.** At block
-  21, writing just these 10 directions moves the prediction 86% of the way to
+  21, writing just these 10 directions moves the prediction 85% of the way to
   the donor. Writing everything else does nothing. Erasing them raises the
   error from 0.43 m to 3.4 m.
 - **It is used only from block 19 on.** Through block 15 the token carries
@@ -430,6 +430,10 @@ room B and the patching test (~2.5 h). Room B's walks are rendered first, on CPU
 with `python -m spatialcells.render_data --room B --out data/walks-roomB`.
 `python -m spatialcells.vggt_patch --blocks 15 19 21 --out
 results/vggt_patch_subspaces.json` adds the PCA subspaces (~35 min).
+In progress: `python -m spatialcells.vggt_patch --probes --blocks 15 19 21 --out
+results/vggt_patch_probes.json` tests whether the probe result depends on how the probe was
+regularised. It sweeps the ridge penalty up to 1e6 and also patches the Haufe pattern Cov(H) W
+and the cross-covariance direction.
 
 ## Experiment 5: why do open models fail, and does any pass?
 
@@ -689,7 +693,7 @@ Run with `scripts/run_grid_rnn.sh` (~1 h for the three retrains) and
 
 Experiment 4 found heading-invariant place neurons in VGGT's late blocks and a 10-d position
 code in the residual stream that the camera head uses (interchange transfer 0.40 at block 19,
-0.86 at block 21). Ablating the neurons did nothing. Does *writing* into them move VGGT's
+0.85 at block 21). Ablating the neurons did nothing. Does *writing* into them move VGGT's
 predicted camera? `vggt_steer.py`, single mode (8 anchors + 1 walk frame), 96 test frames
 from odd walks. Block 21 was added to the recorded activations (`vggt_cells.py --blocks 21`).
 

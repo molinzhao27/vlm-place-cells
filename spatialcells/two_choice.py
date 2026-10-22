@@ -25,6 +25,8 @@ answered; --score summarises every file there into results/two_choice/summary.js
 --shuffle-walk shows the walk's frames in a fixed random order (seeded by the walk) with their real
 frame numbers; adding --relabel numbers them 1, 2, ... as shown and names the options by those
 labels (as claude_test.py; answers are stored in real frame numbers).
+--device mps runs on Apple silicon (bf16, as on CUDA); a non-CUDA device joins the tag, so its
+answers never mix with a CUDA run's.
 """
 from __future__ import annotations
 
@@ -56,7 +58,8 @@ def default_tag(args):
     return (f"{name}-{args.trials}-{args.size}px" + ("-nowalk" if args.no_walk else "")
             + (f"-think-{args.effort}" if args.think else "")
             + (f"-max{args.max_images}" if args.max_images and not args.no_walk else "")
-            + ("-shuffled" if args.shuffle_walk else "") + ("-relabel" if args.relabel else ""))
+            + ("-shuffled" if args.shuffle_walk else "") + ("-relabel" if args.relabel else "")
+            + (f"-{args.device}" if args.device != "cuda" else ""))
 
 
 def parse(text, a, b):
@@ -95,7 +98,8 @@ def run(args):
         ip.size = {"shortest_edge": args.size * args.size, "longest_edge": args.size * args.size}
     elif "gemma" in args.model.lower():              # soft tokens per image: 70 is closest to Qwen's 64
         ip.max_soft_tokens = ip.image_seq_length = proc.image_seq_length = args.image_tokens
-    kw = dict(dtype=torch.bfloat16, device_map="cuda", trust_remote_code=args.trust_remote_code)
+    dev = torch.mps if args.device == "mps" else torch.cuda
+    kw = dict(dtype=torch.bfloat16, device_map=args.device, trust_remote_code=args.trust_remote_code)
     if "Hy-Embodied" in args.model:
         # its modeling code reads moe_intermediate_size, which its config.json calls expert_hidden_dim
         from transformers import AutoConfig
@@ -171,7 +175,7 @@ def run(args):
         tb = trials[b0:b0 + args.batch]
         built = [build(t) for t in tb]
         inputs = proc(text=[x for x, _ in built], images=[im for _, ims in built for im in ims],
-                      return_tensors="pt", padding=True).to("cuda")
+                      return_tensors="pt", padding=True).to(args.device)
         P = inputs["input_ids"].shape[1]
         with torch.no_grad():
             out = model.generate(**inputs, max_new_tokens=args.max_new, **gen_kw)
@@ -184,13 +188,13 @@ def run(args):
             idx = idx_all[c0:c0 + 4]
             cont = [built[i][0] + replies[i] + "\n</think>\n\n" for i in idx]
             inp2 = proc(text=cont, images=[im for i in idx for im in built[i][1]], return_tensors="pt",
-                        padding=True).to("cuda")
+                        padding=True).to(args.device)
             with torch.no_grad():
                 out2 = model.generate(**inp2, max_new_tokens=16, do_sample=False)
             for j, i in enumerate(idx):
                 replies[i] += "\n</think>\n\n" + proc.decode(out2[j, inp2["input_ids"].shape[1]:], skip_special_tokens=False)
             del inp2, out2
-            torch.cuda.empty_cache()
+            dev.empty_cache()
         for t, reply, g, f in zip(tb, replies, n_gen, forced):
             for sp in special:
                 reply = reply.replace(sp, "")
@@ -203,9 +207,10 @@ def run(args):
                 fh.write(json.dumps(rec) + "\n")
         done_n = b0 + len(tb)
         if b0 == 0 or done_n % 24 < len(tb):
-            mem = torch.cuda.max_memory_allocated() / 2**30
+            mem = (dev.driver_allocated_memory() if args.device == "mps" else dev.max_memory_allocated()) / 2**30
             print(f"{done_n}/{len(trials)}, {time.time() - t0:.0f}s, prompt {P} tokens, generated {max(n_gen)} max, "
-                  f"forced {sum(forced)}, peak {mem:.0f} GiB, e.g. {reply[-120:]!r}", flush=True)
+                  f"forced {sum(forced)}, {'driver' if args.device == 'mps' else 'peak'} {mem:.0f} GiB, "
+                  f"e.g. {reply[-120:]!r}", flush=True)
     print(f"{tag}: done, {time.time() - t0:.0f}s -> {path}", flush=True)
 
 
@@ -266,6 +271,7 @@ def main():
     ap.add_argument("--adapter", help="LoRA adapter folder to merge in (finetune.py)")
     ap.add_argument("--trust-remote-code", action="store_true")
     ap.add_argument("--data", help="walks folder (default: the trials' own, data/walks for room A)")
+    ap.add_argument("--device", default="cuda", help="cuda, or mps on Apple silicon")
     ap.add_argument("--score", action="store_true")
     args = ap.parse_args()
     score(args) if args.score else run(args)

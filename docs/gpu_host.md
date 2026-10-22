@@ -28,3 +28,14 @@ GPU, so jobs from different projects never overlap.
 `--system-site-packages`). `vggt_control.py` and the other `vggt_*` modules also need the
 [VGGT repository](https://github.com/facebookresearch/vggt) cloned to `/workspace/vggt` in the
 container.
+
+## Smaller machines
+
+`scripts/vast1/fetch.sh roomA|roomB|adapter` copies the data a job reads from the container to
+this machine. Over a slow link it is faster to render the walks and probes again
+(`render_data`, `render_probes`): they are seeded and come out identical to the GPU host's.
+
+- **Apple silicon** (Qwen3-VL-8B needs ~18 GB of unified memory): `scripts/mac/setup.sh` makes
+  `.venv-mac` with the GPU host's package versions, and `two_choice.py --device mps` runs the
+  behaviour tests there. Its answers are tagged `-mps`. `scripts/mac/run_roomB.sh` checks one
+  published room-A result first, then runs experiment 9b.

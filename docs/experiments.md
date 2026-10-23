@@ -180,8 +180,9 @@ So the 256 x 256 frames hold everything needed to place a novel view. The VLMs'
 failure is not about resolution or information.
 
 **Spatial fine-tuning doesn't help.** SenseNova-SI-1.1-Qwen3-VL-8B is
-Qwen3-VL-8B fine-tuned on 8M spatial QA samples; it reports 68.7% on VSI-Bench
-and 85.6% on MindCube. Against the base model on every test:
+Qwen3-VL-8B fine-tuned on 8M spatial QA samples; its model card reports 64.8% on VSI-Bench
+and 73.8% on MindCube-Tiny for this 8B model (the card's headline 68.7% and 85.6% are for the
+SenseNova-SI family). Against the base model on every test:
 
 | | Qwen3-VL-8B | SenseNova-SI 8B |
 |---|---|---|
@@ -236,7 +237,7 @@ frames (with their frame numbers), the new view and the same question.
 Most of the skill is reasoning about the three views themselves (which walls,
 posters and pillars are visible, and from how far). On the lure-free trials of
 experiment 5, though, the walk adds about 10 points, and that gain is significant
-(p = 0.008).
+(two-sided p = 0.016).
 
 So at least one frontier model shows the behaviour the Qwen models lack:
 recognising a place seen from a new direction. Whether it has a place-like code
@@ -510,8 +511,8 @@ per walk; its greedy answers matched `two_choice.py` on 181/192 trials.
 - **Qwen3.8 with thinking is the best open model with the walk (65%)**, and keeps
   63% where frame order points to the far option. But trial by trial, the walk
   is no better than its no-walk thinking run (22 trials better, 18 worse,
-  p = 0.32). It does not use the walk the way Opus does (+10-14 points,
-  p = 0.008).
+  two-sided p = 0.64). It does not use the walk the way Opus does (+10-14 points,
+  two-sided p = 0.016).
 - **Qwen3.6 thinks itself into the cap.** With the walk, 117 of 192 answers hit
   8,192 tokens and were forced, and 7% never gave a valid answer. It stays at
   chance.
@@ -535,12 +536,12 @@ asked for a frame number only.
 - **Only Opus gains from the walk.**
   - Opus: comparing walk and no walk trial by trial, averaged over the three
     efforts, the walk version is right more often on 38 novel trials and less
-    often on 19 (sign test, p = 0.008). Each effort on its own gives p of 0.02
-    to 0.05.
+    often on 19 (two-sided sign test, p = 0.016). Each effort on its own gives
+    two-sided p of 0.03 to 0.11.
   - Sonnet at high effort: 70% with the walk against 64% without, but trial by
-    trial that is 24 trials better and 18 worse (p = 0.22).
+    trial that is 24 trials better and 18 worse (two-sided p = 0.44).
   - Haiku: the walk hurts slightly, as it does for the open models (30 trials
-    better, 43 worse; at high effort p = 0.04 that it hurts).
+    better, 43 worse; at high effort 11 better and 22 worse, two-sided p = 0.08).
 - **Sonnet with thinking off, or at low and medium effort, barely does the
   task.** It picks the first-listed option 70-91% of the time. At high effort it
   thinks about twice as long (1,160 tokens) and the bias is gone.
@@ -831,8 +832,8 @@ no walk 43 better, 3 worse; shuffled vs ordered walk 4 better, 47 worse (p = 2e-
 - **It is not a shortcut we balanced for.** It is right 91% of the time when frame order points to
   the far option, it picks the more similar-looking option 53% of the time (view matching would
   be 50%), and first-listed 47%.
-- **It also resists the lures.** On the original trials, where the far option shares a landmark
-  with the new view, it gets 91% (base 37%).
+- **It also resists the lures.** On the original novel trials it gets 91% (base 37%), and on the
+  50 where the far option shares a landmark with the new view, 88% (base 14%).
 - **It needs the walk, in order.** Without the walk it is at chance. With the same frames
   shuffled it is at chance, even with their real frame numbers. That is the opposite of Opus,
   which uses the walk as a set of views and doesn't care about the order (experiment 6). The

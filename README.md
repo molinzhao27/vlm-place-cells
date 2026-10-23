@@ -35,9 +35,9 @@ rendered rooms, so every frame's true position and heading are known.
    chance, and with thinking Qwen3.8-27B does no better than without the walk.
    ([Exp 5](docs/experiments.md#experiment-5-why-do-open-models-fail-and-does-any-pass))
 4. **Claude Opus 5.5 is the only off-the-shelf model that gains from the walk** (75% vs 61-66%
-   without it on lure-free novel trials; paired sign test p = 0.008), and it resists the lure.
-   Shuffling the walk costs nothing, so it uses the frames as a set of reference views, not as a
-   path. Sonnet and Haiku 5.5 do not gain from the walk.
+   without it on lure-free novel trials; paired sign test, two-sided p = 0.016), and it resists
+   the lure. Shuffling the walk costs nothing, so it uses the frames as a set of reference views,
+   not as a path. Sonnet and Haiku 5.5 do not gain from the walk.
    ([Exp 5-6](docs/experiments.md#experiment-6-does-opus-follow-the-path-shuffled-walk))
 5. **VGGT solves the task and has a place code, but its place neurons are not the mechanism.**
    With reference views it places 98% of novel views within 1 m. Its late blocks hold

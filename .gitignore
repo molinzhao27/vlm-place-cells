@@ -9,12 +9,14 @@ build/
 # Generated data: rendered walks, activations, checkpoints (see README "Reproducing")
 data/
 
-# GPU host settings (start from scripts/vast1/host.env.example)
+# GPU host settings (start from scripts/vast1/host.env.example, scripts/rtx4070/host.env.example)
 scripts/vast1/host.env
+scripts/rtx4070/host.env
 
 # Large or regenerable results, archived separately with the preprint
 results/behave/qwen38-reason.npz
 results/export/claude/
+results/export/claude-roomB/
 results/export/human/
 results/figs/*
 !results/figs/vggt-single_L19.png
@@ -27,3 +29,25 @@ NEXT_EXPERIMENTS.md
 # Unpublished post drafts (delete these lines when the post goes out)
 writeup/probe_post/post.md
 writeup/probe_post/draft_*.md
+
+# Preprint draft and writer kit (unpublished)
+writeup/paper/
+
+# Experiment 10 rooms: regenerable seeded renders (probe JPEGs, Claude walk-frame exports)
+results/export/dissimilar-roomP*/probe_*.jpg
+results/export/claude-room*/
+
+# Human-baseline answers (participant ids): kept out of git
+results/export/human_responses/
+results/export/dissimilar-roomReplica*/probe_*.jpg
+lab_package/
+
+# Local agent notes, external reviews of the draft, previews and scratch (not published)
+/CLAUDE.md
+/*_review.md
+docs/reviews/
+results/review/
+scripts/preprint_review_audit.py
+results/preview/
+tmp/
+results/*_incomplete.json

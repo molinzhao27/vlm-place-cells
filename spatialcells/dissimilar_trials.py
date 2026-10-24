@@ -1,6 +1,6 @@
 """Two-choice trials in which neither option looks like the new view, so view matching gives 50%.
 
-    python -m spatialcells.dissimilar_trials [--room B]
+    python -m spatialcells.dissimilar_trials [--room B | --room P5000 --walks 16]
 
 For each probe in the 16 test walks: the near option is a walk frame taken within 1 m of it,
 the far option one taken more than 3 m away, and both face more than 90 deg away from it
@@ -16,8 +16,12 @@ model got them. In any other room (--room B: data/walks-roomB, with probes from 
 --room B) frame order is balanced too, as in procedural_data.py: the trials cycle through the four
 combinations of which option pixel similarity and frame order favour (frame-order ties excluded),
 separately in novel and familiar trials.
-Writes results/export/dissimilar/trials.json (room B: results/export/dissimilar-roomB/; same fields
-as the Claude trials) and the probe JPEGs beside it.
+Procedural rooms (--room P<seed>, experiment 10) work like room B, from data/walks-roomP<seed>.
+Photoreal rooms (habitat_scene.py --walks-out, e.g. --room ReplicaRoom0) have no ray-castable layout:
+their landmarks come from landmarks.json, the labelled objects covering >= 2% of each view. Views
+with more than 5% of pixels showing no geometry are not used, as probes or as options.
+Writes results/export/dissimilar/trials.json (other rooms: results/export/dissimilar-room<R>/; same
+fields as the Claude trials) and the probe JPEGs beside it.
 """
 from __future__ import annotations
 
@@ -29,7 +33,7 @@ import numpy as np
 from PIL import Image
 
 from .analyze_behave import angdiff, geometry
-from .room import CAM_H, H, HFOV, L, LAYOUTS, PILLARS, _posters
+from .room import CAM_H, H, HFOV, L, PILLARS, _posters, get_layout
 
 OUT = "results/export/dissimilar"
 WALKS = 16
@@ -84,19 +88,31 @@ _POSTERS = _posters()
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--room", default="A", choices=list(LAYOUTS))
+    ap.add_argument("--room", default="A", help="A, B or P<seed> (room.get_layout)")
+    ap.add_argument("--walks", type=int, default=WALKS, help="use the first N walks")
+    ap.add_argument("--per-walk", type=int, default=PER_WALK, help="up to this many trials per walk")
     ap.add_argument("--out", help="default results/export/dissimilar (room A) or ...-room<R>")
     args = ap.parse_args()
     data = "data/walks" if args.room == "A" else f"data/walks-room{args.room}"
     out = args.out or (OUT if args.room == "A" else f"{OUT}-room{args.room}")
-    pillars, posters = LAYOUTS[args.room]["pillars"], LAYOUTS[args.room]["posters"]()
-    seen = lambda x, y, th: landmarks(x, y, th, pillars=pillars, posters=posters)
     meta, pmeta, G = geometry(data)
+    if os.path.exists(f"{data}/landmarks.json"):        # photoreal scene: labelled objects, by view index
+        L = json.load(open(f"{data}/landmarks.json"))
+        frame_marks = lambda f: set(L["frames"][f])
+        probe_marks = lambda p: set(L["probes"][p])
+    else:
+        lay = get_layout(args.room)
+        pillars, posters = lay["pillars"], lay["posters"]()
+        seen = lambda x, y, th: landmarks(x, y, th, pillars=pillars, posters=posters)
+        frame_marks = lambda f: seen(meta["x"][f], meta["y"][f], meta["theta"][f])
+        probe_marks = lambda p: seen(pmeta["x"][p], pmeta["y"][p], pmeta["theta"][p])
+    frame_ok = meta["holes"] <= 0.05 if "holes" in meta else np.ones(len(meta["walk"]), bool)
+    probe_ok = pmeta["holes"] <= 0.05 if "holes" in pmeta else np.ones(len(pmeta["walk"]), bool)
     probes = np.load(f"{data}/probes.npy", mmap_mode="r")
     rng = np.random.default_rng(11)
     trials, sign, order = [], 1, None
-    for w in range(WALKS):
-        pidx = np.flatnonzero(pmeta["walk"] == w)
+    for w in range(args.walks):
+        pidx = np.flatnonzero((pmeta["walk"] == w) & probe_ok)
         pidx = sorted(pidx, key=lambda p: (G[p]["familiar"], rng.random()))     # novel first, random within
         n = 0
         for p in pidx:
@@ -104,8 +120,8 @@ def main():
                 sign, order = COMBOS[sum(t["familiar"] == G[p]["familiar"] for t in trials) % 4]
             fi, d, sim, bm = G[p]["fi"], G[p]["d"], G[p]["sim"], G[p]["pix"]
             dh = angdiff(meta["theta"][fi], pmeta["theta"][p])
-            seen_p = seen(pmeta["x"][p], pmeta["y"][p], pmeta["theta"][p])
-            shares = np.array([bool(seen_p & seen(meta["x"][f], meta["y"][f], meta["theta"][f]))
+            seen_p = probe_marks(p)
+            shares = np.array([bool(seen_p & frame_marks(f)) or not frame_ok[f]
                                if dh[k] > AWAY and (d[k] < NEAR or d[k] > FAR) else True for k, f in enumerate(fi)])
             near = np.flatnonzero((d < NEAR) & (dh > AWAY) & ~shares)
             far = np.flatnonzero((d > FAR) & (dh > AWAY) & ~shares)
@@ -136,7 +152,7 @@ def main():
                 "frame_order_favours_near": bool(abs(i - bm) < abs(j - bm)),
             })
             sign, n = -sign, n + 1                    # room A alternates the pixel cue only
-            if n == PER_WALK:
+            if n == args.per_walk:
                 break
     os.makedirs(out, exist_ok=True)
     json.dump(trials, open(f"{out}/trials.json", "w"), indent=1)

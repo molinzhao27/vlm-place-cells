@@ -29,6 +29,10 @@ the shuffled order, and the question names the two options by their new labels, 
 is left in the labels either (tag -shuffled-relabel; answers are stored in original numbers).
 --walk-frames 64 shows 64 of the 256 frames, in order: every option frame of
 that walk's trials plus frames spread evenly in time (farthest-point in frame number) (tag -f64).
+--trials room<R>: the lure-free trials in room R (dissimilar_trials.py --room R; tag -room<R>): roomB,
+or a procedural room such as roomP5000 (experiment 10). Its walk frames and probes are written as
+JPEGs (q92, as export_trials.py) from data/walks-room<R> on first use, to results/export/claude-room<R>/
+and results/export/dissimilar-room<R>/.
 """
 from __future__ import annotations
 
@@ -43,8 +47,24 @@ import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 
-EXPORT = "results/export/claude"          # walk frames (and the original trials' probes)
+EXPORT = "results/export/claude"          # walk frames (and the original trials' probes); set from --trials
 TRIAL_SETS = {"original": "results/export/claude", "dissimilar": "results/export/dissimilar"}
+
+
+def trial_dir(name):
+    """Folder with the trial set's trials.json and probe JPEGs: original, dissimilar or room<R>."""
+    return TRIAL_SETS.get(name) or f"results/export/dissimilar-{name}"
+
+
+def walk_set(name):
+    """(walks folder, walk-frame JPEG export) for a room other than A, else None."""
+    return (f"data/walks-{name}", f"results/export/claude-{name}") if name.startswith("room") else None
+
+
+def trial_set(name):
+    if name not in TRIAL_SETS and not re.fullmatch(r"room[A-Z][A-Za-z0-9]*", name):
+        raise argparse.ArgumentTypeError(f"--trials: original, dissimilar or room<R>, not {name!r}")
+    return name
 PROBES = EXPORT                           # set from --trials in main()
 OUT = "results/claude"
 KEY_FILE = os.path.expanduser("~/.config/anthropic/api_key")
@@ -63,6 +83,23 @@ QUESTION = ("This new view was taken somewhere in the same room, possibly facing
 def image(path):
     data = base64.standard_b64encode(open(path, "rb").read()).decode()
     return {"type": "image", "source": {"type": "base64", "media_type": "image/jpeg", "data": data}}
+
+
+def export_jpegs(trials, data):
+    """Write the walk frames and probes the trials use as JPEGs, if not there yet."""
+    import numpy as np
+    from PIL import Image
+    meta = np.load(f"{data}/meta.npz")
+    jpg = lambda a, path: os.path.exists(path) or Image.fromarray(np.asarray(a)).save(path, quality=92)
+    frames = np.load(f"{data}/frames.npy", mmap_mode="r")
+    for w in sorted({t["walk"] for t in trials}):
+        os.makedirs(f"{EXPORT}/walk_{w:02d}", exist_ok=True)
+        i = np.flatnonzero(meta["walk"] == w)
+        for k, f in enumerate(i[np.argsort(meta["step"][i])], 1):
+            jpg(frames[f], f"{EXPORT}/walk_{w:02d}/frame_{k:03d}.jpg")
+    probes = np.load(f"{data}/probes.npy", mmap_mode="r")
+    for t in trials:
+        jpg(probes[t["probe"]], f"{PROBES}/probe_{t['probe']:04d}.jpg")
 
 
 def walk_frames(w, trials, n=256, shuffle=False):
@@ -108,7 +145,7 @@ def cost(model, u):
 
 
 def tag(args):
-    return (args.model + ("-dissimilar" if args.trials == "dissimilar" else "") + ("-nowalk" if args.no_walk else "")
+    return (args.model + ({"dissimilar": "-dissimilar"}.get(args.trials, f"-{args.trials}" if walk_set(args.trials) else "")) + ("-nowalk" if args.no_walk else "")
             + ("-shuffled" if args.shuffle_walk else "") + ("-relabel" if args.relabel else "") + (f"-f{args.walk_frames}" if args.walk_frames < 256 else "")
             + ("" if args.effort == "high" else f"-{args.effort}"))
 
@@ -125,6 +162,8 @@ def client():
 
 def run(args):
     trials = json.load(open(f"{PROBES}/trials.json"))
+    if walk_set(args.trials):
+        export_jpegs(trials, walk_set(args.trials)[0])
     if args.no_walk and args.trials == "original":
         trials = [t for t in trials if not t["familiar"]]
     os.makedirs(OUT, exist_ok=True)
@@ -225,7 +264,7 @@ def run(args):
 
 def score(args):
     trials = {t["id"]: t for t in json.load(open(f"{PROBES}/trials.json"))}
-    human = {t["id"] for t in json.load(open("results/export/human/trials.json"))["trials"]}
+    human = set() if walk_set(args.trials) else {t["id"] for t in json.load(open("results/export/human/trials.json"))["trials"]}
     recs = [json.loads(l) for l in open(f"{OUT}/{tag(args)}.jsonl")]
     out = {}
     for cat in ("familiar", "novel"):
@@ -257,9 +296,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="claude-opus-5-5", choices=list(PRICES))
     ap.add_argument("--effort", default="high", choices=["none", "low", "medium", "high", "xhigh", "max"])
-    ap.add_argument("--trials", default="original", choices=list(TRIAL_SETS))
+    ap.add_argument("--trials", default="original", type=trial_set, help="original, dissimilar or room<R>")
     ap.add_argument("--max-tokens", type=int, default=16000)
-    ap.add_argument("--walks", type=int, default=16)
+    ap.add_argument("--walks", type=int, help="only the first N walks that have trials (default: all of them)")
     ap.add_argument("--concurrency", type=int, default=4)
     ap.add_argument("--budget-usd", type=float, default=10)
     ap.add_argument("--dry-run", action="store_true")
@@ -269,8 +308,9 @@ def main():
     ap.add_argument("--walk-frames", type=int, default=256, help="show this many walk frames (always incl. the options)")
     ap.add_argument("--score", action="store_true")
     args = ap.parse_args()
-    global PROBES
-    PROBES = TRIAL_SETS[args.trials]
+    global PROBES, EXPORT
+    PROBES = trial_dir(args.trials)
+    EXPORT = (walk_set(args.trials) or (None, EXPORT))[1]
     score(args) if args.score else run(args)
 
 

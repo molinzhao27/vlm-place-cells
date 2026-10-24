@@ -206,14 +206,26 @@ def random_layout(seed: int) -> dict:
     return dict(pillars=pillars, walls={w: f"wall{w}" for w in "NSEW"}, floor="floor_p", posters=lambda: posters, tex=tex)
 
 
+def get_layout(name: str) -> dict:
+    """A room by name: "A" or "B" (LAYOUTS), or "P<seed>" for Room(random_layout(seed)). Experiment 9
+    trained on seeds 0-1199; experiment 10's held-out rooms are P5000-P5009."""
+    if name[:1] == "P" and name[1:].isdigit():
+        return random_layout(int(name[1:]))
+    return LAYOUTS[name]
+
+
 class Room:
-    def __init__(self, layout="A"):
-        """layout: a name in LAYOUTS, or a dict like random_layout()'s."""
+    def __init__(self, layout="A", remove=()):
+        """layout: a room name (see get_layout()), or a dict like random_layout()'s. remove: posters to leave
+        out, named as dissimilar_trials.landmarks() names them (wall and index in its list: "S0", "E1", ...);
+        the wall's own texture shows in their place (experiment 14c)."""
         self.layout = layout if isinstance(layout, str) else "procedural"
-        lay = LAYOUTS[layout] if isinstance(layout, str) else layout
+        lay = get_layout(layout) if isinstance(layout, str) else layout
         self.tex = _load_textures()
         self.tex.update(lay.get("tex", {}))
         self.posters = lay["posters"]()
+        if remove:
+            self.posters = {w: [p for i, p in enumerate(ps) if f"{w}{i}" not in remove] for w, ps in self.posters.items()}
         self.pillars, self.walls, self.floor = lay["pillars"], lay["walls"], lay["floor"]
         n = IMG * SS
         a = np.tan(HFOV / 2)

@@ -1,0 +1,5 @@
+{"id": "w02p0177", "walk": 2, "probe": 0, "familiar": false, "near": 20, "far": 113, "a": 20, "b": 113, "answer": 113, "correct": false, "prompt_tokens": 291, "gen_tokens": 4, "forced": false, "text": "113"}
+{"id": "w08p0523", "walk": 8, "probe": 1, "familiar": false, "near": 247, "far": 61, "a": 61, "b": 247, "answer": 61, "correct": false, "prompt_tokens": 291, "gen_tokens": 4, "forced": false, "text": "061"}
+{"id": "w08p0542", "walk": 8, "probe": 2, "familiar": false, "near": 142, "far": 8, "a": 142, "b": 8, "answer": 8, "correct": false, "prompt_tokens": 291, "gen_tokens": 4, "forced": false, "text": "008"}
+{"id": "w08p0560", "walk": 8, "probe": 3, "familiar": false, "near": 99, "far": 149, "a": 149, "b": 99, "answer": 99, "correct": true, "prompt_tokens": 291, "gen_tokens": 4, "forced": false, "text": "099"}
+{"id": "w11p0705", "walk": 11, "probe": 4, "familiar": false, "near": 219, "far": 55, "a": 219, "b": 55, "answer": 55, "correct": false, "prompt_tokens": 291, "gen_tokens": 4, "forced": false, "text": "055"}

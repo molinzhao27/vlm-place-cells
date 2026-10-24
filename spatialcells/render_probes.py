@@ -17,7 +17,7 @@ from multiprocessing import Pool
 import numpy as np
 
 from .render_data import _init, _render
-from .room import LAYOUTS, valid
+from .room import get_layout, valid
 
 
 def main():
@@ -26,17 +26,18 @@ def main():
     ap.add_argument("--data", default="data/walks")
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--workers", type=int, default=28)
-    ap.add_argument("--room", default="A", choices=list(LAYOUTS))
+    ap.add_argument("--room", default="A", help="A, B or P<seed> (room.get_layout)")
     args = ap.parse_args()
     meta = np.load(f"{args.data}/meta.npz")
     rng = np.random.default_rng(args.seed)
+    pillars = get_layout(args.room)["pillars"]
     rows = []
     for w in np.unique(meta["walk"]):
         pos = np.stack([meta["x"], meta["y"]], 1)[meta["walk"] == w]
         for k in range(args.per_walk):
             while True:
                 x, y = pos[rng.integers(len(pos))] + rng.normal(0, 0.15, 2)
-                if valid(x, y, pillars=LAYOUTS[args.room]["pillars"]):
+                if valid(x, y, pillars=pillars):
                     break
             rows.append((w, k, x, y, rng.uniform(0, 2 * np.pi)))
     rows = np.array(rows)

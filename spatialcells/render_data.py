@@ -2,6 +2,8 @@
 
     python -m spatialcells.render_data --walks 48 --steps 256 --out data/walks
     python -m spatialcells.render_data --room B --out data/walks-roomB     (second room, for remapping)
+    python -m spatialcells.render_data --room P5000 --walks 16 --seed 5000 --out data/walks-roomP5000
+                                                    (a procedural room, room.get_layout)
 
 Writes frames.npy (N, 256, 256, 3) uint8 and meta.npz (walk, step, x, y, theta),
 plus preview figures in results/preview/.
@@ -14,7 +16,7 @@ from multiprocessing import Pool
 
 import numpy as np
 
-from .room import IMG, L, LAYOUTS, Room, foraging_walk
+from .room import IMG, L, Room, foraging_walk, get_layout
 
 _room = None
 
@@ -35,11 +37,11 @@ def main():
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--out", default="data/walks")
     ap.add_argument("--workers", type=int, default=28)
-    ap.add_argument("--room", default="A", choices=list(LAYOUTS))
+    ap.add_argument("--room", default="A", help="A, B or P<seed> (room.get_layout)")
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
     rng = np.random.default_rng(args.seed)
-    pillars = LAYOUTS[args.room]["pillars"]
+    pillars = get_layout(args.room)["pillars"]
     poses = np.stack([foraging_walk(args.steps, rng, pillars=pillars) for _ in range(args.walks)])  # (W, S, 3)
     flat = poses.reshape(-1, 3)
     with Pool(args.workers, initializer=_init, initargs=(args.room,)) as pool:

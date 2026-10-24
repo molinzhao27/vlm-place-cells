@@ -1,0 +1,1210 @@
+{
+ "design": {
+  "lure_trials": 50,
+  "qualifying": 38,
+  "picture_posters_only": 23,
+  "excluded_pillar": 12,
+  "without_control": [
+   "w02p0151",
+   "w08p0554",
+   "w11p0752"
+  ],
+  "poster_order": [
+   "N0",
+   "N1",
+   "E0",
+   "E1",
+   "S0",
+   "S1",
+   "W0",
+   "W1"
+  ],
+  "rooms": 14
+ },
+ "runs": {
+  "Qwen3-VL-8B, walk": {
+   "complete": true,
+   "answered": {
+    "original": 38,
+    "edited": 38,
+    "control": 35
+   },
+   "expected": {
+    "original": 38,
+    "edited": 38,
+    "control": 35
+   },
+   "parsed": 1.0,
+   "missing_runs": [],
+   "accuracy": {
+    "original": {
+     "k": 8,
+     "n": 38,
+     "accuracy": 0.21052631578947367
+    },
+    "edited": {
+     "k": 10,
+     "n": 38,
+     "accuracy": 0.2631578947368421
+    },
+    "control": {
+     "k": 5,
+     "n": 35,
+     "accuracy": 0.14285714285714285
+    }
+   },
+   "edited_minus_original": {
+    "n": 38,
+    "both_right": 7,
+    "only_first_right": 3,
+    "only_second_right": 1,
+    "difference": 0.05263157894736842,
+    "p_two_sided": 0.625
+   },
+   "edited_minus_control": {
+    "n": 35,
+    "both_right": 4,
+    "only_first_right": 5,
+    "only_second_right": 1,
+    "difference": 0.11428571428571428,
+    "p_two_sided": 0.21875
+   },
+   "control_minus_original": {
+    "n": 35,
+    "both_right": 5,
+    "only_first_right": 0,
+    "only_second_right": 2,
+    "difference": -0.05714285714285714,
+    "p_two_sided": 0.5
+   },
+   "picture_posters_only": {
+    "accuracy": {
+     "original": {
+      "k": 5,
+      "n": 23,
+      "accuracy": 0.21739130434782608
+     },
+     "edited": {
+      "k": 6,
+      "n": 23,
+      "accuracy": 0.2608695652173913
+     },
+     "control": {
+      "k": 3,
+      "n": 22,
+      "accuracy": 0.13636363636363635
+     }
+    },
+    "edited_minus_original": {
+     "n": 23,
+     "both_right": 4,
+     "only_first_right": 2,
+     "only_second_right": 1,
+     "difference": 0.043478260869565216,
+     "p_two_sided": 1.0
+    },
+    "edited_minus_control": {
+     "n": 22,
+     "both_right": 2,
+     "only_first_right": 3,
+     "only_second_right": 1,
+     "difference": 0.09090909090909091,
+     "p_two_sided": 0.625
+    },
+    "control_minus_original": {
+     "n": 22,
+     "both_right": 3,
+     "only_first_right": 0,
+     "only_second_right": 1,
+     "difference": -0.045454545454545456,
+     "p_two_sided": 1.0
+    }
+   },
+   "per_trial": {
+    "w00p0002": [
+     true,
+     true,
+     false
+    ],
+    "w00p0003": [
+     false,
+     false,
+     false
+    ],
+    "w01p0102": [
+     false,
+     false,
+     false
+    ],
+    "w01p0110": [
+     false,
+     false,
+     false
+    ],
+    "w02p0140": [
+     false,
+     false,
+     false
+    ],
+    "w02p0151": [
+     false,
+     false,
+     null
+    ],
+    "w02p0171": [
+     false,
+     false,
+     false
+    ],
+    "w02p0177": [
+     false,
+     false,
+     false
+    ],
+    "w03p0202": [
+     false,
+     false,
+     false
+    ],
+    "w03p0205": [
+     false,
+     false,
+     false
+    ],
+    "w03p0227": [
+     false,
+     false,
+     false
+    ],
+    "w05p0351": [
+     false,
+     false,
+     false
+    ],
+    "w06p0396": [
+     false,
+     false,
+     false
+    ],
+    "w07p0510": [
+     true,
+     true,
+     true
+    ],
+    "w08p0513": [
+     true,
+     true,
+     true
+    ],
+    "w08p0520": [
+     false,
+     false,
+     false
+    ],
+    "w08p0523": [
+     false,
+     false,
+     false
+    ],
+    "w08p0542": [
+     true,
+     true,
+     true
+    ],
+    "w08p0554": [
+     true,
+     true,
+     null
+    ],
+    "w08p0560": [
+     false,
+     false,
+     false
+    ],
+    "w08p0562": [
+     false,
+     true,
+     false
+    ],
+    "w09p0601": [
+     false,
+     false,
+     false
+    ],
+    "w09p0615": [
+     false,
+     false,
+     false
+    ],
+    "w11p0705": [
+     false,
+     false,
+     false
+    ],
+    "w11p0713": [
+     false,
+     true,
+     false
+    ],
+    "w11p0722": [
+     false,
+     false,
+     false
+    ],
+    "w11p0737": [
+     true,
+     true,
+     true
+    ],
+    "w11p0750": [
+     false,
+     false,
+     false
+    ],
+    "w11p0752": [
+     false,
+     false,
+     null
+    ],
+    "w11p0758": [
+     true,
+     true,
+     false
+    ],
+    "w12p0780": [
+     false,
+     false,
+     false
+    ],
+    "w13p0855": [
+     false,
+     false,
+     false
+    ],
+    "w13p0885": [
+     true,
+     false,
+     true
+    ],
+    "w14p0937": [
+     false,
+     true,
+     false
+    ],
+    "w15p0968": [
+     false,
+     false,
+     false
+    ],
+    "w15p0977": [
+     false,
+     false,
+     false
+    ],
+    "w15p0999": [
+     false,
+     false,
+     false
+    ],
+    "w15p1017": [
+     false,
+     false,
+     false
+    ]
+   },
+   "device_check": {
+    "cuda_run": "results/two_choice/Qwen3-VL-8B-Instruct-original-256px.jsonl",
+    "trials": 38,
+    "same_answer": 38,
+    "cuda_accuracy": {
+     "k": 8,
+     "n": 38,
+     "accuracy": 0.21052631578947367
+    }
+   }
+  },
+  "Qwen3-VL-8B, no walk": {
+   "complete": true,
+   "answered": {
+    "original": 38,
+    "edited": 38,
+    "control": 35
+   },
+   "expected": {
+    "original": 38,
+    "edited": 38,
+    "control": 35
+   },
+   "parsed": 1.0,
+   "missing_runs": [],
+   "accuracy": {
+    "original": {
+     "k": 6,
+     "n": 38,
+     "accuracy": 0.15789473684210525
+    },
+    "edited": {
+     "k": 9,
+     "n": 38,
+     "accuracy": 0.23684210526315788
+    },
+    "control": {
+     "k": 6,
+     "n": 35,
+     "accuracy": 0.17142857142857143
+    }
+   },
+   "edited_minus_original": {
+    "n": 38,
+    "both_right": 5,
+    "only_first_right": 4,
+    "only_second_right": 1,
+    "difference": 0.07894736842105263,
+    "p_two_sided": 0.375
+   },
+   "edited_minus_control": {
+    "n": 35,
+    "both_right": 5,
+    "only_first_right": 4,
+    "only_second_right": 1,
+    "difference": 0.08571428571428572,
+    "p_two_sided": 0.375
+   },
+   "control_minus_original": {
+    "n": 35,
+    "both_right": 6,
+    "only_first_right": 0,
+    "only_second_right": 0,
+    "difference": 0.0,
+    "p_two_sided": 1.0
+   },
+   "picture_posters_only": {
+    "accuracy": {
+     "original": {
+      "k": 3,
+      "n": 23,
+      "accuracy": 0.13043478260869565
+     },
+     "edited": {
+      "k": 6,
+      "n": 23,
+      "accuracy": 0.2608695652173913
+     },
+     "control": {
+      "k": 3,
+      "n": 22,
+      "accuracy": 0.13636363636363635
+     }
+    },
+    "edited_minus_original": {
+     "n": 23,
+     "both_right": 2,
+     "only_first_right": 4,
+     "only_second_right": 1,
+     "difference": 0.13043478260869565,
+     "p_two_sided": 0.375
+    },
+    "edited_minus_control": {
+     "n": 22,
+     "both_right": 2,
+     "only_first_right": 4,
+     "only_second_right": 1,
+     "difference": 0.13636363636363635,
+     "p_two_sided": 0.375
+    },
+    "control_minus_original": {
+     "n": 22,
+     "both_right": 3,
+     "only_first_right": 0,
+     "only_second_right": 0,
+     "difference": 0.0,
+     "p_two_sided": 1.0
+    }
+   },
+   "per_trial": {
+    "w00p0002": [
+     true,
+     true,
+     true
+    ],
+    "w00p0003": [
+     false,
+     true,
+     false
+    ],
+    "w01p0102": [
+     false,
+     false,
+     false
+    ],
+    "w01p0110": [
+     false,
+     false,
+     false
+    ],
+    "w02p0140": [
+     false,
+     false,
+     false
+    ],
+    "w02p0151": [
+     false,
+     false,
+     null
+    ],
+    "w02p0171": [
+     false,
+     false,
+     false
+    ],
+    "w02p0177": [
+     false,
+     true,
+     false
+    ],
+    "w03p0202": [
+     false,
+     false,
+     false
+    ],
+    "w03p0205": [
+     false,
+     false,
+     false
+    ],
+    "w03p0227": [
+     false,
+     false,
+     false
+    ],
+    "w05p0351": [
+     false,
+     false,
+     false
+    ],
+    "w06p0396": [
+     false,
+     true,
+     false
+    ],
+    "w07p0510": [
+     true,
+     true,
+     true
+    ],
+    "w08p0513": [
+     true,
+     false,
+     true
+    ],
+    "w08p0520": [
+     false,
+     false,
+     false
+    ],
+    "w08p0523": [
+     false,
+     false,
+     false
+    ],
+    "w08p0542": [
+     false,
+     false,
+     false
+    ],
+    "w08p0554": [
+     false,
+     false,
+     null
+    ],
+    "w08p0560": [
+     true,
+     true,
+     true
+    ],
+    "w08p0562": [
+     false,
+     false,
+     false
+    ],
+    "w09p0601": [
+     false,
+     false,
+     false
+    ],
+    "w09p0615": [
+     false,
+     false,
+     false
+    ],
+    "w11p0705": [
+     false,
+     false,
+     false
+    ],
+    "w11p0713": [
+     false,
+     false,
+     false
+    ],
+    "w11p0722": [
+     false,
+     false,
+     false
+    ],
+    "w11p0737": [
+     false,
+     false,
+     false
+    ],
+    "w11p0750": [
+     false,
+     false,
+     false
+    ],
+    "w11p0752": [
+     false,
+     false,
+     null
+    ],
+    "w11p0758": [
+     false,
+     false,
+     false
+    ],
+    "w12p0780": [
+     true,
+     true,
+     true
+    ],
+    "w13p0855": [
+     false,
+     false,
+     false
+    ],
+    "w13p0885": [
+     false,
+     false,
+     false
+    ],
+    "w14p0937": [
+     false,
+     true,
+     false
+    ],
+    "w15p0968": [
+     true,
+     true,
+     true
+    ],
+    "w15p0977": [
+     false,
+     false,
+     false
+    ],
+    "w15p0999": [
+     false,
+     false,
+     false
+    ],
+    "w15p1017": [
+     false,
+     false,
+     false
+    ]
+   },
+   "device_check": {
+    "cuda_run": "results/two_choice/Qwen3-VL-8B-Instruct-original-256px-nowalk.jsonl",
+    "trials": 38,
+    "same_answer": 38,
+    "cuda_accuracy": {
+     "k": 6,
+     "n": 38,
+     "accuracy": 0.15789473684210525
+    }
+   }
+  },
+  "Opus 5.5 high, walk": {
+   "complete": true,
+   "answered": {
+    "original": 38,
+    "edited": 38,
+    "control": 35
+   },
+   "expected": {
+    "original": 38,
+    "edited": 38,
+    "control": 35
+   },
+   "parsed": 1.0,
+   "missing_runs": [],
+   "accuracy": {
+    "original": {
+     "k": 25,
+     "n": 38,
+     "accuracy": 0.6578947368421053
+    },
+    "edited": {
+     "k": 20,
+     "n": 38,
+     "accuracy": 0.5263157894736842
+    },
+    "control": {
+     "k": 26,
+     "n": 35,
+     "accuracy": 0.7428571428571429
+    }
+   },
+   "edited_minus_original": {
+    "n": 38,
+    "both_right": 19,
+    "only_first_right": 1,
+    "only_second_right": 6,
+    "difference": -0.13157894736842105,
+    "p_two_sided": 0.125
+   },
+   "edited_minus_control": {
+    "n": 35,
+    "both_right": 17,
+    "only_first_right": 3,
+    "only_second_right": 9,
+    "difference": -0.17142857142857143,
+    "p_two_sided": 0.14599609375
+   },
+   "control_minus_original": {
+    "n": 35,
+    "both_right": 22,
+    "only_first_right": 4,
+    "only_second_right": 2,
+    "difference": 0.05714285714285714,
+    "p_two_sided": 0.6875
+   },
+   "picture_posters_only": {
+    "accuracy": {
+     "original": {
+      "k": 13,
+      "n": 23,
+      "accuracy": 0.5652173913043478
+     },
+     "edited": {
+      "k": 11,
+      "n": 23,
+      "accuracy": 0.4782608695652174
+     },
+     "control": {
+      "k": 15,
+      "n": 22,
+      "accuracy": 0.6818181818181818
+     }
+    },
+    "edited_minus_original": {
+     "n": 23,
+     "both_right": 10,
+     "only_first_right": 1,
+     "only_second_right": 3,
+     "difference": -0.08695652173913043,
+     "p_two_sided": 0.625
+    },
+    "edited_minus_control": {
+     "n": 22,
+     "both_right": 9,
+     "only_first_right": 2,
+     "only_second_right": 6,
+     "difference": -0.18181818181818182,
+     "p_two_sided": 0.2890625
+    },
+    "control_minus_original": {
+     "n": 22,
+     "both_right": 12,
+     "only_first_right": 3,
+     "only_second_right": 1,
+     "difference": 0.09090909090909091,
+     "p_two_sided": 0.625
+    }
+   },
+   "per_trial": {
+    "w00p0002": [
+     false,
+     false,
+     false
+    ],
+    "w00p0003": [
+     true,
+     true,
+     true
+    ],
+    "w01p0102": [
+     true,
+     false,
+     true
+    ],
+    "w01p0110": [
+     true,
+     true,
+     true
+    ],
+    "w02p0140": [
+     false,
+     false,
+     false
+    ],
+    "w02p0151": [
+     true,
+     false,
+     null
+    ],
+    "w02p0171": [
+     true,
+     false,
+     true
+    ],
+    "w02p0177": [
+     false,
+     false,
+     false
+    ],
+    "w03p0202": [
+     true,
+     true,
+     false
+    ],
+    "w03p0205": [
+     true,
+     true,
+     false
+    ],
+    "w03p0227": [
+     false,
+     true,
+     false
+    ],
+    "w05p0351": [
+     true,
+     false,
+     true
+    ],
+    "w06p0396": [
+     false,
+     false,
+     true
+    ],
+    "w07p0510": [
+     true,
+     true,
+     true
+    ],
+    "w08p0513": [
+     false,
+     false,
+     true
+    ],
+    "w08p0520": [
+     true,
+     true,
+     true
+    ],
+    "w08p0523": [
+     false,
+     false,
+     true
+    ],
+    "w08p0542": [
+     true,
+     true,
+     true
+    ],
+    "w08p0554": [
+     false,
+     false,
+     null
+    ],
+    "w08p0560": [
+     true,
+     true,
+     true
+    ],
+    "w08p0562": [
+     true,
+     true,
+     true
+    ],
+    "w09p0601": [
+     false,
+     false,
+     false
+    ],
+    "w09p0615": [
+     true,
+     true,
+     true
+    ],
+    "w11p0705": [
+     true,
+     true,
+     true
+    ],
+    "w11p0713": [
+     true,
+     true,
+     true
+    ],
+    "w11p0722": [
+     true,
+     true,
+     true
+    ],
+    "w11p0737": [
+     true,
+     false,
+     true
+    ],
+    "w11p0750": [
+     true,
+     true,
+     true
+    ],
+    "w11p0752": [
+     false,
+     false,
+     null
+    ],
+    "w11p0758": [
+     true,
+     true,
+     true
+    ],
+    "w12p0780": [
+     true,
+     true,
+     true
+    ],
+    "w13p0855": [
+     true,
+     true,
+     true
+    ],
+    "w13p0885": [
+     true,
+     true,
+     true
+    ],
+    "w14p0937": [
+     true,
+     false,
+     true
+    ],
+    "w15p0968": [
+     true,
+     true,
+     true
+    ],
+    "w15p0977": [
+     false,
+     false,
+     false
+    ],
+    "w15p0999": [
+     false,
+     false,
+     true
+    ],
+    "w15p1017": [
+     false,
+     false,
+     false
+    ]
+   }
+  },
+  "Opus 5.5 high, no walk": {
+   "complete": true,
+   "answered": {
+    "original": 38,
+    "edited": 38,
+    "control": 35
+   },
+   "expected": {
+    "original": 38,
+    "edited": 38,
+    "control": 35
+   },
+   "parsed": 1.0,
+   "missing_runs": [],
+   "accuracy": {
+    "original": {
+     "k": 23,
+     "n": 38,
+     "accuracy": 0.6052631578947368
+    },
+    "edited": {
+     "k": 28,
+     "n": 38,
+     "accuracy": 0.7368421052631579
+    },
+    "control": {
+     "k": 27,
+     "n": 35,
+     "accuracy": 0.7714285714285715
+    }
+   },
+   "edited_minus_original": {
+    "n": 38,
+    "both_right": 21,
+    "only_first_right": 7,
+    "only_second_right": 2,
+    "difference": 0.13157894736842105,
+    "p_two_sided": 0.1796875
+   },
+   "edited_minus_control": {
+    "n": 35,
+    "both_right": 24,
+    "only_first_right": 3,
+    "only_second_right": 3,
+    "difference": 0.0,
+    "p_two_sided": 1.0
+   },
+   "control_minus_original": {
+    "n": 35,
+    "both_right": 20,
+    "only_first_right": 7,
+    "only_second_right": 2,
+    "difference": 0.14285714285714285,
+    "p_two_sided": 0.1796875
+   },
+   "picture_posters_only": {
+    "accuracy": {
+     "original": {
+      "k": 12,
+      "n": 23,
+      "accuracy": 0.5217391304347826
+     },
+     "edited": {
+      "k": 18,
+      "n": 23,
+      "accuracy": 0.782608695652174
+     },
+     "control": {
+      "k": 16,
+      "n": 22,
+      "accuracy": 0.7272727272727273
+     }
+    },
+    "edited_minus_original": {
+     "n": 23,
+     "both_right": 11,
+     "only_first_right": 7,
+     "only_second_right": 1,
+     "difference": 0.2608695652173913,
+     "p_two_sided": 0.0703125
+    },
+    "edited_minus_control": {
+     "n": 22,
+     "both_right": 15,
+     "only_first_right": 3,
+     "only_second_right": 1,
+     "difference": 0.09090909090909091,
+     "p_two_sided": 0.625
+    },
+    "control_minus_original": {
+     "n": 22,
+     "both_right": 10,
+     "only_first_right": 6,
+     "only_second_right": 2,
+     "difference": 0.18181818181818182,
+     "p_two_sided": 0.2890625
+    }
+   },
+   "per_trial": {
+    "w00p0002": [
+     true,
+     true,
+     true
+    ],
+    "w00p0003": [
+     true,
+     true,
+     true
+    ],
+    "w01p0102": [
+     true,
+     true,
+     true
+    ],
+    "w01p0110": [
+     true,
+     true,
+     true
+    ],
+    "w02p0140": [
+     false,
+     true,
+     true
+    ],
+    "w02p0151": [
+     true,
+     true,
+     null
+    ],
+    "w02p0171": [
+     true,
+     true,
+     true
+    ],
+    "w02p0177": [
+     false,
+     true,
+     false
+    ],
+    "w03p0202": [
+     false,
+     true,
+     true
+    ],
+    "w03p0205": [
+     true,
+     false,
+     true
+    ],
+    "w03p0227": [
+     true,
+     true,
+     true
+    ],
+    "w05p0351": [
+     true,
+     true,
+     true
+    ],
+    "w06p0396": [
+     true,
+     true,
+     true
+    ],
+    "w07p0510": [
+     true,
+     true,
+     true
+    ],
+    "w08p0513": [
+     true,
+     true,
+     true
+    ],
+    "w08p0520": [
+     false,
+     true,
+     true
+    ],
+    "w08p0523": [
+     false,
+     false,
+     false
+    ],
+    "w08p0542": [
+     true,
+     true,
+     true
+    ],
+    "w08p0554": [
+     false,
+     false,
+     null
+    ],
+    "w08p0560": [
+     true,
+     true,
+     true
+    ],
+    "w08p0562": [
+     true,
+     true,
+     true
+    ],
+    "w09p0601": [
+     false,
+     true,
+     false
+    ],
+    "w09p0615": [
+     true,
+     true,
+     true
+    ],
+    "w11p0705": [
+     true,
+     true,
+     true
+    ],
+    "w11p0713": [
+     true,
+     true,
+     true
+    ],
+    "w11p0722": [
+     true,
+     true,
+     true
+    ],
+    "w11p0737": [
+     true,
+     false,
+     false
+    ],
+    "w11p0750": [
+     false,
+     false,
+     false
+    ],
+    "w11p0752": [
+     false,
+     false,
+     null
+    ],
+    "w11p0758": [
+     true,
+     true,
+     true
+    ],
+    "w12p0780": [
+     true,
+     true,
+     true
+    ],
+    "w13p0855": [
+     true,
+     true,
+     false
+    ],
+    "w13p0885": [
+     false,
+     false,
+     false
+    ],
+    "w14p0937": [
+     false,
+     true,
+     true
+    ],
+    "w15p0968": [
+     false,
+     true,
+     true
+    ],
+    "w15p0977": [
+     false,
+     false,
+     false
+    ],
+    "w15p0999": [
+     false,
+     false,
+     true
+    ],
+    "w15p1017": [
+     false,
+     false,
+     true
+    ]
+   }
+  }
+ }
+}

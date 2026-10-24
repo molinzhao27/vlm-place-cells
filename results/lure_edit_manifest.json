@@ -1,0 +1,2060 @@
+{
+ "poster_order": [
+  "N0",
+  "N1",
+  "E0",
+  "E1",
+  "S0",
+  "S1",
+  "W0",
+  "W1"
+ ],
+ "lure_trials": 50,
+ "qualifying": [
+  "w00p0002",
+  "w00p0003",
+  "w01p0102",
+  "w01p0110",
+  "w02p0140",
+  "w02p0151",
+  "w02p0171",
+  "w02p0177",
+  "w03p0202",
+  "w03p0205",
+  "w03p0227",
+  "w05p0351",
+  "w06p0396",
+  "w07p0510",
+  "w08p0513",
+  "w08p0520",
+  "w08p0523",
+  "w08p0542",
+  "w08p0554",
+  "w08p0560",
+  "w08p0562",
+  "w09p0601",
+  "w09p0615",
+  "w11p0705",
+  "w11p0713",
+  "w11p0722",
+  "w11p0737",
+  "w11p0750",
+  "w11p0752",
+  "w11p0758",
+  "w12p0780",
+  "w13p0855",
+  "w13p0885",
+  "w14p0937",
+  "w15p0968",
+  "w15p0977",
+  "w15p0999",
+  "w15p1017"
+ ],
+ "excluded_pillar": {
+  "w01p0117": [
+   "P1",
+   "W0"
+  ],
+  "w02p0168": [
+   "N0",
+   "P1",
+   "W0"
+  ],
+  "w03p0214": [
+   "P0",
+   "S0"
+  ],
+  "w03p0252": [
+   "P1",
+   "W0"
+  ],
+  "w07p0454": [
+   "P0",
+   "S0"
+  ],
+  "w09p0625": [
+   "P0",
+   "S0"
+  ],
+  "w09p0631": [
+   "P1",
+   "W0",
+   "W1"
+  ],
+  "w10p0692": [
+   "E0",
+   "N1",
+   "P0"
+  ],
+  "w10p0703": [
+   "E0",
+   "P0"
+  ],
+  "w11p0734": [
+   "N0",
+   "P1"
+  ],
+  "w12p0829": [
+   "E0",
+   "E1",
+   "N1",
+   "P0"
+  ],
+  "w13p0852": [
+   "E0",
+   "P0"
+  ]
+ },
+ "no_control": [
+  "w02p0151",
+  "w08p0554",
+  "w11p0752"
+ ],
+ "trials": {
+  "w00p0002": {
+   "walk": 0,
+   "shared": [
+    "S0"
+   ],
+   "control": "N0",
+   "door_or_window": false,
+   "control_room": "roomAnoN0",
+   "edited_room": "roomAnoS0"
+  },
+  "w00p0003": {
+   "walk": 0,
+   "shared": [
+    "S0"
+   ],
+   "control": "W0",
+   "door_or_window": false,
+   "control_room": "roomAnoW0",
+   "edited_room": "roomAnoS0"
+  },
+  "w01p0102": {
+   "walk": 1,
+   "shared": [
+    "S1",
+    "W1"
+   ],
+   "control": "N1",
+   "door_or_window": true,
+   "control_room": "roomAnoN1",
+   "edited_room": "roomAnoS1W1"
+  },
+  "w01p0110": {
+   "walk": 1,
+   "shared": [
+    "W0"
+   ],
+   "control": "N1",
+   "door_or_window": false,
+   "control_room": "roomAnoN1",
+   "edited_room": "roomAnoW0"
+  },
+  "w02p0140": {
+   "walk": 2,
+   "shared": [
+    "N0",
+    "N1"
+   ],
+   "control": "E0",
+   "door_or_window": false,
+   "control_room": "roomAnoE0",
+   "edited_room": "roomAnoN0N1"
+  },
+  "w02p0151": {
+   "walk": 2,
+   "shared": [
+    "S1",
+    "W0",
+    "W1"
+   ],
+   "control": null,
+   "door_or_window": true,
+   "control_room": null,
+   "edited_room": "roomAnoS1W0W1"
+  },
+  "w02p0171": {
+   "walk": 2,
+   "shared": [
+    "S1",
+    "W1"
+   ],
+   "control": "N0",
+   "door_or_window": true,
+   "control_room": "roomAnoN0",
+   "edited_room": "roomAnoS1W1"
+  },
+  "w02p0177": {
+   "walk": 2,
+   "shared": [
+    "N0",
+    "N1"
+   ],
+   "control": "E1",
+   "door_or_window": false,
+   "control_room": "roomAnoE1",
+   "edited_room": "roomAnoN0N1"
+  },
+  "w03p0202": {
+   "walk": 3,
+   "shared": [
+    "N1"
+   ],
+   "control": "S0",
+   "door_or_window": false,
+   "control_room": "roomAnoS0",
+   "edited_room": "roomAnoN1"
+  },
+  "w03p0205": {
+   "walk": 3,
+   "shared": [
+    "S1",
+    "W1"
+   ],
+   "control": "N0",
+   "door_or_window": true,
+   "control_room": "roomAnoN0",
+   "edited_room": "roomAnoS1W1"
+  },
+  "w03p0227": {
+   "walk": 3,
+   "shared": [
+    "W1"
+   ],
+   "control": "E0",
+   "door_or_window": false,
+   "control_room": "roomAnoE0",
+   "edited_room": "roomAnoW1"
+  },
+  "w05p0351": {
+   "walk": 5,
+   "shared": [
+    "N0"
+   ],
+   "control": "S0",
+   "door_or_window": false,
+   "control_room": "roomAnoS0",
+   "edited_room": "roomAnoN0"
+  },
+  "w06p0396": {
+   "walk": 6,
+   "shared": [
+    "E0"
+   ],
+   "control": "N0",
+   "door_or_window": false,
+   "control_room": "roomAnoN0",
+   "edited_room": "roomAnoE0"
+  },
+  "w07p0510": {
+   "walk": 7,
+   "shared": [
+    "E0",
+    "E1"
+   ],
+   "control": "N0",
+   "door_or_window": true,
+   "control_room": "roomAnoN0",
+   "edited_room": "roomAnoE0E1"
+  },
+  "w08p0513": {
+   "walk": 8,
+   "shared": [
+    "W0"
+   ],
+   "control": "N1",
+   "door_or_window": false,
+   "control_room": "roomAnoN1",
+   "edited_room": "roomAnoW0"
+  },
+  "w08p0520": {
+   "walk": 8,
+   "shared": [
+    "N0"
+   ],
+   "control": "E0",
+   "door_or_window": false,
+   "control_room": "roomAnoE0",
+   "edited_room": "roomAnoN0"
+  },
+  "w08p0523": {
+   "walk": 8,
+   "shared": [
+    "E1"
+   ],
+   "control": "N0",
+   "door_or_window": true,
+   "control_room": "roomAnoN0",
+   "edited_room": "roomAnoE1"
+  },
+  "w08p0542": {
+   "walk": 8,
+   "shared": [
+    "E1"
+   ],
+   "control": "E0",
+   "door_or_window": true,
+   "control_room": "roomAnoE0",
+   "edited_room": "roomAnoE1"
+  },
+  "w08p0554": {
+   "walk": 8,
+   "shared": [
+    "N1"
+   ],
+   "control": null,
+   "door_or_window": false,
+   "control_room": null,
+   "edited_room": "roomAnoN1"
+  },
+  "w08p0560": {
+   "walk": 8,
+   "shared": [
+    "E1"
+   ],
+   "control": "N0",
+   "door_or_window": true,
+   "control_room": "roomAnoN0",
+   "edited_room": "roomAnoE1"
+  },
+  "w08p0562": {
+   "walk": 8,
+   "shared": [
+    "N0"
+   ],
+   "control": "N1",
+   "door_or_window": false,
+   "control_room": "roomAnoN1",
+   "edited_room": "roomAnoN0"
+  },
+  "w09p0601": {
+   "walk": 9,
+   "shared": [
+    "W0"
+   ],
+   "control": "N0",
+   "door_or_window": false,
+   "control_room": "roomAnoN0",
+   "edited_room": "roomAnoW0"
+  },
+  "w09p0615": {
+   "walk": 9,
+   "shared": [
+    "S0"
+   ],
+   "control": "N1",
+   "door_or_window": false,
+   "control_room": "roomAnoN1",
+   "edited_room": "roomAnoS0"
+  },
+  "w11p0705": {
+   "walk": 11,
+   "shared": [
+    "S0"
+   ],
+   "control": "E1",
+   "door_or_window": false,
+   "control_room": "roomAnoE1",
+   "edited_room": "roomAnoS0"
+  },
+  "w11p0713": {
+   "walk": 11,
+   "shared": [
+    "E0",
+    "E1"
+   ],
+   "control": "N0",
+   "door_or_window": true,
+   "control_room": "roomAnoN0",
+   "edited_room": "roomAnoE0E1"
+  },
+  "w11p0722": {
+   "walk": 11,
+   "shared": [
+    "S1",
+    "W1"
+   ],
+   "control": "N0",
+   "door_or_window": true,
+   "control_room": "roomAnoN0",
+   "edited_room": "roomAnoS1W1"
+  },
+  "w11p0737": {
+   "walk": 11,
+   "shared": [
+    "N0",
+    "N1"
+   ],
+   "control": "S0",
+   "door_or_window": false,
+   "control_room": "roomAnoS0",
+   "edited_room": "roomAnoN0N1"
+  },
+  "w11p0750": {
+   "walk": 11,
+   "shared": [
+    "S1"
+   ],
+   "control": "E0",
+   "door_or_window": true,
+   "control_room": "roomAnoE0",
+   "edited_room": "roomAnoS1"
+  },
+  "w11p0752": {
+   "walk": 11,
+   "shared": [
+    "S1"
+   ],
+   "control": null,
+   "door_or_window": true,
+   "control_room": null,
+   "edited_room": "roomAnoS1"
+  },
+  "w11p0758": {
+   "walk": 11,
+   "shared": [
+    "S0",
+    "S1",
+    "W1"
+   ],
+   "control": "N0",
+   "door_or_window": true,
+   "control_room": "roomAnoN0",
+   "edited_room": "roomAnoS0S1W1"
+  },
+  "w12p0780": {
+   "walk": 12,
+   "shared": [
+    "S1",
+    "W1"
+   ],
+   "control": "N0",
+   "door_or_window": true,
+   "control_room": "roomAnoN0",
+   "edited_room": "roomAnoS1W1"
+  },
+  "w13p0855": {
+   "walk": 13,
+   "shared": [
+    "S0"
+   ],
+   "control": "N1",
+   "door_or_window": false,
+   "control_room": "roomAnoN1",
+   "edited_room": "roomAnoS0"
+  },
+  "w13p0885": {
+   "walk": 13,
+   "shared": [
+    "S0"
+   ],
+   "control": "N0",
+   "door_or_window": false,
+   "control_room": "roomAnoN0",
+   "edited_room": "roomAnoS0"
+  },
+  "w14p0937": {
+   "walk": 14,
+   "shared": [
+    "S0"
+   ],
+   "control": "N0",
+   "door_or_window": false,
+   "control_room": "roomAnoN0",
+   "edited_room": "roomAnoS0"
+  },
+  "w15p0968": {
+   "walk": 15,
+   "shared": [
+    "E0"
+   ],
+   "control": "S1",
+   "door_or_window": false,
+   "control_room": "roomAnoS1",
+   "edited_room": "roomAnoE0"
+  },
+  "w15p0977": {
+   "walk": 15,
+   "shared": [
+    "S0"
+   ],
+   "control": "N1",
+   "door_or_window": false,
+   "control_room": "roomAnoN1",
+   "edited_room": "roomAnoS0"
+  },
+  "w15p0999": {
+   "walk": 15,
+   "shared": [
+    "W0",
+    "W1"
+   ],
+   "control": "N1",
+   "door_or_window": false,
+   "control_room": "roomAnoN1",
+   "edited_room": "roomAnoW0W1"
+  },
+  "w15p1017": {
+   "walk": 15,
+   "shared": [
+    "S1"
+   ],
+   "control": "E0",
+   "door_or_window": true,
+   "control_room": "roomAnoE0",
+   "edited_room": "roomAnoS1"
+  }
+ },
+ "rooms": {
+  "roomAnoE0": {
+   "removed": [
+    "E0"
+   ],
+   "walks": [
+    2,
+    3,
+    6,
+    8,
+    11,
+    15
+   ],
+   "edited_trials": [
+    "w06p0396",
+    "w15p0968"
+   ],
+   "control_trials": [
+    "w02p0140",
+    "w03p0227",
+    "w08p0520",
+    "w08p0542",
+    "w11p0750",
+    "w15p1017"
+   ],
+   "views": 1544,
+   "views_with_poster_rays": 485,
+   "of_them_changed": 485,
+   "views_without_rays_identical": 1059,
+   "pixels_changed_outside_footprint": 0,
+   "trial_views": {
+    "w02p0140": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 70
+    },
+    "w03p0227": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 102
+    },
+    "w06p0396": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 2103,
+      "changed_px": 2103
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 3212,
+      "changed_px": 3212
+     },
+     "walk_frames_changed": 80
+    },
+    "w08p0520": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 85
+    },
+    "w08p0542": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 85
+    },
+    "w11p0750": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 90
+    },
+    "w15p0968": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 1793,
+      "changed_px": 1793
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 1061,
+      "changed_px": 1061
+     },
+     "walk_frames_changed": 56
+    },
+    "w15p1017": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 56
+    }
+   }
+  },
+  "roomAnoE0E1": {
+   "removed": [
+    "E0",
+    "E1"
+   ],
+   "walks": [
+    7,
+    11
+   ],
+   "edited_trials": [
+    "w07p0510",
+    "w11p0713"
+   ],
+   "control_trials": [],
+   "views": 514,
+   "views_with_poster_rays": 228,
+   "of_them_changed": 228,
+   "views_without_rays_identical": 286,
+   "pixels_changed_outside_footprint": 0,
+   "trial_views": {
+    "w07p0510": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 975,
+      "changed_px": 975
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 2489,
+      "changed_px": 2489
+     },
+     "walk_frames_changed": 129
+    },
+    "w11p0713": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 2108,
+      "changed_px": 2108
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 10003,
+      "changed_px": 10003
+     },
+     "walk_frames_changed": 97
+    }
+   }
+  },
+  "roomAnoE1": {
+   "removed": [
+    "E1"
+   ],
+   "walks": [
+    2,
+    8,
+    11
+   ],
+   "edited_trials": [
+    "w08p0523",
+    "w08p0542",
+    "w08p0560"
+   ],
+   "control_trials": [
+    "w02p0177",
+    "w11p0705"
+   ],
+   "views": 773,
+   "views_with_poster_rays": 171,
+   "of_them_changed": 171,
+   "views_without_rays_identical": 602,
+   "pixels_changed_outside_footprint": 0,
+   "trial_views": {
+    "w02p0177": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 53
+    },
+    "w08p0523": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 2958,
+      "changed_px": 2958
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 2394,
+      "changed_px": 2394
+     },
+     "walk_frames_changed": 53
+    },
+    "w08p0542": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 473,
+      "changed_px": 473
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 3836,
+      "changed_px": 3836
+     },
+     "walk_frames_changed": 53
+    },
+    "w08p0560": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 1804,
+      "changed_px": 1804
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 107,
+      "changed_px": 107
+     },
+     "walk_frames_changed": 53
+    },
+    "w11p0705": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 95,
+      "changed_px": 95
+     },
+     "far": {
+      "footprint_px": 92,
+      "changed_px": 92
+     },
+     "walk_frames_changed": 62
+    }
+   }
+  },
+  "roomAnoN0": {
+   "removed": [
+    "N0"
+   ],
+   "walks": [
+    0,
+    2,
+    3,
+    5,
+    6,
+    7,
+    8,
+    9,
+    11,
+    12,
+    13,
+    14
+   ],
+   "edited_trials": [
+    "w05p0351",
+    "w08p0520",
+    "w08p0562"
+   ],
+   "control_trials": [
+    "w00p0002",
+    "w02p0171",
+    "w03p0205",
+    "w06p0396",
+    "w07p0510",
+    "w08p0523",
+    "w08p0560",
+    "w09p0601",
+    "w11p0713",
+    "w11p0722",
+    "w11p0758",
+    "w12p0780",
+    "w13p0885",
+    "w14p0937"
+   ],
+   "views": 3089,
+   "views_with_poster_rays": 840,
+   "of_them_changed": 840,
+   "views_without_rays_identical": 2249,
+   "pixels_changed_outside_footprint": 0,
+   "trial_views": {
+    "w00p0002": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 81
+    },
+    "w02p0171": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 65
+    },
+    "w03p0205": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 82
+    },
+    "w05p0351": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 4167,
+      "changed_px": 4167
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 940,
+      "changed_px": 940
+     },
+     "walk_frames_changed": 85
+    },
+    "w06p0396": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 50
+    },
+    "w07p0510": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 65
+    },
+    "w08p0520": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 18825,
+      "changed_px": 18825
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 934,
+      "changed_px": 934
+     },
+     "walk_frames_changed": 84
+    },
+    "w08p0523": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 84
+    },
+    "w08p0560": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 84
+    },
+    "w08p0562": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 16896,
+      "changed_px": 16896
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 1900,
+      "changed_px": 1900
+     },
+     "walk_frames_changed": 84
+    },
+    "w09p0601": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 79
+    },
+    "w11p0713": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 61
+    },
+    "w11p0722": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 61
+    },
+    "w11p0758": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 61
+    },
+    "w12p0780": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 52
+    },
+    "w13p0885": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 77
+    },
+    "w14p0937": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 56
+    }
+   }
+  },
+  "roomAnoN0N1": {
+   "removed": [
+    "N0",
+    "N1"
+   ],
+   "walks": [
+    2,
+    11
+   ],
+   "edited_trials": [
+    "w02p0140",
+    "w02p0177",
+    "w11p0737"
+   ],
+   "control_trials": [],
+   "views": 515,
+   "views_with_poster_rays": 172,
+   "of_them_changed": 172,
+   "views_without_rays_identical": 343,
+   "pixels_changed_outside_footprint": 0,
+   "trial_views": {
+    "w02p0140": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 4124,
+      "changed_px": 4124
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 4122,
+      "changed_px": 4122
+     },
+     "walk_frames_changed": 88
+    },
+    "w02p0177": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 3560,
+      "changed_px": 3560
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 6100,
+      "changed_px": 6100
+     },
+     "walk_frames_changed": 88
+    },
+    "w11p0737": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 4175,
+      "changed_px": 4175
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 1275,
+      "changed_px": 1275
+     },
+     "walk_frames_changed": 81
+    }
+   }
+  },
+  "roomAnoN1": {
+   "removed": [
+    "N1"
+   ],
+   "walks": [
+    1,
+    3,
+    8,
+    9,
+    13,
+    15
+   ],
+   "edited_trials": [
+    "w03p0202",
+    "w08p0554"
+   ],
+   "control_trials": [
+    "w01p0102",
+    "w01p0110",
+    "w08p0513",
+    "w08p0562",
+    "w09p0615",
+    "w13p0855",
+    "w15p0977",
+    "w15p0999"
+   ],
+   "views": 1546,
+   "views_with_poster_rays": 467,
+   "of_them_changed": 467,
+   "views_without_rays_identical": 1079,
+   "pixels_changed_outside_footprint": 0,
+   "trial_views": {
+    "w01p0102": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 71
+    },
+    "w01p0110": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 71
+    },
+    "w03p0202": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 226,
+      "changed_px": 226
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 1844,
+      "changed_px": 1844
+     },
+     "walk_frames_changed": 99
+    },
+    "w08p0513": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 78
+    },
+    "w08p0554": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 3183,
+      "changed_px": 3183
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 4473,
+      "changed_px": 4473
+     },
+     "walk_frames_changed": 78
+    },
+    "w08p0562": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 78
+    },
+    "w09p0615": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 91
+    },
+    "w13p0855": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 65
+    },
+    "w15p0977": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 61
+    },
+    "w15p0999": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 61
+    }
+   }
+  },
+  "roomAnoS0": {
+   "removed": [
+    "S0"
+   ],
+   "walks": [
+    0,
+    3,
+    5,
+    9,
+    11,
+    13,
+    14,
+    15
+   ],
+   "edited_trials": [
+    "w00p0002",
+    "w00p0003",
+    "w09p0615",
+    "w11p0705",
+    "w13p0855",
+    "w13p0885",
+    "w14p0937",
+    "w15p0977"
+   ],
+   "control_trials": [
+    "w03p0202",
+    "w05p0351",
+    "w11p0737"
+   ],
+   "views": 2059,
+   "views_with_poster_rays": 609,
+   "of_them_changed": 609,
+   "views_without_rays_identical": 1450,
+   "pixels_changed_outside_footprint": 0,
+   "trial_views": {
+    "w00p0002": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 1226,
+      "changed_px": 1226
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 8963,
+      "changed_px": 8963
+     },
+     "walk_frames_changed": 66
+    },
+    "w00p0003": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 1480,
+      "changed_px": 1480
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 10462,
+      "changed_px": 10462
+     },
+     "walk_frames_changed": 66
+    },
+    "w03p0202": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 64
+    },
+    "w05p0351": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 71
+    },
+    "w09p0615": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 1026,
+      "changed_px": 1026
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 10992,
+      "changed_px": 10992
+     },
+     "walk_frames_changed": 69
+    },
+    "w11p0705": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 4047,
+      "changed_px": 4047
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 2324,
+      "changed_px": 2324
+     },
+     "walk_frames_changed": 96
+    },
+    "w11p0737": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 96
+    },
+    "w13p0855": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 1934,
+      "changed_px": 1934
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 1145,
+      "changed_px": 1145
+     },
+     "walk_frames_changed": 91
+    },
+    "w13p0885": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 773,
+      "changed_px": 773
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 8832,
+      "changed_px": 8832
+     },
+     "walk_frames_changed": 91
+    },
+    "w14p0937": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 673,
+      "changed_px": 673
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 4703,
+      "changed_px": 4703
+     },
+     "walk_frames_changed": 80
+    },
+    "w15p0977": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 6848,
+      "changed_px": 6848
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 4788,
+      "changed_px": 4788
+     },
+     "walk_frames_changed": 64
+    }
+   }
+  },
+  "roomAnoS0S1W1": {
+   "removed": [
+    "S0",
+    "S1",
+    "W1"
+   ],
+   "walks": [
+    11
+   ],
+   "edited_trials": [
+    "w11p0758"
+   ],
+   "control_trials": [],
+   "views": 257,
+   "views_with_poster_rays": 168,
+   "of_them_changed": 168,
+   "views_without_rays_identical": 89,
+   "pixels_changed_outside_footprint": 0,
+   "trial_views": {
+    "w11p0758": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 13652,
+      "changed_px": 13652
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 2235,
+      "changed_px": 2235
+     },
+     "walk_frames_changed": 167
+    }
+   }
+  },
+  "roomAnoS1": {
+   "removed": [
+    "S1"
+   ],
+   "walks": [
+    11,
+    15
+   ],
+   "edited_trials": [
+    "w11p0750",
+    "w11p0752",
+    "w15p1017"
+   ],
+   "control_trials": [
+    "w15p0968"
+   ],
+   "views": 516,
+   "views_with_poster_rays": 168,
+   "of_them_changed": 168,
+   "views_without_rays_identical": 348,
+   "pixels_changed_outside_footprint": 0,
+   "trial_views": {
+    "w11p0750": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 522,
+      "changed_px": 522
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 2623,
+      "changed_px": 2623
+     },
+     "walk_frames_changed": 85
+    },
+    "w11p0752": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 884,
+      "changed_px": 884
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 5396,
+      "changed_px": 5396
+     },
+     "walk_frames_changed": 85
+    },
+    "w15p0968": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 80
+    },
+    "w15p1017": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 2357,
+      "changed_px": 2357
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 2382,
+      "changed_px": 2382
+     },
+     "walk_frames_changed": 80
+    }
+   }
+  },
+  "roomAnoS1W0W1": {
+   "removed": [
+    "S1",
+    "W0",
+    "W1"
+   ],
+   "walks": [
+    2
+   ],
+   "edited_trials": [
+    "w02p0151"
+   ],
+   "control_trials": [],
+   "views": 257,
+   "views_with_poster_rays": 156,
+   "of_them_changed": 156,
+   "views_without_rays_identical": 101,
+   "pixels_changed_outside_footprint": 0,
+   "trial_views": {
+    "w02p0151": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 5414,
+      "changed_px": 5414
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 2924,
+      "changed_px": 2924
+     },
+     "walk_frames_changed": 155
+    }
+   }
+  },
+  "roomAnoS1W1": {
+   "removed": [
+    "S1",
+    "W1"
+   ],
+   "walks": [
+    1,
+    2,
+    3,
+    11,
+    12
+   ],
+   "edited_trials": [
+    "w01p0102",
+    "w02p0171",
+    "w03p0205",
+    "w11p0722",
+    "w12p0780"
+   ],
+   "control_trials": [],
+   "views": 1285,
+   "views_with_poster_rays": 502,
+   "of_them_changed": 502,
+   "views_without_rays_identical": 783,
+   "pixels_changed_outside_footprint": 0,
+   "trial_views": {
+    "w01p0102": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 1427,
+      "changed_px": 1427
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 575,
+      "changed_px": 575
+     },
+     "walk_frames_changed": 70
+    },
+    "w02p0171": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 1529,
+      "changed_px": 1529
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 2478,
+      "changed_px": 2478
+     },
+     "walk_frames_changed": 103
+    },
+    "w03p0205": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 2187,
+      "changed_px": 2187
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 622,
+      "changed_px": 622
+     },
+     "walk_frames_changed": 68
+    },
+    "w11p0722": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 1247,
+      "changed_px": 1247
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 14024,
+      "changed_px": 14024
+     },
+     "walk_frames_changed": 126
+    },
+    "w12p0780": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 3583,
+      "changed_px": 3583
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 2774,
+      "changed_px": 2774
+     },
+     "walk_frames_changed": 130
+    }
+   }
+  },
+  "roomAnoW0": {
+   "removed": [
+    "W0"
+   ],
+   "walks": [
+    0,
+    1,
+    8,
+    9
+   ],
+   "edited_trials": [
+    "w01p0110",
+    "w08p0513",
+    "w09p0601"
+   ],
+   "control_trials": [
+    "w00p0003"
+   ],
+   "views": 1028,
+   "views_with_poster_rays": 399,
+   "of_them_changed": 399,
+   "views_without_rays_identical": 629,
+   "pixels_changed_outside_footprint": 0,
+   "trial_views": {
+    "w00p0003": {
+     "role": "control",
+     "new view": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "walk_frames_changed": 98
+    },
+    "w01p0110": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 8203,
+      "changed_px": 8203
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 540,
+      "changed_px": 540
+     },
+     "walk_frames_changed": 109
+    },
+    "w08p0513": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 1673,
+      "changed_px": 1673
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 26548,
+      "changed_px": 26548
+     },
+     "walk_frames_changed": 95
+    },
+    "w09p0601": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 4018,
+      "changed_px": 4018
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 1220,
+      "changed_px": 1220
+     },
+     "walk_frames_changed": 94
+    }
+   }
+  },
+  "roomAnoW0W1": {
+   "removed": [
+    "W0",
+    "W1"
+   ],
+   "walks": [
+    15
+   ],
+   "edited_trials": [
+    "w15p0999"
+   ],
+   "control_trials": [],
+   "views": 257,
+   "views_with_poster_rays": 141,
+   "of_them_changed": 141,
+   "views_without_rays_identical": 116,
+   "pixels_changed_outside_footprint": 0,
+   "trial_views": {
+    "w15p0999": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 3038,
+      "changed_px": 3038
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 2891,
+      "changed_px": 2891
+     },
+     "walk_frames_changed": 140
+    }
+   }
+  },
+  "roomAnoW1": {
+   "removed": [
+    "W1"
+   ],
+   "walks": [
+    3
+   ],
+   "edited_trials": [
+    "w03p0227"
+   ],
+   "control_trials": [],
+   "views": 257,
+   "views_with_poster_rays": 65,
+   "of_them_changed": 65,
+   "views_without_rays_identical": 192,
+   "pixels_changed_outside_footprint": 0,
+   "trial_views": {
+    "w03p0227": {
+     "role": "edited",
+     "new view": {
+      "footprint_px": 433,
+      "changed_px": 433
+     },
+     "near": {
+      "footprint_px": 0,
+      "changed_px": 0
+     },
+     "far": {
+      "footprint_px": 875,
+      "changed_px": 875
+     },
+     "walk_frames_changed": 64
+    }
+   }
+  }
+ }
+}

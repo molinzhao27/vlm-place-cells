@@ -1,0 +1,10 @@
+{"id": "w01p0102", "walk": 1, "probe": 0, "familiar": false, "near": 208, "far": 68, "a": 68, "b": 208, "answer": 68, "correct": false, "prompt_tokens": 18582, "gen_tokens": 4, "forced": false, "text": "068"}
+{"id": "w01p0110", "walk": 1, "probe": 1, "familiar": false, "near": 163, "far": 2, "a": 2, "b": 163, "answer": 2, "correct": false, "prompt_tokens": 18582, "gen_tokens": 4, "forced": false, "text": "002"}
+{"id": "w03p0202", "walk": 3, "probe": 2, "familiar": false, "near": 34, "far": 60, "a": 34, "b": 60, "answer": 60, "correct": false, "prompt_tokens": 18582, "gen_tokens": 4, "forced": false, "text": "060"}
+{"id": "w08p0513", "walk": 8, "probe": 3, "familiar": false, "near": 174, "far": 142, "a": 174, "b": 142, "answer": 174, "correct": true, "prompt_tokens": 18582, "gen_tokens": 4, "forced": false, "text": "174"}
+{"id": "w08p0554", "walk": 8, "probe": 4, "familiar": false, "near": 98, "far": 70, "a": 98, "b": 70, "answer": 98, "correct": true, "prompt_tokens": 18582, "gen_tokens": 4, "forced": false, "text": "098"}
+{"id": "w08p0562", "walk": 8, "probe": 5, "familiar": false, "near": 135, "far": 83, "a": 135, "b": 83, "answer": 83, "correct": false, "prompt_tokens": 18582, "gen_tokens": 4, "forced": false, "text": "083"}
+{"id": "w09p0615", "walk": 9, "probe": 6, "familiar": false, "near": 253, "far": 1, "a": 1, "b": 253, "answer": 1, "correct": false, "prompt_tokens": 18582, "gen_tokens": 4, "forced": false, "text": "001"}
+{"id": "w13p0855", "walk": 13, "probe": 7, "familiar": false, "near": 242, "far": 171, "a": 171, "b": 242, "answer": 171, "correct": false, "prompt_tokens": 18582, "gen_tokens": 4, "forced": false, "text": "171"}
+{"id": "w15p0977", "walk": 15, "probe": 8, "familiar": false, "near": 6, "far": 55, "a": 55, "b": 6, "answer": 55, "correct": false, "prompt_tokens": 18582, "gen_tokens": 4, "forced": false, "text": "055"}
+{"id": "w15p0999", "walk": 15, "probe": 9, "familiar": false, "near": 255, "far": 225, "a": 255, "b": 225, "answer": 225, "correct": false, "prompt_tokens": 18582, "gen_tokens": 4, "forced": false, "text": "225"}

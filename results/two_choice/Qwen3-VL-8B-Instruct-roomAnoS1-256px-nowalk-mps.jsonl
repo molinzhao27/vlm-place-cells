@@ -1,0 +1,4 @@
+{"id": "w11p0750", "walk": 11, "probe": 0, "familiar": false, "near": 229, "far": 69, "a": 69, "b": 229, "answer": 69, "correct": false, "prompt_tokens": 291, "gen_tokens": 4, "forced": false, "text": "069"}
+{"id": "w11p0752", "walk": 11, "probe": 1, "familiar": false, "near": 182, "far": 114, "a": 114, "b": 182, "answer": 114, "correct": false, "prompt_tokens": 291, "gen_tokens": 4, "forced": false, "text": "114"}
+{"id": "w15p0968", "walk": 15, "probe": 2, "familiar": false, "near": 94, "far": 120, "a": 120, "b": 94, "answer": 94, "correct": true, "prompt_tokens": 291, "gen_tokens": 4, "forced": false, "text": "094"}
+{"id": "w15p1017", "walk": 15, "probe": 3, "familiar": false, "near": 74, "far": 235, "a": 74, "b": 235, "answer": 235, "correct": false, "prompt_tokens": 291, "gen_tokens": 4, "forced": false, "text": "235"}

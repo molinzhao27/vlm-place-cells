@@ -1,0 +1,2 @@
+{"id": "w07p0510", "walk": 7, "probe": 0, "familiar": false, "near": 232, "far": 55, "a": 232, "b": 55, "answer": 232, "correct": true, "prompt_tokens": 291, "gen_tokens": 4, "forced": false, "text": "232"}
+{"id": "w11p0713", "walk": 11, "probe": 1, "familiar": false, "near": 32, "far": 230, "a": 230, "b": 32, "answer": 230, "correct": false, "prompt_tokens": 291, "gen_tokens": 4, "forced": false, "text": "230"}

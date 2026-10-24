@@ -7,7 +7,8 @@ Reads two_choice.py's per-trial results for base Qwen3-VL-8B and the LoRA adapte
 and prints, per room and condition (64-frame walk, no walk, shuffled walk): accuracy on novel
 and familiar trials for each seed, the 3-seed mean and range, and paired two-sided sign tests
 by trial (each seed vs base with the same walk, ordered vs no walk, ordered vs shuffled).
-Writes results/two_choice/ft_seeds.json.
+Each run is the CUDA one (vast-1) if it exists, else the same run on Apple MPS (tag + "-mps"; the
+room-B runs of base and seed 0); the JSON names the file used. Writes results/two_choice/ft_seeds.json.
 """
 from __future__ import annotations
 
@@ -26,8 +27,10 @@ CONDS = {"walk": "-max64", "nowalk": "-nowalk", "shuffled": "-max64-shuffled"}
 
 
 def load(tag):
-    path = f"{OUT}/{tag}.jsonl"
-    return {r["id"]: r for r in map(json.loads, open(path))} if os.path.exists(path) else None
+    for t in (tag, f"{tag}-mps"):
+        if os.path.exists(f"{OUT}/{t}.jsonl"):
+            return t, {r["id"]: r for r in map(json.loads, open(f"{OUT}/{t}.jsonl"))}
+    return None, None
 
 
 def sign_test(x, y, ids):
@@ -42,11 +45,11 @@ def sign_test(x, y, ids):
 def main():
     res = {}
     for room, trials in ROOMS.items():
-        runs = {}
+        runs, tags = {}, {}
         for cond, suf in CONDS.items():
-            runs[("base", cond)] = load(f"{BASE}-{trials}-256px{suf}")
+            tags[("base", cond)], runs[("base", cond)] = load(f"{BASE}-{trials}-256px{suf}")
             for s, a in SEEDS.items():
-                runs[(s, cond)] = load(f"{BASE}+{a}-{trials}-256px{suf}")
+                tags[(s, cond)], runs[(s, cond)] = load(f"{BASE}+{a}-{trials}-256px{suf}")
         out = {}
         for cat in ("novel", "familiar"):
             o = {}
@@ -55,7 +58,7 @@ def main():
                     continue
                 ids = [i for i, t in r.items() if t["familiar"] == (cat == "familiar")]
                 k = sum(r[i]["correct"] for i in ids)
-                o[f"{who}/{cond}"] = {"k": k, "n": len(ids), "acc": k / len(ids) if ids else float("nan"),
+                o[f"{who}/{cond}"] = {"tag": tags[(who, cond)], "k": k, "n": len(ids), "acc": k / len(ids) if ids else float("nan"),
                                       "p_above_chance": sum(math.comb(len(ids), i) for i in range(k, len(ids) + 1)) / 2 ** len(ids)}
                 if who != "base" and runs[("base", cond)] is not None:
                     o[f"{who}/{cond}"]["vs_base"] = sign_test(r, runs[("base", cond)], ids)
@@ -76,7 +79,8 @@ def main():
                 else:
                     extra = "".join(f", {lab} {v[t]['better']} better / {v[t]['worse']} worse (p={v[t]['p']:.2g})"
                                     for t, lab in (("vs_base", "vs base"), ("walk_vs_this", "walk vs this")) if t in v)
-                    print(f"  {key:16s} {v['acc']:.0%} ({v['k']}/{v['n']}, p={v['p_above_chance']:.2g}){extra}")
+                    mps = " [mps]" if v["tag"].endswith("-mps") else ""
+                    print(f"  {key:16s} {v['acc']:.0%} ({v['k']}/{v['n']}, p={v['p_above_chance']:.2g}){extra}{mps}")
     json.dump(res, open(f"{OUT}/ft_seeds.json", "w"), indent=1)
     print(f"-> {OUT}/ft_seeds.json")
 

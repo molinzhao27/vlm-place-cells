@@ -24,6 +24,10 @@ close to its stability); a "view cell" driven by what is on screen does not.
 Population decoding: ridge regression from a layer's neurons to (x, y), trained
 on even walks and tested on odd walks, either within the same facing half or
 across to the opposite facing half (the allocentric test).
+
+--quadrant (experiment 13e) adds the same invariance and decoding measures on
+opposite 90-degree sectors centred on E, N, W, S (N vs S, E vs W; no shared view),
+as in heading_matrix, and writes results/summary_quadrant.json without figures.
 """
 from __future__ import annotations
 
@@ -186,7 +190,12 @@ def decode(X, Y, tr, te, val_split):
     return (Z[te] @ W + ym - Y[te]).norm(dim=1).median().item()
 
 
-def decoding_suite(X, meta):
+def sectors(theta, n=4):
+    """Facing sector ids: n equal slices of the compass, 0..3 = E, N, W, S for n = 4."""
+    return np.floor(((theta + np.pi / n) % (2 * np.pi)) / (2 * np.pi / n)).astype(int)
+
+
+def decoding_suite(X, meta, quadrant=False):
     xy = torch.tensor(np.stack([meta["x"], meta["y"]], 1), dtype=torch.float32, device=dev)
     walk, th = meta["walk"], meta["theta"]
     even, odd = walk % 2 == 0, walk % 2 == 1
@@ -201,6 +210,15 @@ def decoding_suite(X, meta):
     out["within_heading"] = float(np.mean([run(even & halves[h], odd & halves[h]) for h in halves]))
     out["cross_heading"] = float(np.mean([run(even & halves[h], odd & halves[opposite[h]]) for h in halves]))
     out["chance"] = (xy[t(odd)] - xy[t(even)].mean(0)).norm(dim=1).median().item()
+    if quadrant:
+        # train on one 90-degree sector, test within it or on the opposite sector (heading_matrix's
+        # diagonal and off-diagonal-by-two cells); chance predicts the training sector's mean position
+        sec = sectors(th)
+        chance = lambda a, b: (xy[t(odd & b)] - xy[t(even & a)].mean(0)).norm(dim=1).median().item()
+        out["cross_heading_chance"] = float(np.mean([chance(halves[h], halves[opposite[h]]) for h in halves]))
+        out["within_quadrant"] = float(np.mean([run(even & (sec == i), odd & (sec == i)) for i in range(4)]))
+        out["cross_quadrant"] = float(np.mean([run(even & (sec == i), odd & (sec == (i + 2) % 4)) for i in range(4)]))
+        out["cross_quadrant_chance"] = float(np.mean([chance(sec == i, sec == (i + 2) % 4) for i in range(4)]))
     return out
 
 
@@ -209,7 +227,7 @@ def heading_matrix(X, meta, n=4):
     (odd walks); sectors are n equal slices of the compass centred on E, N, W, S for n = 4."""
     xy = torch.tensor(np.stack([meta["x"], meta["y"]], 1), dtype=torch.float32, device=dev)
     walk = meta["walk"]
-    sector = np.floor(((meta["theta"] + np.pi / n) % (2 * np.pi)) / (2 * np.pi / n)).astype(int)
+    sector = sectors(meta["theta"], n)
     t = lambda m: torch.from_numpy(np.flatnonzero(m)).to(dev)
     M = np.zeros((n, n))
     for i in range(n):
@@ -247,7 +265,7 @@ def load_units(tag, layer, data_dir, meta):
     return causal_ema(X, meta, float(ema)) if ema else X
 
 
-def analyze_layer(X, meta, rng):
+def analyze_layer(X, meta, rng, quadrant=False):
     N = len(X)
     walk, step = meta["walk"], meta["step"]
     ix = np.clip((meta["x"] / L * NB).astype(int), 0, NB - 1)
@@ -319,6 +337,22 @@ def analyze_layer(X, meta, rng):
         "frac_place_heading_invariant": (place & (heading_inv > 0.5)).float().mean().item(),
         "max_gridness": float(grid[torch.isfinite(grid)].max()),
     }
+    if quadrant:
+        # maps from opposite 90-degree sectors only (N vs S, E vs W); each has about half the frames
+        # of a 180-degree half. The ratio still divides by stab (even vs odd walks, all headings).
+        sec = sectors(th)
+        hq = []
+        for i in (1, 0):
+            ma, oa = rate_maps(R, bins, torch.from_numpy(sec == i).to(dev))
+            mb, ob = rate_maps(R, bins, torch.from_numpy(sec == i + 2).to(dev))
+            hq.append(map_corr(ma, mb, (oa >= MIN_OCC) & (ob >= MIN_OCC)))
+        inv_q = (hq[0] + hq[1]) / 2
+        stats.update({
+            "place_heading_inv_quadrant_median": med(inv_q, place),
+            "place_inv_quadrant_over_stab_median": med(inv_q / stab.clamp_min(1e-3), place),
+            "all_stable_heading_inv_quadrant_median": med(inv_q, stab > 0.5),
+            "frac_place_heading_invariant_quadrant": (place & (inv_q > 0.5)).float().mean().item(),
+        })
     per_unit = dict(pole=pole_ids, si=si, stab=stab, hi=heading_inv, grid=grid, hd=hd,
                     place=place, gridc=gridc, hdc=hdc, maps=maps, valid=valid)
     return stats, per_unit
@@ -372,14 +406,28 @@ def main():
     ap.add_argument("--layers", nargs="*", help="only these layer names, e.g. L6 L14")
     ap.add_argument("--out", default="results")
     ap.add_argument("--max-walks", type=int, help="match activations extracted with --max-walks")
+    ap.add_argument("--quadrant", action="store_true",
+                    help="experiment 13e: add opposite-90-degree-sector measures, write summary_quadrant.json, no figures")
     args = ap.parse_args()
     meta = dict(np.load(os.path.join(args.data, "meta.npz")))
     if args.max_walks:
         n = int((meta["walk"] < args.max_walks).sum())
         meta = {k: v[:n] for k, v in meta.items()}
     os.makedirs(os.path.join(args.out, "figs"), exist_ok=True)
-    summary_path = os.path.join(args.out, "summary.json")
+    summary_path = os.path.join(args.out, "summary_quadrant.json" if args.quadrant else "summary.json")
     summary = json.load(open(summary_path)) if os.path.exists(summary_path) else {}
+    if args.quadrant:
+        summary["_about"] = {
+            "split": "*_quadrant keys use four 90-degree facing sectors centred on E, N, W, S (heading_matrix) "
+                     "and compare only opposite sectors (N vs S, E vs W); the other keys are recomputed here "
+                     "(on CPU) as in summary.json, with heading invariance and decoding on 180-degree halves",
+            "stability": "place_inv_quadrant_over_stab_median divides by the same split-half stability as "
+                         "summary.json: even vs odd walks, all headings",
+            "decoding": "decode_cross_quadrant / decode_within_quadrant: ridge trained on one sector (even walks), "
+                        "tested on the opposite / same sector (odd walks), mean over the 4 sectors",
+            "chance": "decode_cross_heading_chance / decode_cross_quadrant_chance: median error of predicting the "
+                      "training half's / sector's mean position on the opposite one; decode_chance as in summary.json",
+        }
     for tag in args.tags:
         base = tag.partition("+ema")[0]
         if base == "pixels":
@@ -392,10 +440,14 @@ def main():
         for layer in layers:
             rng = np.random.default_rng(0)
             X = load_units(tag, layer, args.data, meta)
-            stats, pu = analyze_layer(X, meta, rng)
-            stats.update({f"decode_{k}": v for k, v in decoding_suite(X, meta).items()})
+            stats, pu = analyze_layer(X, meta, rng, args.quadrant)
+            stats.update({f"decode_{k}": v for k, v in decoding_suite(X, meta, args.quadrant).items()})
             summary.setdefault(tag, {})[layer] = stats
             print(tag, layer, json.dumps({k: round(v, 3) if isinstance(v, float) else v for k, v in stats.items()}), flush=True)
+            if args.quadrant:
+                json.dump(summary, open(summary_path, "w"), indent=1)
+                del X, pu
+                continue
 
             north = torch.from_numpy(np.sin(meta["theta"]) > 0).to(dev)
             ix = np.clip((meta["x"] / L * NB).astype(int), 0, NB - 1)

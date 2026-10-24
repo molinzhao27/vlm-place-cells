@@ -1,0 +1,228 @@
+{
+ "n_test": 128,
+ "clean_error_m": 0.8459546522335388,
+ "target_donor_distance_m": 4.359181756058693,
+ "blocks": {
+  "19": {
+   "token_norm_median": 48.12950134277344,
+   "probe_r2": {
+    "ridge 1e4, fit in room B": 0.9240666230625443,
+    "ridge 1e4, fit in room A": 0.952896244331965
+   },
+   "readout_r2": {
+    "position PCA 10, fit in room B": {
+     "room B": 0.9275438654242014,
+     "room A": 0.959604547663693
+    },
+    "position PCA 2, fit in room B": {
+     "room B": 0.809900351972302,
+     "room A": 0.8245902372483339
+    },
+    "ridge 1e4, fit in room B": {
+     "room B": 0.9351123565509589,
+     "room A": 0.9471260603958311
+    },
+    "position PCA 10, fit in room A": {
+     "room B": 0.9269492304261988,
+     "room A": 0.9603671051898862
+    },
+    "position PCA 2, fit in room A": {
+     "room B": 0.8359239314978504,
+     "room A": 0.8559015426538719
+    },
+    "ridge 1e4, fit in room A": {
+     "room B": 0.9213718177663051,
+     "room A": 0.9629434418157877
+    }
+   },
+   "overlap": {
+    "position PCA 10": 0.8015555739402771,
+    "position PCA 2": 0.9156662225723267,
+    "ridge 1e4": 0.9117732048034668
+   },
+   "share": {
+    "position PCA 10, fit in room B": 0.9105418920516968,
+    "position PCA 2, fit in room B": 0.22795648872852325,
+    "ridge 1e4, fit in room B": 0.20309066772460938,
+    "position PCA 10, fit in room A": 0.8651447892189026,
+    "position PCA 2, fit in room A": 0.2161974012851715,
+    "ridge 1e4, fit in room A": 0.18931975960731506
+   },
+   "full": {
+    "moved_m_median": 2.4587543360280404,
+    "error_m_median": 3.2362274351939986,
+    "transfer_mean": 0.48091729771760827,
+    "transfer_sem": 0.03671297530286653,
+    "transfer_median": 0.48383162561694004
+   },
+   "position PCA 10, fit in room B": {
+    "moved_m_median": 2.3586434507693648,
+    "error_m_median": 3.007691692855599,
+    "transfer_mean": 0.4242976438325182,
+    "transfer_sem": 0.03074474852172444,
+    "transfer_median": 0.43334760653358695
+   },
+   "position PCA 2, fit in room B": {
+    "moved_m_median": 0.8191635251559849,
+    "error_m_median": 1.6079510445440224,
+    "transfer_mean": 0.1799092785367234,
+    "transfer_sem": 0.016837226001168364,
+    "transfer_median": 0.1550063620656822
+   },
+   "ridge 1e4, fit in room B": {
+    "moved_m_median": 0.7373257813804406,
+    "error_m_median": 1.5139417598340084,
+    "transfer_mean": 0.17014757392644084,
+    "transfer_sem": 0.011356253070722683,
+    "transfer_median": 0.15149977453247565
+   },
+   "position PCA 10, fit in room A": {
+    "moved_m_median": 2.3233305636881196,
+    "error_m_median": 3.128859442528333,
+    "transfer_mean": 0.4494473127997368,
+    "transfer_sem": 0.032005555536250355,
+    "transfer_median": 0.44907277268886286
+   },
+   "position PCA 2, fit in room A": {
+    "moved_m_median": 0.8416902864732512,
+    "error_m_median": 1.5447910675776853,
+    "transfer_mean": 0.16745033716054555,
+    "transfer_sem": 0.014285258512908886,
+    "transfer_median": 0.15097841764678188
+   },
+   "ridge 1e4, fit in room A": {
+    "moved_m_median": 0.6873893451811341,
+    "error_m_median": 1.511541301001893,
+    "transfer_mean": 0.15647714986041697,
+    "transfer_sem": 0.009898727397538542,
+    "transfer_median": 0.1451018138219371
+   },
+   "other_minus_own": {
+    "position PCA 10": {
+     "transfer_mean": 0.025149668967218524,
+     "transfer_sem": 0.010364246357788303
+    },
+    "position PCA 2": {
+     "transfer_mean": -0.012458941376177889,
+     "transfer_sem": 0.0061995881128688365
+    },
+    "ridge 1e4": {
+     "transfer_mean": -0.013670424066023885,
+     "transfer_sem": 0.008842769066911754
+    }
+   }
+  },
+  "21": {
+   "token_norm_median": 60.24074172973633,
+   "probe_r2": {
+    "ridge 1e4, fit in room B": 0.9304734645411381,
+    "ridge 1e4, fit in room A": 0.9581889042454274
+   },
+   "readout_r2": {
+    "position PCA 10, fit in room B": {
+     "room B": 0.9230381972329252,
+     "room A": 0.9562063417277263
+    },
+    "position PCA 2, fit in room B": {
+     "room B": 0.5473853859283537,
+     "room A": 0.5201946397107866
+    },
+    "ridge 1e4, fit in room B": {
+     "room B": 0.9386754996989538,
+     "room A": 0.9468014970572945
+    },
+    "position PCA 10, fit in room A": {
+     "room B": 0.9197881529269867,
+     "room A": 0.9561612709501338
+    },
+    "position PCA 2, fit in room A": {
+     "room B": 0.4920881187298093,
+     "room A": 0.5274015455528116
+    },
+    "ridge 1e4, fit in room A": {
+     "room B": 0.9167429927245084,
+     "room A": 0.9646836400211288
+    }
+   },
+   "overlap": {
+    "position PCA 10": 0.7975467443466187,
+    "position PCA 2": 0.7026943564414978,
+    "ridge 1e4": 0.8771195411682129
+   },
+   "share": {
+    "position PCA 10, fit in room B": 0.9134519696235657,
+    "position PCA 2, fit in room B": 0.16945767402648926,
+    "ridge 1e4, fit in room B": 0.10479115694761276,
+    "position PCA 10, fit in room A": 0.894733190536499,
+    "position PCA 2, fit in room A": 0.19664037227630615,
+    "ridge 1e4, fit in room A": 0.10674910247325897
+   },
+   "full": {
+    "moved_m_median": 3.8728347889729884,
+    "error_m_median": 4.590568864233507,
+    "transfer_mean": 0.9022278857721084,
+    "transfer_sem": 0.03534125634342924,
+    "transfer_median": 0.8809325057651024
+   },
+   "position PCA 10, fit in room B": {
+    "moved_m_median": 3.9011074312039375,
+    "error_m_median": 4.450412850475724,
+    "transfer_mean": 0.8664425581263312,
+    "transfer_sem": 0.027716785724531616,
+    "transfer_median": 0.8804255265133815
+   },
+   "position PCA 2, fit in room B": {
+    "moved_m_median": 1.3653773743748894,
+    "error_m_median": 2.0255620428412984,
+    "transfer_mean": 0.2239444090208081,
+    "transfer_sem": 0.026327777128856412,
+    "transfer_median": 0.20088525628699824
+   },
+   "ridge 1e4, fit in room B": {
+    "moved_m_median": 0.7245007496409879,
+    "error_m_median": 1.5201426997121308,
+    "transfer_mean": 0.15568847494613838,
+    "transfer_sem": 0.012901696607642798,
+    "transfer_median": 0.14485330209675734
+   },
+   "position PCA 10, fit in room A": {
+    "moved_m_median": 3.892995896232328,
+    "error_m_median": 4.548898340988351,
+    "transfer_mean": 0.8696022241804122,
+    "transfer_sem": 0.02794572930282112,
+    "transfer_median": 0.8759593231596814
+   },
+   "position PCA 2, fit in room A": {
+    "moved_m_median": 1.281393481434802,
+    "error_m_median": 1.8260682952896612,
+    "transfer_mean": 0.18507256992211896,
+    "transfer_sem": 0.04930570140526294,
+    "transfer_median": 0.19117227126195552
+   },
+   "ridge 1e4, fit in room A": {
+    "moved_m_median": 0.7585212964125505,
+    "error_m_median": 1.5550755164130616,
+    "transfer_mean": 0.1539293028055831,
+    "transfer_sem": 0.009900860495621373,
+    "transfer_median": 0.15342979858631106
+   },
+   "other_minus_own": {
+    "position PCA 10": {
+     "transfer_mean": 0.003159666054081123,
+     "transfer_sem": 0.010605249398019977
+    },
+    "position PCA 2": {
+     "transfer_mean": -0.03887183909868916,
+     "transfer_sem": 0.04599329156857713
+    },
+    "ridge 1e4": {
+     "transfer_mean": -0.0017591721405552613,
+     "transfer_sem": 0.0073293720045582485
+    }
+   }
+  }
+ },
+ "room": "B",
+ "other_room": "A",
+ "other_room_fit_clean_error_m": 0.4185824516975437
+}

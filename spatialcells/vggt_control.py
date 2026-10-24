@@ -15,6 +15,9 @@ Same trials as behave_reason (its direct two-choice records): all novel ones and
   two-choice     whichever of near / far has its predicted centre nearer the probe's
 Needs the VGGT repo on the path (cloned to /workspace/vggt; not pip-installed, because
 its requirements pin an old torch). Writes results/vggt_control.json and .npz.
+--trial-set R instead runs every trial of results/export/dissimilar-room<R>/trials.json (lure-free
+trials of room R, novel and familiar) on data/walks-room<R>, and writes results/vggt_control_<R>.json
+and .npz (experiment 12: R = ReplicaApt0 ...).
 """
 from __future__ import annotations
 
@@ -54,21 +57,31 @@ def main():
     ap.add_argument("--familiar-every", type=int, default=4, help="keep every n-th familiar trial (all novel ones)")
     ap.add_argument("--trials", default="results/behave/qwen38-reason.npz")
     ap.add_argument("--vggt", default="/workspace/vggt")
+    ap.add_argument("--trial-set", help="room R: its lure-free trials and walks (see above)")
     args = ap.parse_args()
     sys.path.insert(0, args.vggt)
     from vggt.models.vggt import VGGT
     from vggt.utils.pose_enc import pose_encoding_to_extri_intri
 
-    meta, pmeta, G = geometry()
-    frames = np.load("data/walks/frames.npy", mmap_mode="r")
-    probes = np.load("data/walks/probes.npy", mmap_mode="r")
-    z = np.load(args.trials)
-    walks = np.unique(meta["walk"])[:args.walks]
-    trials = [(int(p), int(nr), int(fr)) for p, q, th, nr, fr in
-              zip(z["probe"], z["question"], z["think"], z["near"], z["far"])
-              if q == "choice" and not th and pmeta["walk"][p] in walks]
-    trials = [tr for k, tr in enumerate(trials) if not G[tr[0]]["familiar"] or k % args.familiar_every == 0]
-    model = VGGT.from_pretrained("facebook/VGGT-1B").cuda().eval()
+    data = f"data/walks-room{args.trial_set}" if args.trial_set else "data/walks"
+    out_base = f"results/vggt_control_{args.trial_set}" if args.trial_set else "results/vggt_control"
+    meta, pmeta, G = geometry(data)
+    frames = np.load(f"{data}/frames.npy", mmap_mode="r")
+    probes = np.load(f"{data}/probes.npy", mmap_mode="r")
+    if args.trial_set:
+        trials = [(t["probe"], t["near"], t["far"]) for t in
+                  json.load(open(f"results/export/dissimilar-room{args.trial_set}/trials.json"))]
+    else:
+        z = np.load(args.trials)
+        walks = np.unique(meta["walk"])[:args.walks]
+        trials = [(int(p), int(nr), int(fr)) for p, q, th, nr, fr in
+                  zip(z["probe"], z["question"], z["think"], z["near"], z["far"])
+                  if q == "choice" and not th and pmeta["walk"][p] in walks]
+        trials = [tr for k, tr in enumerate(trials) if not G[tr[0]]["familiar"] or k % args.familiar_every == 0]
+    model = VGGT.from_pretrained("facebook/VGGT-1B")
+    for head in ("depth_head", "point_head", "track_head"):      # unused here: only the aggregator and camera head run
+        setattr(model, head, None)
+    model = model.cuda().eval()
     print(f"VGGT: {len(trials)} trials, walk stride {args.stride}", flush=True)
 
     def prep(ims):
@@ -120,7 +133,7 @@ def main():
                   f"peak {torch.cuda.max_memory_allocated() / 2**30:.0f} GiB", flush=True)
 
     o = {k: np.array(v) for k, v in out.items()}
-    np.savez("results/vggt_control.npz", **o)
+    np.savez(f"{out_base}.npz", **o)
     res = {}
     for cat, sel in [("familiar", o["familiar"]), ("novel", ~o["familiar"])]:
         res[cat] = {"n": int(sel.sum()), "walk_fit_rms_m": float(np.median(o["fit_rms"][sel])),
@@ -131,7 +144,7 @@ def main():
                     "nearest_random_hit_rate": float(o["nearest_random"][sel].mean()),
                     "choice_accuracy": float(o["choice_right"][sel].mean())}
         print(cat, json.dumps({k: round(v, 3) for k, v in res[cat].items()}), flush=True)
-    json.dump(res, open("results/vggt_control.json", "w"), indent=1)
+    json.dump(res, open(f"{out_base}.json", "w"), indent=1)
     print(f"vggt_control: done, {time.time() - t0:.0f}s", flush=True)
 
 

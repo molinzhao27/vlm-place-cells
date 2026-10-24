@@ -175,6 +175,13 @@ def score(args):
         g, logits = hidden(model, pc, xy, chunk, args.sub)
         err = (pc.decode(logits) - xy[:, 1:]).norm(dim=-1) * SCALE
         X = g.reshape(-1, NG)
+        if args.quadrant:       # experiment 13f: the strict opposite-sector measures of analyze.py --quadrant
+            stats, _ = analyze.analyze_layer(X, sub, np.random.default_rng(0), quadrant=True)
+            stats.update({f"decode_{k}": v for k, v in analyze.decoding_suite(X, sub, quadrant=True).items()},
+                         decoded_error_median_m=err.median().item())
+            results[mode] = stats
+            print(mode, json.dumps({k: (round(v, 3) if isinstance(v, float) else v) for k, v in stats.items()}), flush=True)
+            continue
         stats, pu = analyze.analyze_layer(X, sub, np.random.default_rng(0))
         grid = pu["grid"][torch.isfinite(pu["grid"])]
         stats.update(decoded_error_median_m=err.median().item(), decoded_error_last_step_m=err[:, -1].median().item(),
@@ -207,10 +214,12 @@ def score(args):
         fig.tight_layout()
         fig.savefig(f"results/grid_rnn_{args.name}_{mode}.png", dpi=80)
         plt.close(fig)
-    results["train_log_last"] = json.load(open(f"{OUT}/train_log.json"))[-1]
-    res = json.load(open("results/grid_rnn.json")) if os.path.exists("results/grid_rnn.json") else {}
+    out = "results/grid_rnn_quadrant.json" if args.quadrant else "results/grid_rnn.json"
+    if not args.quadrant:
+        results["train_log_last"] = json.load(open(f"{OUT}/train_log.json"))[-1]
+    res = json.load(open(out)) if os.path.exists(out) else {}
     res.setdefault(args.name, {}).update(results, step_m=args.step, sub=args.sub)
-    json.dump(res, open("results/grid_rnn.json", "w"), indent=1)
+    json.dump(res, open(out, "w"), indent=1)
 
 
 def dense(args):
@@ -351,6 +360,8 @@ def main():
     ap.add_argument("--traj", default="foraging", choices=["foraging", "sorscher"], help="training trajectories")
     ap.add_argument("--sub", type=int, default=1, help="sub-steps per data/walks step when scoring")
     ap.add_argument("--tf32", action="store_true", help="TF32 matmuls (the base run used them)")
+    ap.add_argument("--quadrant", action="store_true",
+                    help="with --score: experiment 13f, strict opposite-sector measures only -> results/grid_rnn_quadrant.json")
     args = ap.parse_args()
     global OUT
     OUT = "data/grid_rnn" + ("" if args.name == "base" else f"_{args.name}")

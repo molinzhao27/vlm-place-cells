@@ -378,6 +378,61 @@ after block 23) transfers 1.00.
   subspaces and found no effect at any block. That came from where the probe
   reads, not from the code being unused.
 
+**Was it how the probe was chosen? Partly** (`vggt_patch.py --probes`,
+`results/vggt_patch_probes.png`). The probe above uses the ridge penalty λ with
+the best held-out R². That choice can favour "filters" (Haufe et al. 2014):
+weights that read low-variance directions to cancel noise, not the directions
+along which position moves the token. So the test was repeated, with the same
+targets, donors and fit frames, for 2-d subspaces for (x, y) chosen in other ways:
+- the ridge probe at each λ from 0.1 to 10⁶;
+- the activation pattern Cov(H) W of the best-R² probe (Haufe et al. 2014);
+- the cross-covariance direction Hᵀ Y, the regression version of a mass-mean
+  probe (Marks & Tegmark 2023);
+- the top two position-PCA directions, a 2-d match for the 10-d subspace.
+
+"R²" is the probe's own held-out R², and in brackets that of a least-squares
+readout of (x, y) from the same two directions, which is not lowered by the
+shrinkage of a heavily regularised probe. "Erase" sets the two directions to
+their mean over the fit frames.
+
+| 2 dims written into the target's token | R² at block 21: probe (readout) | share at block 21 | block 15 | block 19 | block 21 (± SEM) | erase at block 21: error (clean 0.43 m) |
+|---|---|---|---|---|---|---|
+| ridge, λ = 0.1 (best R² at blocks 15, 19) | 0.99 (0.99) | 0.02% | 0.00 | 0.00 | 0.00 ± 0.00 | 0.43 m |
+| ridge, λ = 1 (best R² at block 21) | 0.99 (0.99) | 0.09% | 0.00 | 0.00 | 0.00 ± 0.00 | 0.43 m |
+| ridge, λ = 10 | 0.99 (0.99) | 0.4% | 0.01 | 0.01 | 0.01 ± 0.00 | 0.43 m |
+| ridge, λ = 100 | 0.99 (0.99) | 2.0% | 0.01 | 0.04 | 0.03 ± 0.00 | 0.44 m |
+| ridge, λ = 10³ | 0.98 (0.98) | 7.6% | 0.02 | 0.13 | 0.11 ± 0.01 | 0.64 m |
+| ridge, λ = 10⁴ | 0.95 (0.96) | 13% | 0.03 | 0.17 | 0.18 ± 0.01 | 0.84 m |
+| ridge, λ = 10⁵ | 0.77 (0.93) | 13% | 0.02 | 0.18 | 0.19 ± 0.01 | 0.88 m |
+| ridge, λ = 10⁶ | 0.22 (0.84) | 15% | 0.02 | 0.18 | **0.20 ± 0.01** | 1.00 m |
+| Haufe pattern Cov(H) W of the best probe | (0.72) | 17% | 0.02 | 0.18 | **0.20 ± 0.01** | 1.10 m |
+| cross-covariance Hᵀ Y | (0.72) | 17% | 0.02 | 0.18 | **0.20 ± 0.01** | 1.10 m |
+| position PCA, 2 dims | (0.52) | 22% | 0.02 | 0.18 | 0.18 ± 0.02 | 1.10 m |
+| position PCA, 10 dims | (0.95) | 93% | 0.03 | 0.40 | **0.85 ± 0.02** | 3.38 m |
+
+- **Transfer rises as the probe is regularised more, and when it is switched to
+  the pattern.** At block 21 it goes from 0.00 for the best-R² probe to 0.20 at
+  λ = 10⁶ or with the pattern (block 19: 0.00 to 0.18). Erasing those
+  directions raises the error from 0.43 m to 1.0-1.1 m. Most of the rise has
+  come by λ = 10⁴, where the probe still has R² 0.95.
+- **The best-R² probe reads filters.** Its directions hold 0.02-0.09% of the
+  target-donor difference at block 21. Heavier penalties tilt it toward the
+  high-variance directions the pattern points along (15% at λ = 10⁶).
+- **The pattern and the cross-covariance direction are the same subspace.**
+  Cov(H) W is proportional to Hᵀ Y − λW, which is almost Hᵀ Y at the small λ
+  the best probe uses. The two give the same share, R² and transfer at every
+  block.
+- **No pair of directions comes close to the 10-d subspace.** The most
+  regularised probe, the pattern and the top two position-PCA directions all
+  transfer 0.18-0.20 at block 21, against 0.85 for position PCA 10. At block 19
+  it is 0.18 against 0.40. At block 15 nothing transfers.
+
+The way the probe was chosen explains why its own directions do nothing: a
+probe picked for R² reads filters. It does not explain the rest of the gap.
+Pointed the right way, two linear directions for (x, y) carry about a fifth of
+the effect at block 21. The code the camera head uses has more dimensions than
+the two coordinates it encodes.
+
 So the heading-invariant place units at block 19 sit in a position code that
 the model starts to use there. At block 15 the same readable code is a
 by-product that gets overwritten. The MLP ablation above missed this because
@@ -431,10 +486,10 @@ room B and the patching test (~2.5 h). Room B's walks are rendered first, on CPU
 with `python -m spatialcells.render_data --room B --out data/walks-roomB`.
 `python -m spatialcells.vggt_patch --blocks 15 19 21 --out
 results/vggt_patch_subspaces.json` adds the PCA subspaces (~35 min).
-In progress: `python -m spatialcells.vggt_patch --probes --blocks 15 19 21 --out
-results/vggt_patch_probes.json` tests whether the probe result depends on how the probe was
-regularised. It sweeps the ridge penalty up to 1e6 and also patches the Haufe pattern Cov(H) W
-and the cross-covariance direction.
+`python -m spatialcells.vggt_patch --probes --blocks 15 19 21 --out
+results/vggt_patch_probes.json` runs the probe-choice test and draws
+`results/vggt_patch_probes.png` (3.6 h on an RTX 4070 with `--batch 2`; it reproduced
+the clean error, 0.43 m, and block 21's position-PCA-10 transfer, 0.85).
 
 ## Experiment 5: why do open models fail, and does any pass?
 
@@ -888,6 +943,771 @@ are in `results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-*.jsonl`, and the co
 Two more LoRA seeds with the same data and settings, each tested on room A's and room B's
 lure-free trials (64-frame walk, no walk, shuffled walk). Run with `scripts/run_ft_seed.sh SEED`;
 `python -m spatialcells.ft_seeds` summarises the three seeds. Results will be added here.
+
+## Experiment 10 (pre-registered 2026-10-22, run 2026-10-23): many held-out rooms
+
+**Deviation found after the results below (2026-10-23, by an external review of the preprint).**
+In the six rooms rebuilt with 32 walks (P5001-P5003, P5005, P5006, P5008), the Opus runs cover only
+walks 0-15: 96 of 192 trials, 60-79 novel. `claude_test.py` defaults to `--walks 16` and the launch
+script did not override it. This was a bug, not a choice. Opus has 859 novel trials over the ten
+rooms against LoRA's 1,299. Six rooms fall below the registered 100 novel trials. The walk-minus-
+no-walk gain is still paired (both Opus conditions miss the same walks), but the LoRA-minus-Opus
+row below compares different trial sets in those rooms. On matched novel trials, LoRA - Opus is
++24.9 points [22.0, 27.7], positive in all ten rooms (the review's audit,
+`results/review/preprint-audit-2026-10-23.json`). The missing walks were run the same day (`--walks 32`; Exp 10 Opus cost
+$73.48 in all). On the full set (1,299 matched novel trials; `heldout_analysis.py` now checks every
+run against the manifests): Opus 69.2% with the walk vs 62.8% without, **gain +6.4 points [+4.1,
++8.2]**, positive in 9 of 10 rooms (p = 0.021; trials 282 better / 200 worse); LoRA minus Opus
+**+23.3 [+20.8, +26.2]**, 10/10 rooms. The 16-walk numbers (+5.3 [3.1, 7.2]; +24.9 matched) are kept in
+`results/heldout_summary.json` under `walks_0_15`. The table below is the first pass.
+
+**Results** (`scripts/heldout_analysis.py`, `results/heldout_summary.json`; novel trials, 102-152 per
+room; means over the 10 rooms with 95% bootstrap CIs over rooms):
+
+| novel trials | walk | no walk | shuffled walk |
+|---|---|---|---|
+| base Qwen3-VL-8B | 51.8% [49.2, 54.2] | 50.0% [47.6, 52.4] | 56.4% [54.6, 58.5] |
+| LoRA (seed 0) | **92.5%** [91.4, 93.6] | 55.9% [53.0, 58.7] | 51.3% [48.2, 54.3] |
+| Opus 5.5, low effort | 67.4% [64.6, 69.8] | 62.1% [59.2, 64.5] | (not run; amendment 1) |
+
+- **Primary question: Opus's walk gain holds across rooms, but it is small.** It is +5.3 points
+  [+3.1, +7.2], positive in 9 of 10 rooms (room-level sign test p = 0.02; pooled trials: 185
+  better, 138 worse). That is smaller than room A's +14 and larger than room B's ~0.
+- **The LoRA model:**
+  - walk minus no walk: +36.6 points [+33.9, +39.6];
+  - in order minus shuffled: +41.2 [+38.8, +43.8];
+  - minus base: +40.7 [+38.2, +43.5];
+  - minus Opus: +25.1 [+22.7, +27.7];
+  - all positive in 10 of 10 rooms.
+- Scope: these rooms come from the LoRA model's training generator (new layouts, same kind of
+  room), and the LoRA results are for one training seed. Opus cost $48.84 for the 20 runs.
+
+The pre-registration follows.
+
+Rooms A and B disagree on one result: Opus 5.5 gains from the walk in room A (75% vs 61%) but not
+in room B (64% vs 63%). Two rooms cannot say which is typical. This experiment repeats the
+two-choice test in ten new rooms, with rooms (not trials) as the unit of analysis.
+
+**Rooms.** Ten procedural rooms from the experiment-9 generator, `room.random_layout(seed)` for
+seeds 5000-5009 (`--room P5000` ... `P5009`). The LoRA model was trained and validated on seeds
+0-1199, so it has seen none of these layouts. They come from the same generator, so the claim
+they support is "new rooms of the kind it was trained on", not new kinds of rooms.
+
+**Trials.** In each room, 16 foraging walks of 256 steps (`render_data --walks 16 --seed <room
+seed>`) and 64 teleport probes per walk (`render_probes`), then the lure-free two-choice trials
+of `dissimilar_trials.py`, built exactly as in room B:
+- near option within 1 m, far option more than 3 m away;
+- both options facing more than 90 deg away from the new view;
+- no poster or pillar shared with the new view;
+- pixel similarity and frame order each favour the near option in half the trials;
+- up to 12 trials per walk, novel views first.
+
+The target is at least 100 novel trials per room. If a room has fewer, its walks are re-rendered
+with 32 walks and the trials rebuilt. That decision is made from the trial counts alone, before
+any model sees the room.
+
+**Models and conditions** (the same prompts as before):
+- Base Qwen3-VL-8B: 64-frame walk, no walk, and the 64-frame walk shuffled (real frame numbers).
+  Greedy, bf16, on the Mac (`--device mps`; it matched CUDA on 192/192 room-A answers).
+- The LoRA model: the same three conditions. Seed 0 first; seeds 1 and 2 once trained
+  (experiment 9b).
+- Claude Opus 5.5, low effort (as in experiment 6 and room B): 256-frame walk, no walk, and the
+  256-frame walk shuffled (real frame numbers).
+
+**Analysis.**
+- Primary outcome: accuracy on novel trials in each room. Unparsed answers count as wrong.
+- Every summary is the mean over rooms, with a 95% CI from a bootstrap over rooms (10,000
+  resamples).
+- Primary question: Opus's walk gain, its walk accuracy minus its no-walk accuracy in each room.
+  It is reported as holding up if the 95% CI of the mean gain excludes 0, and is reported either
+  way, along with the number of rooms where it is positive.
+- Secondary, analysed the same way:
+  - LoRA walk minus LoRA no walk;
+  - LoRA in order minus LoRA shuffled;
+  - LoRA minus base, both with the walk;
+  - LoRA minus Opus, both with the walk.
+- Trial-level paired sign tests, pooled over rooms, are reported as a supplement only.
+- Familiar trials are reported but not tested.
+
+**Budget.** Opus costs about $11 per room at low effort ($4.9 walk, $4.9 shuffled, $1.3 no
+walk, from rooms A and B), about $110 in all. The approved cap is $300. Spend is logged per run
+in `results/api_costs.csv`.
+
+**Amendment (2026-10-23, before any result from rooms P5001-P5009; only P5000's Opus walk run
+had started).** The Claude API budget is now $138 until next month, so Opus runs only the
+256-frame walk and no walk, about $6.2 per room and $62 in all. Its shuffled-walk condition is
+dropped. That condition was secondary: room A already showed that walk order does not matter to
+Opus (experiment 6). The primary question is unchanged. The LoRA and base models keep all three
+conditions, since they cost nothing. Caching is already near its limit: each walk's prefix is
+written once and read by the walk's other 11 trials. About half of an Opus walk run is those 16
+cache writes, and a quarter is thinking tokens, which cannot be turned off.
+
+**Amendment 2 (2026-10-23, from trial counts only; no model had seen any room but P5000).** At
+16 walks, most procedural rooms have fewer than 100 novel trials: 77-102, against room A's 102.
+Their posters are more numerous than room A's, so the no-shared-landmark rule leaves fewer pairs.
+As registered, such rooms are re-rendered with 32 walks. To keep every room at 192 trials (the
+same cost and run time as the others), their trials are built with up to 6 per walk instead of
+12, novel first (`dissimilar_trials --walks 32 --per-walk 6`). The trial rules are otherwise
+unchanged. The first 16 walks and their probes stay identical, because both are drawn
+sequentially from the same seeds. Rooms that already reach 100 novel trials at 16 walks keep
+those trials.
+
+## Experiment 11 (pre-registered 2026-10-23, not yet run): other frontier and open models
+
+Experiment 5 found Opus 5.5 to be the only off-the-shelf model whose accuracy rose with the walk.
+That claim rests on Claude and open models up to 35B. This experiment tests it on other providers'
+flagship models and on the largest open models served by an API.
+
+**Models.** Candidates, each kept only if a preflight shows it accepts the full protocol:
+- Kimi K3 (Moonshot; reasoning `low`; temperature fixed at 1.0 by the provider);
+- GPT-6 Astra (reasoning `low`; temperature not settable);
+- Gemini 4 Argon (reasoning `low`; temperature ignored);
+- GPT-5.5 at effort `none` with temperature 0, as a near-greedy control;
+- Qwen3.5-397B-A17B and MiniMax-M3 (DeepInfra; thinking off, temperature 0);
+- DeepSeek V4.1 Flash.
+
+The preflight (`api_test.py --preflight`) is one request with all 257 images (256 walk frames
+plus the new view) at 256 × 256, as JPEGs, unresized and labelled as in the Claude prompt. A
+model or provider that cannot take that is listed as untestable, with the reason, and the protocol
+is not changed for it. Known in advance:
+- untestable: Llama 4 Maverick (3-20 images per request, by provider), Mistral Large 3 (8) and
+  InternVL3.5-241B (no reliable host);
+- 64-frame walk only: GLM-5.3 (150 images), so it is not tested.
+
+Each model's settings and any provider quantisation are recorded with its results.
+
+**Trials and conditions.** Room A's 192 lure-free trials (102 novel), with exactly the prompt
+and images Opus got (`api_test.py` builds them with `claude_test.py`'s own functions). Two
+conditions: the 256-frame walk, and no walk. A model gets the shuffled walk only if its walk
+gain is significant. Every model with a significant gain is also run in the experiment-10 rooms,
+if the budget allows.
+
+**Analysis.**
+- Accuracy on novel trials; unparsed answers count as wrong.
+- Walk gain: a two-sided paired sign test of walk vs no walk on the novel trials, as for Opus in
+  experiment 5 (two-sided p = 0.016).
+- The claim "Opus 5.5 is the only off-the-shelf model that gains from the walk" stands only if
+  no tested model has p < 0.05 for a positive gain. It is reported either way.
+- An open model with a significant gain triggers a proposal to the user for a self-hosted
+  activation analysis, with a cost estimate. Nothing is rented without asking.
+
+**Budget.** $150 in all, outside the Claude limit. Per-model estimates for room A, walk plus no
+walk: GPT-6 Astra about $25-40, Gemini 4 Argon about $10-38 (its image token count is measured
+first), GPT-5.5 about $9, Kimi K3 about $10-14, Qwen3.5-397B and MiniMax-M3 about $1-2 each.
+Each trial's cost is logged in `results/api/*.jsonl` and summed in `results/api_costs.csv`.
+
+**Amendment (2026-10-23, before any experiment-11 trial): a fast-decision arm.** Two
+decision-model APIs return one choice from a fixed set, with probabilities, and no reasoning
+step:
+- OpenAI's Decisions API (`gpt-6-luna`, public beta);
+- TypeSafe's Jev 1.14, whose image input the provider labels experimental (it is sent with
+  `TypeSafe-Danger-Zone-Images: true`).
+
+They ask whether the walk gain needs deliberation. They get the same content in the same order:
+the labelled walk as shared input, then "New view:", the probe and the question. The question's
+last sentence ("Answer with one of the two frame numbers only") is replaced by the two choices
+"Frame a" and "Frame b", listed in the trial's order.
+- Scoring uses the chosen option, as for every other model.
+- The probability given to the near option is recorded and reported, but not tested.
+- The same preflight and untestable rule apply.
+
+Together they are expected to cost under $2 for room A.
+
+**Amendment 2 (2026-10-23, scope; no results seen from any of the dropped models).** After
+experiment 10, Opus's walk gain is small (+5.3 points over 10 rooms). The fine-tuned 8B's is large
+(+37). So the paper's claim no longer rests on Opus being the only model with a gain, and this
+experiment shrinks to one appendix table. The models are GPT-6 Astra, Gemini 4 Argon, Kimi K3 (done)
+and DeepSeek V4.1 Flash, plus OpenAI's Decisions API only if it is cheap and clean. Jev (image input
+experimental by the provider's own account), GPT-5.5, Qwen3.5-397B and MiniMax-M3 are dropped. The
+analysis and the untestable rule are unchanged.
+
+**Amendment 3 (2026-10-23, scope; no decision model has been run).** The fast-decision arm is
+dropped: OpenAI's Decisions API (gpt-6-luna) is not run, and Jev was already dropped. The
+experiment is GPT-6 Astra, Gemini 4 Argon, Kimi K3 and DeepSeek V4.1 Flash.
+
+**Results so far (room A, 102 novel and 90 familiar trials; `results/api/`).**
+
+| Model | Novel, walk | Novel, no walk | Better / worse with walk | p | Familiar, walk / no walk | Cost |
+|---|---|---|---|---|---|---|
+| Kimi K3 | 57.8% | 60.8% | 12 / 15 | 0.70 | 56.7% / 57.8% | $14.92 |
+| DeepSeek V4.1 Flash | 56.9% | 58.8% | 24 / 26 | 0.89 | 68.9% / 54.4% (25 / 12, p 0.047) | $1.27 |
+
+Neither model gains from the walk on novel trials, the pre-registered test. DeepSeek is better with
+the walk on familiar trials, where a seen view can be matched directly (one walk answer unparsed,
+counted wrong). DeepSeek ran with thinking on and off-peak pricing; its median reasoning was about
+5,300 tokens with the walk and 1,850 without. GPT-6 Astra and Gemini 4 Argon wait for keys.
+
+*Logistics (2026-10-23, no protocol change).* GPT-6 Astra and Gemini 4 Argon are run on the user's
+university lab PC, billed to the lab, from a self-contained
+package (`lab_package/exp11_lab.zip`, gitignored: the room-A trials, probe and walk JPEGs with
+SHA-256 checksums, `claude_test.py`, `api_test.py` and a runbook for the agent there). `api_test.py`
+gained the two models (prices and settings from the providers' docs, Oct 2026), Gemini's dated
+price change, OpenAI's long-context rate, a `prompt_cache_key` per walk for OpenAI, thinking tokens
+billed from `total_tokens` when `completion_tokens` leaves them out, the served model ID and UTC
+time in each record, and a projected full-run cost in `--preflight`.
+
+## Experiment 12 (pre-registered 2026-10-23, run 2026-10-23): photoreal apartments
+
+Do the behavioural results hold in real scanned interiors? This is the first pass agreed in
+docs/photoreal_plan.md: behaviour tests plus VGGT localisation. The place-cell analyses are left for
+a later version.
+
+**Scenes.** Three Replica apartments (Meta; Replica Research Terms): apartment_0, apartment_1 and
+apartment_2, named ReplicaApt0-2. They are rendered with habitat-sim 0.3.3 from the
+vertex-coloured mesh; the PTex textures do not render on the host's driver. The stage loads Z-up
+while its navmesh is Y-up, and `habitat_scene.py --zup` handles this. The single-room scenes were
+dropped from counts alone, before any model saw them: their walks revisit every place from every
+direction, so almost no probe is novel. These are apartments, so "the same room" in the prompt is
+really the same apartment.
+
+**Walks and probes** (`scripts/rtx4070/render_replica.sh`):
+- the same camera: 256 x 256, 90 deg horizontal FOV, 1 m high;
+- the same foraging walk: 0.22 m steps, heading drift, head scans;
+- 32 walks of 256 steps on each scene's largest navigable island, with 0.15 m clearance from
+  obstacles (0.35 m confined the walks to single rooms);
+- 128 teleport probes per walk, near visited places at random headings.
+
+**Trials** (`dissimilar_trials --room ReplicaAptN --walks 32 --per-walk 6`):
+- the lure-free rules of experiments 5 and 10: near option within 1 m, far more than 3 m away,
+  both facing more than 90 deg from the new view, pixel similarity and frame order balanced;
+- "no shared landmark" means no labelled object (other than walls, floor, ceiling, windows,
+  doors and similar) covering 2% or more of both views;
+- no view with more than 5% of pixels showing no geometry is used.
+
+Counts: ReplicaApt0 176 trials (42 novel), ReplicaApt1 168 (6 novel), ReplicaApt2 159 (10 novel).
+
+**Primary outcome: accuracy on all lure-free trials** in each scene, with an exact binomial CI,
+and pooled over the three scenes. Novel views are rare here, so novel-trial accuracy is reported
+pooled (58 trials) as a secondary outcome only. All trials are still hard by construction. In
+room A, familiar lure-free trials separated the models about as well as novel ones did (base
+57-66%, LoRA 91%, Opus about 80%).
+
+**Models and conditions** (prompts as before):
+- base Qwen3-VL-8B and the LoRA model (seed 0; seeds 1-2 when trained): 64-frame walk, no walk,
+  shuffled 64-frame walk, on the Mac (MPS);
+- Opus 5.5 at low effort: 256-frame walk and no walk, about $5 per scene from the Claude budget;
+- VGGT positive control, as in experiment 3c: each trial gives it every 4th walk frame, the two
+  options and the probe. Its cameras are fitted to the walk frames' true poses by a similarity
+  transform (the probe never enters the fit). It reports the median probe position error, the
+  share of probes placed within 1 m, and two-choice accuracy, for novel and familiar trials. (A
+  first draft of this entry said "8 anchor views"; that was experiment 4's method, corrected
+  before any VGGT run.)
+  *Amendment, before any VGGT result:* every **8th** walk frame, so 32 walk frames plus the two
+  options and the probe. 67 images do not fit the RTX 4070's 12 GB, even one trial at a time and
+  with VGGT's unused heads removed; experiment 3c used every 4th frame on a 96 GB GPU.
+
+**Questions.**
+1. Does the LoRA model, trained only on ray-cast procedural rooms, transfer to real scans?
+   Paired sign tests: LoRA minus base, and LoRA walk minus LoRA no walk, pooled over scenes.
+2. Is the base model again near chance, with Opus in between?
+3. Does VGGT still place probes?
+
+Reported either way. Scope: three scenes, vertex-coloured renders, apartments rather than rooms.
+
+*Deviation (2026-10-23, found after the first Opus pass, before any accuracy was tabulated).* The
+first Opus pass used `claude_test.py`'s default of the first 16 walks with trials, a bug rather
+than a choice (the same one as in experiment 10): 270 of the 503 trials (27 of 58 novel). Its progress log, which prints
+running counts of right answers, had been seen. The remaining walks are run with `--walks 32` (about
+$10 more), so Opus covers every trial as the primary outcome requires. Both the 16-walk numbers
+and the full numbers are reported.
+
+**Results (2026-10-23; `scripts/photoreal_analysis.py` -> `results/photoreal_summary.json`; all 503
+lure-free trials, 58 novel; every run checked against the manifests).** Pooled accuracy, all trials
+[exact 95% CI] (per scene Apt0 / Apt1 / Apt2; novel pooled; first-listed rate):
+
+| | all trials | per scene | novel (58) | first-listed |
+|---|---|---|---|---|
+| base, 64-frame walk | 55.1% [50.6, 59.5] | 47 / 54 / 66% | 52% | 55% |
+| base, no walk | 49.3% [44.9, 53.8] | 47 / 50 / 52% | 45% | 61% |
+| base, shuffled | 51.9% [47.4, 56.3] | 45 / 52 / 59% | 66% | 55% |
+| **LoRA, 64-frame walk** | **86.7% [83.4, 89.5]** | 88 / 84 / 88% | 79% | 47% |
+| LoRA, no walk | 52.5% [48.0, 56.9] | 52 / 52 / 53% | 52% | 21% |
+| LoRA, shuffled | 53.5% [49.0, 57.9] | 50 / 52 / 58% | 55% | 43% |
+| **Opus, 256-frame walk** | **84.1% [80.6, 87.2]** | 87 / 76 / 89% | 90% | 55% |
+| Opus, no walk | 55.7% [51.2, 60.1] | 51 / 50 / 67% | 48% | 56% |
+| VGGT (every 8th frame) | 82.3% | 91 / 77 / 79% | 72% | |
+
+Paired two-sided sign tests, pooled (trial level; trials share walks, 32 per scene):
+- LoRA minus base, with the walk: +31.6 points (187 better / 28 worse, p = 5e-30); novel +27.6 (18/2).
+- LoRA walk minus no walk: +34.2 (197/25, p = 2e-34); walk minus shuffled: +33.2 (202/35).
+- Opus walk minus no walk: **+28.4** (174/31, p = 2e-25); novel +41.4 (24/0, p = 1e-7).
+- LoRA minus Opus, with the walk: +2.6 (62/49, p = 0.25); novel -10.3 (3/9, p = 0.15).
+- Base walk minus no walk: +5.8 (99/70, p = 0.03).
+Opus's first pass (the first 16 walks with trials, 270 trials): 85.2% with the walk, 56.3% without
+(novel 96% / 56%, n = 27), close to the full set. Cues are balanced (pixel similarity favours near on
+51%, frame order on 50%); with the walk, Opus and LoRA stay at 83% on trials where frame order points
+to the far option. VGGT: median probe error 0.34-0.85 m on familiar views; novel 0.87 m in Apt0
+(n = 42) and 2.2-2.7 m in Apt1-2 (n = 6 and 10).
+
+Answers. (1) **Yes, the LoRA model transfers** to real scans it never trained on: 86.7%, far above
+the base model, and it still needs the walk in order. (2) The base model is again near chance, but
+**Opus is not in between: with the walk it matches the LoRA model**, and its walk gain (+28 points)
+is about four times its gain in the procedural rooms (+6.4). (3) VGGT still places views, but at
+82% it is not the ceiling here (every 8th frame, vertex-coloured renders). Caveat for
+interpretation: these are apartments. The far option (> 3 m) is often in another room, so the walk
+can help by grouping views into rooms; room-level recognition, not metric localisation within a
+room, may carry much of the gain. Most trials are familiar (445 of 503).
+
+## Experiment 13 (pre-registered 2026-10-23, run 2026-10-23/24): what the walk is used for
+
+External reviews of the preprint (GPT in `docs/reviews/`; Grok 4.7 and Muse Wonder in the repository root) asked what the
+order effects and the walk's cost actually show. This experiment tests the cheapest ways to tell
+the candidate explanations apart. No model has seen any of these presentations.
+
+**13a. The LoRA model's use of order** (seed 0; the ten held-out rooms P5000-P5009, all 192 trials
+each; the experiment-10 64-frame setting, which shows 61-63 frames). Three new presentations of
+the same shown frames, each labelled 1, 2, ... in the order shown:
+- *reversed*: the frames in reverse time order;
+- *window-shuffled*: the frames cut into consecutive blocks of 8 (about 7 m of walking), with the
+  block order shuffled by a seed taken from the walk and the order kept inside each block;
+- *renumbered*: time order kept, with labels replaced by sorted, distinct random integers from
+  1-999 (seeded by the walk), so that label differences no longer track steps.
+
+They are compared with experiment 10's ordered walk (92.5%), shuffled walk (51.3%) and no walk
+(55.9%). What each explanation predicts:
+- distances read off label differences: renumbered well below ordered;
+- only local time-neighbours used (find a look-alike frame, pick the option near it in time):
+  window-shuffled stays well above shuffled, and reversed is about equal to ordered;
+- long-range order needed (integration along the whole path, or any other long-range use):
+  window-shuffled close to shuffled;
+- dependence on the direction of travel: reversed well below ordered.
+The hand-built adjacency rule (`adjacency_baseline.py`, pixels and DINOv2) is also scored under
+each presentation, as the pattern that a look-alike-plus-time-neighbour strategy produces.
+*Note (2026-10-23, from the rule's scoring, before any LoRA run):* "time" can be read from the shown
+labels or from each frame's position in the prompt; both are reported (`results/adjacency_presentations.json`).
+In the held-out rooms the rule is near chance under every presentation (ordered 54.6% pixels, 59.2%
+DINOv2; window-shuffled 49.5% / 54.2%), because their trials balance frame order by construction. So it
+gives no informative pattern to compare the LoRA model's against; the explanations are told apart by
+the model's own contrasts above.
+
+Analysis: novel trials, rooms as the unit, means and paired differences with 95% bootstrap CIs over
+rooms, room-level sign tests. The three primary contrasts are window-shuffled minus shuffled,
+ordered minus reversed, and ordered minus renumbered. Reported either way. The paper calls the
+model "order-dependent" unless these results separate the explanations.
+
+*13a result (2026-10-24, Mac MPS, all 30 runs complete; `scripts/exp13_analysis.py` ->
+`results/exp13_summary.json`; 1,299 novel trials, means over rooms with 95% bootstrap CIs):*
+
+| presentation | novel accuracy | first-listed |
+|---|---|---|
+| ordered (exp. 10) | 92.5% [91.4, 93.6] | 53% |
+| renumbered | 91.9% [90.2, 93.8] | 54% |
+| window-shuffled (blocks of 8) | 81.9% [79.4, 84.3] | 50% |
+| reversed | 67.8% [65.5, 70.1] | 49% |
+| no walk (exp. 10) | 55.9% [53.1, 58.7] | 23% |
+| shuffled (exp. 10) | 51.3% [48.1, 54.3] | 43% |
+
+Primary contrasts (rooms up/down, room-level sign test; trial-level pooled sign test):
+- window-shuffled - shuffled: +30.6 [+27.3, +33.8], 10/0 rooms (p 0.002), 513/115 trials;
+- ordered - reversed: +24.7 [+22.4, +26.7], 10/0 rooms (p 0.002), 360/37 trials;
+- ordered - renumbered: +0.6 [-0.8, +1.8], 6/3 rooms (p 0.51), 28/21 trials (p 0.39).
+Also: window-shuffled - ordered -10.6 [-12.7, -8.8] (0/10 rooms); reversed - shuffled +16.5
+[+12.8, +20.3] (10/0).
+Against the registered predictions: renumbering costs nothing, so the model does not read distances
+off label differences. Window-shuffling keeps 74% of the ordered-minus-shuffled gap (30.6 of 41.2
+points), so most of what the model uses lies within blocks of 8 shown frames (about 7 m of walking);
+the remaining 10.6 points need order across blocks. Reversing costs 24.7 points while staying 16.5
+above shuffled, so the model depends on the direction of travel, which a symmetric "look-alike frame,
+then its time-neighbours" strategy would not. The explanations are separated: local, direction-
+dependent use of the sequence, plus some longer-range order; not label arithmetic.
+
+**13b. Why the base model drops to chance with the walk** (room A, 192 lure-free trials, base
+Qwen3-VL-8B, 256 px). Existing runs on novel trials: no walk 58.8%, 64-frame walk 50.0%, 256-frame
+walk 50.0%. A 64-frame walk is enough to cause the drop, so prompt length beyond 64 frames does not
+explain it. New condition: an *irrelevant walk*, the 64-frame presentation with every frame except
+the two options replaced by the frame at the same position of room B's walk with the same index,
+labels unchanged. Same length and format, no information about room A beyond the options.
+- If any extra images cost accuracy, the irrelevant walk scores about 50%.
+- If room-A content specifically misleads the model, it scores about as well as no walk.
+Analysis: paired sign tests, irrelevant minus no walk and irrelevant minus the 64-frame walk, with
+95% intervals from a bootstrap over walks; first-listed answer rates are reported alongside.
+*Amendment (2026-10-23, before any 13b run):* the no-walk and 64-frame references were run on CUDA
+and the base model's CUDA-MPS agreement has not been checked, so both are rerun on MPS next to the
+irrelevant walk and the comparisons use the MPS runs (the CUDA runs are reported too).
+
+*13b result (2026-10-24, Mac MPS; `results/exp13_summary.json`; 102 novel trials, 95% intervals from
+a bootstrap over walks):* irrelevant walk 52.9%, no walk 58.8%, 64-frame walk 49.0% (CUDA: no walk
+58.8%, 64-frame 50.0%, 256-frame 50.0%).
+- irrelevant - no walk: -5.9 [-15.2, +3.7], 11/17 (p 0.34);
+- irrelevant - 64-frame walk: +3.9 [-10.5, +18.8], 24/20 (p 0.65).
+Inconclusive: the irrelevant walk lands between the two references and differs from neither. The
+drop it was meant to explain is itself not significant: 64-frame walk - no walk is -9.8 [-22.8, +2.0],
+15/25 (p 0.15) on MPS; on CUDA 15/24 (p 0.20) with 64 frames and 19/28 (p 0.24) with 256. So the
+supported statement is that the walk does not help the base model, not that it hurts it. First-listed
+rates: irrelevant 27%, no walk 31%, room-A 64-frame walk 55%; the irrelevant walk leaves the no-walk
+lean to the second-listed option in place, while room A's own walk removes it.
+
+**13c. VGGT controls** (the experiment-4 patching setup: same model, test set, targets and donors;
+blocks 19 and 21):
+- the exact orthogonal complement of position PCA-10, patched (expected transfer near 0);
+- a random 10-d erasure, as the matched control for the position-PCA-10 erasure already measured
+  (block 21: 3.38 m against 0.43 m clean);
+- fixed alignment: the patched run scored with the clean target run's similarity transform rather
+  than one refitted after patching, for the whole token and position PCA-10, with the median
+  movement of the anchor cameras reported;
+- heading-matched donors: donors restricted to the target's heading quadrant, for the whole token
+  and position PCA-10, with the change in predicted heading reported.
+Expected: complement transfer below 0.05; fixed-alignment and heading-matched transfers within 0.1
+of the originals. Departures are reported and narrow the claims in the paper.
+
+*13c result (2026-10-23, `results/vggt_patch_controls.json`; 128 targets, clean error 0.43 m).* All
+four registered expectations hold. Block 19 / block 21:
+- exact complement of position PCA-10: transfer 0.00 / -0.01 (expected < 0.05);
+- erasure: position PCA-10 raises the error to 1.65 / 3.38 m, a random 10-d subspace leaves it at
+  0.43 / 0.43 m;
+- fixed alignment (the clean run's similarity transform): whole token 0.41 / 0.87, position PCA-10
+  0.40 / 0.85, identical to the refitted scores; anchors move 4 mm;
+- heading-matched donors (heading gap 28 degrees instead of 91): position PCA-10 0.47 / 0.80, whole
+  token 0.49 / 0.82 (originals 0.40 / 0.85 and 0.41 / 0.87), all within 0.1.
+Also measured: with the original donors, patching position PCA-10 turns the predicted heading by a
+median 25 / 77 degrees (23 degrees with heading-matched donors), so the 10-d subspace carries heading
+as well as position, consistent with heading PCA-6 transferring 0.32.
+
+**13d. Appearance cue beyond pixels** (no model behaviour). For every lure-free trial in rooms A,
+B and P5000-P5009: the DINOv2 (ViT-B/14, CLS token) cosine similarity of the new view to each
+option, the share of trials where it favours the near option (novel and familiar), and each
+model's accuracy split by which option it favours.
+
+**13e. Opposite headings, strictly** (added 2026-10-23 from the Gemini 4 review, before any
+recomputation). The heading split behind "heading invariance" and "cross-heading decoding"
+(`analyze.py`, `halves`) uses 180-degree halves (N = sin(theta) > 0, and so on). Two frames facing 1
+and 359 degrees therefore count as opposite, although with a 90-degree field of view they show
+almost the same scene; about half of each half lies within 45 degrees of a boundary. Both measures
+are recomputed with four 90-degree sectors centred on E, N, W and S, comparing only opposite sectors
+(N vs S, E vs W; at least 90 degrees apart, so no shared view): invariance as the correlation of
+rate maps built from opposite sectors (and its ratio to split-half stability), and decoding trained
+on one sector and tested on the opposite one (the off-diagonal cells of `heading_matrix`). Every
+condition in `results/summary.json` is recomputed from the stored activations, on CPU, into a new
+file; the original numbers are kept. The teleport-probe decoding (`analyze_probes.py`, `results/probes.json`) uses the same
+180-degree halves and is recomputed the same way, at every layer, into `results/probes_quadrant.json`
+(scope extended 2026-10-23; only the existing single-layer heading matrices in
+`results/probes_heading_matrix.json` had been seen). The paper then reports the strict version, with the 180-degree
+version noted. Expected: lower invariance and higher cross-heading error everywhere. The tests
+that matter are whether the moving average still matches the walk-in-context model, whether
+VGGT-single keeps a clear majority of heading-invariant place units, and whether random-weight
+Qwen3-VL-2B's 2.79 m survives.
+
+**13f. A positive control for the strict test** (added 2026-10-23 at the user's request, after the
+13e results above; nothing about the RNN under the strict split had been computed). Under 13e no
+model passes heading invariance with a linear readout, so the test needs a model that has a
+position code by construction. The path-integrating RNN of experiment 7 (velocity input only,
+trained to output place-cell activity) is scored with the same strict measures along the same 48
+walks (`grid_rnn.py --score --quadrant` -> `results/grid_rnn_quadrant.json`): the `s093` run
+(0.093 m training steps, `--sub 3`) and the `base` run (0.22 m steps), each anchored (state reset
+every ~20 network steps, as in training) and free. Prediction: a clear majority of its place units
+heading-invariant on opposite sectors and strict cross-heading error well below chance, near its
+within-sector error. If it passes, the strict test is shown to be passable by a real position code;
+if it fails, the strict test (a linear decoder trained on a quarter of the frames) is too harsh and
+the paper says so. Its only heading information is the recent direction of motion.
+
+**Re-analyses of existing data** (sensitivity, not new tests): room-A and room-B contrasts
+re-reported with 95% intervals from a bootstrap over walks (10,000 resamples); first-listed answer
+rates for every model and condition; experiment 10 recomputed on complete runs, with completeness
+checked against the trial manifests. The ten-room results stay the primary evidence.
+
+Cost: none (Mac and RTX 4070). Mac time about 8 h; 4070 about 2 h, behind the shared lock.
+
+**Results so far (2026-10-23).**
+- *13d* (`scripts/appearance_cue.py` -> `results/appearance_cue.json`). DINOv2 favours the near
+  option on 52.0% of novel lure-free trials over the 12 rooms (n = 1,507; room A 52.0%, room B
+  55.7%, P rooms 44-60%) and 55.0% of familiar ones; it agrees with the pixel cue on only about half
+  of trials, so it is a separate cue and is roughly balanced. Accuracy split by its direction (near-
+  favoured minus far-favoured, novel): the base 8B depends on it strongly (P rooms: walk +15.5
+  points, no walk +16.9, shuffled +11.3; room B +26-28), as does the LoRA model without the walk
+  (P rooms +14.3, room B +24.4). The LoRA model with the walk (+0.6 to +6.8, P rooms p = 0.21) and
+  Opus with the walk (P rooms +1.2, p = 0.67; complete runs) do not; Opus without the walk
+  depends on it modestly (+6.9, p = 0.011). Single room-A runs of other models show large
+  splits (Qwen3.6 with walk +25, Gemma no walk 1024 px +20, Sonnet high with walk +20, DeepSeek no
+  walk +27), uncorrected over about 160 runs.
+- *Walk-clustered re-analysis* (`scripts/review_stats.py` -> `results/review_stats.json`; agrees with
+  the GPT review's audit where they overlap). Room A, Opus walk minus no walk: low +13.7 [-1.3,
+  +28.2], sign-flip p = 0.13; medium +8.8 [+1.0, +17.8], p = 0.094; high +11.8 [-1.1, +22.7],
+  p = 0.13; mean of the three +11.4 [+2.3, +20.6], p = 0.046. Ordered minus shuffled -6.9 [-15.8,
+  +2.0]; ordered minus relabelled -1.0 [-11.8, +10.6]. Room B, Opus +0.9 [-11.0, +12.5]. Every LoRA
+  contrast in rooms A and B stays large with walks as the unit (e.g. room A walk minus no walk +39.2
+  [+28.4, +52.0], p = 1e-4; ordered minus shuffled +42.2). No open model or other provider has an
+  interval excluding 0.
+- *First-listed rates* (same file): above 70% for Sonnet at none/low/medium effort (74-91%),
+  Haiku thinking-off with the walk (72%), Gemma-4-31B with the walk (76%); second-listed above 70%
+  for every LoRA no-walk run (74-84%) and several base no-walk runs (71-76%). Unparsed at most 1%
+  (Qwen3.6 thinking 9/192).
+- *13e* (`analyze.py --quadrant` -> `results/summary_quadrant.json`, 14 priority conditions so far,
+  the other 21 running; `analyze_probes.py --quadrant` -> `results/probes_quadrant.json`, complete).
+  Opposite 90-degree sectors; chance (predicting the training sector's mean) 3.70 m for units, 3.62 m
+  for probes. The CPU recompute reproduces summary.json to 0.001 except qwen-shuffled (stored
+  activations differ slightly; use the file's own 180-degree values for it).
+  Original 180-degree -> strict, at the layer the paper reports (cross-heading error; invariant place
+  units as a share of place units):
+  pixels 3.87 -> 5.11 m, 15% -> 1%; pixels + moving average 0.79 -> 0.96 m, 100% -> 97%;
+  Qwen3-VL-2B single L10 3.79 -> 5.68 m, 4% -> 0%; with the walk L2 1.48 -> 2.38 m, 88% -> 47%;
+  shuffled 3.52 -> 4.71 m; single + moving average 0.45 -> 0.60 m, 98% -> 88%;
+  random-weight Qwen3-VL-2B 2.79 -> 4.80 m (best strict layer 4.20 m), 10% -> 1%;
+  DINOv2 3.06 -> 5.30 m; random DINOv2 3.06 -> 6.91 m; VGGT alone L9 3.64 -> 5.44 m;
+  **VGGT single (8 anchors) block 19: 0.97 -> 3.41 m, 64% -> 45%**; VGGT walk block 19: 1.08 ->
+  2.18 m, 80% -> 63%; Qwen3-VL-8B base and fine-tuned with the walk L3: 1.23 / 1.31 -> 2.41 m.
+  VGGT single at every block: strict cross-heading error 3.41-8.92 m (best block 19), while within a
+  sector it is 0.08-0.13 m at blocks 15-23; at blocks 21 and 23 opposite-sector predictions miss by
+  7.7-8.9 m, about twice chance, i.e. mirrored.
+  Teleport probes, best layer: every model 4.16-4.55 m (was 3.19-3.58), the fine-tuned 8B 2.78 ->
+  3.63 m; walk, shuffled and no walk still alike; recall baseline 1.68 -> 1.95 m.
+  Answers to the three questions: (1) the moving average still matches or beats the walk-in-context
+  model, by a wider margin; (2) **no**: VGGT-single keeps 45% heading-invariant place units at block
+  19 and does not decode position linearly across opposite headings; its population code decodes
+  precisely within a sector but not across (VGGT walk does better, 2.18 m and 63%); see 13f for why the
+  decoding half of this is not diagnostic; (3) **no**: random-weight
+  Qwen3-VL-2B's 2.79 m was the 180-degree boundary; strictly it is worse than chance.
+- *13e, complete (2026-10-24 02:11 UTC; all 35 conditions in `results/summary_quadrant.json`).* Strictly
+  heading-invariant share of place units (best layer): single frames 0-6% in every model (pixels 1%,
+  DINOv2 4%, random DINOv2 2%, Qwen3-VL-2B 0%, random 2B 1%, 8B 0%, fine-tuned 8B 1%, Qwen3.8-27B 0%,
+  32B 0%, SenseNova 0%, VGGT alone 6%); walk in context 7-63% (8B 7%, fine-tuned 8B 14%, SenseNova
+  17%, 27B 29%, 2B 47%, 32B 51%, VGGT 63%; VGGT single with anchors 45%); the 8-step moving average of
+  single frames 90-94% for every Qwen-family model and 97% for pixels (2-step 22-34%, 32-step 100%).
+  Strict cross-sector decoding (13f's caveat applies): single frames 4.2-6.6 m, walk in context
+  1.57-2.41 m, moving average 0.49-0.96 m. So in every model the moving average of single frames
+  gives at least the walk's invariance. The fine-tuned 8B's late layers (14%) exceed the base's (7%)
+  but stay far below the moving average.
+- *13f* (`results/grid_rnn_quadrant.json`). Path-integrating RNN, strict opposite sectors (invariant
+  place units as a share of place units; decoding within a sector / across opposite sectors; chance
+  3.70 m):
+  `s093` anchored: 100% (inv/stab 0.99); 0.18 / **0.31 m**. Free: 100%; 1.50 / 1.64 m.
+  `base` anchored: 99% (inv/stab 0.94); 0.23 / **7.57 m**. Free: 98%; 0.29 / 4.22 m.
+  So the unit-level strict test is passed by both networks (98-100% of place units invariant, against
+  45% for VGGT-single block 19, 63% VGGT-walk, 47% Qwen3-VL-2B with the walk, 88% its moving
+  average, 0-1% single-frame pixels, DINOv2, Qwen and VGGT-alone at the reported layers, at most 6% at
+  any layer). The population test is not
+  reliable: the base RNN, whose units are all heading-invariant, fails strict cross-sector decoding
+  with mirrored errors (7.57 m, twice chance) just as VGGT does (7.7-8.9 m at blocks 21-23). A
+  population that also carries heading (the RNN's input is the direction of motion) can defeat a
+  decoder trained on one heading sector, whatever its position code. So: (1) the strict *unit*
+  measure is the criterion the paper uses; (2) strict cross-sector decoding is reported only with
+  this caveat and is not evidence that a code is heading-dependent; (3) the earlier reading of
+  VGGT's mirrored errors as a camera-relative code (13e above) is withdrawn as unsupported.
+- *Experiment 10 completeness*: `heldout_analysis.py` now checks runs against the manifests and
+  writes `results/heldout_summary_incomplete.json` until every run is complete. These files are
+  rerun once the Opus walks 16-31 finish.
+
+## Experiment 14 (pre-registered 2026-10-23, run 2026-10-23/24): the deferred controls
+
+The reviews' remaining requests that the user chose to run (all but repeated API runs). No model has
+seen any of these inputs or conditions.
+
+**14a. The fine-tuned model, recorded while doing the task.** Experiment 9 recorded the LoRA model
+under a walk prompt without labels or the question; reviewers asked for the task itself.
+- *Models and inputs:* the LoRA model (seed 0) and the base Qwen3-VL-8B, on the exact `two_choice.py`
+  prompts (64-frame walk as shown, 61-63 labelled frames, the new view and the question), for all
+  1,920 trials of P5000-P5009. bf16 on the Mac, one forward pass per trial, no generation.
+- *Sites:* the residual stream after every decoder layer at (i) the new view's image-end token,
+  (ii) the mean over the new view's visual tokens, (iii) the question's last token and (iv) the
+  last prompt token (where the answer is generated).
+- *Targets:* the new view's position (x, y); its distance to option a minus its distance to
+  option b; and which option is nearer (a or b).
+- *Readouts:* ridge, and a one-hidden-layer MLP (256 units, early stopping on a validation split),
+  trained on five rooms and tested on the other five, both ways, averaged (no room in both).
+- *Questions:* (1) Is the nearer option decodable at (iv) in the LoRA model at about its behavioural
+  accuracy (a pipeline check), and not in the base? (2) Is the distance difference decodable at
+  (iii)/(iv), and from which layer, in the LoRA model compared with the base? (3) Is the new view's
+  (x, y) decodable at any site in the LoRA model, and at (i) under the task prompt compared with
+  experiment 9's recording prompt? For (x, y), cross-sector decoding (train on one 90-degree heading
+  sector of the new view, test on the opposite) is reported with experiment 13f's caveat.
+  Reported either way; the paper's representation claim is then stated from these results.
+
+*14a result (2026-10-24, Mac MPS, both models complete; `data/acts_task/`, `spatialcells/task_probe.py` ->
+`results/task_probe.json`; readouts trained on five rooms and tested on the other five, both ways).*
+Behaviour on these exact prompts: LoRA 92.8% (novel 92.5%), base 52.8%. Chance: nearer option 54.0%,
+(x, y) 3.50 m.
+- (1) Pipeline check passes: at the last token the LoRA model's nearer option reads out at 92.5% (ridge,
+  layer 27), its behavioural accuracy; the base model's at 55-57%, near chance.
+- (2) Distance difference (d_a - d_b) at the question and last tokens: LoRA R^2 0.74-0.76 (ridge; MLP
+  0.72), appearing between layers 18 and 20 (last token R^2 0.14 at layer 18, 0.54 at 20) together
+  with the nearer option (66% -> 82%); base about 0 at every layer. The decision forms in layers
+  18-20.
+- (3) The new view's (x, y) across rooms: not decodable at any site in either model (best R^2 0.03;
+  lowest median error anywhere 3.38 m, against 3.50 m chance). Within one heading sector across rooms
+  the image sites reach 2.15-2.27 m at their best layers (ridge; LoRA 2.15/2.16, base 2.22/2.27) in both
+  models alike; opposite sectors 4.3-4.9 m, worse than chance (13f's caveat). Experiment 9's
+  room-A decoding (about 1.4 m) was within one room, so it is not comparable with this cross-room test.
+*Exploratory (2026-10-24, not registered; from the same recordings):*
+- (2) is mostly the answer itself. A binary predictor from the LoRA model's own answer already gives
+  R^2 0.69 for d_a - d_b (the true sign gives 0.87), and a ridge readout of what is left after the
+  answer reaches R^2 0.03-0.06 across rooms (last token, layers 20-30). So the readout shows the
+  decision, with at most a small graded distance component.
+- Within each room (ridge, five folds grouped by walk), the new view's position reads out at 1.43 m
+  from the mean of its visual tokens (layer 6) in both models alike (base 1.44 m), matching experiment
+  9's room-A figure under the walk prompt; at the last token, LoRA 2.10 m vs base 2.86 m (chance 3.48 m).
+  So the task prompt and the fine-tuning leave the image-level position information as it was, and add
+  the decision at the answer site, not a room-general position code.
+
+**14b. Opus with the shuffled walk** (experiment 10's registered arm, dropped there for budget, and
+the same arm in the apartments). Claude Opus 5.5, low effort, the 256-frame walk shuffled with its
+real frame numbers (`claude_test.py --shuffle-walk`), as registered in experiment 10. Rooms: decided
+from the Claude budget before any run (see below). Analysis: ordered minus shuffled on novel trials,
+rooms as the unit with a bootstrap CI (procedural rooms); paired sign test pooled (apartments, all
+trials and novel). "Opus does not use the walk's order" is claimed only if the 95% CI of ordered
+minus shuffled lies within +/-3 points.
+
+*14b result (2026-10-24; `results/claude/claude-opus-5-5-roomReplicaApt*-shuffled-low.jsonl`,
+`scripts/photoreal_analysis.py`; $17.30).* Opus with the shuffled walk: **88.1%** of all 503 trials
+[84.9, 90.8] (Apt0-2: 88 / 85 / 92%), against 84.1% in order and 55.7% with no walk; novel 88% (58).
+Ordered minus shuffled: all trials **-4.0 points** (18 better / 38 worse, sign test p = 0.01;
+bootstrap over 90 walks [-7.0, -1.0], whole-walk sign-flip p = 0.017); novel +1.7 (3/2, p = 1).
+Shuffled minus no walk: +32.4 (186/23). So in the apartments Opus's large walk gain does not depend
+on the walk's order, and the interval excludes any advantage for the ordered walk (it slightly
+favours the shuffled one). The same direction as room A (shuffled 81% vs ordered 75%, p = 0.19) and
+the base 8B in the procedural rooms (56.4% vs 51.8%); the opposite of the LoRA model (53.5% shuffled vs
+86.7% ordered here).
+
+**14c. The landmark lure, edited.** Room A's 50 original novel trials where only the far option
+shares a landmark with the new view (`results/landmark_shares.json`).
+- *Edit:* the shared landmark is removed from the room and the whole walk, the new view and both
+  options are re-rendered at the same poses. A poster is replaced by the wall's own texture.
+  Pillars cannot be removed without changing geometry and occlusion, so only trials whose shared
+  landmarks are all posters are used (their number is reported).
+- *Control edit:* in a second variant, one poster that is visible in none of the trial's three
+  views (the lowest-numbered such poster) is removed instead, with the same re-rendering.
+- *Models:* base Qwen3-VL-8B with the 256-frame walk and without the walk, as in figure 2b, on the
+  original, edited and control renders (all on the Mac); Opus (walk and no walk) if the budget allows.
+- *Analysis:* paired sign tests on the same trials, edited minus original and edited minus control.
+*Clarifications (2026-10-23, after rendering, before any model run):* (1) "posters" means every flat
+wall landmark `room.py` renders as a poster, including the door and window: 38 of the 50 lure trials
+qualify (12 share a pillar). The six picture posters alone give 23 trials, reported as a subset. (2)
+Three trials have no control (all eight wall landmarks appear in their views), so the control
+comparison has 35. In one control trial (w11p0705) the removed window shows as a ~95-pixel sliver in
+both options, below the landmark threshold; it is kept. (3) The base model runs through `two_choice.py`
+on MPS for original, edited and control alike (figure 2b's 18% came from another runner; the
+`two_choice.py` CUDA run scores 21% with the walk on these 38). (4) Opus runs at high effort, figure
+2b's setting, reusing its existing original-trial runs; about $10.
+  If the shared poster causes the errors, accuracy rises on the edited trials (toward the 41% the
+  base model scores on no-landmark trials) and not on the control.
+
+*14c result (2026-10-24; base model on the Mac, MPS; Opus at high effort; `scripts/lure_edit_analysis.py` ->
+`results/lure_edit_summary.json`).* 38 qualifying trials (23 with picture posters only), 35 with a
+control. MPS reproduces the CUDA answers on the original trials (38/38 with and without the walk).
+
+| run | original | edited | control | edited - original | edited - control |
+|---|---|---|---|---|---|
+| base 8B, walk | 21% (8/38) | 26% (10/38) | 14% (5/35) | +5 (3/1, p 0.63) | +11 (5/1, p 0.22) |
+| base 8B, no walk | 16% (6/38) | 24% (9/38) | 17% (6/35) | +8 (4/1, p 0.38) | +9 (4/1, p 0.38) |
+| Opus high, walk | 66% (25/38) | 53% (20/38) | 74% (26/35) | -13 (1/6, p 0.13) | -17 (3/9, p 0.15) |
+| Opus high, no walk | 61% (23/38) | 74% (28/38) | 77% (27/35) | +13 (7/2, p 0.18) | +0 (3/3, p 1) |
+
+Picture posters only: the same pattern (base with walk 22% -> 26%). Removing the shared poster does not
+rescue the base model: only 4 of its 38 answers change with the walk, it still picks the far option on
+about three quarters of the trials, and accuracy stays far below the 41% of no-landmark trials. So the
+shared poster is not what causes the lure errors. Opus's changes are not significant either way; its
+no-walk gain on edited trials is matched by the control (+14 over the original), so it is not specific
+to the shared poster.
+*Exploratory (2026-10-24, not registered):* neither listing order nor raw pixels explain the base
+model's pull to the far option on these trials (far option listed first in 19 of 38; pixels favour the
+near option in 19 of 38, before and after the edit; the model picks far 30/38 with the walk and 32/38
+without). DINOv2 (the 13d features) favours the far option in 26 of 38 original trials (68%), 25 of 38
+edited (66%) and 23 of 35 controls (66%), with the median margin unchanged (+0.045 original, +0.055
+edited). The lure trials are trials where the far option looks more similar overall; the shared poster
+marks that similarity but is not its source.
+
+**14d. VGGT, cross-room patching.** The experiment-4 setup at blocks 19 and 21 in room B (anchors at
+the same poses, targets and donors built the same way). Subspaces (position PCA-10, PCA-2 and the
+lambda = 1e4 ridge) fit on room A's fit frames are compared with the same subspaces fit on room B's.
+If the causal subspace is a room-general position code, room-A-fit transfer in room B is within 0.1
+of room-B-fit transfer.
+
+*14d result (2026-10-24, `results/vggt_patch_crossroom.json`; 128 targets in room B; clean error
+0.85 m in room B, 0.42 m on room A's fit frames).* Transfer, subspace fit in room A / fit in room B:
+block 21 position PCA-10 0.87 / 0.87, PCA-2 0.19 / 0.22, ridge 1e4 0.15 / 0.16 (whole token 0.90);
+block 19 PCA-10 0.45 / 0.42, PCA-2 0.17 / 0.18, ridge 0.16 / 0.17 (whole token 0.48). Paired A-fit
+minus B-fit differences -0.04 to +0.03, all within the registered 0.1; the A- and B-fit subspaces
+overlap 0.70-0.92. **The causal subspace carries over to the other room.**
+
+**14e. VGGT remapping with a changed reference.** Block-19 camera-token rate maps in room A with
+(i) the standard 8 anchors, (ii) the same anchors in another order (a different first anchor), and
+(iii) all anchor poses rotated 90 degrees about the room centre. Map correlation with (i), unit by
+unit, and with (i)'s maps rotated 90 degrees. If the units code position in the first anchor's or
+the anchors' frame, (ii)/(iii) move the maps (lower correlation with (i); (iii) correlating with the
+rotated maps); if they code the room's own frame, the maps stay. Reported either way; the remapping
+paragraph is framed by it.
+*Amendment (2026-10-23, before any 14e recording):* the 8 standard anchors sit at poses that map onto
+each other under a 90-degree turn about the room centre, so (iii) as written renders the same 8 images
+in another order and cannot separate the anchors' frame from the room's. (iii) is replaced by all
+anchor poses rotated **45 degrees** about the room centre (new images, a moved anchor set), compared
+with (i)'s maps rotated 45 degrees. (ii) stays (a corner view, (2, 2) facing the centre, first). To
+share the RTX 4070 fairly, each anchor set runs as its own locked job.
+
+*14e result (2026-10-24, RTX 4070; `results/vggt_remap_reference.json`, `spatialcells/vggt_reference.py`).*
+The camera head works with every set (median error 0.42 m standard, 0.47 m reordered, 0.42 m rotated).
+Block-19 place units of (i) (1,505; split-half stability median 0.95; a 45-degree turn of (i)'s own maps
+correlates 0.66 with them, so the test can tell a turned map from a kept one). Medians over units:
+
+| set | vs (i) | vs (i) turned +45 | vs (i) turned -45 | closer to turned +45 | also a place unit (chance) |
+|---|---|---|---|---|---|
+| (ii) reordered | 0.68 | 0.85 | 0.03 | 71% | 43% (22%) |
+| (iii) rotated 45 | 0.68 | 0.95 | -0.01 | 96% | 72% (31%) |
+
+The strictly heading-invariant place units (957) give the same picture (rotated: 0.97 vs turned +45,
+99% closer to it). Position decoders trained on one set fail on another (2.7-3.8 m; within a set
+0.13-0.15 m). So the maps move with the anchors: rotating the anchor poses turns the maps by the same
+45 degrees, and reordering alone, which changes only the first anchor (from the centre facing east to
+(2, 2) facing the centre, a 45-degree change of heading), turns them too. VGGT's place units code
+position in the frame the anchors define (consistent with the first camera's frame, which VGGT's
+outputs are expressed in), not in the room's own frame. This also explains why they keep their maps
+across rooms A and B, where the anchors sit at the same poses. Turned +45 fits (ii) less well than
+(iii) (0.85 vs 0.95), as expected if the first camera's position, which moves in (ii), also matters;
+only rotation was registered, so this is not tested.
+
+**Cost.** 14a, 14c (base model), 14d and 14e: none (Mac and RTX 4070). 14b and Opus in 14c come from
+the Claude budget ($45 left of $138 until next month): 14b about $7 per procedural room and $6.5 per
+apartment; Opus in 14c about $13. The rooms in 14b are fixed by the user's budget decision, before
+any run.
+*Budget decision (2026-10-23, before any 14b or Opus run):* stay within the $45 left. 14b runs in the
+three apartments only (ReplicaApt0-2, all trials), and Opus runs in 14c. The ten procedural rooms
+are not run, so the +/-3-point equivalence claim cannot be made for them and the paper keeps its
+narrowed wording about Opus and order in those rooms. 14b's analysis is the pooled paired sign test
+in the apartments (all trials and novel).
+
+## Experiment 15 (pre-registered 2026-10-24, not yet run): which walk frames the fine-tuned model reads
+
+Experiment 13a showed that the LoRA model uses short stretches of the walk in the order walked, and
+14a that its decision becomes readable at the answer site between layers 18 and 20, with no
+room-general position code. This experiment intervenes inside the model to find which shown frames
+the decision depends on. No model has seen these conditions.
+
+- *Model and trials:* the LoRA model (seed 0), bf16 on the Mac (MPS), experiment 10's exact 64-frame
+  prompts (61-63 labelled walk frames, the new view, the question; built as in `task_record.py`, with
+  its token-count check against experiment 10), all 1,299 novel trials of P5000-P5009. Answers by
+  greedy generation and parsing exactly as `two_choice.py` does.
+- *Intervention (attention cut):* for a set S of shown walk frames, every token outside S is stopped
+  from attending to the visual tokens of the frames in S (from `<|vision_start|>` to `<|vision_end|>`
+  inclusive; the frames' text labels stay visible), by an additive -inf attention mask, in every
+  decoder layer and in every generation step. Nothing else changes: same tokens, positions and
+  images.
+- *Frame sets* (8 frames each, never including the two option frames):
+  - *near neighbours*: the 4 shown frames before and the 4 after the near option in the order shown
+    (at a walk end, the missing ones are taken from the other side);
+  - *far neighbours*: the same around the far option;
+  - *look-alikes*: the 8 shown frames whose DINOv2-base CLS features (as in experiment 13d) are most
+    similar (cosine) to the new view;
+  - *random*: 8 shown frames drawn with a seed from the trial id (the control for cutting 8 frames).
+  Sets may overlap; the overlaps (near neighbours with look-alikes, near with far neighbours) are
+  reported, and the primary contrasts are repeated on the trials without that overlap.
+- *Conditions:* clean (no cut), and each set cut in all layers (primary). Secondary, on rooms
+  P5000-P5002 only (about 390 novel trials): near neighbours and look-alikes cut only in layers 1-18 or
+  only in layers 19-36 (before and after the decision forms, per 14a).
+- *Check:* the clean run reproduces experiment 10's answers on at least 99% of trials; otherwise the
+  run stops and the mismatch is reported before any cut condition is run.
+- *Analysis:* as 13a. Novel-trial accuracy per room, means over rooms with 95% bootstrap CIs (10,000
+  resamples), paired per-room differences with room-level sign tests, and trial-level pooled sign tests.
+  Primary contrasts: near neighbours minus random, look-alikes minus random, near neighbours minus far
+  neighbours. The secondary windows are compared with clean and with the all-layer cut.
+- *What each account predicts:*
+  - the decision reads the walk around the near option (local sequence where the query was taken):
+    cutting near neighbours costs well more than random, and more than far neighbours;
+  - the decision starts from frames that look like the query: cutting look-alikes costs well more
+    than random;
+  - no 8-frame set is special (the information is spread along the walk): every set costs about as
+    much as random.
+  The windows then say whether the frames that matter are read before layer 19 (feeding the decision
+  as it forms) or after it. Reported either way; the paper's statement about what the fine-tuned model
+  reads is made from these results only, and without a claim about how it computes the answer.
+- *Cost:* none (Mac). About 6.5 h for the primary conditions and 1.5 h for the windows; one job at a
+  time on the Mac.
 
 ## Prior work this builds on
 

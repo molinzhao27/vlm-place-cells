@@ -39,3 +39,11 @@ this machine. Over a slow link it is faster to render the walks and probes again
   `.venv-mac` with the GPU host's package versions, and `two_choice.py --device mps` runs the
   behaviour tests there. Its answers are tagged `-mps`. `scripts/mac/run_roomB.sh` checks one
   published room-A result first, then runs experiment 9b.
+- **A 12 GB CUDA card on Ubuntu, no container** (`scripts/rtx4070/`, host settings in its
+  `host.env`): `setup.sh` (venv, VGGT at the GPU host's commit, VGGT-1B weights), `sync.sh
+  push|data|pull`, and `run.sh [--detach LOG] COMMAND`, which holds a GPU lock on that host. It is
+  enough for the `vggt_*` modules with smaller batches (`run_vggt_probes.sh`), not for the 8B
+  models. Its system disk is small, so the large data live on a second SSD (NTFS, mounted at
+  `/mnt/bigd` with `nofail`): `~/habitat-data` and the project's `data/walks*` folders are symlinks
+  into `/mnt/bigd/mechinterp/`. If that drive is not mounted, jobs that read them fail with a
+  missing-file error. Keep the venv and model weights on the system disk.

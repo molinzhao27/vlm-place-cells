@@ -25,6 +25,9 @@ fi
 MI_EXEC_ENV+=(-e TRITON_CACHE_DIR=/workspace/.cache/triton)
 # Host-wide lock shared with the other projects on this GPU.
 MI_GPU_LOCK="${MI_GPU_LOCK:-/tmp/gpu-0.lock}"
+# Optional host script that waits for a project's turn in a shared GPU order, then execs its
+# remaining arguments (gpu-run.sh --turn PROJECT).
+MI_GPU_TURN="${MI_GPU_TURN:-}"
 MI_SSH=(ssh -o BatchMode=yes -o ConnectTimeout=15 -o ServerAliveInterval=30 "$MI_VAST_HOST")
 # rsync remote shell: "<container>:<path>" runs rsync inside the container.
 MI_RSYNC_SHELL="ssh -o BatchMode=yes -o ServerAliveInterval=30 $MI_VAST_HOST docker exec -i"

@@ -1,0 +1,1345 @@
+{
+ "_about": "Per layer: the keys of probes.json (180-degree halves) recomputed on CPU, plus within_quadrant / cross_quadrant: ridge trained on one 90-degree facing sector centred on E, N, W or S (even walks), tested on the same / opposite sector (odd walks), mean over the 4 sectors; cross_heading_chance / cross_quadrant_chance: median error of predicting the training half's / sector's mean position on the opposite one. _best_layer: the layer with the lowest cross_quadrant.",
+ "pixels": {
+  "pix": {
+   "all": 1.6944948434829712,
+   "within_heading": 1.3468281030654907,
+   "cross_heading": 4.143305003643036,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 0.9359376430511475,
+   "cross_quadrant": 5.354813098907471,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "pixels-recall-ema8": {
+  "pix": {
+   "all": 1.4649087190628052,
+   "within_heading": 1.485972821712494,
+   "cross_heading": 1.6771647334098816,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.5486139059066772,
+   "cross_quadrant": 1.947273999452591,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen-probes-walk": {
+  "L2": {
+   "all": 2.2893893718719482,
+   "within_heading": 1.89468315243721,
+   "cross_heading": 3.4711796641349792,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.690243810415268,
+   "cross_quadrant": 4.336056709289551,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L6": {
+   "all": 1.7954834699630737,
+   "within_heading": 1.48035728931427,
+   "cross_heading": 3.6330363154411316,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.1778967380523682,
+   "cross_quadrant": 4.994350433349609,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L10": {
+   "all": 1.586257815361023,
+   "within_heading": 1.2923407852649689,
+   "cross_heading": 3.621830403804779,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.1275867521762848,
+   "cross_quadrant": 4.831691384315491,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L14": {
+   "all": 1.889777660369873,
+   "within_heading": 1.6832592189311981,
+   "cross_heading": 3.7646986842155457,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.4101131558418274,
+   "cross_quadrant": 4.973138928413391,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 2.0721805095672607,
+   "within_heading": 1.8318690359592438,
+   "cross_heading": 3.5553762912750244,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.5008687376976013,
+   "cross_quadrant": 4.671507358551025,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L22": {
+   "all": 2.206040859222412,
+   "within_heading": 1.9028638303279877,
+   "cross_heading": 3.5639837980270386,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.645478218793869,
+   "cross_quadrant": 4.650805473327637,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L27": {
+   "all": 2.3048229217529297,
+   "within_heading": 2.0897133350372314,
+   "cross_heading": 3.527496099472046,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.787109375,
+   "cross_quadrant": 4.420862376689911,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen-probes-shuffled": {
+  "L2": {
+   "all": 2.100893974304199,
+   "within_heading": 1.8753620088100433,
+   "cross_heading": 3.3823500871658325,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.651401311159134,
+   "cross_quadrant": 4.357257544994354,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L6": {
+   "all": 1.7557077407836914,
+   "within_heading": 1.508833646774292,
+   "cross_heading": 3.616027593612671,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.2012171745300293,
+   "cross_quadrant": 5.057256460189819,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L10": {
+   "all": 1.5457680225372314,
+   "within_heading": 1.2884860336780548,
+   "cross_heading": 3.601843476295471,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0892807394266129,
+   "cross_quadrant": 4.957539319992065,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L14": {
+   "all": 1.8507473468780518,
+   "within_heading": 1.6401672959327698,
+   "cross_heading": 3.7418044805526733,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.3935170471668243,
+   "cross_quadrant": 4.999365568161011,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.983169674873352,
+   "within_heading": 1.6663008630275726,
+   "cross_heading": 3.640056550502777,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.4767469465732574,
+   "cross_quadrant": 4.778733968734741,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L22": {
+   "all": 2.1384024620056152,
+   "within_heading": 1.8457633256912231,
+   "cross_heading": 3.5906482338905334,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.5990237593650818,
+   "cross_quadrant": 4.783265709877014,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L27": {
+   "all": 2.3363606929779053,
+   "within_heading": 2.088283121585846,
+   "cross_heading": 3.6047471165657043,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.8204641044139862,
+   "cross_quadrant": 4.668120861053467,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen-probes-only": {
+  "L2": {
+   "all": 2.2056519985198975,
+   "within_heading": 1.9137297868728638,
+   "cross_heading": 3.5760162472724915,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.8339393436908722,
+   "cross_quadrant": 4.3423638343811035,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L6": {
+   "all": 1.7572784423828125,
+   "within_heading": 1.5045917332172394,
+   "cross_heading": 3.8305757641792297,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.2519051134586334,
+   "cross_quadrant": 5.018746852874756,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L10": {
+   "all": 1.653880000114441,
+   "within_heading": 1.3272858262062073,
+   "cross_heading": 3.7757144570350647,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.1447346210479736,
+   "cross_quadrant": 5.042222857475281,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L14": {
+   "all": 2.1907458305358887,
+   "within_heading": 1.8219623267650604,
+   "cross_heading": 3.831643521785736,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.5894368588924408,
+   "cross_quadrant": 4.893535375595093,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 2.1875741481781006,
+   "within_heading": 1.9326051473617554,
+   "cross_heading": 3.8389121890068054,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.6399689316749573,
+   "cross_quadrant": 4.834401726722717,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L22": {
+   "all": 2.5630059242248535,
+   "within_heading": 2.2129631638526917,
+   "cross_heading": 3.8856687545776367,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.9156034886837006,
+   "cross_quadrant": 4.675213098526001,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L27": {
+   "all": 2.901946544647217,
+   "within_heading": 2.5896400809288025,
+   "cross_heading": 3.9336525201797485,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 2.121393859386444,
+   "cross_quadrant": 4.630920350551605,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-probes-walk": {
+  "L3": {
+   "all": 1.8044004440307617,
+   "within_heading": 1.5781164765357971,
+   "cross_heading": 3.2425416111946106,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.3844607174396515,
+   "cross_quadrant": 4.294217646121979,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.407309889793396,
+   "within_heading": 1.2137356996536255,
+   "cross_heading": 3.3717156052589417,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0241259038448334,
+   "cross_quadrant": 4.8695878982543945,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.4637503623962402,
+   "within_heading": 1.2254888713359833,
+   "cross_heading": 3.4616618752479553,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0172660201787949,
+   "cross_quadrant": 4.903844356536865,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.8812400102615356,
+   "within_heading": 1.56468066573143,
+   "cross_heading": 3.789699077606201,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.361609011888504,
+   "cross_quadrant": 5.051202416419983,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.949590802192688,
+   "within_heading": 1.6551640331745148,
+   "cross_heading": 3.8149211406707764,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.4141970872879028,
+   "cross_quadrant": 5.087115049362183,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 2.341459035873413,
+   "within_heading": 1.8937205970287323,
+   "cross_heading": 3.73147851228714,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.573226273059845,
+   "cross_quadrant": 4.875364422798157,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 2.5042662620544434,
+   "within_heading": 2.2090567350387573,
+   "cross_heading": 3.603760838508606,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.9578667879104614,
+   "cross_quadrant": 4.699381232261658,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-probes-shuffled": {
+  "L3": {
+   "all": 1.738002061843872,
+   "within_heading": 1.5904023051261902,
+   "cross_heading": 3.219436764717102,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.4508475363254547,
+   "cross_quadrant": 4.332496106624603,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.3344484567642212,
+   "within_heading": 1.1792590618133545,
+   "cross_heading": 3.5373188257217407,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 0.9520261436700821,
+   "cross_quadrant": 5.006940841674805,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.4341456890106201,
+   "within_heading": 1.1952401399612427,
+   "cross_heading": 3.6312105655670166,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 0.9939296543598175,
+   "cross_quadrant": 4.954956889152527,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.8174328804016113,
+   "within_heading": 1.5187949240207672,
+   "cross_heading": 3.7176398038864136,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.2910611033439636,
+   "cross_quadrant": 5.078924655914307,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.9316356182098389,
+   "within_heading": 1.650587111711502,
+   "cross_heading": 3.7800111174583435,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.3816212117671967,
+   "cross_quadrant": 5.067538261413574,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 2.1197474002838135,
+   "within_heading": 1.8346853852272034,
+   "cross_heading": 3.786425530910492,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.5710870623588562,
+   "cross_quadrant": 5.040547728538513,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 2.2933006286621094,
+   "within_heading": 2.042601376771927,
+   "cross_heading": 3.7053762078285217,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.802907407283783,
+   "cross_quadrant": 4.745441198348999,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-probes-only": {
+  "L3": {
+   "all": 1.7954111099243164,
+   "within_heading": 1.5771448612213135,
+   "cross_heading": 3.2885791063308716,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.4059633910655975,
+   "cross_quadrant": 4.315709352493286,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.4820870161056519,
+   "within_heading": 1.2473191916942596,
+   "cross_heading": 3.4847134351730347,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0395427942276,
+   "cross_quadrant": 5.000004529953003,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.5834649801254272,
+   "within_heading": 1.32156041264534,
+   "cross_heading": 3.5763763189315796,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0810306668281555,
+   "cross_quadrant": 5.044278025627136,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 2.089263439178467,
+   "within_heading": 1.8102248013019562,
+   "cross_heading": 3.8808467388153076,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.539036601781845,
+   "cross_quadrant": 5.019111394882202,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 2.216336250305176,
+   "within_heading": 1.9784879088401794,
+   "cross_heading": 3.8810238242149353,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.6842217445373535,
+   "cross_quadrant": 5.025969743728638,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 2.54060435295105,
+   "within_heading": 2.2287246584892273,
+   "cross_heading": 3.9646114110946655,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.858162522315979,
+   "cross_quadrant": 4.957258105278015,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 2.639054536819458,
+   "within_heading": 2.386248767375946,
+   "cross_heading": 3.7642927169799805,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 2.0152380168437958,
+   "cross_quadrant": 4.573181629180908,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen38-probes-walk": {
+  "L5": {
+   "all": 1.8294662237167358,
+   "within_heading": 1.5896805226802826,
+   "cross_heading": 3.5491649508476257,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.4549469649791718,
+   "cross_quadrant": 4.501366019248962,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L14": {
+   "all": 1.35747492313385,
+   "within_heading": 1.201881468296051,
+   "cross_heading": 3.375896394252777,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0509007275104523,
+   "cross_quadrant": 4.656915068626404,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.3428707122802734,
+   "within_heading": 1.182265192270279,
+   "cross_heading": 3.188546359539032,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.027649074792862,
+   "cross_quadrant": 4.399829149246216,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L33": {
+   "all": 1.7787725925445557,
+   "within_heading": 1.4484450221061707,
+   "cross_heading": 3.904500126838684,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.279070258140564,
+   "cross_quadrant": 5.115029573440552,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L42": {
+   "all": 1.693182110786438,
+   "within_heading": 1.3548462986946106,
+   "cross_heading": 3.7814034819602966,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.1444201469421387,
+   "cross_quadrant": 5.164610981941223,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L51": {
+   "all": 2.2292823791503906,
+   "within_heading": 1.9150287806987762,
+   "cross_heading": 3.904490053653717,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.5778053104877472,
+   "cross_quadrant": 4.972992420196533,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L63": {
+   "all": 2.6029748916625977,
+   "within_heading": 2.255075454711914,
+   "cross_heading": 3.9184020161628723,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.8475708663463593,
+   "cross_quadrant": 4.837501883506775,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen38-probes-shuffled": {
+  "L5": {
+   "all": 1.7835956811904907,
+   "within_heading": 1.5581904351711273,
+   "cross_heading": 3.5991302728652954,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.3447369635105133,
+   "cross_quadrant": 4.535281777381897,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L14": {
+   "all": 1.3679852485656738,
+   "within_heading": 1.17529958486557,
+   "cross_heading": 3.4709280729293823,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0461299866437912,
+   "cross_quadrant": 4.663410544395447,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.3202725648880005,
+   "within_heading": 1.1709559559822083,
+   "cross_heading": 3.2465375661849976,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.024806097149849,
+   "cross_quadrant": 4.317482948303223,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L33": {
+   "all": 1.7198684215545654,
+   "within_heading": 1.416789472103119,
+   "cross_heading": 3.848350465297699,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.234702467918396,
+   "cross_quadrant": 5.148628234863281,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L42": {
+   "all": 1.6539312601089478,
+   "within_heading": 1.3508293330669403,
+   "cross_heading": 3.865725815296173,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.1556905806064606,
+   "cross_quadrant": 5.146543741226196,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L51": {
+   "all": 2.333815097808838,
+   "within_heading": 1.9069661796092987,
+   "cross_heading": 4.004843175411224,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.6638993918895721,
+   "cross_quadrant": 4.937362790107727,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L63": {
+   "all": 2.716240406036377,
+   "within_heading": 2.2835241556167603,
+   "cross_heading": 4.045879065990448,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.915676325559616,
+   "cross_quadrant": 4.758206605911255,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen38-probes-only": {
+  "L5": {
+   "all": 1.9091191291809082,
+   "within_heading": 1.6540314853191376,
+   "cross_heading": 3.514998435974121,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.4733607172966003,
+   "cross_quadrant": 4.474048495292664,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L14": {
+   "all": 1.3917454481124878,
+   "within_heading": 1.2677051723003387,
+   "cross_heading": 3.446953296661377,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0927014648914337,
+   "cross_quadrant": 4.7152745723724365,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.4451613426208496,
+   "within_heading": 1.224600911140442,
+   "cross_heading": 3.2854427099227905,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.033310890197754,
+   "cross_quadrant": 4.491422414779663,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L33": {
+   "all": 1.8758007287979126,
+   "within_heading": 1.5277737081050873,
+   "cross_heading": 3.9087108969688416,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.2938523590564728,
+   "cross_quadrant": 5.0653969049453735,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L42": {
+   "all": 1.8842802047729492,
+   "within_heading": 1.5068334937095642,
+   "cross_heading": 3.967348635196686,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.3116147220134735,
+   "cross_quadrant": 5.178189396858215,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L51": {
+   "all": 2.493351936340332,
+   "within_heading": 2.1721730828285217,
+   "cross_heading": 4.041638612747192,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.7977769076824188,
+   "cross_quadrant": 4.987101078033447,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L63": {
+   "all": 2.6289820671081543,
+   "within_heading": 2.320102334022522,
+   "cross_heading": 3.9833348989486694,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.911342442035675,
+   "cross_quadrant": 4.768468856811523,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen32b-probes-walk": {
+  "L5": {
+   "all": 1.9195780754089355,
+   "within_heading": 1.6843628287315369,
+   "cross_heading": 3.3404398560523987,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.541828602552414,
+   "cross_quadrant": 4.160617709159851,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L14": {
+   "all": 1.313296914100647,
+   "within_heading": 1.0935869216918945,
+   "cross_heading": 3.4200116991996765,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 0.9207431375980377,
+   "cross_quadrant": 4.819240093231201,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.2858144044876099,
+   "within_heading": 1.0874199569225311,
+   "cross_heading": 3.445199489593506,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 0.9668053090572357,
+   "cross_quadrant": 4.85823667049408,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L33": {
+   "all": 1.3420259952545166,
+   "within_heading": 1.0958136022090912,
+   "cross_heading": 3.500629246234894,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 0.9368990659713745,
+   "cross_quadrant": 4.8943458795547485,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L42": {
+   "all": 1.5510103702545166,
+   "within_heading": 1.2305722534656525,
+   "cross_heading": 3.654112994670868,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0691377222537994,
+   "cross_quadrant": 5.236305117607117,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L51": {
+   "all": 1.9015315771102905,
+   "within_heading": 1.646485298871994,
+   "cross_heading": 3.761094391345978,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.364516705274582,
+   "cross_quadrant": 5.198129296302795,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L63": {
+   "all": 2.498473882675171,
+   "within_heading": 2.044580399990082,
+   "cross_heading": 3.6474722027778625,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.7056063413619995,
+   "cross_quadrant": 4.710729956626892,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen32b-probes-shuffled": {
+  "L5": {
+   "all": 1.8889477252960205,
+   "within_heading": 1.680132895708084,
+   "cross_heading": 3.29826158285141,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.5596033334732056,
+   "cross_quadrant": 4.176227867603302,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L14": {
+   "all": 1.2823761701583862,
+   "within_heading": 1.0601866841316223,
+   "cross_heading": 3.3788978457450867,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 0.9088386297225952,
+   "cross_quadrant": 4.758518695831299,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.2674933671951294,
+   "within_heading": 1.046715408563614,
+   "cross_heading": 3.4527280926704407,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 0.9714236855506897,
+   "cross_quadrant": 4.737605810165405,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L33": {
+   "all": 1.2685253620147705,
+   "within_heading": 1.0843565165996552,
+   "cross_heading": 3.4365891218185425,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 0.9440951347351074,
+   "cross_quadrant": 4.814569115638733,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L42": {
+   "all": 1.43461275100708,
+   "within_heading": 1.2391902208328247,
+   "cross_heading": 3.702952206134796,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0592341721057892,
+   "cross_quadrant": 5.173131942749023,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L51": {
+   "all": 1.7810426950454712,
+   "within_heading": 1.5018399357795715,
+   "cross_heading": 3.655311703681946,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.3078868687152863,
+   "cross_quadrant": 5.096756458282471,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L63": {
+   "all": 2.5189812183380127,
+   "within_heading": 2.090656816959381,
+   "cross_heading": 3.8278677463531494,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.677651584148407,
+   "cross_quadrant": 4.841646790504456,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen32b-probes-only": {
+  "L5": {
+   "all": 1.9199877977371216,
+   "within_heading": 1.6942521333694458,
+   "cross_heading": 3.4667232632637024,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.620358258485794,
+   "cross_quadrant": 4.344820141792297,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L14": {
+   "all": 1.3927922248840332,
+   "within_heading": 1.167843908071518,
+   "cross_heading": 3.4016658663749695,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0097676813602448,
+   "cross_quadrant": 4.835783243179321,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.3429985046386719,
+   "within_heading": 1.126824527978897,
+   "cross_heading": 3.4744321703910828,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 0.9907032400369644,
+   "cross_quadrant": 4.906757235527039,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L33": {
+   "all": 1.3367438316345215,
+   "within_heading": 1.1425963044166565,
+   "cross_heading": 3.478484630584717,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0062595456838608,
+   "cross_quadrant": 4.944627165794373,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L42": {
+   "all": 1.695157527923584,
+   "within_heading": 1.3528094589710236,
+   "cross_heading": 3.6704641580581665,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.1910383105278015,
+   "cross_quadrant": 5.185014128684998,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L51": {
+   "all": 2.119546413421631,
+   "within_heading": 1.795617789030075,
+   "cross_heading": 3.869122266769409,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.5191726386547089,
+   "cross_quadrant": 5.084708571434021,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L63": {
+   "all": 2.6968767642974854,
+   "within_heading": 2.3816843032836914,
+   "cross_heading": 3.846644341945648,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.974668025970459,
+   "cross_quadrant": 4.7484623193740845,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "sn8b-probes-walk": {
+  "L3": {
+   "all": 1.813614845275879,
+   "within_heading": 1.5960021913051605,
+   "cross_heading": 3.208921194076538,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.392844706773758,
+   "cross_quadrant": 4.438041687011719,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.3983794450759888,
+   "within_heading": 1.178963154554367,
+   "cross_heading": 3.2959588170051575,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 0.9908447116613388,
+   "cross_quadrant": 4.882584929466248,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.450169324874878,
+   "within_heading": 1.2557202577590942,
+   "cross_heading": 3.372455656528473,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.1008652448654175,
+   "cross_quadrant": 4.867392182350159,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.8737744092941284,
+   "within_heading": 1.5916313827037811,
+   "cross_heading": 3.829169988632202,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.4014267325401306,
+   "cross_quadrant": 5.219105124473572,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 2.204925775527954,
+   "within_heading": 1.8517475128173828,
+   "cross_heading": 3.781883120536804,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.6405302584171295,
+   "cross_quadrant": 5.0376152992248535,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 2.3917791843414307,
+   "within_heading": 2.0215287506580353,
+   "cross_heading": 3.7253338098526,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.7922083139419556,
+   "cross_quadrant": 4.906186938285828,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 2.528202772140503,
+   "within_heading": 2.214121460914612,
+   "cross_heading": 3.6503307223320007,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.9618541896343231,
+   "cross_quadrant": 4.547862768173218,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "sn8b-probes-shuffled": {
+  "L3": {
+   "all": 1.7850674390792847,
+   "within_heading": 1.5374841392040253,
+   "cross_heading": 3.239366829395294,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.3468367755413055,
+   "cross_quadrant": 4.362629234790802,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.3627711534500122,
+   "within_heading": 1.1279079914093018,
+   "cross_heading": 3.3774152398109436,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 0.99369116127491,
+   "cross_quadrant": 4.834004759788513,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.453465223312378,
+   "within_heading": 1.2284259796142578,
+   "cross_heading": 3.3962458968162537,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0691764056682587,
+   "cross_quadrant": 4.8130186796188354,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.870556116104126,
+   "within_heading": 1.5326654613018036,
+   "cross_heading": 3.8678364753723145,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.3386453092098236,
+   "cross_quadrant": 5.12633740901947,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 2.205152988433838,
+   "within_heading": 1.8406299948692322,
+   "cross_heading": 3.8467798829078674,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.5466500520706177,
+   "cross_quadrant": 5.178117990493774,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 2.233666181564331,
+   "within_heading": 1.9463339149951935,
+   "cross_heading": 3.772788166999817,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.6673729121685028,
+   "cross_quadrant": 4.99444055557251,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 2.5131683349609375,
+   "within_heading": 2.2304252982139587,
+   "cross_heading": 3.7292049527168274,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.9213175475597382,
+   "cross_quadrant": 4.873219847679138,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "sn8b-probes-only": {
+  "L3": {
+   "all": 1.8070749044418335,
+   "within_heading": 1.5136544406414032,
+   "cross_heading": 3.247690439224243,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.3709136247634888,
+   "cross_quadrant": 4.552211761474609,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.464650273323059,
+   "within_heading": 1.2283301949501038,
+   "cross_heading": 3.3487167954444885,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0775925517082214,
+   "cross_quadrant": 4.9873915910720825,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.5762150287628174,
+   "within_heading": 1.3275598585605621,
+   "cross_heading": 3.393378973007202,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.1503017246723175,
+   "cross_quadrant": 4.758877873420715,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 2.0952024459838867,
+   "within_heading": 1.8137595653533936,
+   "cross_heading": 3.8149372935295105,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.5776424705982208,
+   "cross_quadrant": 5.039353251457214,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 2.406959295272827,
+   "within_heading": 2.0000988841056824,
+   "cross_heading": 3.8589879274368286,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.8106256127357483,
+   "cross_quadrant": 4.944157004356384,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 2.5805916786193848,
+   "within_heading": 2.2008248567581177,
+   "cross_heading": 3.8205398321151733,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.9317755997180939,
+   "cross_quadrant": 4.837906122207642,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 2.54201340675354,
+   "within_heading": 2.3617902398109436,
+   "cross_heading": 3.7042205929756165,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 2.1076260805130005,
+   "cross_quadrant": 4.649580240249634,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-probes-walk": {
+  "L3": {
+   "all": 1.803890585899353,
+   "within_heading": 1.587941735982895,
+   "cross_heading": 3.238330602645874,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.3676030337810516,
+   "cross_quadrant": 4.3922141790390015,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.4081717729568481,
+   "within_heading": 1.1737848222255707,
+   "cross_heading": 3.4216859936714172,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0387422144412994,
+   "cross_quadrant": 4.878736138343811,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.4325214624404907,
+   "within_heading": 1.2046457827091217,
+   "cross_heading": 3.403412640094757,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0280997455120087,
+   "cross_quadrant": 4.820905923843384,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.5348738431930542,
+   "within_heading": 1.3690845370292664,
+   "cross_heading": 3.065536379814148,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.1742563843727112,
+   "cross_quadrant": 4.438407123088837,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.739530086517334,
+   "within_heading": 1.5096141993999481,
+   "cross_heading": 2.8225200176239014,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.3348225355148315,
+   "cross_quadrant": 3.92284095287323,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.6466150283813477,
+   "within_heading": 1.595748245716095,
+   "cross_heading": 2.854943037033081,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.4594012796878815,
+   "cross_quadrant": 3.8026344180107117,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.7658443450927734,
+   "within_heading": 1.6761911809444427,
+   "cross_heading": 2.7849977612495422,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.543471872806549,
+   "cross_quadrant": 3.6269986033439636,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-probes-shuffled": {
+  "L3": {
+   "all": 1.7025386095046997,
+   "within_heading": 1.563500314950943,
+   "cross_heading": 3.2128782272338867,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.3314884006977081,
+   "cross_quadrant": 4.320974946022034,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.3576915264129639,
+   "within_heading": 1.1888369023799896,
+   "cross_heading": 3.518641412258148,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 0.970319539308548,
+   "cross_quadrant": 4.943564295768738,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.3768141269683838,
+   "within_heading": 1.1458983719348907,
+   "cross_heading": 3.434602737426758,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 0.9836223721504211,
+   "cross_quadrant": 4.7832818031311035,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.4635963439941406,
+   "within_heading": 1.2920638918876648,
+   "cross_heading": 3.123564600944519,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.1142753064632416,
+   "cross_quadrant": 4.432234585285187,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.6696857213974,
+   "within_heading": 1.4187626540660858,
+   "cross_heading": 2.8180989623069763,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.2706324756145477,
+   "cross_quadrant": 4.019330084323883,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.728540301322937,
+   "within_heading": 1.5362691283226013,
+   "cross_heading": 2.8060566782951355,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.3590503334999084,
+   "cross_quadrant": 3.8986154198646545,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.7906088829040527,
+   "within_heading": 1.5940838158130646,
+   "cross_heading": 2.8551405668258667,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.410868525505066,
+   "cross_quadrant": 3.7261996269226074,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-probes-only": {
+  "L3": {
+   "all": 1.7945280075073242,
+   "within_heading": 1.5980345606803894,
+   "cross_heading": 3.2848246097564697,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.3378380239009857,
+   "cross_quadrant": 4.3999412059783936,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.473406195640564,
+   "within_heading": 1.2952139973640442,
+   "cross_heading": 3.415793716907501,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.0657303631305695,
+   "cross_quadrant": 4.864583849906921,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.4594022035598755,
+   "within_heading": 1.2634389698505402,
+   "cross_heading": 3.4521015882492065,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.054283320903778,
+   "cross_quadrant": 4.855769753456116,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.7011408805847168,
+   "within_heading": 1.4852090179920197,
+   "cross_heading": 3.2088212966918945,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.3065330684185028,
+   "cross_quadrant": 4.435770630836487,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.9053401947021484,
+   "within_heading": 1.7557061612606049,
+   "cross_heading": 3.219609797000885,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.5351945459842682,
+   "cross_quadrant": 4.226131558418274,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 2.0285403728485107,
+   "within_heading": 1.8583073019981384,
+   "cross_heading": 3.1382396817207336,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.699908286333084,
+   "cross_quadrant": 4.0837637186050415,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 2.230977773666382,
+   "within_heading": 2.066839814186096,
+   "cross_heading": 3.173613131046295,
+   "chance": 3.624385356903076,
+   "cross_heading_chance": 3.6186848282814026,
+   "within_quadrant": 1.8743385970592499,
+   "cross_quadrant": 3.8921878337860107,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "_best_layer": {
+  "pixels": "pix",
+  "pixels-recall-ema8": "pix",
+  "qwen-probes-walk": "L2",
+  "qwen-probes-shuffled": "L2",
+  "qwen-probes-only": "L2",
+  "qwen8b-probes-walk": "L3",
+  "qwen8b-probes-shuffled": "L3",
+  "qwen8b-probes-only": "L3",
+  "qwen38-probes-walk": "L23",
+  "qwen38-probes-shuffled": "L23",
+  "qwen38-probes-only": "L5",
+  "qwen32b-probes-walk": "L5",
+  "qwen32b-probes-shuffled": "L5",
+  "qwen32b-probes-only": "L5",
+  "sn8b-probes-walk": "L3",
+  "sn8b-probes-shuffled": "L3",
+  "sn8b-probes-only": "L3",
+  "qwen8b-ft-probes-walk": "L35",
+  "qwen8b-ft-probes-shuffled": "L35",
+  "qwen8b-ft-probes-only": "L35"
+ }
+}

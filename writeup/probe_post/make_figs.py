@@ -4,7 +4,7 @@
 
 Reads results/vggt_patch.json, results/vggt_patch_subspaces.json and results/vggt_steer.json.
 Writes writeup/probe_post/figs/fig1_depth.png, fig2_subspaces.png, fig3_neurons.png and
-fig4_joystick.png.
+fig4_joystick.png and fig5_lambda.png (the last from results/vggt_patch_probes.json).
 """
 from __future__ import annotations
 
@@ -197,6 +197,40 @@ def fig4_joystick(block="block 21"):
     plt.close(fig)
 
 
+def fig5_lambda(block="21"):
+    d = json.load(open(RES / "vggt_patch_probes.json"))["blocks"][block]
+    lams = [k for k in d["readout_r2"] if k.startswith("ridge")]
+    ridge = [(d["readout_r2"][k], d[k]["transfer_mean"]) for k in lams]
+    pat = (d["readout_r2"]["pattern"], d["pattern"]["transfer_mean"])
+    pca = (d["readout_r2"]["position PCA 10"], d["position PCA 10"]["transfer_mean"])
+
+    fig, ax = plt.subplots(figsize=(6.0, 4.0), dpi=200)
+    tidy(ax)
+    ax.set_xlim(0.65, 1.005)
+    ax.set_ylim(-0.03, 1.0)
+    ax.set_yticks([0, 0.25, 0.5, 0.75, 1.0])
+    ax.set_xlabel("R² of camera (x, y) read from the written directions")
+    ax.set_ylabel("transfer to the donor's position")
+
+    ax.plot(*zip(*ridge), color=BLUE, lw=2, marker="o", label="ridge probe, λ = 0.1 to 10⁶ (2-d)", **RING)
+    ax.plot(*pat, marker="o", color=ORANGE, linestyle="none", label="Haufe pattern (2-d)", **RING)
+    ax.plot(*pca, marker="o", color=GRAY, linestyle="none", label="position PCA (10-d)", **RING)
+
+    best = max(ridge, key=lambda p: p[0])
+    ax.annotate(f"best-R² probe: {best[1]:.2f}", best, xytext=(-34, 0), textcoords="offset points",
+                ha="right", va="center", fontsize=8.5, color=INK2)
+    ax.annotate("λ = 10⁶", ridge[-1], xytext=(0, 10), textcoords="offset points", ha="center",
+                fontsize=8.5, color=INK2)
+    ax.annotate(f"{pca[1]:.2f}", pca, xytext=(-10, 0), textcoords="offset points", ha="right",
+                va="center", fontsize=9, color=INK)
+    ax.annotate(f"{pat[1]:.2f}", pat, xytext=(0, 10), textcoords="offset points", ha="center", fontsize=9, color=INK)
+
+    ax.legend(loc="upper left", frameon=False, fontsize=9, handlelength=1.6, labelcolor=INK2)
+    fig.tight_layout()
+    fig.savefig(OUT / "fig5_lambda.png")
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     for old in OUT.glob("*.png"):
@@ -205,4 +239,5 @@ if __name__ == "__main__":
     fig2_subspaces()
     fig3_neurons()
     fig4_joystick()
+    fig5_lambda()
     print("wrote", sorted(p.name for p in OUT.glob("*.png")))

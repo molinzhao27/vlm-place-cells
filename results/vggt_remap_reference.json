@@ -1,0 +1,150 @@
+{
+ "layer": "L19",
+ "anchor_sets": {
+  "standard": "(i)",
+  "reordered": "(ii)",
+  "rot45": "(iii)"
+ },
+ "rot45_poses": [
+  [
+   5.0,
+   5.0,
+   0.7853981633974483
+  ],
+  [
+   5.0,
+   5.0,
+   2.356194490192345
+  ],
+  [
+   5.0,
+   5.0,
+   3.9269908169872414
+  ],
+  [
+   5.0,
+   5.0,
+   5.497787143782138
+  ],
+  [
+   5.0,
+   0.7573593128807148,
+   1.5707963267948966
+  ],
+  [
+   9.242640687119286,
+   4.999999999999999,
+   3.141592653589793
+  ],
+  [
+   5.0,
+   9.242640687119284,
+   -1.5707963267948966
+  ],
+  [
+   0.7573593128807148,
+   5.0,
+   0.0
+  ]
+ ],
+ "rot45_views_mean_abs_pixel_diff_to_closest_standard_view": [
+  25.374969482421875,
+  24.81415303548177,
+  24.397776285807293,
+  27.051681518554688,
+  21.174204508463543,
+  21.163523356119793,
+  23.77826436360677,
+  22.95447285970052
+ ],
+ "camera_error_m": {
+  "standard": 0.4218616643303064,
+  "reordered": 0.47219813504391317,
+  "rot45": 0.4225430735594028
+ },
+ "frac_place": {
+  "standard": 0.3614313006401062,
+  "reordered": 0.2156580090522766,
+  "rot45": 0.30713769793510437
+ },
+ "L19": {
+  "rotation_bins_compared": {
+   "+45": 292,
+   "-45": 292,
+   "0": 384
+  },
+  "place": {
+   "n_poles": 1505,
+   "stability_in_i_median": 0.9541968107223511,
+   "i_vs_own_rotation_+45_median": 0.6615673899650574,
+   "i_vs_own_rotation_-45_median": 0.6625537872314453,
+   "reordered": {
+    "map_corr_vs_i_median": 0.6780940890312195,
+    "map_corr_vs_i_frac_over_0.5": 0.7574750781059265,
+    "map_corr_vs_i_rotated_+45_median": 0.8546823263168335,
+    "map_corr_vs_i_rotated_+45_frac_over_0.5": 0.8531560897827148,
+    "map_corr_vs_i_rotated_-45_median": 0.0333322174847126,
+    "frac_closer_to_i_rotated_+45_than_to_i": 0.70963454246521,
+    "map_corr_random_pairs_median": 0.22156168520450592,
+    "also_place": 0.42591362126245846,
+    "chance_place": 0.2156580090522766,
+    "mean_rate_over_i_median": 1.1618870496749878,
+    "frac_nearly_silent": 0.00797342136502266
+   },
+   "rot45": {
+    "map_corr_vs_i_median": 0.6827293634414673,
+    "map_corr_vs_i_frac_over_0.5": 0.9282391667366028,
+    "map_corr_vs_i_rotated_+45_median": 0.946521520614624,
+    "map_corr_vs_i_rotated_+45_frac_over_0.5": 0.9847175478935242,
+    "map_corr_vs_i_rotated_-45_median": -0.014716259203851223,
+    "frac_closer_to_i_rotated_+45_than_to_i": 0.9601328372955322,
+    "map_corr_random_pairs_median": 0.10282858461141586,
+    "also_place": 0.7196013289036545,
+    "chance_place": 0.30713769793510437,
+    "mean_rate_over_i_median": 1.0146596431732178,
+    "frac_nearly_silent": 0.004651162773370743
+   }
+  },
+  "invariant_place": {
+   "n_poles": 957,
+   "stability_in_i_median": 0.9706502556800842,
+   "i_vs_own_rotation_+45_median": 0.6766699552536011,
+   "i_vs_own_rotation_-45_median": 0.676478922367096,
+   "reordered": {
+    "map_corr_vs_i_median": 0.6802690029144287,
+    "map_corr_vs_i_frac_over_0.5": 0.7951933145523071,
+    "map_corr_vs_i_rotated_+45_median": 0.8960888385772705,
+    "map_corr_vs_i_rotated_+45_frac_over_0.5": 0.9310344457626343,
+    "map_corr_vs_i_rotated_-45_median": 0.014710765331983566,
+    "frac_closer_to_i_rotated_+45_than_to_i": 0.785788893699646,
+    "map_corr_random_pairs_median": 0.182835191488266,
+    "also_place": 0.522466039707419,
+    "chance_place": 0.2156580090522766,
+    "mean_rate_over_i_median": 1.1895922422409058,
+    "frac_nearly_silent": 0.004179728217422962
+   },
+   "rot45": {
+    "map_corr_vs_i_median": 0.692592442035675,
+    "map_corr_vs_i_frac_over_0.5": 0.9749215841293335,
+    "map_corr_vs_i_rotated_+45_median": 0.9651681184768677,
+    "map_corr_vs_i_rotated_+45_frac_over_0.5": 1.0,
+    "map_corr_vs_i_rotated_-45_median": -0.008441999554634094,
+    "frac_closer_to_i_rotated_+45_than_to_i": 0.9916405081748962,
+    "map_corr_random_pairs_median": 0.09252353757619858,
+    "also_place": 0.7962382445141066,
+    "chance_place": 0.30713769793510437,
+    "mean_rate_over_i_median": 1.006234884262085,
+    "frac_nearly_silent": 0.0010449320543557405
+   }
+  },
+  "decoding": {
+   "standard->standard": 0.1523565649986267,
+   "standard->reordered": 3.7976789474487305,
+   "reordered->standard": 3.452234983444214,
+   "reordered->reordered": 0.12665602564811707,
+   "standard->rot45": 2.656642436981201,
+   "rot45->standard": 2.8600332736968994,
+   "rot45->rot45": 0.12942343950271606
+  }
+ }
+}

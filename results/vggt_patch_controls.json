@@ -1,0 +1,166 @@
+{
+ "n_test": 128,
+ "clean_error_m": 0.4315018122378109,
+ "target_donor_distance_m": 5.322935250436702,
+ "blocks": {
+  "19": {
+   "token_norm_median": 49.63899230957031,
+   "share": {
+    "position PCA 10": 0.9258939623832703,
+    "random 10": 0.007702265866100788,
+    "all but position PCA 10": 0.07245959341526031,
+    "position PCA 10, heading-matched donors": 0.889972984790802
+   },
+   "full": {
+    "moved_m_median": 2.526786402130877,
+    "error_m_median": 2.7845109216585464,
+    "transfer_mean": 0.4072458480122375,
+    "transfer_sem": 0.020774170933718982,
+    "transfer_median": 0.43093725180717385,
+    "heading_change_deg_median": 25.240328628216716
+   },
+   "full, fixed alignment": {
+    "moved_m_median": 2.531843495689698,
+    "error_m_median": 2.7837907384913416,
+    "transfer_mean": 0.40718224464238184,
+    "transfer_sem": 0.020785969955156018,
+    "transfer_median": 0.4306482926391084,
+    "heading_change_deg_median": 25.26157240453095,
+    "anchor_moved_m_median": 0.003797690936965821
+   },
+   "position PCA 10": {
+    "moved_m_median": 2.513845695995104,
+    "error_m_median": 2.7021720231116118,
+    "transfer_mean": 0.4000054934943613,
+    "transfer_sem": 0.019862362659735754,
+    "transfer_median": 0.40444679503911096,
+    "heading_change_deg_median": 25.472069436232267
+   },
+   "position PCA 10, fixed alignment": {
+    "moved_m_median": 2.5063448024055965,
+    "error_m_median": 2.6995670745280993,
+    "transfer_mean": 0.3999140731981545,
+    "transfer_sem": 0.019879021696110093,
+    "transfer_median": 0.40511842764977757,
+    "heading_change_deg_median": 25.504424415975617,
+    "anchor_moved_m_median": 0.0037363721676482594
+   },
+   "full, heading-matched donors": {
+    "moved_m_median": 2.5377825686543156,
+    "error_m_median": 2.7408103770353565,
+    "transfer_mean": 0.4883662292031051,
+    "transfer_sem": 0.011011536351154688,
+    "transfer_median": 0.5051953310968349,
+    "heading_change_deg_median": 11.588141325909028
+   },
+   "position PCA 10, heading-matched donors": {
+    "moved_m_median": 2.478325428085748,
+    "error_m_median": 2.6614340407875954,
+    "transfer_mean": 0.47336929599163174,
+    "transfer_sem": 0.010992732914785613,
+    "transfer_median": 0.4849196884056461,
+    "heading_change_deg_median": 10.88221710358275
+   },
+   "all but position PCA 10": {
+    "moved_m_median": 0.16196497742566196,
+    "error_m_median": 0.4892956374672663,
+    "transfer_mean": 0.002194960901657829,
+    "transfer_sem": 0.003127508135903522,
+    "transfer_median": 0.005526368601586841,
+    "heading_change_deg_median": 0.7507051189866809
+   },
+   "erase position PCA 10": {
+    "moved_m_median": 1.3711156249403151,
+    "error_m_median": 1.6453779939537463,
+    "heading_change_deg_median": 7.777760046540978
+   },
+   "erase random 10": {
+    "moved_m_median": 0.020040877143580986,
+    "error_m_median": 0.4319417224538179,
+    "heading_change_deg_median": 0.06275880549851148
+   }
+  },
+  "21": {
+   "token_norm_median": 63.40983581542969,
+   "share": {
+    "position PCA 10": 0.934897243976593,
+    "random 10": 0.011311373673379421,
+    "all but position PCA 10": 0.06456786394119263,
+    "position PCA 10, heading-matched donors": 0.8888201713562012
+   },
+   "full": {
+    "moved_m_median": 4.612139047374436,
+    "error_m_median": 5.030254212892899,
+    "transfer_mean": 0.8693225904133689,
+    "transfer_sem": 0.01475414456746113,
+    "transfer_median": 0.8754744932885625,
+    "heading_change_deg_median": 77.76099025894716
+   },
+   "full, fixed alignment": {
+    "moved_m_median": 4.60744650330736,
+    "error_m_median": 5.030207479241662,
+    "transfer_mean": 0.8695080857015329,
+    "transfer_sem": 0.01475666331420998,
+    "transfer_median": 0.8758745823484106,
+    "heading_change_deg_median": 77.66891037241601,
+    "anchor_moved_m_median": 0.003937722781312133
+   },
+   "position PCA 10": {
+    "moved_m_median": 4.49355666441479,
+    "error_m_median": 4.80713089843859,
+    "transfer_mean": 0.853985131158677,
+    "transfer_sem": 0.017559454427930967,
+    "transfer_median": 0.8743461937523441,
+    "heading_change_deg_median": 77.32222161909853
+   },
+   "position PCA 10, fixed alignment": {
+    "moved_m_median": 4.483545197647427,
+    "error_m_median": 4.808836047058934,
+    "transfer_mean": 0.854285587325736,
+    "transfer_sem": 0.01756329255722806,
+    "transfer_median": 0.8755549551912729,
+    "heading_change_deg_median": 77.22077921511547,
+    "anchor_moved_m_median": 0.0041409762173754
+   },
+   "full, heading-matched donors": {
+    "moved_m_median": 4.243721449228545,
+    "error_m_median": 4.38846658195359,
+    "transfer_mean": 0.8235577271724027,
+    "transfer_sem": 0.009933994975905972,
+    "transfer_median": 0.8323174043363881,
+    "heading_change_deg_median": 22.82783829904433
+   },
+   "position PCA 10, heading-matched donors": {
+    "moved_m_median": 4.133407418311556,
+    "error_m_median": 4.3511779414932645,
+    "transfer_mean": 0.80450535842872,
+    "transfer_sem": 0.011218800867922865,
+    "transfer_median": 0.8169163214877677,
+    "heading_change_deg_median": 23.350114743734014
+   },
+   "all but position PCA 10": {
+    "moved_m_median": 0.22121134744888538,
+    "error_m_median": 0.5242723793366858,
+    "transfer_mean": -0.006970569794828723,
+    "transfer_sem": 0.008152648475748803,
+    "transfer_median": 0.0004035367596184839,
+    "heading_change_deg_median": 1.1764601347134624
+   },
+   "erase position PCA 10": {
+    "moved_m_median": 3.063203254561741,
+    "error_m_median": 3.38391448756044,
+    "heading_change_deg_median": 45.56956183519494
+   },
+   "erase random 10": {
+    "moved_m_median": 0.04179670283284264,
+    "error_m_median": 0.43285997753371874,
+    "heading_change_deg_median": 0.21231711851984725
+   }
+  }
+ },
+ "clean_heading_error_deg": 2.2373607668902884,
+ "target_donor_heading_deg": 91.3103130253198,
+ "heading_matched_target_donor_distance_m": 5.256528169890769,
+ "heading_matched_target_donor_heading_deg": 28.12856813527654,
+ "heading_matched_target_donor_true_heading_deg": 28.09582812758542
+}

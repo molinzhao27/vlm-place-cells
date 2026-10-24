@@ -17,6 +17,17 @@ Records the MLP neurons (fc2 input, 4096) at each walk frame's camera token in 7
 frames.npy order); room B goes to data/acts/vggt-<mode>-roomB. Also saves the predicted camera centres in room coordinates, by a
 similarity fit on the anchors only, as data/acts/vggt-<mode>/pose.npz.
 Needs the VGGT repo at /workspace/vggt (see vggt_control.py).
+
+Experiment 14e (remapping with a changed reference) records single mode with other anchor sets,
+each to data/acts/vggt-single-anchors-<set> (pose.npz always written):
+    python -m spatialcells.vggt_cells --mode single --blocks 19 --anchor-set standard|reordered|rot45 --batch 2
+  standard   the 8 anchors above (a separate copy of the standard run)
+  reordered  the same views in another order, a corner view first ((2, 2) facing the centre, not the
+             centre facing east); VGGT's output frame is the first image's
+  rot45      every anchor pose rotated 45 deg anticlockwise about the room centre (5, 5), heading too,
+             rendered there (data/walks/anchors-rot45.npz): the centre facing NE, N-W, ..., and the
+             wall midpoints 4.24 m from the centre facing it. (A 90 deg rotation maps the 8 poses onto
+             each other, so it would only reorder the standard views; amendment of 2026-10-23.)
 """
 from __future__ import annotations
 
@@ -35,15 +46,28 @@ from .vggt_control import RES, umeyama
 ANCHORS = [(5.0, 5.0, 0.0), (5.0, 5.0, np.pi / 2), (5.0, 5.0, np.pi), (5.0, 5.0, 3 * np.pi / 2),
            (2.0, 2.0, np.pi / 4), (8.0, 2.0, 3 * np.pi / 4), (8.0, 8.0, -3 * np.pi / 4), (2.0, 8.0, -np.pi / 4)]
 CHUNK = 64
+REORDERED = [4, 5, 6, 7, 0, 1, 2, 3]    # experiment 14e (ii): the same anchors, a corner view first
 
 
-def anchors(data, layout="A"):
-    path = f"{data}/anchors.npz"
+def rotated(poses, deg):
+    """Poses (x, y, heading) rotated deg anticlockwise about the room centre (5, 5)."""
+    a = np.deg2rad(deg)
+    return [(5 + np.cos(a) * (x - 5) - np.sin(a) * (y - 5), 5 + np.sin(a) * (x - 5) + np.cos(a) * (y - 5), th + a)
+            for x, y, th in poses]
+
+
+def anchors(data, layout="A", anchor_set=None):
+    """Anchor images and poses (x, y, heading) for the room in data, rendered on first use. anchor_set
+    (experiment 14e): None or "standard", "reordered" or "rot45" (see above)."""
+    rot = anchor_set == "rot45"
+    path = f"{data}/anchors-rot45.npz" if rot else f"{data}/anchors.npz"
     if not os.path.exists(path):
         from .room import Room
         room = Room(layout)
-        np.savez(path, images=np.stack([room.render(x, y, th) for x, y, th in ANCHORS]), poses=np.array(ANCHORS))
-    return np.load(path)
+        poses = rotated(ANCHORS, 45) if rot else ANCHORS
+        np.savez(path, images=np.stack([room.render(x, y, th) for x, y, th in poses]), poses=np.array(poses))
+    A = np.load(path)
+    return {k: A[k][REORDERED] for k in ("images", "poses")} if anchor_set == "reordered" else A
 
 
 @torch.no_grad()
@@ -55,6 +79,9 @@ def main():
     ap.add_argument("--vggt", default="/workspace/vggt")
     ap.add_argument("--walks", type=int, help="only the first N walks (smoke test; not saved)")
     ap.add_argument("--blocks", type=int, nargs="+", help="record these global blocks instead (pose.npz not rewritten)")
+    ap.add_argument("--anchor-set", choices=["standard", "reordered", "rot45"],
+                    help="experiment 14e: these anchors, saved to data/acts/vggt-<mode>-anchors-<set>")
+    ap.add_argument("--batch", type=int, help="sequences per batch (default 48 single, 64 alone, 1 walk)")
     args = ap.parse_args()
     sys.path.insert(0, args.vggt)
     from vggt.models.vggt import VGGT
@@ -62,7 +89,7 @@ def main():
 
     frames = np.load(f"{args.data}/frames.npy", mmap_mode="r")
     meta = dict(np.load(f"{args.data}/meta.npz"))
-    A = anchors(args.data, args.room)
+    A = anchors(args.data, args.room, args.anchor_set)
     model = VGGT.from_pretrained("facebook/VGGT-1B").cuda().eval()
     agg = model.aggregator
     P = agg.patch_start_idx + (RES // 14) ** 2                       # tokens per image: camera, registers, patches
@@ -117,6 +144,7 @@ def main():
     else:
         groups = [np.array([f]) for o in order for f in o]
         batch = 48 if args.mode == "single" else 64
+    batch = args.batch or batch
     for b0 in range(0, len(groups), batch):
         run(groups[b0:b0 + batch])
         if b0 % (batch * 50) == 0:
@@ -124,9 +152,10 @@ def main():
             print(f"{b0 + batch}/{len(groups)} sequences, {time.time() - t0:.0f}s, median position error so far "
                   f"{err:.2f} m, peak {torch.cuda.max_memory_allocated() / 2**30:.0f} GiB", flush=True)
     if not args.walks:
-        out = f"data/acts/vggt-{args.mode}" + ("" if args.room == "A" else f"-room{args.room}")
+        out = (f"data/acts/vggt-{args.mode}" + ("" if args.room == "A" else f"-room{args.room}")
+               + (f"-anchors-{args.anchor_set}" if args.anchor_set else ""))
         save(out, acts)
-        if not args.blocks:
+        if not args.blocks or args.anchor_set:
             np.savez(f"{out}/pose.npz", x=xy[:, 0], y=xy[:, 1], theta=heading)
     if n_anchor:
         done = np.isfinite(xy[:, 0])

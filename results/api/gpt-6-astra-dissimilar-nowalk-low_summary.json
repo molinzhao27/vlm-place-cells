@@ -1,0 +1,18 @@
+{
+ "novel": {
+  "n": 102,
+  "accuracy": 0.5098039215686274,
+  "parsed": 1.0,
+  "picked_first_listed": 0.5294117647058824,
+  "median_output_tokens": 146,
+  "cost_usd": 1.07
+ },
+ "familiar": {
+  "n": 90,
+  "accuracy": 0.6666666666666666,
+  "parsed": 1.0,
+  "picked_first_listed": 0.5555555555555556,
+  "median_output_tokens": 110,
+  "cost_usd": 0.87
+ }
+}

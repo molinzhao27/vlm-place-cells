@@ -234,6 +234,8 @@ def run(args):
                     "walk_frames": args.walk_frames, "seconds": round(time.time() - t0, 1),
                     **({"raw": raw} if args.preflight else {})}
         extra = {"prompt_cache_key": f"{args.model}-walk{t['walk']}"} if provider == "openai" and prefix is not None else {}
+        if provider == "openai" and args.service_tier:
+            extra["service_tier"] = args.service_tier     # transport and price only; same request otherwise
         r = c.chat.completions.create(messages=[{"role": "user", "content": parts(context + ct.question_blocks(t))}], **kw, **extra)
         m = r.choices[0].message
         text = m.content or ""
@@ -245,7 +247,8 @@ def run(args):
                 "far": t["far"], "a": t["a"], "b": t["b"], "answer": ans, "correct": ans == t["near"], "text": text[-600:],
                 "reasoning": reasoning[-1500:], "finish_reason": r.choices[0].finish_reason, "usage": u,
                 "cost_usd": cost(args.model, u, t0), "offpeak": offpeak(args.model, t0), "model": args.model,
-                "model_served": getattr(r, "model", None), "utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(t0)),
+                "model_served": getattr(r, "model", None), "service_tier": getattr(r, "service_tier", None),
+                "utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(t0)),
                 "settings": settings, "walk_shown": not args.no_walk,
                 "shuffle_walk": args.shuffle_walk, "walk_frames": args.walk_frames, "seconds": round(time.time() - t0, 1)}
 
@@ -347,6 +350,8 @@ def main():
     ap.add_argument("--shuffle-walk", action="store_true", help="walk frames in a fixed random order, original labels")
     ap.add_argument("--walk-frames", type=int, default=256, help="show this many walk frames (always incl. the options)")
     ap.add_argument("--concurrency", type=int, default=4)
+    ap.add_argument("--service-tier", choices=["flex"], help="OpenAI only: request the flex tier (batch pricing, may be "
+                    "slower). Costs are still logged at the standard rate, an upper bound")
     ap.add_argument("--budget-usd", type=float, default=5.0)
     ap.add_argument("--preflight", action="store_true", help="one full-walk request: is it accepted, and what does it cost")
     ap.add_argument("--score", action="store_true")

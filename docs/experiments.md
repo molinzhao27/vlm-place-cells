@@ -1857,6 +1857,22 @@ Questions:
 4. Does VGGT still place probes?
 Reported either way, and pooled with experiment 12's apartments only as a separate, labelled summary.
 
+*Implementation note (2026-10-25, after rendering, before any model saw a house):* `spatialcells/hssd_select.py`,
+`habitat_scene.py --hssd`, `scripts/rtx4070/render_hssd.sh`; selection record `results/hssd_selection.json`.
+- The Hugging Face release holds 168 houses, not the 211 of the HSSD paper; the draw ran over those 168
+  as registered (sorted ids, `random.Random(16)`).
+- 13 houses were drawn and 8 accepted (HSSD1-8 in draw order). Skipped: three whose largest navigable
+  island is a yard or a whole lot (327-866 m^2), one at 35.6 m^2, and one whose largest island is
+  outdoors and gave 10 trials (88% of views more than 5% holes).
+- HSSD ships no navmesh, so it is computed with experiment 12's agent (1.5 m tall, 0.1 m radius),
+  furniture counted as obstacles. HSSD's semantic ids are per category, so the instance image uses each
+  object's own id; the stage (walls, floor, ceiling) is structure, and doors, windows, carpets (as rugs),
+  stairs, beams and wall panels are mapped onto experiment 12's non-landmark list. Walk seeds are 1600
+  plus the draw position.
+- Accepted houses: largest islands 57-128 m^2, no view more than 5% holes. Trials (all / novel): HSSD1
+  188/68, HSSD2 192/53, HSSD3 180/38, HSSD4 192/38, HSSD5 156/36, HSSD6 170/40, HSSD7 180/55, HSSD8
+  192/38; 1,450 in all, 366 novel.
+
 ## Prior work this builds on
 
 - Luo, Mok & Love 2024, *The inevitability and superfluousness of cell types in

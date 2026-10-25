@@ -1,0 +1,878 @@
+{
+ "about": "The scene ids of hssd-hab's default scene set (scenes/*.scene_instance.json) are sorted, shuffled with\nrandom.Random(16) and taken in that order. Each drawn house is checked and rendered as in experiment 12\n(habitat_scene.py --hssd --walks-out: 32 walks of 256 steps, 128 probes per walk, 0.15 m clearance, seed\n1600 + its place in the draw), and its lure-free trials are built (dissimilar_trials.py --walks 32\n--per-walk 6, CPU only). It is accepted if it loads, has a navmesh (none ship, so computed with experiment\n12's agent), its largest navigable island is 40-250 m^2, its objects carry instance labels\n(habitat_scene.scene_check) and it yields at least 60 trials; otherwise the next house is drawn, until 8\nare accepted. They are named HSSD1..HSSD8 in draw order: walks in BIG/walks-roomHSSD<k> (data/walks-roomHSSD<k>\nlinks there, as for the Replica walks), trials in results/export/dissimilar-roomHSSD<k>/. A skipped house's\nrender and trials move to BIG/hssd-skipped/<scene id>/. Every draw, and why it was accepted or skipped, goes\nto results/hssd_selection.json, rewritten after each draw; a rerun resumes from it. Houses whose objects are\nnot downloaded yet (scripts/rtx4070/get_hssd.sh fetches the first 24 of the draw first) stop the run.",
+ "dataset": "hssd/hssd-hab",
+ "revision": "4369cb9876214c7fbebcf552eb532380e4d287e4",
+ "scene_ids": 168,
+ "rules": {
+  "island_m2": [
+   40,
+   250
+  ],
+  "min_trials": 60,
+  "render": "--walks 32 --steps 256 --probes-per-walk 128 --margin 0.15",
+  "trials": "--walks 32 --per-walk 6",
+  "draw_seed": 16,
+  "render_seed": "1600 + draw position"
+ },
+ "draw_order": [
+  "106366371_174226743",
+  "104862639_172226823",
+  "106879080_174887211",
+  "107734176_176000019",
+  "106878858_174886965",
+  "104348181_171513120",
+  "104862687_172226883",
+  "102816786",
+  "106878960_174887073",
+  "103997424_171030444",
+  "104862513_172226580",
+  "108294846_176710506",
+  "105515505_173104584",
+  "104862396_172226349",
+  "103997586_171030669",
+  "108294684_176710278",
+  "107734227_176000091",
+  "106366173_174226431",
+  "106366134_174226362",
+  "102816600",
+  "106366434_174226881",
+  "103997445_171030492",
+  "108294816_176710461",
+  "108294537_176710050",
+  "105515286_173104287",
+  "107734479_176000442",
+  "104862384_172226319",
+  "107734146_175999971",
+  "103997994_171031320",
+  "104348010_171512832",
+  "102816066",
+  "103997919_171031233",
+  "104348037_171512898",
+  "102344469",
+  "104348028_171512877",
+  "107734449_176000403",
+  "105515490_173104566",
+  "103997613_171030702",
+  "102816756",
+  "107734119_175999938",
+  "104862501_172226556",
+  "102344094",
+  "103997895_171031182",
+  "102815859",
+  "103997718_171030855",
+  "103997781_171030978",
+  "105515160_173104077",
+  "102816627",
+  "105515430_173104494",
+  "102816729",
+  "102816615",
+  "102816009",
+  "105515541_173104641",
+  "103997586_171030666",
+  "108736851_177263586",
+  "108294558_176710095",
+  "106365897_174225972",
+  "103997403_171030405",
+  "106366263_174226557",
+  "107734017_175999794",
+  "103997478_171030525",
+  "104862573_172226682",
+  "107734119_175999932",
+  "102817200",
+  "106879023_174887148",
+  "104862558_172226664",
+  "102344250",
+  "102344529",
+  "105515211_173104185",
+  "103997940_171031257",
+  "108736689_177263340",
+  "102817140",
+  "106366104_174226329",
+  "105515235_173104215",
+  "107734119_175999935",
+  "102344457",
+  "105515151_173104068",
+  "105515337_173104347",
+  "102344328",
+  "104348463_171513588",
+  "106366386_174226770",
+  "108294465_176709960",
+  "108294870_176710551",
+  "107734338_176000244",
+  "105515448_173104512",
+  "105515184_173104128",
+  "108294624_176710203",
+  "104862417_172226382",
+  "102344115",
+  "107733912_175999623",
+  "103997970_171031287",
+  "102816852",
+  "105515307_173104317",
+  "102816036",
+  "108294939_176710668",
+  "105515175_173104107",
+  "104348361_171513414",
+  "102344403",
+  "104862669_172226853",
+  "108736737_177263406",
+  "102815835",
+  "107734056_175999839",
+  "106366410_174226806",
+  "108736635_177263256",
+  "107734254_176000121",
+  "108736872_177263607",
+  "108294765_176710386",
+  "108736722_177263382",
+  "107734158_175999998",
+  "105515403_173104449",
+  "104348253_171513237",
+  "107734188_176000034",
+  "107734110_175999914",
+  "102344307",
+  "106878915_174887025",
+  "108736779_177263484",
+  "103997562_171030642",
+  "103997478_171030528",
+  "108294573_176710113",
+  "102816051",
+  "104348328_171513363",
+  "102817053",
+  "103997799_171031002",
+  "107734287_176000160",
+  "102343992",
+  "106366104_174226332",
+  "108736800_177263517",
+  "102816114",
+  "108736824_177263559",
+  "102344439",
+  "108294417_176709879",
+  "103997643_171030747",
+  "106366353_174226695",
+  "107734080_175999881",
+  "105515301_173104305",
+  "102816216",
+  "106366323_174226647",
+  "108736656_177263304",
+  "108736884_177263634",
+  "108294798_176710428",
+  "104348133_171513054",
+  "108294897_176710602",
+  "106878945_174887058",
+  "106879005_174887124",
+  "102344280",
+  "103997541_171030615",
+  "108294783_176710410",
+  "104348394_171513453",
+  "108736611_177263226",
+  "102344193",
+  "104862681_172226874",
+  "103997460_171030507",
+  "105515211_173104179",
+  "104862660_172226844",
+  "104862621_172226772",
+  "102344049",
+  "104348082_171512994",
+  "104348202_171513150",
+  "104348511_171513654",
+  "106366248_174226527",
+  "102344022",
+  "106878867_174886977",
+  "104348160_171513093",
+  "106366302_174226617",
+  "104862534_172226625",
+  "107733960_175999701",
+  "106879044_174887172",
+  "105515379_173104395"
+ ],
+ "draws": [
+  {
+   "position": 0,
+   "scene": "106366371_174226743",
+   "seed": 1600,
+   "check": {
+    "scene": "106366371_174226743",
+    "seed": 1600,
+    "objects_in_scene_file": 505,
+    "objects_created": 505,
+    "navmesh": "computed",
+    "islands_m2": [
+     327.3,
+     316.8,
+     80.9,
+     10.2,
+     6.7
+    ],
+    "largest_island_m2": 327.3,
+    "island_range_m2": [
+     40.0,
+     250.0
+    ],
+    "label_views": 64,
+    "objects_seen": 101,
+    "object_pixel_share": 0.303,
+    "landmark_objects_seen": 52,
+    "non_object_ids_seen": [
+     0
+    ],
+    "structure_objects": {
+     "door": 1,
+     "rug": 7,
+     "window": 19
+    },
+    "unnamed_objects": 56,
+    "skip": "island: largest 327.3 m^2, not 40-250"
+   },
+   "status": "skipped",
+   "reason": "island: largest 327.3 m^2, not 40-250",
+   "minutes": 0.0
+  },
+  {
+   "position": 1,
+   "scene": "104862639_172226823",
+   "seed": 1601,
+   "check": {
+    "scene": "104862639_172226823",
+    "seed": 1601,
+    "objects_in_scene_file": 120,
+    "objects_created": 120,
+    "navmesh": "computed",
+    "islands_m2": [
+     57.4,
+     1.5,
+     1.5,
+     1.3
+    ],
+    "largest_island_m2": 57.4,
+    "island_range_m2": [
+     40.0,
+     250.0
+    ],
+    "label_views": 64,
+    "objects_seen": 104,
+    "object_pixel_share": 0.321,
+    "landmark_objects_seen": 51,
+    "non_object_ids_seen": [
+     0
+    ],
+    "structure_objects": {
+     "door": 2,
+     "rug": 4,
+     "window": 17
+    },
+    "unnamed_objects": 5,
+    "skip": null
+   },
+   "render": {
+    "scene": "104862639_172226823",
+    "frames": 8192,
+    "probes": 4096,
+    "extent_m": [
+     12.35,
+     11.87
+    ],
+    "frame_holes_over_5pct": 0.0,
+    "probe_holes_over_5pct": 0.0,
+    "landmarks_per_view": 2.38
+   },
+   "trials": 188,
+   "novel": 68,
+   "trials_summary": "188 trials (68 novel); pixels favour near in 50%, frame order in 50%; median |sim diff| 0.003 (options' sim median -0.03, best walk frame 0.62); near/far distance medians 0.52 / 3.56 m; heading diff medians 133 / 131 deg -> results/export/dissimilar-roomHSSD1/trials.json",
+   "status": "accepted",
+   "name": "HSSD1",
+   "reason": "188 lure-free trials >= 60",
+   "minutes": 0.7
+  },
+  {
+   "position": 2,
+   "scene": "106879080_174887211",
+   "seed": 1602,
+   "check": {
+    "scene": "106879080_174887211",
+    "seed": 1602,
+    "objects_in_scene_file": 432,
+    "objects_created": 432,
+    "navmesh": "computed",
+    "islands_m2": [
+     115.8,
+     4.3,
+     3.2,
+     2.8,
+     2.7
+    ],
+    "largest_island_m2": 115.8,
+    "island_range_m2": [
+     40.0,
+     250.0
+    ],
+    "label_views": 64,
+    "objects_seen": 377,
+    "object_pixel_share": 0.419,
+    "landmark_objects_seen": 98,
+    "non_object_ids_seen": [
+     0
+    ],
+    "structure_objects": {
+     "door": 1,
+     "rug": 7,
+     "window": 14
+    },
+    "unnamed_objects": 54,
+    "skip": null
+   },
+   "render": {
+    "scene": "106879080_174887211",
+    "frames": 8192,
+    "probes": 4096,
+    "extent_m": [
+     17.88,
+     12.19
+    ],
+    "frame_holes_over_5pct": 0.0,
+    "probe_holes_over_5pct": 0.0,
+    "landmarks_per_view": 2.79
+   },
+   "trials": 192,
+   "novel": 53,
+   "trials_summary": "192 trials (53 novel); pixels favour near in 51%, frame order in 51%; median |sim diff| 0.003 (options' sim median 0.06, best walk frame 0.68); near/far distance medians 0.63 / 3.46 m; heading diff medians 141 / 143 deg -> results/export/dissimilar-roomHSSD2/trials.json",
+   "status": "accepted",
+   "name": "HSSD2",
+   "reason": "192 lure-free trials >= 60",
+   "minutes": 1.2
+  },
+  {
+   "position": 3,
+   "scene": "107734176_176000019",
+   "seed": 1603,
+   "check": {
+    "scene": "107734176_176000019",
+    "seed": 1603,
+    "objects_in_scene_file": 257,
+    "objects_created": 257,
+    "navmesh": "computed",
+    "islands_m2": [
+     74.7,
+     4.4,
+     2.5,
+     2.2,
+     1.7
+    ],
+    "largest_island_m2": 74.7,
+    "island_range_m2": [
+     40.0,
+     250.0
+    ],
+    "label_views": 64,
+    "objects_seen": 192,
+    "object_pixel_share": 0.295,
+    "landmark_objects_seen": 83,
+    "non_object_ids_seen": [
+     0
+    ],
+    "structure_objects": {
+     "door": 6,
+     "rug": 12,
+     "window": 2
+    },
+    "unnamed_objects": 15,
+    "skip": null
+   },
+   "render": {
+    "scene": "107734176_176000019",
+    "frames": 8192,
+    "probes": 4096,
+    "extent_m": [
+     20.17,
+     7.82
+    ],
+    "frame_holes_over_5pct": 0.0,
+    "probe_holes_over_5pct": 0.0,
+    "landmarks_per_view": 2.65
+   },
+   "trials": 180,
+   "novel": 38,
+   "trials_summary": "180 trials (38 novel); pixels favour near in 51%, frame order in 50%; median |sim diff| 0.003 (options' sim median -0.02, best walk frame 0.62); near/far distance medians 0.61 / 3.39 m; heading diff medians 134 / 136 deg -> results/export/dissimilar-roomHSSD3/trials.json",
+   "status": "accepted",
+   "name": "HSSD3",
+   "reason": "180 lure-free trials >= 60",
+   "minutes": 0.8
+  },
+  {
+   "position": 4,
+   "scene": "106878858_174886965",
+   "seed": 1604,
+   "check": {
+    "scene": "106878858_174886965",
+    "seed": 1604,
+    "objects_in_scene_file": 331,
+    "objects_created": 331,
+    "navmesh": "computed",
+    "islands_m2": [
+     865.7,
+     2.7,
+     2.6,
+     2.5,
+     2.1
+    ],
+    "largest_island_m2": 865.7,
+    "island_range_m2": [
+     40.0,
+     250.0
+    ],
+    "label_views": 64,
+    "objects_seen": 212,
+    "object_pixel_share": 0.104,
+    "landmark_objects_seen": 27,
+    "non_object_ids_seen": [
+     0
+    ],
+    "structure_objects": {
+     "door": 9,
+     "rug": 13,
+     "window": 10
+    },
+    "unnamed_objects": 15,
+    "skip": "island: largest 865.7 m^2, not 40-250"
+   },
+   "status": "skipped",
+   "reason": "island: largest 865.7 m^2, not 40-250",
+   "minutes": 0.0
+  },
+  {
+   "position": 5,
+   "scene": "104348181_171513120",
+   "seed": 1605,
+   "check": {
+    "scene": "104348181_171513120",
+    "seed": 1605,
+    "objects_in_scene_file": 487,
+    "objects_created": 487,
+    "navmesh": "computed",
+    "islands_m2": [
+     723.2,
+     145.4,
+     111.0,
+     34.6,
+     23.5
+    ],
+    "largest_island_m2": 723.2,
+    "island_range_m2": [
+     40.0,
+     250.0
+    ],
+    "label_views": 64,
+    "objects_seen": 204,
+    "object_pixel_share": 0.378,
+    "landmark_objects_seen": 86,
+    "non_object_ids_seen": [
+     0
+    ],
+    "structure_objects": {
+     "door": 12,
+     "rug": 10,
+     "window": 30
+    },
+    "unnamed_objects": 34,
+    "skip": "island: largest 723.2 m^2, not 40-250"
+   },
+   "status": "skipped",
+   "reason": "island: largest 723.2 m^2, not 40-250",
+   "minutes": 0.0
+  },
+  {
+   "position": 6,
+   "scene": "104862687_172226883",
+   "seed": 1606,
+   "check": {
+    "scene": "104862687_172226883",
+    "seed": 1606,
+    "objects_in_scene_file": 196,
+    "objects_created": 196,
+    "navmesh": "computed",
+    "islands_m2": [
+     35.6,
+     2.3,
+     2.3,
+     2.3,
+     1.4
+    ],
+    "largest_island_m2": 35.6,
+    "island_range_m2": [
+     40.0,
+     250.0
+    ],
+    "label_views": 64,
+    "objects_seen": 185,
+    "object_pixel_share": 0.372,
+    "landmark_objects_seen": 77,
+    "non_object_ids_seen": [
+     0
+    ],
+    "structure_objects": {
+     "door": 1,
+     "rug": 4,
+     "window": 8
+    },
+    "unnamed_objects": 18,
+    "skip": "island: largest 35.6 m^2, not 40-250"
+   },
+   "status": "skipped",
+   "reason": "island: largest 35.6 m^2, not 40-250",
+   "minutes": 0.0
+  },
+  {
+   "position": 7,
+   "scene": "102816786",
+   "seed": 1607,
+   "check": {
+    "scene": "102816786",
+    "seed": 1607,
+    "objects_in_scene_file": 358,
+    "objects_created": 358,
+    "navmesh": "computed",
+    "islands_m2": [
+     112.2,
+     7.8,
+     3.4,
+     3.1,
+     2.1
+    ],
+    "largest_island_m2": 112.2,
+    "island_range_m2": [
+     40.0,
+     250.0
+    ],
+    "label_views": 64,
+    "objects_seen": 302,
+    "object_pixel_share": 0.366,
+    "landmark_objects_seen": 93,
+    "non_object_ids_seen": [
+     0
+    ],
+    "structure_objects": {
+     "door": 2,
+     "rug": 9,
+     "stair": 1,
+     "window": 14
+    },
+    "unnamed_objects": 31,
+    "skip": null
+   },
+   "render": {
+    "scene": "102816786",
+    "frames": 8192,
+    "probes": 4096,
+    "extent_m": [
+     15.26,
+     18.07
+    ],
+    "frame_holes_over_5pct": 0.0,
+    "probe_holes_over_5pct": 0.0,
+    "landmarks_per_view": 2.37
+   },
+   "trials": 192,
+   "novel": 38,
+   "trials_summary": "192 trials (38 novel); pixels favour near in 51%, frame order in 50%; median |sim diff| 0.004 (options' sim median -0.05, best walk frame 0.65); near/far distance medians 0.62 / 3.54 m; heading diff medians 133 / 130 deg -> results/export/dissimilar-roomHSSD4/trials.json",
+   "status": "accepted",
+   "name": "HSSD4",
+   "reason": "192 lure-free trials >= 60",
+   "minutes": 1.0
+  },
+  {
+   "position": 8,
+   "scene": "106878960_174887073",
+   "seed": 1608,
+   "check": {
+    "scene": "106878960_174887073",
+    "seed": 1608,
+    "objects_in_scene_file": 272,
+    "objects_created": 272,
+    "navmesh": "computed",
+    "islands_m2": [
+     63.6,
+     3.5,
+     2.3,
+     1.1
+    ],
+    "largest_island_m2": 63.6,
+    "island_range_m2": [
+     40.0,
+     250.0
+    ],
+    "label_views": 64,
+    "objects_seen": 239,
+    "object_pixel_share": 0.331,
+    "landmark_objects_seen": 83,
+    "non_object_ids_seen": [
+     0
+    ],
+    "structure_objects": {
+     "door": 2,
+     "rug": 9,
+     "window": 19
+    },
+    "unnamed_objects": 8,
+    "skip": null
+   },
+   "render": {
+    "scene": "106878960_174887073",
+    "frames": 8192,
+    "probes": 4096,
+    "extent_m": [
+     10.73,
+     11.83
+    ],
+    "frame_holes_over_5pct": 0.0,
+    "probe_holes_over_5pct": 0.0,
+    "landmarks_per_view": 3.19
+   },
+   "trials": 156,
+   "novel": 36,
+   "trials_summary": "156 trials (36 novel); pixels favour near in 50%, frame order in 50%; median |sim diff| 0.002 (options' sim median -0.00, best walk frame 0.57); near/far distance medians 0.53 / 3.44 m; heading diff medians 136 / 137 deg -> results/export/dissimilar-roomHSSD5/trials.json",
+   "status": "accepted",
+   "name": "HSSD5",
+   "reason": "156 lure-free trials >= 60",
+   "minutes": 0.9
+  },
+  {
+   "position": 9,
+   "scene": "103997424_171030444",
+   "seed": 1609,
+   "check": {
+    "scene": "103997424_171030444",
+    "seed": 1609,
+    "objects_in_scene_file": 173,
+    "objects_created": 173,
+    "navmesh": "computed",
+    "islands_m2": [
+     69.0,
+     2.7,
+     1.5
+    ],
+    "largest_island_m2": 69.0,
+    "island_range_m2": [
+     40.0,
+     250.0
+    ],
+    "label_views": 64,
+    "objects_seen": 164,
+    "object_pixel_share": 0.321,
+    "landmark_objects_seen": 63,
+    "non_object_ids_seen": [
+     0
+    ],
+    "structure_objects": {
+     "door": 1,
+     "rug": 3,
+     "window": 6
+    },
+    "unnamed_objects": 9,
+    "skip": null
+   },
+   "render": {
+    "scene": "103997424_171030444",
+    "frames": 8192,
+    "probes": 4096,
+    "extent_m": [
+     14.67,
+     10.54
+    ],
+    "frame_holes_over_5pct": 0.0,
+    "probe_holes_over_5pct": 0.0,
+    "landmarks_per_view": 2.61
+   },
+   "trials": 170,
+   "novel": 40,
+   "trials_summary": "170 trials (40 novel); pixels favour near in 51%, frame order in 50%; median |sim diff| 0.004 (options' sim median -0.03, best walk frame 0.67); near/far distance medians 0.58 / 3.63 m; heading diff medians 138 / 135 deg -> results/export/dissimilar-roomHSSD6/trials.json",
+   "status": "accepted",
+   "name": "HSSD6",
+   "reason": "170 lure-free trials >= 60",
+   "minutes": 0.7
+  },
+  {
+   "position": 10,
+   "scene": "104862513_172226580",
+   "seed": 1610,
+   "check": {
+    "scene": "104862513_172226580",
+    "seed": 1610,
+    "objects_in_scene_file": 546,
+    "objects_created": 546,
+    "navmesh": "computed",
+    "islands_m2": [
+     77.5,
+     2.7,
+     2.1,
+     1.8,
+     1.6
+    ],
+    "largest_island_m2": 77.5,
+    "island_range_m2": [
+     40.0,
+     250.0
+    ],
+    "label_views": 64,
+    "objects_seen": 457,
+    "object_pixel_share": 0.341,
+    "landmark_objects_seen": 62,
+    "non_object_ids_seen": [
+     0
+    ],
+    "structure_objects": {
+     "window": 9
+    },
+    "unnamed_objects": 7,
+    "skip": null
+   },
+   "render": {
+    "scene": "104862513_172226580",
+    "frames": 8192,
+    "probes": 4096,
+    "extent_m": [
+     12.0,
+     10.87
+    ],
+    "frame_holes_over_5pct": 0.0,
+    "probe_holes_over_5pct": 0.0,
+    "landmarks_per_view": 2.16
+   },
+   "trials": 180,
+   "novel": 55,
+   "trials_summary": "180 trials (55 novel); pixels favour near in 51%, frame order in 51%; median |sim diff| 0.003 (options' sim median -0.00, best walk frame 0.72); near/far distance medians 0.65 / 3.54 m; heading diff medians 136 / 130 deg -> results/export/dissimilar-roomHSSD7/trials.json",
+   "status": "accepted",
+   "name": "HSSD7",
+   "reason": "180 lure-free trials >= 60",
+   "minutes": 1.0
+  },
+  {
+   "position": 11,
+   "scene": "108294846_176710506",
+   "seed": 1611,
+   "check": {
+    "scene": "108294846_176710506",
+    "seed": 1611,
+    "objects_in_scene_file": 566,
+    "objects_created": 566,
+    "navmesh": "computed",
+    "islands_m2": [
+     182.9,
+     139.4,
+     115.4,
+     4.3,
+     4.1
+    ],
+    "largest_island_m2": 182.9,
+    "island_range_m2": [
+     40.0,
+     250.0
+    ],
+    "label_views": 64,
+    "objects_seen": 49,
+    "object_pixel_share": 0.122,
+    "landmark_objects_seen": 13,
+    "non_object_ids_seen": [
+     0
+    ],
+    "structure_objects": {
+     "door": 2,
+     "rug": 2,
+     "window": 27
+    },
+    "unnamed_objects": 10,
+    "skip": null
+   },
+   "render": {
+    "scene": "108294846_176710506",
+    "frames": 8192,
+    "probes": 4096,
+    "extent_m": [
+     29.78,
+     21.84
+    ],
+    "frame_holes_over_5pct": 0.88,
+    "probe_holes_over_5pct": 0.888,
+    "landmarks_per_view": 0.4
+   },
+   "trials": 10,
+   "novel": 0,
+   "trials_summary": "10 trials (0 novel); pixels favour near in 60%, frame order in 50%; median |sim diff| 0.009 (options' sim median 0.76, best walk frame 0.90); near/far distance medians 0.59 / 3.27 m; heading diff medians 107 / 118 deg -> results/export/dissimilar-roomHSSD8/trials.json",
+   "status": "skipped",
+   "reason": "trials: 10 lure-free, fewer than 60",
+   "minutes": 1.0
+  },
+  {
+   "position": 12,
+   "scene": "105515505_173104584",
+   "seed": 1612,
+   "check": {
+    "scene": "105515505_173104584",
+    "seed": 1612,
+    "objects_in_scene_file": 264,
+    "objects_created": 264,
+    "navmesh": "computed",
+    "islands_m2": [
+     127.6,
+     34.3,
+     7.3,
+     4.7,
+     3.8
+    ],
+    "largest_island_m2": 127.6,
+    "island_range_m2": [
+     40.0,
+     250.0
+    ],
+    "label_views": 64,
+    "objects_seen": 177,
+    "object_pixel_share": 0.34,
+    "landmark_objects_seen": 72,
+    "non_object_ids_seen": [
+     0
+    ],
+    "structure_objects": {
+     "door": 2,
+     "rug": 12,
+     "stair": 1,
+     "window": 16
+    },
+    "unnamed_objects": 50,
+    "skip": null
+   },
+   "render": {
+    "scene": "105515505_173104584",
+    "frames": 8192,
+    "probes": 4096,
+    "extent_m": [
+     16.6,
+     15.95
+    ],
+    "frame_holes_over_5pct": 0.005,
+    "probe_holes_over_5pct": 0.004,
+    "landmarks_per_view": 2.22
+   },
+   "trials": 192,
+   "novel": 38,
+   "trials_summary": "192 trials (38 novel); pixels favour near in 51%, frame order in 50%; median |sim diff| 0.006 (options' sim median 0.04, best walk frame 0.73); near/far distance medians 0.54 / 3.40 m; heading diff medians 131 / 133 deg -> results/export/dissimilar-roomHSSD8/trials.json",
+   "status": "accepted",
+   "name": "HSSD8",
+   "reason": "192 lure-free trials >= 60",
+   "minutes": 0.9
+  }
+ ],
+ "accepted": {
+  "HSSD1": "104862639_172226823",
+  "HSSD2": "106879080_174887211",
+  "HSSD3": "107734176_176000019",
+  "HSSD4": "102816786",
+  "HSSD5": "106878960_174887073",
+  "HSSD6": "103997424_171030444",
+  "HSSD7": "104862513_172226580",
+  "HSSD8": "105515505_173104584"
+ },
+ "skipped": {
+  "106366371_174226743": "island: largest 327.3 m^2, not 40-250",
+  "106878858_174886965": "island: largest 865.7 m^2, not 40-250",
+  "104348181_171513120": "island: largest 723.2 m^2, not 40-250",
+  "104862687_172226883": "island: largest 35.6 m^2, not 40-250",
+  "108294846_176710506": "trials: 10 lure-free, fewer than 60"
+ }
+}

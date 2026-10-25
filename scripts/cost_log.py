@@ -13,7 +13,7 @@ import os
 import re
 
 OUT = "results/api_costs.csv"
-SECOND_KEY = [r"results/claude/claude-opus-5-5-roomP50\d\d-shuffled-low\.jsonl"]   # runs paid by the second Claude key ($200, from 2026-10-24)
+SECOND_KEY = [r"results/claude/claude-opus-5-5-roomP50\d\d-shuffled-low\.jsonl", r"results/claude/claude-opus-5-5-roomHSSD\d+.*\.jsonl"]   # runs paid by the second Claude key ($200, from 2026-10-24)
 rows = []
 for path in sorted(glob.glob("results/claude/*.jsonl") + glob.glob("results/api/*.jsonl")):
     R = [json.loads(line) for line in open(path)]

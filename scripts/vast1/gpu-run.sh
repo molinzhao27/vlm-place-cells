@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# LEGACY (2026-10-25): GPU jobs now go through gq (docs/gpu_host.md), e.g.
+#   gq submit --on vast1 --project mechinterp --name NAME --gpu --est 2h -- .venv/bin/python -m ...
+# Kept so older run scripts' usage lines still make sense; don't start new jobs with it.
+#
 # Hold the shared host GPU lock for an entire foreground container command.
 #   gpu-run.sh py -m spatialcells.extract --model dinov2
 #   gpu-run.sh --detach $HOST_LOGS/mechinterp-x.log py -m ...   (HOST_LOGS: a log dir on the host)

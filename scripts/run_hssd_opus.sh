@@ -25,7 +25,8 @@ for R in $ROOMS; do
     echo "$(date -u +%T) room$R ${C:-walk} (second key spend \$$s)"
     for attempt in 1 2 3 4; do
       # shellcheck disable=SC2086
-      $P -m spatialcells.claude_test --model claude-opus-5-5 --trials "room$R" --effort low $C --budget-usd "$BUDGET" && break
+      $P -m spatialcells.claude_test --model claude-opus-5-5 --trials "room$R" --effort low $C --budget-usd "$BUDGET" \
+        --concurrency "${CONC:-2}" && break
       echo "$(date -u +%T) room$R attempt $attempt failed; retrying in 2 min"; sleep 120
     done
   done

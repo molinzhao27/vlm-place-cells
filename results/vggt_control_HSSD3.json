@@ -1,0 +1,22 @@
+{
+ "familiar": {
+  "n": 142,
+  "walk_fit_rms_m": 0.929032312315812,
+  "probe_error_m_median": 0.8352196121569571,
+  "probe_within_1m": 0.6126760563380281,
+  "heading_error_deg_median": 16.966120591108876,
+  "nearest_hit_rate_1m": 0.7253521126760564,
+  "nearest_random_hit_rate": 0.2918133802816901,
+  "choice_accuracy": 0.795774647887324
+ },
+ "novel": {
+  "n": 38,
+  "walk_fit_rms_m": 1.3884168583676098,
+  "probe_error_m_median": 1.8283112119164178,
+  "probe_within_1m": 0.3684210526315789,
+  "heading_error_deg_median": 51.07306665460534,
+  "nearest_hit_rate_1m": 0.39473684210526316,
+  "nearest_random_hit_rate": 0.06661184210526316,
+  "choice_accuracy": 0.6578947368421053
+ }
+}

@@ -45,6 +45,56 @@ the ray-cast box.
   tests and VGGT localisation in 2-3 scenes. In the paper that is one figure and one paragraph.
   Step 9 (the place-cell analyses in photoreal scenes) is left for a later version.
 
+## HSSD houses (experiment 16, prepared 2026-10-25)
+
+- **Data.** `scripts/rtx4070/get_hssd.sh` downloads `hssd/hssd-hab` at revision `4369cb98` into
+  `/mnt/bigd/mechinterp/hssd-hab` (linked as `~/habitat-data/hssd-hab`), file by file, because
+  anonymous Hugging Face requests may resolve only 3,000 files per 5 minutes (about 1.5 h for the
+  ~57k files). It leaves out `urdf/`, `scenes-articulated/`, `scenes-uncluttered/` and
+  `scene_filter_files/`, which the default scenes never use, and fetches the objects of the first 24
+  houses of the draw first. The default scene set has 168 houses, not the 211 of the HSSD paper, and
+  the draw is over those 168.
+- **Frame and navmesh.** HSSD loads Y-up like its navmesh, so no `--zup`. No navmeshes ship, so
+  `habitat_scene.compute_navmesh` builds one with experiment 12's agent (habitat-sim's defaults: 1.5 m
+  tall, radius 0.1 m, climb 0.2 m, slope 45 deg, which Replica's shipped navmeshes carry) and the
+  scene's static objects as obstacles, since HSSD's furniture are separate objects rather than part
+  of a scanned mesh. It takes about 4 s a house.
+- **Instance labels.** HSSD's semantic ids are per category (from each object's config), so they
+  cannot separate two chairs. With `--hssd`, the instance sensor renders each object's own id
+  instead (`CameraSensorSpec.semantic_target = OBJECT_ID`). Objects get ids 1..N in a house, and the
+  stage (walls, floors and ceilings) gets 0. `hssd_classes()` names each object from
+  `metadata/fpmodels-with-decomposed.csv` (its `main_category`, or its WordNet synsets when that is
+  empty). Doors, windows, carpets, stairs, beams and wall panels are mapped onto experiment 12's
+  excluded classes (door, window, rug, stair, beam, panel), and the stage counts as structure.
+  Every other object is a possible landmark, including those with neither a category nor a synset
+  (7% of the objects in the eight accepted houses).
+- **Acceptance checks** (`habitat_scene.scene_check`, run before rendering, written to each walk
+  folder's `scene.json`). A house *loads* if every object instance in its scene file is created. It
+  *has instance labels* if, over 64 random views on the largest island, at least one possible
+  landmark covers 2% or more of a view and the only id that is not an object is the stage's 0. The
+  draw itself (`spatialcells/hssd_select.py`, run by `scripts/rtx4070/render_hssd.sh` under the GPU
+  lock) renders each house as in experiment 12 (seed 1600 plus its place in the draw), builds its
+  trials and counts them. Skipped renders are kept in `/mnt/bigd/mechinterp/hssd-skipped/`.
+- **Preview** (`results/preview/hssd_106366371_174226743*.png`, the first house drawn). That
+  house's largest island is its yard (327 m^2, sky = holes); its second is the interior (317 m^2, 0%
+  holes, ceilings present, plain but sensible lighting); its third is a flat roof. Yards and roofs
+  are screened out by the island-size rule or by the 5% hole rule (one drawn house kept only 10
+  trials for that reason). Rendering runs at about 230 fps for RGB, depth and instance labels, and a
+  whole house (12,288 views plus its trials) takes about 1 minute.
+- **Result** (`results/hssd_selection.json`; 13 drawn, 8 accepted, 2026-10-25): HSSD1-8 =
+  104862639_172226823, 106879080_174887211, 107734176_176000019, 102816786, 106878960_174887073,
+  103997424_171030444, 104862513_172226580, 105515505_173104584. Five were skipped: three had a
+  largest island outside 40-250 m^2 (327, 866 and 723 m^2), one had an island of only 35.6 m^2, and one
+  (108294846_176710506, whose largest island is outdoors) gave only 10 trials. The trials were built
+  on the 4070. Rebuilt on the Mac, they come out the same, except that `sim_best_frame` differs in the
+  4th decimal in one trial each of HSSD4 and HSSD5.
+  Trials (all / novel): HSSD1 188/68, HSSD2 192/53, HSSD3 180/38, HSSD4 192/38, HSSD5 156/36,
+  HSSD6 170/40, HSSD7 180/55, HSSD8 192/38; 1,450 in all, 366 of them novel. Largest islands are
+  57-128 m^2 and the walks span 11-20 m. The walks (`data/walks-roomHSSD<k>/`) and trial exports
+  (`results/export/dissimilar-roomHSSD<k>/`) were copied to the Mac, and all 1,507 files match the
+  4070's SHA-256 sums. The Claude walk-frame JPEGs (`results/export/claude-roomHSSD<k>/`) were made
+  on the Mac from the copied frames.
+
 ## Steps
 
 | Step | Where | Time |

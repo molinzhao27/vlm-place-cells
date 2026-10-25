@@ -40,6 +40,7 @@ results/export/claude-room*/
 # Human-baseline answers (participant ids): kept out of git
 results/export/human_responses/
 results/export/dissimilar-roomReplica*/probe_*.jpg
+results/export/dissimilar-roomHSSD*/probe_*.jpg
 lab_package/
 
 # Local agent notes, external reviews of the draft, previews and scratch (not published)

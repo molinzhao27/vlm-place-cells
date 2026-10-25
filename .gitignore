@@ -11,6 +11,7 @@ data/
 
 # GPU host settings (start from scripts/vast1/host.env.example, scripts/rtx4070/host.env.example)
 scripts/vast1/host.env
+scripts/vast1/host-*.env
 scripts/rtx4070/host.env
 
 # Large or regenerable results, archived separately with the preprint

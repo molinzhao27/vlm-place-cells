@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# LEGACY (2026-10-25): GPU jobs on the 4070 now go through gq (docs/gpu_host.md), e.g.
+#   gq submit --on pc --project mechinterp --name NAME --gpu --est 2h --env VGGT_DIR=<R4_VGGT> -- .venv/bin/python -m ...
+# Kept so older run scripts' usage lines still make sense; don't start new jobs with it.
+#
 # Run a command on the 4070 host from the project root there, holding R4_GPU_LOCK for the whole
 # command; it refuses to start if anything else is computing on the GPU.
 #   scripts/rtx4070/run.sh py -m spatialcells.vggt_patch --plot --out results/vggt_patch_probes_4070.json

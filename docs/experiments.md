@@ -944,6 +944,16 @@ Two more LoRA seeds with the same data and settings, each tested on room A's and
 lure-free trials (64-frame walk, no walk, shuffled walk). Run with `scripts/run_ft_seed.sh SEED`;
 `python -m spatialcells.ft_seeds` summarises the three seeds. Results will be added here.
 
+*Platform (2026-10-25):* seeds 1 and 2 are trained and tested on vast-3's RTX 5090 (32 GB), not vast-1's
+RTX PRO 6000 (seed 0). The training code (`run_ft_seed.sh`, `finetune.py`) is unchanged, the packages
+are vast-1's exact versions (`requirements-lock.txt`), and the training data are seed 0's byte for byte (all 1,205 files of
+`data/proc` checked by md5). Regenerating them would not do: `room.py` draws `skimage.data.binary_blobs()`
+posters without a seed, so the 242 rooms with one differ on every run, and those rooms and `trials.json`
+were copied from vast-1. Training also sets `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`, which
+changes memory layout, not the arithmetic (seed 0 peaked at 29 GiB). The tests use the current
+`two_choice.py`; before the move, it reproduced on vast-3 vast-1's CUDA answers for the seed-0 model on
+room A (48 of 48 trials, the same answers and text).
+
 ## Experiment 10 (pre-registered 2026-10-22, run 2026-10-23): many held-out rooms
 
 **Deviation found after the results below (2026-10-23, by an external review of the preprint).**
@@ -1167,6 +1177,41 @@ walk +26.5 [+16.4, +38.0], 10 walks up and none down, trials 36/9 (p 7e-5). So, 
 does at least as well with the walk shuffled (real frame numbers kept) as in order; the fine-tuned
 model drops to chance. The ten held-out rooms were not run (the budget does not allow it; the
 registration runs them only if it does).
+
+**Amendment 5 (2026-10-25, before any trial of these models): a screen of the largest open-weight VLMs.**
+Experiment 11's question is whether models other than Claude gain from the walk; the two that do
+(Opus, GPT-6 Astra) are closed, so none can be inspected. This screen looks for an open-weight model
+that passes. Models (OpenRouter, the newest and largest open-weight models that take images, Oct
+2026; Kimi and DeepSeek already tested), in the order run, cheapest input price first:
+nvidia/nemotron-3.5-super-vl, qwen/qwen3.8-flash, minimax/minimax-m3, xiaomi/mimo-v2.6-pro,
+qwen/qwen3.5-397b-a17b, stepfun/step-5-preview, thinkingmachines/inkling, meta/muse-spark-open.
+- Protocol as above: room A, the same 192 trials, images and prompts, walk and no walk, reasoning
+  at low effort where the model has it, temperature not sent; a model that rejects the 257-image
+  request is untestable. Requests go through OpenRouter restricted to hosts serving bf16, fp16 or
+  fp8 weights; each record keeps the host that served it and OpenRouter's reported cost.
+- Test: the registered walk-gain sign test on novel trials, but because the screen tests up to eight
+  models and stops at the first pass, a model passes only at two-sided p < 0.05 / 8 = 0.00625
+  (Bonferroni). Nominal p values are reported for every model; a model with 0.00625 <= p < 0.05 is
+  "nominal, not confirmed" and the screen continues.
+- Stopping rule: one model at a time, preflight first; the screen stops at the first model that
+  passes, which then gets the registered shuffled-walk run. Models after it are reported as not run.
+- Budget: the OpenRouter key's $50 limit; a model whose preflight projection would pass what is left
+  is skipped and reported.
+*Note (2026-10-25, after the first two preflights, before any recorded trial):* OpenRouter lists each
+host's declared precision. nvidia/nemotron-3.5-super-vl is untestable: it spends about 1,445 tokens
+per 256-px frame (371,365 image tokens for the walk), more than the 262,144-token context of its only
+bf16 host (its 1M-context hosts serve fp4). Some models have no host that declares bf16/fp16/fp8 (Qwen3.8-Flash:
+Alibaba only; Inkling: Together only; Muse Spark Open: fp4 or undeclared). For those, hosts with
+undeclared precision are allowed, declared fp4 never; the serving host is recorded with every answer.
+API runs go one at a time: concurrent ~6 MB image uploads on this network cause TLS errors.
+*Note (2026-10-25, first pass of the screen):* untestable as registered: Nemotron 3.5 Super VL and
+Qwen3.5-397B (the walk needs about 389k tokens, over their 262k context on hosts allowed by precision),
+Qwen3.8-Flash (Alibaba's API takes at most 250 images per request), Inkling (its only host rejects the
+request as too large). Step-5's first host (DeepInfra) takes at most 8 images, so it is retried on
+StepFun's own fp8 host before being called untestable. MiniMax-M3 and MiMo-V2.6-Pro stopped on
+malformed replies from their hosts (not rejections); such replies are now retried, and both are rerun.
+Muse Spark Open, tested: 64.7% with the walk vs 59.8% without, 21 better / 16 worse, p = 0.51, no gain
+(hosts Fireworks, Modal and Together, precision undeclared; $4.92).
 
 *Logistics (2026-10-23, no protocol change).* GPT-6 Astra and Gemini 4 Argon are run on the user's
 university lab PC, billed to the lab, from a self-contained
@@ -1814,7 +1859,16 @@ each window alone costs less than the cut in all layers (+6.1 and +8.4 above it)
 both before and after layer 19, with the larger share before; the window comparison is on three rooms
 and was not tested formally.
 
-## Experiment 16 (pre-registered 2026-10-25, not yet run): more out-of-distribution houses (HSSD)
+*Reproducibility note (2026-10-25, found while preparing the LoRA seeds on vast-3).* `room.py` draws
+the "blobs" poster texture with `skimage.data.binary_blobs()` without a seed, so any room that uses it
+renders differently each time: 242 of the 1,200 procedural training rooms and held-out room P5005. Room A
+and room B (fixed posters) re-render byte-identically. Every model saw a single render of each room (the
+fine-tuning data rendered once on vast-1; P5005 rendered once on the Mac and used by all experiment-10
+models), so the results are internally consistent, but those rooms cannot be re-rendered exactly. The
+existing renders are the data of record and are to be archived with the preprint; seeding the call
+would change those rooms relative to the record, so the code is left as it is.
+
+## Experiment 16 (pre-registered 2026-10-25, run 2026-10-25): more out-of-distribution houses (HSSD)
 
 Experiment 12 tested three Replica apartments. This adds more and larger interiors from a different
 source, to see whether its results generalise beyond three scenes. No model has seen any of these
@@ -1872,6 +1926,45 @@ Reported either way, and pooled with experiment 12's apartments only as a separa
 - Accepted houses: largest islands 57-128 m^2, no view more than 5% holes. Trials (all / novel): HSSD1
   188/68, HSSD2 192/53, HSSD3 180/38, HSSD4 192/38, HSSD5 156/36, HSSD6 170/40, HSSD7 180/55, HSSD8
   192/38; 1,450 in all, 366 novel.
+
+*Result (2026-10-25; `scripts/hssd_analysis.py` -> `results/hssd_summary.json`).* Qwen ran on the Mac for
+HSSD1-3 and on vast-3 for HSSD4-8 (platform note above); Opus on the second Claude key ($103 for the eight
+houses); VGGT on the RTX 4070. Pooled over the eight houses, all 1,450 lure-free trials [exact 95% CI];
+novel trials (366):
+
+| | all trials | novel | per house (all) |
+|---|---|---|---|
+| base, 64-frame walk | 60.3% [57.7, 62.8] | 55.5% | 55-65% |
+| base, no walk | 51.5% | 50.0% | |
+| base, shuffled | 59.8% | 59.0% | |
+| **LoRA, 64-frame walk** | **91.9% [90.4, 93.3]** | **85.0%** | 87-95% |
+| LoRA, no walk | 51.0% | 51.4% | |
+| LoRA, shuffled | 54.2% | 54.9% | |
+| **Opus, 256-frame walk** | **87.7% [85.9, 89.4]** | **83.3%** | 82-94% |
+| Opus, no walk | 61.7% | 61.7% | |
+| Opus, shuffled | 89.2% [87.5, 90.8] | 84.7% | |
+| VGGT (every 8th frame) | 82.7% | 74.9% | |
+
+Contrasts, pooled trial-level sign tests and houses as the unit (mean [95% CI], houses up/down):
+1. LoRA transfers: LoRA minus base with the walk +31.7 (498/39), houses +31.7 [+28.4, +34.8], 8/0; novel
+   +29.5, houses 8/0. It needs the walk in order: walk minus no walk +41.0 (8/0), walk minus shuffled
+   +37.7 (8/0).
+2. Opus gains from the walk: +26.1 (453/75), houses +26.2 [+24.3, +28.4], 8/0; novel +21.6 (8/0). As in
+   experiments 12 and 14b it does at least as well shuffled: shuffled minus ordered +1.5 (94/72, p 0.10),
+   houses +1.4 [-0.7, +3.3], 5/3; novel +1.4 (p 0.52).
+3. The base model: with the walk +8.8 over no walk (325/198, p 3e-8; 8/0 houses), mostly on familiar
+   trials; novel +5.5 (68/48, p 0.08). Unlike in the procedural rooms, the walk helps it somewhat here.
+4. VGGT places probes as in the apartments (two-choice 82.7%; median probe error 0.5-1.8 m on novel
+   trials, 0.26-0.95 m on familiar ones, by house).
+LoRA minus Opus: +4.2 on all trials (8/0 houses), +1.6 on novel (p 0.56). The house caveat applies: the
+walk may help by grouping views into rooms.
+
+*Platform amendment (2026-10-25, after the Mac had run HSSD1 and part of HSSD2):* to finish sooner, the
+Qwen runs are split by house. HSSD1-3 ran on the Mac as registered (MPS, files tagged `-mps`) and HSSD4-8
+on vast-3's RTX 5090 (CUDA, untagged files; gq jobs vast3:83-86 and 88). All six conditions of a house
+ran on one machine, in `scripts/mac/run_heldout.sh`'s order, from md5-identical copies of the walks and
+trials. Before the split, vast-3 reproduced the Mac's HSSD1 answers on walks 0-3 for the base model with
+the walk and the LoRA model with and without it (72 of 72 trials, the same answers and text).
 
 ## Prior work this builds on
 

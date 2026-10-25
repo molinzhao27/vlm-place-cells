@@ -38,6 +38,9 @@ CONTRASTS = [   # (name, a, b): a minus b; the first is the primary question
     ("LoRA vs Opus (walk)", "LoRA, walk", "Opus, walk"),
 ]
 FIELDS = ("walk", "probe", "familiar", "near", "far", "a", "b")
+# Experiment 14b, procedural rooms (registered in docs/experiments.md; run 2026-10-24 on the second key). Kept
+# out of RUNS so the bootstrap draws of the experiment-10 numbers above stay exactly as they were.
+OPUS_SHUFFLED = "results/claude/claude-opus-5-5-room{r}-shuffled-low.jsonl"
 
 
 def novel(path):
@@ -126,6 +129,41 @@ def analyse(rows, trials, walks=None):
     return out
 
 
+def exp14b(rows, trials):
+    """Ordered minus shuffled walk for Opus on novel trials, rooms as the unit (bootstrap over rooms, own rng
+    seeded 0); "does not use the order" only if the 95% CI lies inside +/-3 points (the registered margin)."""
+    shuf = {r: load(OPUS_SHUFFLED.format(r=r), trials[r]) for r in ROOMS}
+    if any(v is None or len(v) != len(trials[r]) for r, v in shuf.items()):
+        print("\nexperiment 14b: shuffled Opus runs incomplete; skipped")
+        return None
+    rng = np.random.default_rng(0)
+    nov = {r: [i for i, t in trials[r].items() if not t["familiar"]] for r in ROOMS}
+    c = lambda run, r, i: bool(run[r][i]["correct"])
+    walk, nowalk = rows["Opus, walk"], rows["Opus, no walk"]
+    acc = [np.mean([c(shuf, r, i) for i in nov[r]]) for r in ROOMS]
+    out = {"shuffled": dict(zip(["mean", "lo", "hi"], boot_mean(acc, rng))), "per_room_shuffled": dict(zip(ROOMS, map(float, acc)))}
+    for name, a, b in (("ordered - shuffled", walk, shuf), ("shuffled - no walk", shuf, nowalk)):
+        d = [np.mean([c(a, r, i) for i in nov[r]]) - np.mean([c(b, r, i) for i in nov[r]]) for r in ROOMS]
+        m, lo, hi = boot_mean(d, rng)
+        pos, neg = int(sum(x > 0 for x in d)), int(sum(x < 0 for x in d))
+        up = sum(c(a, r, i) and not c(b, r, i) for r in ROOMS for i in nov[r])
+        dn = sum(c(b, r, i) and not c(a, r, i) for r in ROOMS for i in nov[r])
+        out[name] = {"mean": m, "ci95": [lo, hi], "rooms_positive": pos, "rooms_negative": neg,
+                     "room_sign_test_p": sign_test(pos, neg), "trials_better": up, "trials_worse": dn,
+                     "trial_sign_test_p": sign_test(up, dn), "per_room": dict(zip(ROOMS, map(float, d)))}
+    o = out["ordered - shuffled"]
+    o["within_3_points"] = -0.03 < o["ci95"][0] and o["ci95"][1] < 0.03
+    print(f"\nexperiment 14b (procedural rooms): Opus shuffled {out['shuffled']['mean']:.1%} "
+          f"[{out['shuffled']['lo']:.1%}, {out['shuffled']['hi']:.1%}]")
+    for name in ("ordered - shuffled", "shuffled - no walk"):
+        v = out[name]
+        print(f"  {name:20s} {v['mean']:+.1%} [{v['ci95'][0]:+.1%}, {v['ci95'][1]:+.1%}]  rooms +{v['rooms_positive']}/-"
+              f"{v['rooms_negative']} (p {v['room_sign_test_p']:.2g}); trials {v['trials_better']}/{v['trials_worse']} "
+              f"(p {v['trial_sign_test_p']:.2g})")
+    print(f"  CI of ordered - shuffled inside +/-3 points: {o['within_3_points']}")
+    return out
+
+
 def main():
     trials = {r: {t["id"]: t for t in json.load(open(MANIFEST.format(r=r)))} for r in ROOMS}
     rows = {name: {r: load(p.format(r=r), trials[r]) for r in ROOMS} for name, p in RUNS.items()}
@@ -159,6 +197,7 @@ def main():
     out = {"rooms": ROOMS, "all_runs_complete": not incomplete, "incomplete_runs": incomplete, "completeness": comp}
     out.update(analyse(rows, trials))
     out["walks_0_15"] = analyse(rows, trials, walks=16)
+    out["exp14b_procedural"] = exp14b(rows, trials)
     path = "results/heldout_summary.json" if not incomplete else "results/heldout_summary_incomplete.json"
     json.dump(out, open(path, "w"), indent=1)
     print(f"\n-> {path}" + ("" if not incomplete else "  (results/heldout_summary.json left as it was: some runs are incomplete)"))

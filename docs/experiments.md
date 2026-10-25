@@ -1125,17 +1125,48 @@ analysis and the untestable rule are unchanged.
 dropped: OpenAI's Decisions API (gpt-6-luna) is not run, and Jev was already dropped. The
 experiment is GPT-6 Astra, Gemini 4 Argon, Kimi K3 and DeepSeek V4.1 Flash.
 
+*Note (2026-10-25, before any GPT-6 Astra or Gemini 4 Argon trial; logistics only):* the user supplied
+keys on this Mac, so the remaining models run here with the same code, trials and images as the lab
+package (its checksums verified), following the package's runbook (preflight, then the walk and
+no-walk runs). *Correction (2026-10-25):* the keys are the user's own, like Kimi's and DeepSeek's, so
+the spend counts toward the $150 other-provider budget (`scripts/cost_log.py`), not the lab.
+
+**Amendment 4 (2026-10-25, scope; no Gemini 4 Argon trial has been run).** The user dropped Gemini 4
+Argon; GPT-6 Astra is experiment 11's last model. *Transport note (2026-10-25, during the Astra walk run,
+21 trials in):* GPT-6 Astra reuses its prompt cache only for exact repeats of these image-heavy prompts,
+never for a shared walk prefix with a different question (tested on Chat Completions with one or two
+user messages and a text-only question, and on the Responses API; about $2.5 of test requests, not
+recorded as trials). So from trial 22 on, requests go out on OpenAI's flex tier (`--service-tier flex`;
+the same request at batch pricing). Prompts, images, settings and parsing are unchanged; each row
+records its service tier, and costs are logged at the standard rate as an upper bound.
+
 **Results so far (room A, 102 novel and 90 familiar trials; `results/api/`).**
 
 | Model | Novel, walk | Novel, no walk | Better / worse with walk | p | Familiar, walk / no walk | Cost |
 |---|---|---|---|---|---|---|
 | Kimi K3 | 57.8% | 60.8% | 12 / 15 | 0.70 | 56.7% / 57.8% | $14.92 |
 | DeepSeek V4.1 Flash | 56.9% | 58.8% | 24 / 26 | 0.89 | 68.9% / 54.4% (25 / 12, p 0.047) | $1.27 |
+| GPT-6 Astra (low reasoning) | 71.6% | 51.0% | 35 / 14 | 0.0038 | 77.8% / 66.7% | $42.22 logged |
 
 Neither model gains from the walk on novel trials, the pre-registered test. DeepSeek is better with
 the walk on familiar trials, where a seen view can be matched directly (one walk answer unparsed,
 counted wrong). DeepSeek ran with thinking on and off-peak pricing; its median reasoning was about
-5,300 tokens with the walk and 1,850 without. GPT-6 Astra and Gemini 4 Argon wait for keys.
+5,300 tokens with the walk and 1,850 without. *GPT-6 Astra (2026-10-25, run on this Mac with the user's
+key; walk run trials 1-21 at the standard tier, the rest and the no-walk run on the flex tier):* it
+gains from the walk, the pre-registered test: 71.6% vs 51.0% on novel trials, 35 better / 14 worse,
+two-sided p = 0.0038 (`walk_gain.py`). So a walk gain is not specific to Claude. Its median output was
+about 60 tokens. By the registration, a significant gain adds a shuffled-walk run in room A and the
+ten experiment-10 rooms if the budget allows; both wait for the user's decision. Costs are logged at
+the standard rate ($40.28 walk, $1.94 no walk) against the $150 other-provider budget; flex should
+roughly halve the actual charge for all but the first 21 walk trials. Gemini 4 Argon was dropped
+(amendment 4).
+*Astra's registered shuffled-walk run (2026-10-25, room A, flex tier, $40.48 logged):* novel trials,
+shuffled 77.5% vs ordered 71.6% vs no walk 51.0%. Ordered minus shuffled -5.9 points, 7 better / 13
+worse (p 0.26); walk-clustered -5.9 [-15.4, +2.5] (`results/review_stats.json`). Shuffled minus no
+walk +26.5 [+16.4, +38.0], 10 walks up and none down, trials 36/9 (p 7e-5). So, like Opus, Astra
+does at least as well with the walk shuffled (real frame numbers kept) as in order; the fine-tuned
+model drops to chance. The ten held-out rooms were not run (the budget does not allow it; the
+registration runs them only if it does).
 
 *Logistics (2026-10-23, no protocol change).* GPT-6 Astra and Gemini 4 Argon are run on the user's
 university lab PC, billed to the lab, from a self-contained
@@ -1661,8 +1692,41 @@ three apartments only (ReplicaApt0-2, all trials), and Opus runs in 14c. The ten
 are not run, so the +/-3-point equivalence claim cannot be made for them and the paper keeps its
 narrowed wording about Opus and order in those rooms. 14b's analysis is the pooled paired sign test
 in the apartments (all trials and novel).
+*Budget decision revised (2026-10-24, by the user, before any procedural-room 14b run):* a second
+Claude API key with $200 pays for the arm that was left out. 14b now also runs in the ten held-out
+procedural rooms P5000-P5009 exactly as registered above (Opus 5.5, low effort, 256-frame walk shuffled
+with its real frame numbers, all trials), and its procedural-room analysis is the registered one:
+ordered minus shuffled on novel trials, rooms as the unit, bootstrap CI over rooms, and the +/-3-point
+equivalence claim only if that CI lies inside +/-3 points. The ordered and no-walk runs are experiment
+10's. Cost about $5-7 a room; runs on the second key stop before its spend would pass $200
+(`scripts/run_heldout_opus_shuffled.sh`; `scripts/cost_log.py` reports that key's spend separately).
+*14b result, procedural rooms (2026-10-24/25; `results/claude/claude-opus-5-5-roomP50xx-shuffled-low.jsonl`,
+all 192 trials in each of the ten rooms; `scripts/heldout_analysis.py` -> `results/heldout_summary.json`,
+key `exp14b_procedural`, with its own rng so experiment 10's numbers are unchanged; $60.37 on the second
+key, one connection error resumed).* Novel trials, means over rooms with 95% bootstrap CIs:
+Opus with the shuffled walk 77.0% [75.5, 78.8], against 69.2% with the walk in order and 62.8% without.
+- ordered - shuffled: -7.8 points [-11.6, -4.8]; ordered better in 0 rooms, worse in 10 (p 0.002);
+  trials 114 better / 209 worse (p 1e-7);
+- shuffled - no walk: +14.2 [+10.6, +18.2], 10/0 rooms; trials 330/153.
+The registered equivalence test fails, but in the other direction: the CI lies outside +/-3 points
+because the shuffled walk is better, not worse. So "Opus does not use the walk's order" cannot be
+claimed as registered; what the data show is that presenting the walk in order does not help Opus and
+presenting it shuffled (with the real frame numbers, so the order can still be read from the labels)
+helps more, as in the apartments (shuffled 4.0 points above ordered). The option frames sit at the same
+average position in both presentations (relative position 0.49-0.51; near after far in 51% vs 49% of
+trials), so the shuffle carries no position cue. The fine-tuned model shows the opposite dependence
+(shuffled 51.3%, at chance). Why shuffling helps Opus is not tested here.
+*Exploratory (2026-10-25, not registered; same trials in both presentations, novel, pooled over rooms):*
+the shuffled walk's advantage depends on where the near option sits in the ordered walk. By fifths of
+the walk (first to last), ordered 79 / 68 / 61 / 68 / 70%, shuffled 80 / 79 / 74 / 78 / 75%: almost no
+difference when the near frame comes early, 13 points when it sits in the middle (part of the middle dip,
+74% vs 80%, is trial difficulty, since it shows in the shuffled runs too). By how far apart the two
+options are in the ordered walk (quarters, close to far), ordered 64 / 71 / 77 / 78%, shuffled 73 / 79 /
+80 / 82%. This fits a weakness for frames in the middle of a long, ordered image sequence, which
+shuffling spreads out, but it is correlational. A direct test would rotate the ordered walk cyclically
+(order kept, start moved) so the near option lands at the start or end.
 
-## Experiment 15 (pre-registered 2026-10-24, not yet run): which walk frames the fine-tuned model reads
+## Experiment 15 (pre-registered 2026-10-24, run 2026-10-24/25): which walk frames the fine-tuned model reads
 
 Experiment 13a showed that the LoRA model uses short stretches of the walk in the order walked, and
 14a that its decision becomes readable at the answer site between layers 18 and 20, with no
@@ -1708,6 +1772,90 @@ the decision depends on. No model has seen these conditions.
   reads is made from these results only, and without a claim about how it computes the answer.
 - *Cost:* none (Mac). About 6.5 h for the primary conditions and 1.5 h for the windows; one job at a
   time on the Mac.
+*Note (2026-10-24, before any run; implementation, no design change):* `spatialcells/frame_cut.py`,
+`scripts/mac/run_frame_cut.sh`, `scripts/frame_cut_analysis.py` -> `results/frame_cut_summary.json`.
+Checks before the run: token counts match experiment 10 on 20 prompts; every cut set covers 8 frames'
+528 tokens; with the hooks on and nothing cut the logits are bit-identical to no hooks; in eager
+attention, tokens outside a cut set give it exactly zero attention in every hooked layer (prefill and
+decoding), and only in layers 19-36 with that window; the clean run reproduced experiment 10's answers
+on 12 of 12 trials. Choices the registration left open: the tokens of the cut frames still attend to
+each other; the "without overlap" analyses use the 503 trials where near neighbours and look-alikes
+share no frame (for near and look-alikes minus random) and the 1,028 where near and far neighbours
+share none (for near minus far). Timing on the Mac is 4.9-5.6 s per trial, so the run takes about
+12.5 h rather than 8.
+
+*Result (2026-10-25; `results/frame_cut/`, `scripts/frame_cut_analysis.py` -> `results/frame_cut_summary.json`).*
+The check passed: the clean run gave experiment 10's answer on 1,299 of 1,299 trials (92.5%). Novel
+trials, means over rooms with 95% bootstrap CIs:
+
+| frames cut (all layers) | accuracy | minus clean |
+|---|---|---|
+| none (clean) | 92.5% [91.4, 93.6] | |
+| 8 random | 91.6% [90.0, 93.1] | -1.0 [-2.0, -0.0] |
+| 8 look-alikes of the new view | 90.3% [88.7, 92.3] | -2.2 [-3.4, -0.9] |
+| 8 around the far option | 89.1% [86.3, 91.5] | -3.5 [-5.6, -1.5] |
+| 8 around the near option | 83.0% [80.9, 84.7] | -9.5 [-10.8, -8.3] |
+
+Primary contrasts (rooms better/worse, room-level sign test; trial-level pooled sign test):
+- near neighbours - random: -8.6 [-10.0, -7.3], 0/10 rooms (p 0.002), trials 30/143 (p 8e-19); on the
+  503 trials where near neighbours and look-alikes share no frame, -6.4 [-9.6, -3.3], 1/8 rooms (p 0.04);
+- look-alikes - random: -1.2 [-2.7, +0.2], 3/6 rooms (p 0.51), trials 39/56 (p 0.10); without overlap,
+  +0.4 [-1.9, +2.8];
+- near neighbours - far neighbours: -6.1 [-8.2, -3.8], 0/9 rooms (p 0.004); on the 1,028 trials
+  without overlap, -7.1 [-9.4, -4.7], 0/10 rooms (p 0.002).
+Against the registered predictions: the decision depends on the walk around the near option (cutting
+those 8 frames costs well more than random and more than the far option's neighbours), not on the
+frames that look like the new view (no more than random), and the information is not spread evenly
+along the walk. The far option's neighbourhood matters a little (-3.5 vs clean).
+Secondary windows (P5000-P5002, 399 novel trials; clean 91.9%, near cut in all layers 80.4%): near
+neighbours cut only in layers 1-18 give 86.5% (-5.5 vs clean), only in layers 19-36 88.8% (-3.1);
+each window alone costs less than the cut in all layers (+6.1 and +8.4 above it). Look-alikes: 89.3%
+(1-18) and 91.4% (19-36), against 87.7% in all layers. So the near option's neighbourhood is read
+both before and after layer 19, with the larger share before; the window comparison is on three rooms
+and was not tested formally.
+
+## Experiment 16 (pre-registered 2026-10-25, not yet run): more out-of-distribution houses (HSSD)
+
+Experiment 12 tested three Replica apartments. This adds more and larger interiors from a different
+source, to see whether its results generalise beyond three scenes. No model has seen any of these
+scenes, and none has been rendered.
+
+**Scenes.** HSSD (Habitat Synthetic Scenes Dataset, `hssd/hssd-hab` on Hugging Face, CC BY-NC 4.0):
+211 artist-built houses based on real floor plans, rendered with habitat-sim 0.3.3. Eight houses are
+chosen by a fixed draw: the scene ids are sorted, shuffled with `random.Random(16)`, and taken in that
+order. A drawn house is used if it loads, has a navmesh (the shipped one, or one computed with the
+agent settings of experiment 12), its largest navigable island is 40-250 m^2, its objects carry
+instance labels for the landmark rule, and it yields at least 60 lure-free trials. Otherwise the next
+house in the order is drawn. The skipped houses and the reason for each are reported. These are
+houses, so, as with the apartments, "the same room" in the prompt means the same house, and the walk
+may help by grouping views into rooms.
+
+**Walks, probes and trials.** Exactly as in experiment 12:
+- the same camera, foraging walk, 32 walks of 256 steps on the largest island with 0.15 m clearance,
+  and 128 probes per walk;
+- the lure-free rules (near option within 1 m, far more than 3 m, both facing more than 90 deg from
+  the new view, pixel similarity and frame order balanced), "no shared landmark" by instance labels
+  (no labelled object other than walls, floor, ceiling, windows, doors and similar covering 2% or
+  more of both views), no view with more than 5% of pixels showing no geometry, 6 trials per walk.
+
+**Models and conditions** (prompts as before):
+- base Qwen3-VL-8B and the LoRA model (seed 0): 64-frame walk, no walk, shuffled 64-frame walk (Mac);
+- Opus 5.5 at low effort: 256-frame walk, no walk, and the shuffled walk with real frame numbers (the
+  second Claude key; about $11.5 per house, about $92 in all; the runner stops before that key's spend
+  would pass $200);
+- VGGT as in experiment 12 (every 8th walk frame, the two options and the probe; RTX 4070).
+
+**Outcomes.** As in experiment 12, the primary outcome is accuracy on all lure-free trials, per house
+with an exact binomial CI and pooled over houses; novel-trial accuracy pooled is secondary. With eight
+houses, the contrasts are also reported with houses as the unit: means over houses with 95% bootstrap
+CIs (10,000 resamples, seed 0) and house-level sign tests, beside the pooled trial-level sign tests.
+Questions:
+1. Does the LoRA model transfer: LoRA minus base, and LoRA walk minus no walk and minus shuffled?
+2. Does Opus gain from the walk, and is it, as in experiments 12 and 14b, at least as good with the
+   walk shuffled as in order?
+3. Is the base model near chance?
+4. Does VGGT still place probes?
+Reported either way, and pooled with experiment 12's apartments only as a separate, labelled summary.
 
 ## Prior work this builds on
 

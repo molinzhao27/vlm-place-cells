@@ -41,13 +41,16 @@ photoreal Replica apartments rendered with Habitat. Experiments 10-15 were pre-r
 3. **A small model can learn the skill, without learning places.** LoRA on 1,136 procedural rooms
    (about 0.5% of the weights, answer-only loss) takes Qwen3-VL-8B from 50% to 92% on room A's
    novel trials and to 92.5% across ten pre-registered held-out rooms (base 52%; better in 10/10
-   rooms). It transfers to the photoreal apartments (86.7% vs base 55.1%). It needs the walk in
-   order, and the order controls say how it uses it: renumbering the frames costs nothing, shuffling
+   rooms). That run was the best of three training seeds: with the same recipe, the three reach 82%
+   on room A's novel trials on average (70-92%) and 79% in a second room (62-95%; base 54%), and the
+   later a run left the loss plateau it starts on, the less it had learned by the end of the fixed
+   schedule. The best run transfers to the photoreal apartments (86.7% vs base 55.1%). It needs the
+   walk in order (the weaker seeds less clearly), and the order controls say how it uses it: renumbering the frames costs nothing, shuffling
    8-frame blocks keeps 74% of the order effect, and reversing the walk costs 25 points. Yet only 14%
    of its place units are strictly heading-invariant (base 7%), its decision becomes readable in the
    residual stream between layers 18 and 20, and the new view's position does not decode across
    rooms in either model. ([Exp 9](docs/experiments.md#experiment-9-teaching-a-small-model-the-skill),
-   Exp 10, 12, 13a, 14a)
+   [9b](docs/experiments.md#experiment-9b-training-seeds-and-a-second-room), Exp 10, 12, 13a, 14a)
 4. **Claude Opus 5.5 gains a little from the walk in procedural rooms and a lot in apartments.**
    Across the ten held-out rooms its walk gain is 6.4 points [4.1, 8.2] (9/10 rooms), and the
    fine-tuned 8B beats it by 23 points; in the three apartments the gain is 28 points (84.1% vs
@@ -89,8 +92,10 @@ walk in context; Claude models at high effort):
 | Claude Opus 5.5 | 63% | 75% |
 | Qwen3-VL-8B + LoRA on procedural rooms (64-frame walk) | 53% | **92%** |
 
-None of the open models' walk-minus-no-walk differences is significant. Pre-registered tests in new
-rooms (novel trials for the procedural rooms, all lure-free trials for the apartments):
+None of the open models' walk-minus-no-walk differences is significant. The LoRA row is training
+seed 0; two more seeds of the same recipe get 83% and 70% with the walk (Exp 9b), and the tests
+below used seed 0. Pre-registered tests in new rooms (novel trials for the procedural rooms, all
+lure-free trials for the apartments):
 
 | | ten held-out procedural rooms | three Replica apartments |
 |---|---|---|

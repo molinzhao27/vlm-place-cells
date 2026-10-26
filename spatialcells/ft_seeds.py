@@ -9,6 +9,9 @@ and familiar trials for each seed, the 3-seed mean and range, and paired two-sid
 by trial (each seed vs base with the same walk, ordered vs no walk, ordered vs shuffled).
 Each run is the CUDA one (vast-1) if it exists, else the same run on Apple MPS (tag + "-mps"; the
 room-B runs of base and seed 0); the JSON names the file used. Writes results/two_choice/ft_seeds.json.
+The GPU control (a second run of the seed-0 configuration on vast-3's RTX 5090, qwen8b-proc-s0-5090; seed 0
+does not fix torch's generator, so its initialisation differs from the original's) is reported as "0-5090",
+with its answers compared to seed 0's, and is left out of the three-seed mean.
 """
 from __future__ import annotations
 
@@ -22,6 +25,7 @@ from .two_choice import OUT
 
 BASE = "Qwen3-VL-8B-Instruct"
 SEEDS = {0: "qwen8b-proc", 1: "qwen8b-proc-s1", 2: "qwen8b-proc-s2"}
+CONTROL = {"0-5090": "qwen8b-proc-s0-5090"}
 ROOMS = {"A": "dissimilar", "B": "roomB"}
 CONDS = {"walk": "-max64", "nowalk": "-nowalk", "shuffled": "-max64-shuffled"}
 
@@ -48,7 +52,7 @@ def main():
         runs, tags = {}, {}
         for cond, suf in CONDS.items():
             tags[("base", cond)], runs[("base", cond)] = load(f"{BASE}-{trials}-256px{suf}")
-            for s, a in SEEDS.items():
+            for s, a in {**SEEDS, **CONTROL}.items():
                 tags[(s, cond)], runs[(s, cond)] = load(f"{BASE}+{a}-{trials}-256px{suf}")
         out = {}
         for cat in ("novel", "familiar"):
@@ -64,6 +68,9 @@ def main():
                     o[f"{who}/{cond}"]["vs_base"] = sign_test(r, runs[("base", cond)], ids)
                 if who != "base" and cond != "walk" and runs[(who, "walk")] is not None:
                     o[f"{who}/{cond}"]["walk_vs_this"] = sign_test(runs[(who, "walk")], r, ids)
+                if who in CONTROL and runs[(0, cond)] is not None:
+                    o[f"{who}/{cond}"]["vs_seed0"] = sign_test(r, runs[(0, cond)], ids)
+                    o[f"{who}/{cond}"]["same_answer_as_seed0"] = sum(r[i]["answer"] == runs[(0, cond)][i]["answer"] for i in ids)
             for cond in CONDS:
                 accs = [o[f"{s}/{cond}"]["acc"] for s in SEEDS if f"{s}/{cond}" in o]
                 if accs:
@@ -78,7 +85,9 @@ def main():
                     print(f"  {key:16s} {v['mean']:.0%} (range {v['min']:.0%}-{v['max']:.0%}, {v['n_seeds']} seeds)")
                 else:
                     extra = "".join(f", {lab} {v[t]['better']} better / {v[t]['worse']} worse (p={v[t]['p']:.2g})"
-                                    for t, lab in (("vs_base", "vs base"), ("walk_vs_this", "walk vs this")) if t in v)
+                                    for t, lab in (("vs_base", "vs base"), ("walk_vs_this", "walk vs this"), ("vs_seed0", "vs seed 0")) if t in v)
+                    if "same_answer_as_seed0" in v:
+                        extra += f", same answer as seed 0 on {v['same_answer_as_seed0']}/{v['n']}"
                     mps = " [mps]" if v["tag"].endswith("-mps") else ""
                     print(f"  {key:16s} {v['acc']:.0%} ({v['k']}/{v['n']}, p={v['p_above_chance']:.2g}){extra}{mps}")
     json.dump(res, open(f"{OUT}/ft_seeds.json", "w"), indent=1)

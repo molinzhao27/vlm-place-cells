@@ -1,0 +1,3045 @@
+{
+ "10": {
+  "seeds": {
+   "0": {
+    "status": "done",
+    "platform": {
+     "P5000": "MPS",
+     "P5001": "MPS",
+     "P5002": "MPS",
+     "P5003": "MPS",
+     "P5004": "MPS",
+     "P5005": "MPS",
+     "P5006": "MPS",
+     "P5007": "MPS",
+     "P5008": "MPS",
+     "P5009": "MPS"
+    },
+    "files": {
+     "LoRA, walk": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5000-256px-max64-mps.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5001-256px-max64-mps.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5002-256px-max64-mps.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5003-256px-max64-mps.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5004-256px-max64-mps.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5005-256px-max64-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5006-256px-max64-mps.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5007-256px-max64-mps.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5008-256px-max64-mps.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5009-256px-max64-mps.jsonl"
+     },
+     "LoRA, no walk": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5000-256px-nowalk-mps.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5001-256px-nowalk-mps.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5002-256px-nowalk-mps.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5003-256px-nowalk-mps.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5004-256px-nowalk-mps.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5005-256px-nowalk-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5006-256px-nowalk-mps.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5007-256px-nowalk-mps.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5008-256px-nowalk-mps.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5009-256px-nowalk-mps.jsonl"
+     },
+     "LoRA, shuffled": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5000-256px-max64-shuffled-mps.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5001-256px-max64-shuffled-mps.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5002-256px-max64-shuffled-mps.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5003-256px-max64-shuffled-mps.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5004-256px-max64-shuffled-mps.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5005-256px-max64-shuffled-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5006-256px-max64-shuffled-mps.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5007-256px-max64-shuffled-mps.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5008-256px-max64-shuffled-mps.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5009-256px-max64-shuffled-mps.jsonl"
+     }
+    },
+    "accuracy": {
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.9253271747498075,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.9327731092436975,
+        "P5001": 0.8923076923076924,
+        "P5002": 0.9333333333333333,
+        "P5003": 0.9545454545454546,
+        "P5004": 0.9215686274509803,
+        "P5005": 0.9183673469387755,
+        "P5006": 0.9078947368421053,
+        "P5007": 0.9245283018867925,
+        "P5008": 0.9513888888888888,
+        "P5009": 0.9145299145299145
+       },
+       "scene_mean": 0.9251237405967636,
+       "scene_ci95": [
+        0.9139522551334824,
+        0.936294308551262
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5573518090839107,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.5378151260504201,
+        "P5001": 0.5461538461538461,
+        "P5002": 0.5466666666666666,
+        "P5003": 0.6212121212121212,
+        "P5004": 0.6274509803921569,
+        "P5005": 0.5850340136054422,
+        "P5006": 0.5592105263157895,
+        "P5007": 0.5849056603773585,
+        "P5008": 0.5,
+        "P5009": 0.47863247863247865
+       },
+       "scene_mean": 0.558708141940628,
+       "scene_ci95": [
+        0.530878385745483,
+        0.5865580060709847
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.5134719014626636,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.5714285714285714,
+        "P5001": 0.4461538461538462,
+        "P5002": 0.47333333333333333,
+        "P5003": 0.5681818181818182,
+        "P5004": 0.5,
+        "P5005": 0.4965986394557823,
+        "P5006": 0.5328947368421053,
+        "P5007": 0.5471698113207547,
+        "P5008": 0.5694444444444444,
+        "P5009": 0.42735042735042733
+       },
+       "scene_mean": 0.5132555628511083,
+       "scene_ci95": [
+        0.4817446962394331,
+        0.5430278369429313
+       ]
+      }
+     }
+    },
+    "contrasts": {
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.4049268668206313,
+       "better": 570,
+       "worse": 44,
+       "sign_p": 1.1821220819101734e-117,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.37335161286048374,
+        0.4367546394959368
+       ],
+       "scene_mean": 0.40663272169931436,
+       "scene_ci95": [
+        0.38182271614499697,
+        0.43401818051075813
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.4117647058823529,
+        "P5001": 0.376923076923077,
+        "P5002": 0.3666666666666667,
+        "P5003": 0.4772727272727273,
+        "P5004": 0.3529411764705882,
+        "P5005": 0.38095238095238093,
+        "P5006": 0.375,
+        "P5007": 0.44339622641509435,
+        "P5008": 0.4027777777777777,
+        "P5009": 0.4786324786324786
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.36797536566589684,
+       "better": 513,
+       "worse": 35,
+       "sign_p": 5.351493925536198e-110,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.3368417113142137,
+        0.39923664122137403
+       ],
+       "scene_mean": 0.3664155986561355,
+       "scene_ci95": [
+        0.3386164335109951,
+        0.39614901214598075
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.39495798319327735,
+        "P5001": 0.34615384615384626,
+        "P5002": 0.3866666666666667,
+        "P5003": 0.33333333333333337,
+        "P5004": 0.2941176470588235,
+        "P5005": 0.33333333333333337,
+        "P5006": 0.3486842105263158,
+        "P5007": 0.339622641509434,
+        "P5008": 0.45138888888888884,
+        "P5009": 0.43589743589743585
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.4118552732871439,
+       "better": 582,
+       "worse": 47,
+       "sign_p": 2.228538330202567e-118,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.37973654401786106,
+        0.44356167222383747
+       ],
+       "scene_mean": 0.4118681777456552,
+       "scene_ci95": [
+        0.3885198312782694,
+        0.4375021597799959
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.3613445378151261,
+        "P5001": 0.4461538461538462,
+        "P5002": 0.46,
+        "P5003": 0.38636363636363635,
+        "P5004": 0.42156862745098034,
+        "P5005": 0.4217687074829932,
+        "P5006": 0.375,
+        "P5007": 0.37735849056603776,
+        "P5008": 0.3819444444444444,
+        "P5009": 0.48717948717948717
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.22863741339491916,
+       "better": 343,
+       "worse": 46,
+       "sign_p": 2.8586644550268853e-57,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.20058715441316238,
+        0.25657423065531637
+       ],
+       "scene_mean": 0.23280421192349463,
+       "scene_ci95": [
+        0.2074686184988043,
+        0.2618194804702019
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.23529411764705888,
+        "P5001": 0.1692307692307693,
+        "P5002": 0.21333333333333337,
+        "P5003": 0.2272727272727273,
+        "P5004": 0.2941176470588235,
+        "P5005": 0.19047619047619047,
+        "P5006": 0.22368421052631582,
+        "P5007": 0.33018867924528306,
+        "P5008": 0.2222222222222222,
+        "P5009": 0.2222222222222222
+       }
+      }
+     }
+    }
+   },
+   "1": {
+    "status": "done",
+    "platform": {
+     "P5000": "CUDA",
+     "P5001": "CUDA",
+     "P5002": "CUDA",
+     "P5003": "CUDA",
+     "P5004": "CUDA",
+     "P5005": "MPS",
+     "P5006": "CUDA",
+     "P5007": "CUDA",
+     "P5008": "CUDA",
+     "P5009": "CUDA"
+    },
+    "files": {
+     "LoRA, walk": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5000-256px-max64.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5001-256px-max64.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5002-256px-max64.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5003-256px-max64.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5004-256px-max64.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5005-256px-max64-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5006-256px-max64.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5007-256px-max64.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5008-256px-max64.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5009-256px-max64.jsonl"
+     },
+     "LoRA, no walk": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5000-256px-nowalk.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5001-256px-nowalk.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5002-256px-nowalk.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5003-256px-nowalk.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5004-256px-nowalk.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5005-256px-nowalk-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5006-256px-nowalk.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5007-256px-nowalk.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5008-256px-nowalk.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5009-256px-nowalk.jsonl"
+     },
+     "LoRA, shuffled": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5000-256px-max64-shuffled.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5001-256px-max64-shuffled.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5002-256px-max64-shuffled.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5003-256px-max64-shuffled.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5004-256px-max64-shuffled.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5005-256px-max64-shuffled-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5006-256px-max64-shuffled.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5007-256px-max64-shuffled.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5008-256px-max64-shuffled.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5009-256px-max64-shuffled.jsonl"
+     }
+    },
+    "accuracy": {
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.8060046189376443,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.773109243697479,
+        "P5001": 0.7384615384615385,
+        "P5002": 0.8266666666666667,
+        "P5003": 0.7954545454545454,
+        "P5004": 0.8235294117647058,
+        "P5005": 0.8367346938775511,
+        "P5006": 0.7894736842105263,
+        "P5007": 0.839622641509434,
+        "P5008": 0.8472222222222222,
+        "P5009": 0.7863247863247863
+       },
+       "scene_mean": 0.8056599434189456,
+       "scene_ci95": [
+        0.7840058352994002,
+        0.825219260190911
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5488837567359507,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.5378151260504201,
+        "P5001": 0.5230769230769231,
+        "P5002": 0.5466666666666666,
+        "P5003": 0.5909090909090909,
+        "P5004": 0.5980392156862745,
+        "P5005": 0.5170068027210885,
+        "P5006": 0.5723684210526315,
+        "P5007": 0.5377358490566038,
+        "P5008": 0.5694444444444444,
+        "P5009": 0.49572649572649574
+       },
+       "scene_mean": 0.548878903539064,
+       "scene_ci95": [
+        0.5296155383562536,
+        0.5685351498159975
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6358737490377213,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.6302521008403361,
+        "P5001": 0.6,
+        "P5002": 0.6266666666666667,
+        "P5003": 0.5909090909090909,
+        "P5004": 0.6568627450980392,
+        "P5005": 0.6802721088435374,
+        "P5006": 0.6513157894736842,
+        "P5007": 0.6320754716981132,
+        "P5008": 0.7152777777777778,
+        "P5009": 0.5555555555555556
+       },
+       "scene_mean": 0.6339187306862801,
+       "scene_ci95": [
+        0.6072719796770384,
+        0.6612761035939909
+       ]
+      }
+     }
+    },
+    "contrasts": {
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.28560431100846806,
+       "better": 461,
+       "worse": 90,
+       "sign_p": 5.1993074566203615e-61,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.25503798330168054,
+        0.3161145997695935
+       ],
+       "scene_mean": 0.28716892452149645,
+       "scene_ci95": [
+        0.2614849114004576,
+        0.313769875344143
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.25210084033613445,
+        "P5001": 0.22307692307692317,
+        "P5002": 0.26,
+        "P5003": 0.3181818181818181,
+        "P5004": 0.2549019607843137,
+        "P5005": 0.29931972789115646,
+        "P5006": 0.256578947368421,
+        "P5007": 0.3584905660377359,
+        "P5008": 0.29861111111111105,
+        "P5009": 0.3504273504273504
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.2571208622016936,
+       "better": 429,
+       "worse": 95,
+       "sign_p": 1.1118738944090247e-51,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.22398797926002903,
+        0.29034758294726004
+       ],
+       "scene_mean": 0.2567810398798816,
+       "scene_ci95": [
+        0.23290090476688774,
+        0.2814693604735455
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.23529411764705888,
+        "P5001": 0.2153846153846154,
+        "P5002": 0.28,
+        "P5003": 0.20454545454545447,
+        "P5004": 0.22549019607843135,
+        "P5005": 0.3197278911564626,
+        "P5006": 0.2171052631578948,
+        "P5007": 0.30188679245283023,
+        "P5008": 0.2777777777777778,
+        "P5009": 0.29059829059829057
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.170130869899923,
+       "better": 316,
+       "worse": 95,
+       "sign_p": 8.020313937515405e-29,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.14142121139608577,
+        0.19859292346195115
+       ],
+       "scene_mean": 0.1717412127326654,
+       "scene_ci95": [
+        0.1510831234144515,
+        0.19317277062560084
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.1428571428571429,
+        "P5001": 0.13846153846153852,
+        "P5002": 0.19999999999999996,
+        "P5003": 0.20454545454545447,
+        "P5004": 0.16666666666666663,
+        "P5005": 0.15646258503401367,
+        "P5006": 0.13815789473684215,
+        "P5007": 0.20754716981132082,
+        "P5008": 0.13194444444444442,
+        "P5009": 0.23076923076923073
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.10931485758275594,
+       "better": 284,
+       "worse": 142,
+       "sign_p": 5.384292478469636e-12,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.07837220921634819,
+        0.13986564478595762
+       ],
+       "scene_mean": 0.11334041474567669,
+       "scene_ci95": [
+        0.07730074990369111,
+        0.15268778176126946
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.0756302521008404,
+        "P5001": 0.015384615384615441,
+        "P5002": 0.10666666666666669,
+        "P5003": 0.06818181818181812,
+        "P5004": 0.196078431372549,
+        "P5005": 0.108843537414966,
+        "P5006": 0.10526315789473684,
+        "P5007": 0.24528301886792458,
+        "P5008": 0.11805555555555558,
+        "P5009": 0.09401709401709402
+       }
+      }
+     }
+    }
+   },
+   "2": {
+    "status": "done",
+    "platform": {
+     "P5000": "CUDA",
+     "P5001": "CUDA",
+     "P5002": "CUDA",
+     "P5003": "CUDA",
+     "P5004": "CUDA",
+     "P5005": "MPS",
+     "P5006": "CUDA",
+     "P5007": "CUDA",
+     "P5008": "CUDA",
+     "P5009": "CUDA"
+    },
+    "files": {
+     "LoRA, walk": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5000-256px-max64.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5001-256px-max64.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5002-256px-max64.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5003-256px-max64.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5004-256px-max64.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5005-256px-max64-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5006-256px-max64.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5007-256px-max64.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5008-256px-max64.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5009-256px-max64.jsonl"
+     },
+     "LoRA, no walk": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5000-256px-nowalk.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5001-256px-nowalk.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5002-256px-nowalk.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5003-256px-nowalk.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5004-256px-nowalk.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5005-256px-nowalk-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5006-256px-nowalk.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5007-256px-nowalk.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5008-256px-nowalk.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5009-256px-nowalk.jsonl"
+     },
+     "LoRA, shuffled": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5000-256px-max64-shuffled.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5001-256px-max64-shuffled.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5002-256px-max64-shuffled.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5003-256px-max64-shuffled.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5004-256px-max64-shuffled.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5005-256px-max64-shuffled-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5006-256px-max64-shuffled.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5007-256px-max64-shuffled.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5008-256px-max64-shuffled.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5009-256px-max64-shuffled.jsonl"
+     }
+    },
+    "accuracy": {
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.6866820631254812,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.6638655462184874,
+        "P5001": 0.5692307692307692,
+        "P5002": 0.6933333333333334,
+        "P5003": 0.6818181818181818,
+        "P5004": 0.7450980392156863,
+        "P5005": 0.7074829931972789,
+        "P5006": 0.6710526315789473,
+        "P5007": 0.6509433962264151,
+        "P5008": 0.75,
+        "P5009": 0.7350427350427351
+       },
+       "scene_mean": 0.6867867625861834,
+       "scene_ci95": [
+        0.6521363675282407,
+        0.7160689308145023
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.4942263279445728,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.5966386554621849,
+        "P5001": 0.4307692307692308,
+        "P5002": 0.47333333333333333,
+        "P5003": 0.5151515151515151,
+        "P5004": 0.5294117647058824,
+        "P5005": 0.42857142857142855,
+        "P5006": 0.48026315789473684,
+        "P5007": 0.5566037735849056,
+        "P5008": 0.5416666666666666,
+        "P5009": 0.4188034188034188
+       },
+       "scene_mean": 0.49712129449433035,
+       "scene_ci95": [
+        0.4623855304568153,
+        0.5323720179854059
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6096997690531177,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.6554621848739496,
+        "P5001": 0.5538461538461539,
+        "P5002": 0.6466666666666666,
+        "P5003": 0.553030303030303,
+        "P5004": 0.6274509803921569,
+        "P5005": 0.5986394557823129,
+        "P5006": 0.6052631578947368,
+        "P5007": 0.6226415094339622,
+        "P5008": 0.6944444444444444,
+        "P5009": 0.5299145299145299
+       },
+       "scene_mean": 0.6087359386279216,
+       "scene_ci95": [
+        0.5784867641489042,
+        0.6386771967030391
+       ]
+      }
+     }
+    },
+    "contrasts": {
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.16628175519630495,
+       "better": 372,
+       "worse": 156,
+       "sign_p": 2.2485071526172405e-21,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.13067213654054174,
+        0.2016813241976387
+       ],
+       "scene_mean": 0.16829574368873434,
+       "scene_ci95": [
+        0.1320335394842759,
+        0.20655911516172543
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.1428571428571428,
+        "P5001": 0.05384615384615388,
+        "P5002": 0.1266666666666667,
+        "P5003": 0.20454545454545447,
+        "P5004": 0.17647058823529416,
+        "P5005": 0.17006802721088432,
+        "P5006": 0.13815789473684204,
+        "P5007": 0.16981132075471694,
+        "P5008": 0.20138888888888884,
+        "P5009": 0.2991452991452992
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.19245573518090842,
+       "better": 402,
+       "worse": 152,
+       "sign_p": 4.7787389340559985e-27,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.1519271868039251,
+        0.23295114092362101
+       ],
+       "scene_mean": 0.18966546809185314,
+       "scene_ci95": [
+        0.14342047949727596,
+        0.2345004137367778
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.0672268907563025,
+        "P5001": 0.1384615384615384,
+        "P5002": 0.22000000000000003,
+        "P5003": 0.16666666666666663,
+        "P5004": 0.21568627450980393,
+        "P5005": 0.27891156462585037,
+        "P5006": 0.1907894736842105,
+        "P5007": 0.09433962264150941,
+        "P5008": 0.20833333333333337,
+        "P5009": 0.3162393162393163
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.07698229407236346,
+       "better": 244,
+       "worse": 144,
+       "sign_p": 4.354055558767276e-07,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.04433838123802542,
+        0.10900868275913098
+       ],
+       "scene_mean": 0.07805082395826182,
+       "scene_ci95": [
+        0.04374467251628905,
+        0.1160043261912789
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.008403361344537785,
+        "P5001": 0.01538461538461533,
+        "P5002": 0.046666666666666745,
+        "P5003": 0.12878787878787878,
+        "P5004": 0.11764705882352944,
+        "P5005": 0.108843537414966,
+        "P5006": 0.06578947368421051,
+        "P5007": 0.028301886792452824,
+        "P5008": 0.05555555555555558,
+        "P5009": 0.20512820512820518
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": -0.01000769822940717,
+       "better": 263,
+       "worse": 276,
+       "sign_p": 0.6052833456322325,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        -0.047316562241127666,
+        0.026647675728006345
+       ],
+       "scene_mean": -0.005532766087085428,
+       "scene_ci95": [
+        -0.05028819295139233,
+        0.034873423024485345
+       ],
+       "scenes_up": 4,
+       "scenes_down": 6,
+       "scene_sign_p": 0.75390625,
+       "per_scene": {
+        "P5000": -0.03361344537815125,
+        "P5001": -0.15384615384615385,
+        "P5002": -0.026666666666666616,
+        "P5003": -0.045454545454545525,
+        "P5004": 0.11764705882352944,
+        "P5005": -0.020408163265306145,
+        "P5006": -0.013157894736842146,
+        "P5007": 0.05660377358490565,
+        "P5008": 0.02083333333333337,
+        "P5009": 0.042735042735042805
+       }
+      }
+     }
+    }
+   }
+  },
+  "three_seeds": {
+   "novel": {
+    "LoRA, walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.9251237405967636,
+      0.8056599434189456,
+      0.6867867625861834
+     ],
+     "mean": 0.8058568155339643,
+     "min": 0.6867867625861834,
+     "max": 0.9251237405967636
+    },
+    "LoRA, no walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.558708141940628,
+      0.548878903539064,
+      0.49712129449433035
+     ],
+     "mean": 0.5349027799913408,
+     "min": 0.49712129449433035,
+     "max": 0.558708141940628
+    },
+    "LoRA, shuffled": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.5132555628511083,
+      0.6339187306862801,
+      0.6087359386279216
+     ],
+     "mean": 0.58530341072177,
+     "min": 0.5132555628511083,
+     "max": 0.6339187306862801
+    },
+    "LoRA walk vs base walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.40663272169931436,
+      0.28716892452149645,
+      0.16829574368873434
+     ],
+     "mean": 0.287365796636515,
+     "min": 0.16829574368873434,
+     "max": 0.40663272169931436
+    },
+    "LoRA walk vs no walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.3664155986561355,
+      0.2567810398798816,
+      0.18966546809185314
+     ],
+     "mean": 0.2709540355426234,
+     "min": 0.18966546809185314,
+     "max": 0.3664155986561355
+    },
+    "LoRA walk vs shuffled": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.4118681777456552,
+      0.1717412127326654,
+      0.07805082395826182
+     ],
+     "mean": 0.22055340481219413,
+     "min": 0.07805082395826182,
+     "max": 0.4118681777456552
+    },
+    "LoRA walk vs Opus walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.23280421192349463,
+      0.11334041474567669,
+      -0.005532766087085428
+     ],
+     "mean": 0.11353728686069531,
+     "min": -0.005532766087085428,
+     "max": 0.23280421192349463
+    }
+   }
+  }
+ },
+ "12": {
+  "seeds": {
+   "0": {
+    "status": "done",
+    "platform": {
+     "ReplicaApt0": "MPS",
+     "ReplicaApt1": "MPS",
+     "ReplicaApt2": "MPS"
+    },
+    "files": {
+     "LoRA, walk": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomReplicaApt0-256px-max64-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomReplicaApt1-256px-max64-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomReplicaApt2-256px-max64-mps.jsonl"
+     },
+     "LoRA, no walk": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomReplicaApt0-256px-nowalk-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomReplicaApt1-256px-nowalk-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomReplicaApt2-256px-nowalk-mps.jsonl"
+     },
+     "LoRA, shuffled": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomReplicaApt0-256px-max64-shuffled-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomReplicaApt1-256px-max64-shuffled-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomReplicaApt2-256px-max64-shuffled-mps.jsonl"
+     }
+    },
+    "accuracy": {
+     "all": {
+      "LoRA, walk": {
+       "pooled": 0.8667992047713717,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.8806818181818182,
+        "ReplicaApt1": 0.8392857142857143,
+        "ReplicaApt2": 0.8805031446540881
+       }
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5248508946322068,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.5227272727272727,
+        "ReplicaApt1": 0.5178571428571429,
+        "ReplicaApt2": 0.5345911949685535
+       }
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.5347912524850894,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.5,
+        "ReplicaApt1": 0.5238095238095238,
+        "ReplicaApt2": 0.5849056603773585
+       }
+      }
+     },
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.7931034482758621,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.7857142857142857,
+        "ReplicaApt1": 0.8333333333333334,
+        "ReplicaApt2": 0.8
+       }
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5172413793103449,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.4523809523809524,
+        "ReplicaApt1": 1.0,
+        "ReplicaApt2": 0.5
+       }
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.5517241379310345,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.5714285714285714,
+        "ReplicaApt1": 0.5,
+        "ReplicaApt2": 0.5
+       }
+      }
+     }
+    },
+    "contrasts": {
+     "all": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.3161033797216699,
+       "better": 187,
+       "worse": 28,
+       "sign_p": 4.730002601849605e-30,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.25889276490052565,
+        0.3752620545073375
+       ]
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.34194831013916493,
+       "better": 197,
+       "worse": 25,
+       "sign_p": 2.4491695641374234e-34,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.2923387096774194,
+        0.3892242195450995
+       ]
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.3320079522862823,
+       "better": 202,
+       "worse": 35,
+       "sign_p": 9.840228755182628e-30,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.2751540041067762,
+        0.386317907444668
+       ]
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.025844930417495027,
+       "better": 62,
+       "worse": 49,
+       "sign_p": 0.25460512309379413,
+       "n": 503,
+       "walk_clustered_ci95": [
+        -0.017857142857142856,
+        0.06958250497017893
+       ]
+      }
+     },
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.27586206896551724,
+       "better": 18,
+       "worse": 2,
+       "sign_p": 0.0004024505615234375,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.14545454545454545,
+        0.39622641509433965
+       ]
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.27586206896551724,
+       "better": 19,
+       "worse": 3,
+       "sign_p": 0.0008554458618164062,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.14752892960462874,
+        0.39215686274509803
+       ]
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.24137931034482762,
+       "better": 22,
+       "worse": 8,
+       "sign_p": 0.016124801710247993,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.05660377358490566,
+        0.4090909090909091
+       ]
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": -0.10344827586206895,
+       "better": 3,
+       "worse": 9,
+       "sign_p": 0.14599609375,
+       "n": 58,
+       "walk_clustered_ci95": [
+        -0.22641509433962265,
+        0.019230769230769232
+       ]
+      }
+     }
+    }
+   },
+   "1": {
+    "status": "done",
+    "platform": {
+     "ReplicaApt0": "MPS",
+     "ReplicaApt1": "MPS",
+     "ReplicaApt2": "MPS"
+    },
+    "files": {
+     "LoRA, walk": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt0-256px-max64-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt1-256px-max64-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt2-256px-max64-mps.jsonl"
+     },
+     "LoRA, no walk": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt0-256px-nowalk-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt1-256px-nowalk-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt2-256px-nowalk-mps.jsonl"
+     },
+     "LoRA, shuffled": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt0-256px-max64-shuffled-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt1-256px-max64-shuffled-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt2-256px-max64-shuffled-mps.jsonl"
+     }
+    },
+    "accuracy": {
+     "all": {
+      "LoRA, walk": {
+       "pooled": 0.8111332007952287,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.7954545454545454,
+        "ReplicaApt1": 0.7678571428571429,
+        "ReplicaApt2": 0.8742138364779874
+       }
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5029821073558648,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.4943181818181818,
+        "ReplicaApt1": 0.48214285714285715,
+        "ReplicaApt2": 0.5345911949685535
+       }
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6421471172962226,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.6477272727272727,
+        "ReplicaApt1": 0.5714285714285714,
+        "ReplicaApt2": 0.710691823899371
+       }
+      }
+     },
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.7758620689655172,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.7380952380952381,
+        "ReplicaApt1": 0.8333333333333334,
+        "ReplicaApt2": 0.9
+       }
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5172413793103449,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.47619047619047616,
+        "ReplicaApt1": 0.8333333333333334,
+        "ReplicaApt2": 0.5
+       }
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.7241379310344828,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.7380952380952381,
+        "ReplicaApt1": 0.6666666666666666,
+        "ReplicaApt2": 0.7
+       }
+      }
+     }
+    },
+    "contrasts": {
+     "all": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.26043737574552683,
+       "better": 158,
+       "worse": 27,
+       "sign_p": 1.0017980989398998e-23,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.20445344129554655,
+        0.3181818181818182
+       ]
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.30815109343936387,
+       "better": 185,
+       "worse": 30,
+       "sign_p": 1.918552549371158e-28,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.25576675257731957,
+        0.3603256904637832
+       ]
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.168986083499006,
+       "better": 115,
+       "worse": 30,
+       "sign_p": 6.243417026857548e-13,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.12170179814703141,
+        0.2172211350293542
+       ]
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": -0.029821073558648048,
+       "better": 52,
+       "worse": 67,
+       "sign_p": 0.19915839818564474,
+       "n": 503,
+       "walk_clustered_ci95": [
+        -0.07659617364447495,
+        0.015474637518180307
+       ]
+      }
+     },
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.2586206896551724,
+       "better": 18,
+       "worse": 3,
+       "sign_p": 0.0014896392822265625,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.14583333333333334,
+        0.375
+       ]
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.2586206896551724,
+       "better": 17,
+       "worse": 2,
+       "sign_p": 0.000728607177734375,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.11536885245901642,
+        0.4126984126984127
+       ]
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.051724137931034475,
+       "better": 7,
+       "worse": 4,
+       "sign_p": 0.548828125,
+       "n": 58,
+       "walk_clustered_ci95": [
+        -0.04225352112676056,
+        0.16666666666666666
+       ]
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": -0.12068965517241381,
+       "better": 2,
+       "worse": 9,
+       "sign_p": 0.0654296875,
+       "n": 58,
+       "walk_clustered_ci95": [
+        -0.22580645161290322,
+        0.0
+       ]
+      }
+     }
+    }
+   },
+   "2": {
+    "status": "done",
+    "platform": {
+     "ReplicaApt0": "MPS",
+     "ReplicaApt1": "MPS",
+     "ReplicaApt2": "MPS"
+    },
+    "files": {
+     "LoRA, walk": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt0-256px-max64-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt1-256px-max64-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt2-256px-max64-mps.jsonl"
+     },
+     "LoRA, no walk": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt0-256px-nowalk-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt1-256px-nowalk-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt2-256px-nowalk-mps.jsonl"
+     },
+     "LoRA, shuffled": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt0-256px-max64-shuffled-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt1-256px-max64-shuffled-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt2-256px-max64-shuffled-mps.jsonl"
+     }
+    },
+    "accuracy": {
+     "all": {
+      "LoRA, walk": {
+       "pooled": 0.7037773359840954,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.7102272727272727,
+        "ReplicaApt1": 0.6607142857142857,
+        "ReplicaApt2": 0.7421383647798742
+       }
+      },
+      "LoRA, no walk": {
+       "pooled": 0.49105367793240556,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.5113636363636364,
+        "ReplicaApt1": 0.5119047619047619,
+        "ReplicaApt2": 0.44654088050314467
+       }
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.5904572564612326,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.5909090909090909,
+        "ReplicaApt1": 0.6011904761904762,
+        "ReplicaApt2": 0.5786163522012578
+       }
+      }
+     },
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.7241379310344828,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.7380952380952381,
+        "ReplicaApt1": 0.6666666666666666,
+        "ReplicaApt2": 0.7
+       }
+      },
+      "LoRA, no walk": {
+       "pooled": 0.43103448275862066,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.38095238095238093,
+        "ReplicaApt1": 0.8333333333333334,
+        "ReplicaApt2": 0.4
+       }
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6724137931034483,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.6904761904761905,
+        "ReplicaApt1": 0.8333333333333334,
+        "ReplicaApt2": 0.5
+       }
+      }
+     }
+    },
+    "contrasts": {
+     "all": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.1530815109343936,
+       "better": 118,
+       "worse": 41,
+       "sign_p": 7.78539861169212e-10,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.09775967413441955,
+        0.21002131137969285
+       ]
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.21272365805168986,
+       "better": 148,
+       "worse": 41,
+       "sign_p": 2.086183649100499e-15,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.1610337972166998,
+        0.26522593320235754
+       ]
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.11332007952286283,
+       "better": 91,
+       "worse": 34,
+       "sign_p": 3.473800882847061e-07,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.07041899994343571,
+        0.15587325686009892
+       ]
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": -0.1371769383697813,
+       "better": 50,
+       "worse": 119,
+       "sign_p": 1.1385090701279978e-07,
+       "n": 503,
+       "walk_clustered_ci95": [
+        -0.18637351457300566,
+        -0.08686659494351806
+       ]
+      }
+     },
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.2068965517241379,
+       "better": 16,
+       "worse": 4,
+       "sign_p": 0.01181793212890625,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.06666666666666667,
+        0.3389830508474576
+       ]
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.2931034482758621,
+       "better": 19,
+       "worse": 2,
+       "sign_p": 0.00022125244140625,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.15,
+        0.43137254901960786
+       ]
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.051724137931034475,
+       "better": 7,
+       "worse": 4,
+       "sign_p": 0.548828125,
+       "n": 58,
+       "walk_clustered_ci95": [
+        -0.04918032786885246,
+        0.1590909090909091
+       ]
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": -0.1724137931034483,
+       "better": 2,
+       "worse": 12,
+       "sign_p": 0.012939453125,
+       "n": 58,
+       "walk_clustered_ci95": [
+        -0.2727272727272727,
+        -0.0625
+       ]
+      }
+     }
+    }
+   }
+  },
+  "three_seeds": {
+   "all": {
+    "LoRA, walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.8667992047713717,
+      0.8111332007952287,
+      0.7037773359840954
+     ],
+     "mean": 0.7939032471835653,
+     "min": 0.7037773359840954,
+     "max": 0.8667992047713717
+    },
+    "LoRA, no walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.5248508946322068,
+      0.5029821073558648,
+      0.49105367793240556
+     ],
+     "mean": 0.5062955599734924,
+     "min": 0.49105367793240556,
+     "max": 0.5248508946322068
+    },
+    "LoRA, shuffled": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.5347912524850894,
+      0.6421471172962226,
+      0.5904572564612326
+     ],
+     "mean": 0.5891318754141815,
+     "min": 0.5347912524850894,
+     "max": 0.6421471172962226
+    },
+    "LoRA walk vs base walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.3161033797216699,
+      0.26043737574552683,
+      0.1530815109343936
+     ],
+     "mean": 0.24320742213386345,
+     "min": 0.1530815109343936,
+     "max": 0.3161033797216699
+    },
+    "LoRA walk vs no walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.34194831013916493,
+      0.30815109343936387,
+      0.21272365805168986
+     ],
+     "mean": 0.28760768721007285,
+     "min": 0.21272365805168986,
+     "max": 0.34194831013916493
+    },
+    "LoRA walk vs shuffled": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.3320079522862823,
+      0.168986083499006,
+      0.11332007952286283
+     ],
+     "mean": 0.20477137176938373,
+     "min": 0.11332007952286283,
+     "max": 0.3320079522862823
+    },
+    "LoRA walk vs Opus walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.025844930417495027,
+      -0.029821073558648048,
+      -0.1371769383697813
+     ],
+     "mean": -0.047051027170311434,
+     "min": -0.1371769383697813,
+     "max": 0.025844930417495027
+    }
+   },
+   "novel": {
+    "LoRA, walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.7931034482758621,
+      0.7758620689655172,
+      0.7241379310344828
+     ],
+     "mean": 0.764367816091954,
+     "min": 0.7241379310344828,
+     "max": 0.7931034482758621
+    },
+    "LoRA, no walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.5172413793103449,
+      0.5172413793103449,
+      0.43103448275862066
+     ],
+     "mean": 0.48850574712643685,
+     "min": 0.43103448275862066,
+     "max": 0.5172413793103449
+    },
+    "LoRA, shuffled": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.5517241379310345,
+      0.7241379310344828,
+      0.6724137931034483
+     ],
+     "mean": 0.6494252873563219,
+     "min": 0.5517241379310345,
+     "max": 0.7241379310344828
+    },
+    "LoRA walk vs base walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.27586206896551724,
+      0.2586206896551724,
+      0.2068965517241379
+     ],
+     "mean": 0.24712643678160917,
+     "min": 0.2068965517241379,
+     "max": 0.27586206896551724
+    },
+    "LoRA walk vs no walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.27586206896551724,
+      0.2586206896551724,
+      0.2931034482758621
+     ],
+     "mean": 0.27586206896551724,
+     "min": 0.2586206896551724,
+     "max": 0.2931034482758621
+    },
+    "LoRA walk vs shuffled": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.24137931034482762,
+      0.051724137931034475,
+      0.051724137931034475
+     ],
+     "mean": 0.1149425287356322,
+     "min": 0.051724137931034475,
+     "max": 0.24137931034482762
+    },
+    "LoRA walk vs Opus walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      -0.10344827586206895,
+      -0.12068965517241381,
+      -0.1724137931034483
+     ],
+     "mean": -0.13218390804597702,
+     "min": -0.1724137931034483,
+     "max": -0.10344827586206895
+    }
+   }
+  }
+ },
+ "16": {
+  "seeds": {
+   "0": {
+    "status": "done",
+    "platform": {
+     "HSSD1": "MPS",
+     "HSSD2": "MPS",
+     "HSSD3": "MPS",
+     "HSSD4": "CUDA",
+     "HSSD5": "CUDA",
+     "HSSD6": "CUDA",
+     "HSSD7": "CUDA",
+     "HSSD8": "CUDA"
+    },
+    "files": {
+     "LoRA, walk": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD1-256px-max64-mps.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD2-256px-max64-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD3-256px-max64-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD4-256px-max64.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD5-256px-max64.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD6-256px-max64.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD7-256px-max64.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD8-256px-max64.jsonl"
+     },
+     "LoRA, no walk": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD1-256px-nowalk-mps.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD2-256px-nowalk-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD3-256px-nowalk-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD4-256px-nowalk.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD5-256px-nowalk.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD6-256px-nowalk.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD7-256px-nowalk.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD8-256px-nowalk.jsonl"
+     },
+     "LoRA, shuffled": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD1-256px-max64-shuffled-mps.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD2-256px-max64-shuffled-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD3-256px-max64-shuffled-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD4-256px-max64-shuffled.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD5-256px-max64-shuffled.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD6-256px-max64-shuffled.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD7-256px-max64-shuffled.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD8-256px-max64-shuffled.jsonl"
+     }
+    },
+    "accuracy": {
+     "all": {
+      "LoRA, walk": {
+       "pooled": 0.9193103448275862,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.8670212765957447,
+        "HSSD2": 0.953125,
+        "HSSD3": 0.9388888888888889,
+        "HSSD4": 0.9270833333333334,
+        "HSSD5": 0.9487179487179487,
+        "HSSD6": 0.9470588235294117,
+        "HSSD7": 0.8722222222222222,
+        "HSSD8": 0.90625
+       },
+       "scene_mean": 0.9200459366609437,
+       "scene_ci95": [
+        0.8960955969267139,
+        0.9411440756190296
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5096551724137931,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.4787234042553192,
+        "HSSD2": 0.515625,
+        "HSSD3": 0.5333333333333333,
+        "HSSD4": 0.5052083333333334,
+        "HSSD5": 0.5128205128205128,
+        "HSSD6": 0.48823529411764705,
+        "HSSD7": 0.5388888888888889,
+        "HSSD8": 0.5052083333333334
+       },
+       "scene_mean": 0.509755387510296,
+       "scene_ci95": [
+        0.49671054412968135,
+        0.5228612588652481
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.5420689655172414,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.5,
+        "HSSD2": 0.53125,
+        "HSSD3": 0.5555555555555556,
+        "HSSD4": 0.5677083333333334,
+        "HSSD5": 0.5961538461538461,
+        "HSSD6": 0.5882352941176471,
+        "HSSD7": 0.5222222222222223,
+        "HSSD8": 0.4895833333333333
+       },
+       "scene_mean": 0.5438385730894921,
+       "scene_ci95": [
+        0.5181907424428105,
+        0.5696575501194067
+       ]
+      }
+     },
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.8497267759562842,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.7352941176470589,
+        "HSSD2": 0.8867924528301887,
+        "HSSD3": 0.8947368421052632,
+        "HSSD4": 0.8421052631578947,
+        "HSSD5": 0.9444444444444444,
+        "HSSD6": 0.975,
+        "HSSD7": 0.7636363636363637,
+        "HSSD8": 0.868421052631579
+       },
+       "scene_mean": 0.863803817056599,
+       "scene_ci95": [
+        0.8076967909128083,
+        0.9163680624517268
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5136612021857924,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.4852941176470588,
+        "HSSD2": 0.5660377358490566,
+        "HSSD3": 0.5526315789473685,
+        "HSSD4": 0.47368421052631576,
+        "HSSD5": 0.3888888888888889,
+        "HSSD6": 0.5,
+        "HSSD7": 0.5636363636363636,
+        "HSSD8": 0.5526315789473685
+       },
+       "scene_mean": 0.5103505593053026,
+       "scene_ci95": [
+        0.4676504007929343,
+        0.5458769305038528
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.5491803278688525,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.4852941176470588,
+        "HSSD2": 0.5283018867924528,
+        "HSSD3": 0.5526315789473685,
+        "HSSD4": 0.7105263157894737,
+        "HSSD5": 0.5833333333333334,
+        "HSSD6": 0.45,
+        "HSSD7": 0.5636363636363636,
+        "HSSD8": 0.5789473684210527
+       },
+       "scene_mean": 0.5565838705708879,
+       "scene_ci95": [
+        0.5099686884323107,
+        0.6099787151702786
+       ]
+      }
+     }
+    },
+    "contrasts": {
+     "all": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.3165517241379311,
+       "better": 498,
+       "worse": 39,
+       "sign_p": 1.6922145637242182e-102,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.2901662049861496,
+        0.3425414364640884
+       ],
+       "scene_mean": 0.31664961811238407,
+       "scene_ci95": [
+        0.28380649464675395,
+        0.34794671474358974
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.28191489361702127,
+        "HSSD2": 0.33333333333333337,
+        "HSSD3": 0.3222222222222222,
+        "HSSD4": 0.33854166666666674,
+        "HSSD5": 0.3012820512820512,
+        "HSSD6": 0.3999999999999999,
+        "HSSD7": 0.22777777777777775,
+        "HSSD8": 0.328125
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.4096551724137931,
+       "better": 642,
+       "worse": 48,
+       "sign_p": 1.1693859119073324e-133,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.3804945054945055,
+        0.43897533391598426
+       ],
+       "scene_mean": 0.4102905491506477,
+       "scene_ci95": [
+        0.38388496688569046,
+        0.4333935906754103
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.3882978723404255,
+        "HSSD2": 0.4375,
+        "HSSD3": 0.40555555555555556,
+        "HSSD4": 0.421875,
+        "HSSD5": 0.4358974358974359,
+        "HSSD6": 0.4588235294117647,
+        "HSSD7": 0.33333333333333337,
+        "HSSD8": 0.40104166666666663
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.37724137931034485,
+       "better": 610,
+       "worse": 63,
+       "sign_p": 2.0964782627062262e-113,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.34448977219897725,
+        0.4095305562443337
+       ],
+       "scene_mean": 0.37620736357145146,
+       "scene_ci95": [
+        0.35905629827498714,
+        0.3953125
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.3670212765957447,
+        "HSSD2": 0.421875,
+        "HSSD3": 0.3833333333333333,
+        "HSSD4": 0.359375,
+        "HSSD5": 0.35256410256410253,
+        "HSSD6": 0.35882352941176465,
+        "HSSD7": 0.35,
+        "HSSD8": 0.4166666666666667
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.042068965517241375,
+       "better": 140,
+       "worse": 79,
+       "sign_p": 4.5246753112698486e-05,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.020082408056612377,
+        0.06422651933701658
+       ],
+       "scene_mean": 0.04103482969497127,
+       "scene_ci95": [
+        0.025102024524178174,
+        0.05666316837018495
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.0478723404255319,
+        "HSSD2": 0.078125,
+        "HSSD3": 0.0444444444444444,
+        "HSSD4": 0.06770833333333337,
+        "HSSD5": 0.012820512820512775,
+        "HSSD6": 0.03529411764705881,
+        "HSSD7": 0.005555555555555536,
+        "HSSD8": 0.03645833333333337
+       }
+      }
+     },
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.29508196721311486,
+       "better": 123,
+       "worse": 15,
+       "sign_p": 2.839975645346407e-22,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.23676880222841226,
+        0.35714285714285715
+       ],
+       "scene_mean": 0.3016976658783642,
+       "scene_ci95": [
+        0.22335948982862686,
+        0.3699845165743389
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.36764705882352944,
+        "HSSD2": 0.24528301886792458,
+        "HSSD3": 0.2894736842105263,
+        "HSSD4": 0.3157894736842105,
+        "HSSD5": 0.3055555555555556,
+        "HSSD6": 0.475,
+        "HSSD7": 0.07272727272727275,
+        "HSSD8": 0.3421052631578948
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.33606557377049184,
+       "better": 147,
+       "worse": 24,
+       "sign_p": 9.219252518858907e-23,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.27077599869654734,
+        0.402817907444668
+       ],
+       "scene_mean": 0.3534532577512965,
+       "scene_ci95": [
+        0.2825285501489573,
+        0.4319882696127109
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.25000000000000006,
+        "HSSD2": 0.3207547169811321,
+        "HSSD3": 0.3421052631578947,
+        "HSSD4": 0.3684210526315789,
+        "HSSD5": 0.5555555555555556,
+        "HSSD6": 0.475,
+        "HSSD7": 0.20000000000000007,
+        "HSSD8": 0.3157894736842105
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.3005464480874317,
+       "better": 142,
+       "worse": 32,
+       "sign_p": 9.718725894710974e-18,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.23204309392265193,
+        0.368687574064669
+       ],
+       "scene_mean": 0.30721994648571116,
+       "scene_ci95": [
+        0.23147157398212515,
+        0.3856779712153811
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.25000000000000006,
+        "HSSD2": 0.3584905660377359,
+        "HSSD3": 0.3421052631578947,
+        "HSSD4": 0.13157894736842102,
+        "HSSD5": 0.36111111111111105,
+        "HSSD6": 0.5249999999999999,
+        "HSSD7": 0.20000000000000007,
+        "HSSD8": 0.2894736842105263
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.016393442622950838,
+       "better": 39,
+       "worse": 33,
+       "sign_p": 0.5559977177609708,
+       "n": 366,
+       "walk_clustered_ci95": [
+        -0.03694175706049057,
+        0.06970665253444727
+       ],
+       "scene_mean": 0.02185060894298438,
+       "scene_ci95": [
+        -0.01241733998375008,
+        0.0537965446844607
+       ],
+       "scenes_up": 6,
+       "scenes_down": 2,
+       "scene_sign_p": 0.2890625,
+       "per_scene": {
+        "HSSD1": 0.02941176470588236,
+        "HSSD2": -0.018867924528301883,
+        "HSSD3": 0.02631578947368418,
+        "HSSD4": 0.05263157894736836,
+        "HSSD5": 0.02777777777777779,
+        "HSSD6": 0.025000000000000022,
+        "HSSD7": -0.07272727272727264,
+        "HSSD8": 0.10526315789473684
+       }
+      }
+     }
+    }
+   },
+   "1": {
+    "status": "done",
+    "platform": {
+     "HSSD1": "CUDA",
+     "HSSD2": "MPS",
+     "HSSD3": "MPS",
+     "HSSD4": "CUDA",
+     "HSSD5": "CUDA",
+     "HSSD6": "CUDA",
+     "HSSD7": "CUDA",
+     "HSSD8": "CUDA"
+    },
+    "files": {
+     "LoRA, walk": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD1-256px-max64.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD2-256px-max64-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD3-256px-max64-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD4-256px-max64.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD5-256px-max64.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD6-256px-max64.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD7-256px-max64.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD8-256px-max64.jsonl"
+     },
+     "LoRA, no walk": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD1-256px-nowalk.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD2-256px-nowalk-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD3-256px-nowalk-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD4-256px-nowalk.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD5-256px-nowalk.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD6-256px-nowalk.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD7-256px-nowalk.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD8-256px-nowalk.jsonl"
+     },
+     "LoRA, shuffled": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD1-256px-max64-shuffled.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD2-256px-max64-shuffled-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD3-256px-max64-shuffled-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD4-256px-max64-shuffled.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD5-256px-max64-shuffled.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD6-256px-max64-shuffled.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD7-256px-max64-shuffled.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD8-256px-max64-shuffled.jsonl"
+     }
+    },
+    "accuracy": {
+     "all": {
+      "LoRA, walk": {
+       "pooled": 0.8744827586206897,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.8138297872340425,
+        "HSSD2": 0.90625,
+        "HSSD3": 0.8722222222222222,
+        "HSSD4": 0.8489583333333334,
+        "HSSD5": 0.9423076923076923,
+        "HSSD6": 0.9058823529411765,
+        "HSSD7": 0.8611111111111112,
+        "HSSD8": 0.859375
+       },
+       "scene_mean": 0.8762420623936973,
+       "scene_ci95": [
+        0.8501948507683215,
+        0.9036248193187532
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5262068965517241,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.5159574468085106,
+        "HSSD2": 0.5208333333333334,
+        "HSSD3": 0.5333333333333333,
+        "HSSD4": 0.5572916666666666,
+        "HSSD5": 0.5448717948717948,
+        "HSSD6": 0.49411764705882355,
+        "HSSD7": 0.5333333333333333,
+        "HSSD8": 0.5104166666666666
+       },
+       "scene_mean": 0.5262694027590578,
+       "scene_ci95": [
+        0.5134562734668335,
+        0.539305868112384
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6855172413793104,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.648936170212766,
+        "HSSD2": 0.6979166666666666,
+        "HSSD3": 0.7777777777777778,
+        "HSSD4": 0.6979166666666666,
+        "HSSD5": 0.7628205128205128,
+        "HSSD6": 0.6764705882352942,
+        "HSSD7": 0.6333333333333333,
+        "HSSD8": 0.6041666666666666
+       },
+       "scene_mean": 0.6874172977974605,
+       "scene_ci95": [
+        0.6495300114726742,
+        0.7272143063444689
+       ]
+      }
+     },
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.8005464480874317,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.6617647058823529,
+        "HSSD2": 0.7924528301886793,
+        "HSSD3": 0.8157894736842105,
+        "HSSD4": 0.7894736842105263,
+        "HSSD5": 0.9166666666666666,
+        "HSSD6": 0.925,
+        "HSSD7": 0.7818181818181819,
+        "HSSD8": 0.8421052631578947
+       },
+       "scene_mean": 0.8156338507010641,
+       "scene_ci95": [
+        0.7592944309618765,
+        0.8680865421826626
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5191256830601093,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.45588235294117646,
+        "HSSD2": 0.5283018867924528,
+        "HSSD3": 0.5,
+        "HSSD4": 0.5526315789473685,
+        "HSSD5": 0.4166666666666667,
+        "HSSD6": 0.55,
+        "HSSD7": 0.5818181818181818,
+        "HSSD8": 0.5789473684210527
+       },
+       "scene_mean": 0.5205310044483624,
+       "scene_ci95": [
+        0.4800410891031054,
+        0.5558715412566579
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6530054644808743,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.47058823529411764,
+        "HSSD2": 0.6792452830188679,
+        "HSSD3": 0.8157894736842105,
+        "HSSD4": 0.7105263157894737,
+        "HSSD5": 0.75,
+        "HSSD6": 0.675,
+        "HSSD7": 0.6545454545454545,
+        "HSSD8": 0.6052631578947368
+       },
+       "scene_mean": 0.6701197400283576,
+       "scene_ci95": [
+        0.6000648037268532,
+        0.7327153110047847
+       ]
+      }
+     }
+    },
+    "contrasts": {
+     "all": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.27172413793103456,
+       "better": 446,
+       "worse": 52,
+       "sign_p": 3.912780882754759e-79,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.24381825560802833,
+        0.29849027652611104
+       ],
+       "scene_mean": 0.2728457438451376,
+       "scene_ci95": [
+        0.24574368812795508,
+        0.3030684389140271
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.22872340425531912,
+        "HSSD2": 0.28645833333333337,
+        "HSSD3": 0.25555555555555554,
+        "HSSD4": 0.26041666666666674,
+        "HSSD5": 0.2948717948717948,
+        "HSSD6": 0.35882352941176465,
+        "HSSD7": 0.21666666666666667,
+        "HSSD8": 0.28125
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.34827586206896555,
+       "better": 584,
+       "worse": 79,
+       "sign_p": 4.226735140167936e-96,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.31824417009602196,
+        0.37878840342483
+       ],
+       "scene_mean": 0.34997265963463947,
+       "scene_ci95": [
+        0.32064309988179673,
+        0.37873355107011436
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.2978723404255319,
+        "HSSD2": 0.38541666666666663,
+        "HSSD3": 0.3388888888888889,
+        "HSSD4": 0.29166666666666674,
+        "HSSD5": 0.39743589743589747,
+        "HSSD6": 0.4117647058823529,
+        "HSSD7": 0.32777777777777783,
+        "HSSD8": 0.34895833333333337
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.18896551724137933,
+       "better": 331,
+       "worse": 57,
+       "sign_p": 4.5542774111916103e-48,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.16044195193637623,
+        0.21853388658367912
+       ],
+       "scene_mean": 0.18882476459623676,
+       "scene_ci95": [
+        0.15359575320512825,
+        0.22054070827048772
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.16489361702127658,
+        "HSSD2": 0.20833333333333337,
+        "HSSD3": 0.09444444444444444,
+        "HSSD4": 0.15104166666666674,
+        "HSSD5": 0.17948717948717952,
+        "HSSD6": 0.22941176470588232,
+        "HSSD7": 0.22777777777777786,
+        "HSSD8": 0.25520833333333337
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": -0.0027586206896551557,
+       "better": 125,
+       "worse": 129,
+       "sign_p": 0.8507380392501527,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        -0.026971888254158,
+        0.021408839779005526
+       ],
+       "scene_mean": -0.00276904457227517,
+       "scene_ci95": [
+        -0.011606806184012067,
+        0.008486126822523893
+       ],
+       "scenes_up": 2,
+       "scenes_down": 6,
+       "scene_sign_p": 0.2890625,
+       "per_scene": {
+        "HSSD1": -0.005319148936170248,
+        "HSSD2": 0.03125,
+        "HSSD3": -0.022222222222222254,
+        "HSSD4": -0.01041666666666663,
+        "HSSD5": 0.0064102564102563875,
+        "HSSD6": -0.00588235294117645,
+        "HSSD7": -0.005555555555555536,
+        "HSSD8": -0.01041666666666663
+       }
+      }
+     },
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.24590163934426235,
+       "better": 108,
+       "worse": 18,
+       "sign_p": 7.857578032825776e-17,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.18867654986522914,
+        0.3038981331168831
+       ],
+       "scene_mean": 0.2535276995228292,
+       "scene_ci95": [
+        0.18642168958703223,
+        0.3195497936016512
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.2941176470588235,
+        "HSSD2": 0.15094339622641517,
+        "HSSD3": 0.21052631578947367,
+        "HSSD4": 0.26315789473684215,
+        "HSSD5": 0.2777777777777778,
+        "HSSD6": 0.42500000000000004,
+        "HSSD7": 0.09090909090909094,
+        "HSSD8": 0.3157894736842105
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.2814207650273224,
+       "better": 135,
+       "worse": 32,
+       "sign_p": 2.958980878037015e-16,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.21293800539083557,
+        0.34959349593495936
+       ],
+       "scene_mean": 0.29510284625270167,
+       "scene_ci95": [
+        0.23646314037034874,
+        0.3687531032770605
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.20588235294117646,
+        "HSSD2": 0.26415094339622647,
+        "HSSD3": 0.3157894736842105,
+        "HSSD4": 0.23684210526315785,
+        "HSSD5": 0.49999999999999994,
+        "HSSD6": 0.375,
+        "HSSD7": 0.20000000000000007,
+        "HSSD8": 0.26315789473684204
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.14754098360655743,
+       "better": 74,
+       "worse": 20,
+       "sign_p": 1.8461183606763285e-08,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.08814589665653495,
+        0.20618556701030927
+       ],
+       "scene_mean": 0.1455141106727064,
+       "scene_ci95": [
+        0.09036421658240801,
+        0.19717150401733324
+       ],
+       "scenes_up": 7,
+       "scenes_down": 0,
+       "scene_sign_p": 0.015625,
+       "per_scene": {
+        "HSSD1": 0.19117647058823528,
+        "HSSD2": 0.1132075471698114,
+        "HSSD3": 0.0,
+        "HSSD4": 0.07894736842105265,
+        "HSSD5": 0.16666666666666663,
+        "HSSD6": 0.25,
+        "HSSD7": 0.12727272727272732,
+        "HSSD8": 0.23684210526315785
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": -0.032786885245901676,
+       "better": 35,
+       "worse": 47,
+       "sign_p": 0.22424452830608177,
+       "n": 366,
+       "walk_clustered_ci95": [
+        -0.09169258459976061,
+        0.023501778335149315
+       ],
+       "scene_mean": -0.026319357412550648,
+       "scene_ci95": [
+        -0.06085008549777225,
+        0.010460174500422073
+       ],
+       "scenes_up": 1,
+       "scenes_down": 5,
+       "scene_sign_p": 0.21875,
+       "per_scene": {
+        "HSSD1": -0.044117647058823595,
+        "HSSD2": -0.1132075471698113,
+        "HSSD3": -0.052631578947368474,
+        "HSSD4": 0.0,
+        "HSSD5": 0.0,
+        "HSSD6": -0.02499999999999991,
+        "HSSD7": -0.05454545454545445,
+        "HSSD8": 0.07894736842105254
+       }
+      }
+     }
+    }
+   },
+   "2": {
+    "status": "done",
+    "platform": {
+     "HSSD1": "CUDA",
+     "HSSD2": "MPS",
+     "HSSD3": "MPS",
+     "HSSD4": "CUDA",
+     "HSSD5": "CUDA",
+     "HSSD6": "CUDA",
+     "HSSD7": "CUDA",
+     "HSSD8": "CUDA"
+    },
+    "files": {
+     "LoRA, walk": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD1-256px-max64.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD2-256px-max64-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD3-256px-max64-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD4-256px-max64.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD5-256px-max64.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD6-256px-max64.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD7-256px-max64.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD8-256px-max64.jsonl"
+     },
+     "LoRA, no walk": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD1-256px-nowalk.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD2-256px-nowalk-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD3-256px-nowalk-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD4-256px-nowalk.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD5-256px-nowalk.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD6-256px-nowalk.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD7-256px-nowalk.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD8-256px-nowalk.jsonl"
+     },
+     "LoRA, shuffled": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD1-256px-max64-shuffled.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD2-256px-max64-shuffled-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD3-256px-max64-shuffled-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD4-256px-max64-shuffled.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD5-256px-max64-shuffled.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD6-256px-max64-shuffled.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD7-256px-max64-shuffled.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD8-256px-max64-shuffled.jsonl"
+     }
+    },
+    "accuracy": {
+     "all": {
+      "LoRA, walk": {
+       "pooled": 0.7296551724137931,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.6382978723404256,
+        "HSSD2": 0.7708333333333334,
+        "HSSD3": 0.7333333333333333,
+        "HSSD4": 0.71875,
+        "HSSD5": 0.8333333333333334,
+        "HSSD6": 0.7294117647058823,
+        "HSSD7": 0.7388888888888889,
+        "HSSD8": 0.6927083333333334
+       },
+       "scene_mean": 0.7319446074085663,
+       "scene_ci95": [
+        0.6961746576123801,
+        0.7700522109885621
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.48137931034482756,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.4946808510638298,
+        "HSSD2": 0.4635416666666667,
+        "HSSD3": 0.5055555555555555,
+        "HSSD4": 0.5625,
+        "HSSD5": 0.4230769230769231,
+        "HSSD6": 0.45294117647058824,
+        "HSSD7": 0.4722222222222222,
+        "HSSD8": 0.4635416666666667
+       },
+       "scene_mean": 0.4797575077153065,
+       "scene_ci95": [
+        0.45435402526395174,
+        0.5091034352293666
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6317241379310344,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.601063829787234,
+        "HSSD2": 0.6614583333333334,
+        "HSSD3": 0.6722222222222223,
+        "HSSD4": 0.6510416666666666,
+        "HSSD5": 0.6923076923076923,
+        "HSSD6": 0.611764705882353,
+        "HSSD7": 0.6166666666666667,
+        "HSSD8": 0.5572916666666666
+       },
+       "scene_mean": 0.6329770979416043,
+       "scene_ci95": [
+        0.6039385250443263,
+        0.660612200839658
+       ]
+      }
+     },
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.6475409836065574,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.45588235294117646,
+        "HSSD2": 0.7169811320754716,
+        "HSSD3": 0.631578947368421,
+        "HSSD4": 0.7894736842105263,
+        "HSSD5": 0.7777777777777778,
+        "HSSD6": 0.625,
+        "HSSD7": 0.6727272727272727,
+        "HSSD8": 0.631578947368421
+       },
+       "scene_mean": 0.6626250143086334,
+       "scene_ci95": [
+        0.5905731072333239,
+        0.7274908970539556
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.45901639344262296,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.4264705882352941,
+        "HSSD2": 0.4716981132075472,
+        "HSSD3": 0.47368421052631576,
+        "HSSD4": 0.5,
+        "HSSD5": 0.3611111111111111,
+        "HSSD6": 0.5,
+        "HSSD7": 0.5636363636363636,
+        "HSSD8": 0.34210526315789475
+       },
+       "scene_mean": 0.4548382062343158,
+       "scene_ci95": [
+        0.4051535087719298,
+        0.5011273359212783
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6065573770491803,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.47058823529411764,
+        "HSSD2": 0.6226415094339622,
+        "HSSD3": 0.6842105263157895,
+        "HSSD4": 0.7368421052631579,
+        "HSSD5": 0.6388888888888888,
+        "HSSD6": 0.625,
+        "HSSD7": 0.6181818181818182,
+        "HSSD8": 0.5526315789473685
+       },
+       "scene_mean": 0.6186230827906378,
+       "scene_ci95": [
+        0.5643037673451614,
+        0.6684136549206062
+       ]
+      }
+     }
+    },
+    "contrasts": {
+     "all": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.12689655172413794,
+       "better": 328,
+       "worse": 144,
+       "sign_p": 1.4211686703906598e-17,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.09588970240906944,
+        0.15724137931034482
+       ],
+       "scene_mean": 0.12854828886000663,
+       "scene_ci95": [
+        0.09875748182908259,
+        0.1566551350746927
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.05319148936170215,
+        "HSSD2": 0.15104166666666674,
+        "HSSD3": 0.11666666666666659,
+        "HSSD4": 0.13020833333333337,
+        "HSSD5": 0.1858974358974359,
+        "HSSD6": 0.1823529411764705,
+        "HSSD7": 0.09444444444444444,
+        "HSSD8": 0.11458333333333337
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.2482758620689655,
+       "better": 483,
+       "worse": 123,
+       "sign_p": 2.4110801416243186e-51,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.2135989010989011,
+        0.2832664609053498
+       ],
+       "scene_mean": 0.25218709969325975,
+       "scene_ci95": [
+        0.19892074837470453,
+        0.3112336797699849
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.14361702127659576,
+        "HSSD2": 0.3072916666666667,
+        "HSSD3": 0.22777777777777775,
+        "HSSD4": 0.15625,
+        "HSSD5": 0.4102564102564103,
+        "HSSD6": 0.2764705882352941,
+        "HSSD7": 0.2666666666666667,
+        "HSSD8": 0.22916666666666669
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.09793103448275864,
+       "better": 250,
+       "worse": 108,
+       "sign_p": 4.272120770473053e-14,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.06976744186046512,
+        0.12620043990350502
+       ],
+       "scene_mean": 0.09896750946696191,
+       "scene_ci95": [
+        0.07296049565830151,
+        0.12271202551533435
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.037234042553191515,
+        "HSSD2": 0.109375,
+        "HSSD3": 0.061111111111111005,
+        "HSSD4": 0.06770833333333337,
+        "HSSD5": 0.14102564102564108,
+        "HSSD6": 0.11764705882352933,
+        "HSSD7": 0.12222222222222223,
+        "HSSD8": 0.13541666666666674
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": -0.14758620689655177,
+       "better": 106,
+       "worse": 320,
+       "sign_p": 4.820795645903509e-26,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        -0.177731673582296,
+        -0.1178082191780822
+       ],
+       "scene_mean": -0.14706649955740614,
+       "scene_ci95": [
+        -0.16766612562578226,
+        -0.12541754750863793
+       ],
+       "scenes_up": 0,
+       "scenes_down": 8,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": -0.18085106382978722,
+        "HSSD2": -0.10416666666666663,
+        "HSSD3": -0.1611111111111112,
+        "HSSD4": -0.140625,
+        "HSSD5": -0.10256410256410253,
+        "HSSD6": -0.1823529411764706,
+        "HSSD7": -0.12777777777777777,
+        "HSSD8": -0.17708333333333326
+       }
+      }
+     },
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.09289617486338808,
+       "better": 76,
+       "worse": 42,
+       "sign_p": 0.0022426650517358795,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.03502970686939251,
+        0.15274096440830406
+       ],
+       "scene_mean": 0.10051886313039857,
+       "scene_ci95": [
+        0.04992077700599664,
+        0.15778811724051667
+       ],
+       "scenes_up": 7,
+       "scenes_down": 1,
+       "scene_sign_p": 0.0703125,
+       "per_scene": {
+        "HSSD1": 0.08823529411764702,
+        "HSSD2": 0.07547169811320753,
+        "HSSD3": 0.02631578947368418,
+        "HSSD4": 0.26315789473684215,
+        "HSSD5": 0.13888888888888895,
+        "HSSD6": 0.125,
+        "HSSD7": -0.018181818181818188,
+        "HSSD8": 0.10526315789473684
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.18852459016393447,
+       "better": 106,
+       "worse": 37,
+       "sign_p": 6.635322356886861e-09,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.11764705882352941,
+        0.26203344627233266
+       ],
+       "scene_mean": 0.20778680807431757,
+       "scene_ci95": [
+        0.12931626467335602,
+        0.29052879841112217
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.02941176470588236,
+        "HSSD2": 0.24528301886792447,
+        "HSSD3": 0.15789473684210525,
+        "HSSD4": 0.2894736842105263,
+        "HSSD5": 0.4166666666666667,
+        "HSSD6": 0.125,
+        "HSSD7": 0.10909090909090913,
+        "HSSD8": 0.28947368421052627
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.040983606557377095,
+       "better": 54,
+       "worse": 39,
+       "sign_p": 0.14617702864715287,
+       "n": 366,
+       "walk_clustered_ci95": [
+        -0.01690260205299594,
+        0.09890183346065698
+       ],
+       "scene_mean": 0.044001931517995536,
+       "scene_ci95": [
+        0.0033809456797072868,
+        0.0845267815944951
+       ],
+       "scenes_up": 5,
+       "scenes_down": 2,
+       "scene_sign_p": 0.453125,
+       "per_scene": {
+        "HSSD1": -0.01470588235294118,
+        "HSSD2": 0.09433962264150941,
+        "HSSD3": -0.052631578947368474,
+        "HSSD4": 0.052631578947368474,
+        "HSSD5": 0.13888888888888895,
+        "HSSD6": 0.0,
+        "HSSD7": 0.054545454545454564,
+        "HSSD8": 0.07894736842105254
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": -0.18579234972677594,
+       "better": 29,
+       "worse": 97,
+       "sign_p": 9.244792163007088e-10,
+       "n": 366,
+       "walk_clustered_ci95": [
+        -0.2526048519736842,
+        -0.1189786386953526
+       ],
+       "scene_mean": -0.17932819380498133,
+       "scene_ci95": [
+        -0.2380739440394511,
+        -0.11511679292929296
+       ],
+       "scenes_up": 0,
+       "scenes_down": 7,
+       "scene_sign_p": 0.015625,
+       "per_scene": {
+        "HSSD1": -0.25000000000000006,
+        "HSSD2": -0.18867924528301894,
+        "HSSD3": -0.23684210526315796,
+        "HSSD4": 0.0,
+        "HSSD5": -0.13888888888888884,
+        "HSSD6": -0.32499999999999996,
+        "HSSD7": -0.16363636363636358,
+        "HSSD8": -0.13157894736842113
+       }
+      }
+     }
+    }
+   }
+  },
+  "three_seeds": {
+   "all": {
+    "LoRA, walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.9200459366609437,
+      0.8762420623936973,
+      0.7319446074085663
+     ],
+     "mean": 0.8427442021544024,
+     "min": 0.7319446074085663,
+     "max": 0.9200459366609437
+    },
+    "LoRA, no walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.509755387510296,
+      0.5262694027590578,
+      0.4797575077153065
+     ],
+     "mean": 0.5052607659948868,
+     "min": 0.4797575077153065,
+     "max": 0.5262694027590578
+    },
+    "LoRA, shuffled": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.5438385730894921,
+      0.6874172977974605,
+      0.6329770979416043
+     ],
+     "mean": 0.621410989609519,
+     "min": 0.5438385730894921,
+     "max": 0.6874172977974605
+    },
+    "LoRA walk vs base walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.31664961811238407,
+      0.2728457438451376,
+      0.12854828886000663
+     ],
+     "mean": 0.23934788360584278,
+     "min": 0.12854828886000663,
+     "max": 0.31664961811238407
+    },
+    "LoRA walk vs no walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.4102905491506477,
+      0.34997265963463947,
+      0.25218709969325975
+     ],
+     "mean": 0.33748343615951565,
+     "min": 0.25218709969325975,
+     "max": 0.4102905491506477
+    },
+    "LoRA walk vs shuffled": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.37620736357145146,
+      0.18882476459623676,
+      0.09896750946696191
+     ],
+     "mean": 0.22133321254488336,
+     "min": 0.09896750946696191,
+     "max": 0.37620736357145146
+    },
+    "LoRA walk vs Opus walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.04103482969497127,
+      -0.00276904457227517,
+      -0.14706649955740614
+     ],
+     "mean": -0.036266904811570015,
+     "min": -0.14706649955740614,
+     "max": 0.04103482969497127
+    }
+   },
+   "novel": {
+    "LoRA, walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.863803817056599,
+      0.8156338507010641,
+      0.6626250143086334
+     ],
+     "mean": 0.7806875606887654,
+     "min": 0.6626250143086334,
+     "max": 0.863803817056599
+    },
+    "LoRA, no walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.5103505593053026,
+      0.5205310044483624,
+      0.4548382062343158
+     ],
+     "mean": 0.495239923329327,
+     "min": 0.4548382062343158,
+     "max": 0.5205310044483624
+    },
+    "LoRA, shuffled": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.5565838705708879,
+      0.6701197400283576,
+      0.6186230827906378
+     ],
+     "mean": 0.6151088977966278,
+     "min": 0.5565838705708879,
+     "max": 0.6701197400283576
+    },
+    "LoRA walk vs base walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.3016976658783642,
+      0.2535276995228292,
+      0.10051886313039857
+     ],
+     "mean": 0.21858140951053065,
+     "min": 0.10051886313039857,
+     "max": 0.3016976658783642
+    },
+    "LoRA walk vs no walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.3534532577512965,
+      0.29510284625270167,
+      0.20778680807431757
+     ],
+     "mean": 0.2854476373594386,
+     "min": 0.20778680807431757,
+     "max": 0.3534532577512965
+    },
+    "LoRA walk vs shuffled": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.30721994648571116,
+      0.1455141106727064,
+      0.044001931517995536
+     ],
+     "mean": 0.16557866289213768,
+     "min": 0.044001931517995536,
+     "max": 0.30721994648571116
+    },
+    "LoRA walk vs Opus walk": {
+     "seeds": [
+      0,
+      1,
+      2
+     ],
+     "values": [
+      0.02185060894298438,
+      -0.026319357412550648,
+      -0.17932819380498133
+     ],
+     "mean": -0.0612656474248492,
+     "min": -0.17932819380498133,
+     "max": 0.02185060894298438
+    }
+   }
+  }
+ }
+}

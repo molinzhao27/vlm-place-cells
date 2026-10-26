@@ -1,0 +1,76 @@
+{
+ "alpha": 0.00625,
+ "models": {
+  "nvidia/nemotron-3.5-super-vl": {
+   "status": "untestable",
+   "error": "maximum context 262,144 tokens; the walk request needs about 388,798 (371,365 image tokens)"
+  },
+  "qwen/qwen3.8-flash": {
+   "status": "untestable",
+   "error": "Alibaba: at most 250 data-URI images per request"
+  },
+  "minimax/minimax-m3": {
+   "walk": 0.5294117647058824,
+   "no_walk": 0.5882352941176471,
+   "better": 21,
+   "worse": 27,
+   "p": 0.4708790136217118,
+   "hosts": [
+    "DeepInfra",
+    "GMICloud",
+    "Minimax",
+    "ModelRun",
+    "Novita",
+    "Parasail",
+    "StreamLake",
+    "Venice"
+   ],
+   "cost": 2.7221,
+   "status": "done",
+   "verdict": "no gain"
+  },
+  "xiaomi/mimo-v2.6-pro": {
+   "walk": 0.5392156862745098,
+   "no_walk": 0.5686274509803921,
+   "better": 20,
+   "worse": 23,
+   "p": 0.7607916425613439,
+   "hosts": [
+    "DeepInfra",
+    "GMICloud",
+    "Novita",
+    "Xiaomi"
+   ],
+   "cost": 2.5415,
+   "status": "done",
+   "verdict": "no gain"
+  },
+  "qwen/qwen3.5-397b-a17b": {
+   "status": "untestable",
+   "error": "maximum context 262,144 tokens; the walk request needs about 388,798 (371,365 image tokens)"
+  },
+  "stepfun/step-5-preview": {
+   "status": "untestable",
+   "error": "DeepInfra: at most 8 images; StepFun: the number of images exceeds the model's limit (images_too_may)"
+  },
+  "thinkingmachines/inkling": {
+   "status": "untestable",
+   "error": "Together: 413 request entity too large"
+  },
+  "meta/muse-spark-open": {
+   "walk": 0.6470588235294118,
+   "no_walk": 0.5980392156862745,
+   "better": 21,
+   "worse": 16,
+   "p": 0.5113757815852296,
+   "hosts": [
+    "Fireworks",
+    "Modal",
+    "Together"
+   ],
+   "cost": 4.9191,
+   "status": "done",
+   "verdict": "no gain"
+  }
+ }
+}

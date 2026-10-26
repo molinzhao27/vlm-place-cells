@@ -39,7 +39,8 @@ from . import claude_test as ct
 OUT = "results/api"
 PROVIDERS = {"moonshot": "https://api.moonshot.ai/v1", "deepinfra": "https://api.deepinfra.com/v1/openai",
              "deepseek": "https://api.deepseek.com", "openai": "https://api.openai.com/v1",
-             "typesafe": "https://api.typesafe.ai/v1", "gemini": "https://generativelanguage.googleapis.com/v1beta/openai/"}
+             "typesafe": "https://api.typesafe.ai/v1", "gemini": "https://generativelanguage.googleapis.com/v1beta/openai/",
+             "openrouter": "https://openrouter.ai/api/v1"}
 TOKEN_PARAM = {"gemini": "max_tokens"}         # the output-cap parameter, if not max_completion_tokens
 DECISION_APIS = {"openai": "/decisions", "typesafe": "/systemone"}      # providers whose models are decision models
 # model: (provider, $ per million tokens (input miss, cache write, cache hit, output; output includes
@@ -74,6 +75,23 @@ MODELS = {
     # 1.14). Price $0.042/M input from launch coverage; check it against the bill.
     "jev-1.14.0": ("typesafe", (0.042, 0.042, 0.042, 0.0), {}, "decision"),
 }
+# Experiment 11, amendment 5: open-weight models through OpenRouter (prices from openrouter.ai/api/v1/models,
+# 2026-10-25: input, input, cache read, output). Requests are restricted to hosts serving bf16/fp16/fp8
+# weights, ask OpenRouter to report each request's cost (used as cost_usd when present), and use
+# OpenRouter's reasoning parameter at low effort; temperature is not sent.
+OR_EXTRA = {"provider": {"quantizations": ["bf16", "fp16", "fp8"]}, "usage": {"include": True},
+            "reasoning": {"effort": "low"}}
+for _id, _p in {"nvidia/nemotron-3.5-super-vl": (0.15, 0.02, 0.50), "qwen/qwen3.8-flash": (0.15, 0.016, 0.47),
+                "minimax/minimax-m3": (0.30, 0.06, 1.20), "xiaomi/mimo-v2.6-pro": (0.435, 0.0036, 0.87),
+                "qwen/qwen3.5-397b-a17b": (0.50, 0.30, 3.60), "stepfun/step-5-preview": (1.00, 0.10, 2.70),
+                "thinkingmachines/inkling": (1.00, 0.17, 4.05), "meta/muse-spark-open": (1.25, 0.15, 4.25)}.items():
+    MODELS[_id] = ("openrouter", (_p[0], _p[0], _p[1], _p[2]), {"extra_body": OR_EXTRA}, "low")
+# Step-5's default host (DeepInfra) caps requests at 8 images; StepFun's own fp8 host is used instead.
+MODELS["stepfun/step-5-preview"] = MODELS["stepfun/step-5-preview"][:2] + (
+    {"extra_body": {**OR_EXTRA, "provider": {"order": ["StepFun"], "allow_fallbacks": False}}},) + MODELS["stepfun/step-5-preview"][3:]
+# No host declares bf16/fp16/fp8 for these: allow hosts whose precision is undeclared (never declared fp4).
+for _id in ("qwen/qwen3.8-flash", "thinkingmachines/inkling", "meta/muse-spark-open"):
+    MODELS[_id] = MODELS[_id][:2] + ({"extra_body": {**OR_EXTRA, "provider": {"quantizations": ["unknown"]}}},) + MODELS[_id][3:]
 PRICE_CHANGES = {"gemini-4-argon": ("2026-12-01", (4.0, 4.0, 0.20, 20.0))}    # new prices from that UTC date
 
 
@@ -197,6 +215,8 @@ def rates(model, when=None):
 
 
 def cost(model, u, when=None):
+    if MODELS[model][0] == "openrouter" and (u.get("raw") or {}).get("cost") is not None:
+        return float(u["raw"]["cost"])          # OpenRouter's own charge for the request
     pin, pwrite, phit, pout = rates(model, when)
     k_in, k_out = (2.0, 1.5) if model == "gpt-6-astra" and u["prompt"] > 272_000 else (1.0, 1.0)
     usd = (k_in * (u["miss"] * pin + u["cache_write"] * pwrite + u["cache_read"] * phit) + k_out * u["output"] * pout) / 1e6
@@ -204,7 +224,7 @@ def cost(model, u, when=None):
 
 
 def tag(args):
-    return (args.model + ({"dissimilar": "-dissimilar"}.get(args.trials, f"-{args.trials}" if ct.walk_set(args.trials) else ""))
+    return (args.model.replace("/", "_") + ({"dissimilar": "-dissimilar"}.get(args.trials, f"-{args.trials}" if ct.walk_set(args.trials) else ""))
             + ("-nowalk" if args.no_walk else "") + ("-shuffled" if args.shuffle_walk else "")
             + (f"-f{args.walk_frames}" if args.walk_frames < 256 else "") + f"-{MODELS[args.model][3]}")
 
@@ -236,7 +256,17 @@ def run(args):
         extra = {"prompt_cache_key": f"{args.model}-walk{t['walk']}"} if provider == "openai" and prefix is not None else {}
         if provider == "openai" and args.service_tier:
             extra["service_tier"] = args.service_tier     # transport and price only; same request otherwise
-        r = c.chat.completions.create(messages=[{"role": "user", "content": parts(context + ct.question_blocks(t))}], **kw, **extra)
+        for attempt in range(3):      # an empty or malformed reply from a host is retried, not scored
+            try:
+                r = c.chat.completions.create(messages=[{"role": "user", "content": parts(context + ct.question_blocks(t))}],
+                                              **kw, **extra)
+                if r.choices:
+                    break
+            except json.JSONDecodeError:
+                pass
+            time.sleep(10)
+        else:
+            raise RuntimeError(f"no usable reply for {t['id']} after 3 attempts")
         m = r.choices[0].message
         text = m.content or ""
         reasoning = getattr(m, "reasoning_content", None) or (m.model_extra or {}).get("reasoning_content") or ""
@@ -248,6 +278,7 @@ def run(args):
                 "reasoning": reasoning[-1500:], "finish_reason": r.choices[0].finish_reason, "usage": u,
                 "cost_usd": cost(args.model, u, t0), "offpeak": offpeak(args.model, t0), "model": args.model,
                 "model_served": getattr(r, "model", None), "service_tier": getattr(r, "service_tier", None),
+                "host": (r.model_extra or {}).get("provider"),
                 "utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(t0)),
                 "settings": settings, "walk_shown": not args.no_walk,
                 "shuffle_walk": args.shuffle_walk, "walk_frames": args.walk_frames, "seconds": round(time.time() - t0, 1)}

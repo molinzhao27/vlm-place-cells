@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 # Experiment 9b: retrain run_finetune.sh's LoRA with another seed (the same data and settings) and test it
 # on room A's and room B's lure-free trials: 64-frame walk, no walk and shuffled walk.
-#   scripts/vast1/gpu-run.sh --detach $HOST_LOGS/mechinterp-ft-s1.log bash scripts/run_ft_seed.sh 1
+#   gq submit --on vast3 --project mechinterp --name lora_seed1 --gpu --est 2h -- /bin/bash scripts/run_ft_seed.sh 1
+# An optional second argument names the adapter folder, e.g. the GPU control, a second seed-0 run on
+# another GPU without touching experiment 9's adapter: run_ft_seed.sh 0 data/ft/qwen8b-proc-s0-5090
 set -uo pipefail
-S=${1:?usage: run_ft_seed.sh SEED}
+S=${1:?usage: run_ft_seed.sh SEED [ADAPTER_DIR]}
 P=.venv/bin/python
 B=Qwen/Qwen3-VL-8B-Instruct
-A=data/ft/qwen8b-proc-s$S
+A=${2:-data/ft/qwen8b-proc-s$S}
 echo "RUN_START=$(date -u +%FT%TZ)"
 $P -m spatialcells.finetune --seed $S --out $A > data/logs/finetune_s$S.log 2>&1 || { echo "FINETUNE FAILED"; exit 1; }
 echo "FINETUNE_DONE=$(date -u +%FT%TZ)"

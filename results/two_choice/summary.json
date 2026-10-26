@@ -319,6 +319,774 @@
    "picked_more_similar_looking": 0.4069767441860465
   }
  },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD1-256px-max64-mps": {
+  "all": {
+   "n": 188,
+   "accuracy": 0.8670212765957447,
+   "parsed": 1.0,
+   "p_above_chance": 2.603778306627725e-26,
+   "accuracy_when_frame_order_favours_far": 0.851063829787234,
+   "n_frame_order_favours_far": 94,
+   "picked_first_listed": 0.5372340425531915,
+   "picked_more_similar_looking": 0.4734042553191489
+  },
+  "novel": {
+   "n": 68,
+   "accuracy": 0.7352941176470589,
+   "parsed": 1.0,
+   "p_above_chance": 6.541938077099227e-05,
+   "accuracy_when_frame_order_favours_far": 0.7058823529411765,
+   "n_frame_order_favours_far": 34,
+   "picked_first_listed": 0.5441176470588235,
+   "picked_more_similar_looking": 0.47058823529411764
+  },
+  "familiar": {
+   "n": 120,
+   "accuracy": 0.9416666666666667,
+   "parsed": 1.0,
+   "p_above_chance": 4.765126470090465e-26,
+   "accuracy_when_frame_order_favours_far": 0.9333333333333333,
+   "n_frame_order_favours_far": 60,
+   "picked_first_listed": 0.5333333333333333,
+   "picked_more_similar_looking": 0.475
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD1-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 188,
+   "accuracy": 0.5,
+   "parsed": 1.0,
+   "p_above_chance": 0.5290571907677553,
+   "accuracy_when_frame_order_favours_far": 0.5425531914893617,
+   "n_frame_order_favours_far": 94,
+   "picked_first_listed": 0.4148936170212766,
+   "picked_more_similar_looking": 0.44680851063829785
+  },
+  "novel": {
+   "n": 68,
+   "accuracy": 0.4852941176470588,
+   "parsed": 1.0,
+   "p_above_chance": 0.6418496199228316,
+   "accuracy_when_frame_order_favours_far": 0.5294117647058824,
+   "n_frame_order_favours_far": 34,
+   "picked_first_listed": 0.4411764705882353,
+   "picked_more_similar_looking": 0.3382352941176471
+  },
+  "familiar": {
+   "n": 120,
+   "accuracy": 0.5083333333333333,
+   "parsed": 1.0,
+   "p_above_chance": 0.46365751054494164,
+   "accuracy_when_frame_order_favours_far": 0.55,
+   "n_frame_order_favours_far": 60,
+   "picked_first_listed": 0.4,
+   "picked_more_similar_looking": 0.5083333333333333
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD1-256px-nowalk-mps": {
+  "all": {
+   "n": 188,
+   "accuracy": 0.4787234042553192,
+   "parsed": 1.0,
+   "p_above_chance": 0.744160190913833,
+   "accuracy_when_frame_order_favours_far": 0.4787234042553192,
+   "n_frame_order_favours_far": 94,
+   "picked_first_listed": 0.18085106382978725,
+   "picked_more_similar_looking": 0.5425531914893617
+  },
+  "novel": {
+   "n": 68,
+   "accuracy": 0.4852941176470588,
+   "parsed": 1.0,
+   "p_above_chance": 0.6418496199228316,
+   "accuracy_when_frame_order_favours_far": 0.5,
+   "n_frame_order_favours_far": 34,
+   "picked_first_listed": 0.20588235294117646,
+   "picked_more_similar_looking": 0.5735294117647058
+  },
+  "familiar": {
+   "n": 120,
+   "accuracy": 0.475,
+   "parsed": 1.0,
+   "p_above_chance": 0.7385045080550028,
+   "accuracy_when_frame_order_favours_far": 0.4666666666666667,
+   "n_frame_order_favours_far": 60,
+   "picked_first_listed": 0.16666666666666666,
+   "picked_more_similar_looking": 0.525
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD2-256px-max64-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.953125,
+   "parsed": 1.0,
+   "p_above_chance": 1.3526271395651635e-43,
+   "accuracy_when_frame_order_favours_far": 0.9578947368421052,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.5364583333333334,
+   "picked_more_similar_looking": 0.5104166666666666
+  },
+  "novel": {
+   "n": 53,
+   "accuracy": 0.8867924528301887,
+   "parsed": 1.0,
+   "p_above_chance": 2.9026612224924975e-09,
+   "accuracy_when_frame_order_favours_far": 0.8846153846153846,
+   "n_frame_order_favours_far": 26,
+   "picked_first_listed": 0.5660377358490566,
+   "picked_more_similar_looking": 0.5471698113207547
+  },
+  "familiar": {
+   "n": 139,
+   "accuracy": 0.9784172661870504,
+   "parsed": 1.0,
+   "p_above_chance": 6.424466928102473e-37,
+   "accuracy_when_frame_order_favours_far": 0.9855072463768116,
+   "n_frame_order_favours_far": 69,
+   "picked_first_listed": 0.5251798561151079,
+   "picked_more_similar_looking": 0.49640287769784175
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD2-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.53125,
+   "parsed": 1.0,
+   "p_above_chance": 0.21367729469829336,
+   "accuracy_when_frame_order_favours_far": 0.5473684210526316,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.4479166666666667,
+   "picked_more_similar_looking": 0.546875
+  },
+  "novel": {
+   "n": 53,
+   "accuracy": 0.5283018867924528,
+   "parsed": 1.0,
+   "p_above_chance": 0.3919231511047494,
+   "accuracy_when_frame_order_favours_far": 0.5769230769230769,
+   "n_frame_order_favours_far": 26,
+   "picked_first_listed": 0.39622641509433965,
+   "picked_more_similar_looking": 0.5283018867924528
+  },
+  "familiar": {
+   "n": 139,
+   "accuracy": 0.5323741007194245,
+   "parsed": 1.0,
+   "p_above_chance": 0.2487820707983046,
+   "accuracy_when_frame_order_favours_far": 0.5362318840579711,
+   "n_frame_order_favours_far": 69,
+   "picked_first_listed": 0.4676258992805755,
+   "picked_more_similar_looking": 0.5539568345323741
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD2-256px-nowalk-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.515625,
+   "parsed": 1.0,
+   "p_above_chance": 0.3591594271088474,
+   "accuracy_when_frame_order_favours_far": 0.5157894736842106,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.140625,
+   "picked_more_similar_looking": 0.4583333333333333
+  },
+  "novel": {
+   "n": 53,
+   "accuracy": 0.5660377358490566,
+   "parsed": 1.0,
+   "p_above_chance": 0.20505135818734566,
+   "accuracy_when_frame_order_favours_far": 0.5,
+   "n_frame_order_favours_far": 26,
+   "picked_first_listed": 0.16981132075471697,
+   "picked_more_similar_looking": 0.49056603773584906
+  },
+  "familiar": {
+   "n": 139,
+   "accuracy": 0.49640287769784175,
+   "parsed": 1.0,
+   "p_above_chance": 0.5673132445486329,
+   "accuracy_when_frame_order_favours_far": 0.5217391304347826,
+   "n_frame_order_favours_far": 69,
+   "picked_first_listed": 0.12949640287769784,
+   "picked_more_similar_looking": 0.4460431654676259
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD3-256px-max64-mps": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.9388888888888889,
+   "parsed": 1.0,
+   "p_above_chance": 8.221255807599223e-38,
+   "accuracy_when_frame_order_favours_far": 0.9222222222222223,
+   "n_frame_order_favours_far": 90,
+   "picked_first_listed": 0.4777777777777778,
+   "picked_more_similar_looking": 0.5277777777777778
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.8947368421052632,
+   "parsed": 1.0,
+   "p_above_chance": 3.0192677513696253e-07,
+   "accuracy_when_frame_order_favours_far": 0.8421052631578947,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.39473684210526316,
+   "picked_more_similar_looking": 0.5789473684210527
+  },
+  "familiar": {
+   "n": 142,
+   "accuracy": 0.9507042253521126,
+   "parsed": 1.0,
+   "p_above_chance": 3.757169389833695e-32,
+   "accuracy_when_frame_order_favours_far": 0.9436619718309859,
+   "n_frame_order_favours_far": 71,
+   "picked_first_listed": 0.5,
+   "picked_more_similar_looking": 0.5140845070422535
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD3-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.5555555555555556,
+   "parsed": 1.0,
+   "p_above_chance": 0.07826573478907554,
+   "accuracy_when_frame_order_favours_far": 0.6444444444444445,
+   "n_frame_order_favours_far": 90,
+   "picked_first_listed": 0.48333333333333334,
+   "picked_more_similar_looking": 0.5222222222222223
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.5526315789473685,
+   "parsed": 1.0,
+   "p_above_chance": 0.31355128507857444,
+   "accuracy_when_frame_order_favours_far": 0.47368421052631576,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.42105263157894735,
+   "picked_more_similar_looking": 0.5526315789473685
+  },
+  "familiar": {
+   "n": 142,
+   "accuracy": 0.5563380281690141,
+   "parsed": 1.0,
+   "p_above_chance": 0.10397921075931413,
+   "accuracy_when_frame_order_favours_far": 0.6901408450704225,
+   "n_frame_order_favours_far": 71,
+   "picked_first_listed": 0.5,
+   "picked_more_similar_looking": 0.5140845070422535
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD3-256px-nowalk-mps": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.5333333333333333,
+   "parsed": 1.0,
+   "p_above_chance": 0.20617527870704347,
+   "accuracy_when_frame_order_favours_far": 0.5333333333333333,
+   "n_frame_order_favours_far": 90,
+   "picked_first_listed": 0.2388888888888889,
+   "picked_more_similar_looking": 0.45555555555555555
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.5526315789473685,
+   "parsed": 1.0,
+   "p_above_chance": 0.31355128507857444,
+   "accuracy_when_frame_order_favours_far": 0.5789473684210527,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.21052631578947367,
+   "picked_more_similar_looking": 0.5526315789473685
+  },
+  "familiar": {
+   "n": 142,
+   "accuracy": 0.528169014084507,
+   "parsed": 1.0,
+   "p_above_chance": 0.2785354935551639,
+   "accuracy_when_frame_order_favours_far": 0.5211267605633803,
+   "n_frame_order_favours_far": 71,
+   "picked_first_listed": 0.24647887323943662,
+   "picked_more_similar_looking": 0.4295774647887324
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD4-256px-max64-shuffled": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.5677083333333334,
+   "parsed": 1.0,
+   "p_above_chance": 0.0354597795220804,
+   "accuracy_when_frame_order_favours_far": 0.59375,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.4427083333333333,
+   "picked_more_similar_looking": 0.5260416666666666
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.7105263157894737,
+   "parsed": 1.0,
+   "p_above_chance": 0.006926482630660757,
+   "accuracy_when_frame_order_favours_far": 0.7894736842105263,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.47368421052631576,
+   "picked_more_similar_looking": 0.4473684210526316
+  },
+  "familiar": {
+   "n": 154,
+   "accuracy": 0.5324675324675324,
+   "parsed": 1.0,
+   "p_above_chance": 0.23421038892638468,
+   "accuracy_when_frame_order_favours_far": 0.5454545454545454,
+   "n_frame_order_favours_far": 77,
+   "picked_first_listed": 0.43506493506493504,
+   "picked_more_similar_looking": 0.5454545454545454
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD4-256px-max64": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.9270833333333334,
+   "parsed": 1.0,
+   "p_above_chance": 1.1280912031577853e-37,
+   "accuracy_when_frame_order_favours_far": 0.9166666666666666,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.4791666666666667,
+   "picked_more_similar_looking": 0.5
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.8421052631578947,
+   "parsed": 1.0,
+   "p_above_chance": 1.2171280104666948e-05,
+   "accuracy_when_frame_order_favours_far": 0.7894736842105263,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.5,
+   "picked_more_similar_looking": 0.5263157894736842
+  },
+  "familiar": {
+   "n": 154,
+   "accuracy": 0.948051948051948,
+   "parsed": 1.0,
+   "p_above_chance": 3.0190249498757392e-34,
+   "accuracy_when_frame_order_favours_far": 0.948051948051948,
+   "n_frame_order_favours_far": 77,
+   "picked_first_listed": 0.474025974025974,
+   "picked_more_similar_looking": 0.4935064935064935
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD4-256px-nowalk": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.5052083333333334,
+   "parsed": 1.0,
+   "p_above_chance": 0.4712462848266119,
+   "accuracy_when_frame_order_favours_far": 0.5729166666666666,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.21354166666666666,
+   "picked_more_similar_looking": 0.5572916666666666
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.47368421052631576,
+   "parsed": 1.0,
+   "p_above_chance": 0.6864487149214256,
+   "accuracy_when_frame_order_favours_far": 0.5263157894736842,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.18421052631578946,
+   "picked_more_similar_looking": 0.47368421052631576
+  },
+  "familiar": {
+   "n": 154,
+   "accuracy": 0.512987012987013,
+   "parsed": 1.0,
+   "p_above_chance": 0.4045363425944302,
+   "accuracy_when_frame_order_favours_far": 0.5844155844155844,
+   "n_frame_order_favours_far": 77,
+   "picked_first_listed": 0.22077922077922077,
+   "picked_more_similar_looking": 0.577922077922078
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD5-256px-max64-shuffled": {
+  "all": {
+   "n": 156,
+   "accuracy": 0.5961538461538461,
+   "parsed": 1.0,
+   "p_above_chance": 0.00997287436841717,
+   "accuracy_when_frame_order_favours_far": 0.5384615384615384,
+   "n_frame_order_favours_far": 78,
+   "picked_first_listed": 0.5192307692307693,
+   "picked_more_similar_looking": 0.4935897435897436
+  },
+  "novel": {
+   "n": 36,
+   "accuracy": 0.5833333333333334,
+   "parsed": 1.0,
+   "p_above_chance": 0.20251612307038158,
+   "accuracy_when_frame_order_favours_far": 0.3888888888888889,
+   "n_frame_order_favours_far": 18,
+   "picked_first_listed": 0.5555555555555556,
+   "picked_more_similar_looking": 0.5277777777777778
+  },
+  "familiar": {
+   "n": 120,
+   "accuracy": 0.6,
+   "parsed": 1.0,
+   "p_above_chance": 0.017661841268884787,
+   "accuracy_when_frame_order_favours_far": 0.5833333333333334,
+   "n_frame_order_favours_far": 60,
+   "picked_first_listed": 0.5083333333333333,
+   "picked_more_similar_looking": 0.48333333333333334
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD5-256px-max64": {
+  "all": {
+   "n": 156,
+   "accuracy": 0.9487179487179487,
+   "parsed": 1.0,
+   "p_above_chance": 8.382119680666996e-35,
+   "accuracy_when_frame_order_favours_far": 0.9487179487179487,
+   "n_frame_order_favours_far": 78,
+   "picked_first_listed": 0.5128205128205128,
+   "picked_more_similar_looking": 0.48717948717948717
+  },
+  "novel": {
+   "n": 36,
+   "accuracy": 0.9444444444444444,
+   "parsed": 1.0,
+   "p_above_chance": 9.70612745732069e-09,
+   "accuracy_when_frame_order_favours_far": 1.0,
+   "n_frame_order_favours_far": 18,
+   "picked_first_listed": 0.5833333333333334,
+   "picked_more_similar_looking": 0.4444444444444444
+  },
+  "familiar": {
+   "n": 120,
+   "accuracy": 0.95,
+   "parsed": 1.0,
+   "p_above_chance": 2.897791926753301e-27,
+   "accuracy_when_frame_order_favours_far": 0.9333333333333333,
+   "n_frame_order_favours_far": 60,
+   "picked_first_listed": 0.49166666666666664,
+   "picked_more_similar_looking": 0.5
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD5-256px-nowalk": {
+  "all": {
+   "n": 156,
+   "accuracy": 0.5128205128205128,
+   "parsed": 1.0,
+   "p_above_chance": 0.40513793864584574,
+   "accuracy_when_frame_order_favours_far": 0.5769230769230769,
+   "n_frame_order_favours_far": 78,
+   "picked_first_listed": 0.20512820512820512,
+   "picked_more_similar_looking": 0.5
+  },
+  "novel": {
+   "n": 36,
+   "accuracy": 0.3888888888888889,
+   "parsed": 1.0,
+   "p_above_chance": 0.9337509180186316,
+   "accuracy_when_frame_order_favours_far": 0.4444444444444444,
+   "n_frame_order_favours_far": 18,
+   "picked_first_listed": 0.25,
+   "picked_more_similar_looking": 0.3888888888888889
+  },
+  "familiar": {
+   "n": 120,
+   "accuracy": 0.55,
+   "parsed": 1.0,
+   "p_above_chance": 0.1576516504161289,
+   "accuracy_when_frame_order_favours_far": 0.6166666666666667,
+   "n_frame_order_favours_far": 60,
+   "picked_first_listed": 0.19166666666666668,
+   "picked_more_similar_looking": 0.5333333333333333
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD6-256px-max64-shuffled": {
+  "all": {
+   "n": 170,
+   "accuracy": 0.5882352941176471,
+   "parsed": 1.0,
+   "p_above_chance": 0.012922193790670845,
+   "accuracy_when_frame_order_favours_far": 0.6,
+   "n_frame_order_favours_far": 85,
+   "picked_first_listed": 0.36470588235294116,
+   "picked_more_similar_looking": 0.5176470588235295
+  },
+  "novel": {
+   "n": 40,
+   "accuracy": 0.45,
+   "parsed": 1.0,
+   "p_above_chance": 0.7852047460783069,
+   "accuracy_when_frame_order_favours_far": 0.55,
+   "n_frame_order_favours_far": 20,
+   "picked_first_listed": 0.275,
+   "picked_more_similar_looking": 0.45
+  },
+  "familiar": {
+   "n": 130,
+   "accuracy": 0.6307692307692307,
+   "parsed": 1.0,
+   "p_above_chance": 0.0018170056464033243,
+   "accuracy_when_frame_order_favours_far": 0.6153846153846154,
+   "n_frame_order_favours_far": 65,
+   "picked_first_listed": 0.3923076923076923,
+   "picked_more_similar_looking": 0.5384615384615384
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD6-256px-max64": {
+  "all": {
+   "n": 170,
+   "accuracy": 0.9470588235294117,
+   "parsed": 1.0,
+   "p_above_chance": 1.8633250612092752e-37,
+   "accuracy_when_frame_order_favours_far": 0.9411764705882353,
+   "n_frame_order_favours_far": 85,
+   "picked_first_listed": 0.5117647058823529,
+   "picked_more_similar_looking": 0.5117647058823529
+  },
+  "novel": {
+   "n": 40,
+   "accuracy": 0.975,
+   "parsed": 1.0,
+   "p_above_chance": 3.728928277269006e-11,
+   "accuracy_when_frame_order_favours_far": 0.95,
+   "n_frame_order_favours_far": 20,
+   "picked_first_listed": 0.45,
+   "picked_more_similar_looking": 0.475
+  },
+  "familiar": {
+   "n": 130,
+   "accuracy": 0.9384615384615385,
+   "parsed": 1.0,
+   "p_above_chance": 1.2754678082800583e-27,
+   "accuracy_when_frame_order_favours_far": 0.9384615384615385,
+   "n_frame_order_favours_far": 65,
+   "picked_first_listed": 0.5307692307692308,
+   "picked_more_similar_looking": 0.5230769230769231
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD6-256px-nowalk": {
+  "all": {
+   "n": 170,
+   "accuracy": 0.48823529411764705,
+   "parsed": 1.0,
+   "p_above_chance": 0.6492589498296432,
+   "accuracy_when_frame_order_favours_far": 0.5529411764705883,
+   "n_frame_order_favours_far": 85,
+   "picked_first_listed": 0.18235294117647058,
+   "picked_more_similar_looking": 0.5
+  },
+  "novel": {
+   "n": 40,
+   "accuracy": 0.5,
+   "parsed": 1.0,
+   "p_above_chance": 0.5626853438097896,
+   "accuracy_when_frame_order_favours_far": 0.65,
+   "n_frame_order_favours_far": 20,
+   "picked_first_listed": 0.225,
+   "picked_more_similar_looking": 0.4
+  },
+  "familiar": {
+   "n": 130,
+   "accuracy": 0.4846153846153846,
+   "parsed": 1.0,
+   "p_above_chance": 0.669415158430592,
+   "accuracy_when_frame_order_favours_far": 0.5230769230769231,
+   "n_frame_order_favours_far": 65,
+   "picked_first_listed": 0.16923076923076924,
+   "picked_more_similar_looking": 0.5307692307692308
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD7-256px-max64-shuffled": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.5222222222222223,
+   "parsed": 1.0,
+   "p_above_chance": 0.30098437650782395,
+   "accuracy_when_frame_order_favours_far": 0.5056179775280899,
+   "n_frame_order_favours_far": 89,
+   "picked_first_listed": 0.46111111111111114,
+   "picked_more_similar_looking": 0.55
+  },
+  "novel": {
+   "n": 55,
+   "accuracy": 0.5636363636363636,
+   "parsed": 1.0,
+   "p_above_chance": 0.20937709413450778,
+   "accuracy_when_frame_order_favours_far": 0.5555555555555556,
+   "n_frame_order_favours_far": 27,
+   "picked_first_listed": 0.5272727272727272,
+   "picked_more_similar_looking": 0.5454545454545454
+  },
+  "familiar": {
+   "n": 125,
+   "accuracy": 0.504,
+   "parsed": 1.0,
+   "p_above_chance": 0.5,
+   "accuracy_when_frame_order_favours_far": 0.4838709677419355,
+   "n_frame_order_favours_far": 62,
+   "picked_first_listed": 0.432,
+   "picked_more_similar_looking": 0.552
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD7-256px-max64": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.8722222222222222,
+   "parsed": 1.0,
+   "p_above_chance": 5.052527105728771e-26,
+   "accuracy_when_frame_order_favours_far": 0.8539325842696629,
+   "n_frame_order_favours_far": 89,
+   "picked_first_listed": 0.5666666666666667,
+   "picked_more_similar_looking": 0.4777777777777778
+  },
+  "novel": {
+   "n": 55,
+   "accuracy": 0.7636363636363637,
+   "parsed": 1.0,
+   "p_above_chance": 5.6805301603457536e-05,
+   "accuracy_when_frame_order_favours_far": 0.6666666666666666,
+   "n_frame_order_favours_far": 27,
+   "picked_first_listed": 0.6181818181818182,
+   "picked_more_similar_looking": 0.5272727272727272
+  },
+  "familiar": {
+   "n": 125,
+   "accuracy": 0.92,
+   "parsed": 1.0,
+   "p_above_chance": 4.558995153907135e-24,
+   "accuracy_when_frame_order_favours_far": 0.9354838709677419,
+   "n_frame_order_favours_far": 62,
+   "picked_first_listed": 0.544,
+   "picked_more_similar_looking": 0.456
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD7-256px-nowalk": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.5388888888888889,
+   "parsed": 1.0,
+   "p_above_chance": 0.16628954522846925,
+   "accuracy_when_frame_order_favours_far": 0.5955056179775281,
+   "n_frame_order_favours_far": 89,
+   "picked_first_listed": 0.18888888888888888,
+   "picked_more_similar_looking": 0.4777777777777778
+  },
+  "novel": {
+   "n": 55,
+   "accuracy": 0.5636363636363636,
+   "parsed": 1.0,
+   "p_above_chance": 0.20937709413450778,
+   "accuracy_when_frame_order_favours_far": 0.7037037037037037,
+   "n_frame_order_favours_far": 27,
+   "picked_first_listed": 0.16363636363636364,
+   "picked_more_similar_looking": 0.43636363636363634
+  },
+  "familiar": {
+   "n": 125,
+   "accuracy": 0.528,
+   "parsed": 1.0,
+   "p_above_chance": 0.2958419635470815,
+   "accuracy_when_frame_order_favours_far": 0.5483870967741935,
+   "n_frame_order_favours_far": 62,
+   "picked_first_listed": 0.2,
+   "picked_more_similar_looking": 0.496
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD8-256px-max64-shuffled": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.4895833333333333,
+   "parsed": 1.0,
+   "p_above_chance": 0.6408405728911526,
+   "accuracy_when_frame_order_favours_far": 0.4270833333333333,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.4375,
+   "picked_more_similar_looking": 0.5104166666666666
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.5789473684210527,
+   "parsed": 1.0,
+   "p_above_chance": 0.2088460954182665,
+   "accuracy_when_frame_order_favours_far": 0.47368421052631576,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.5263157894736842,
+   "picked_more_similar_looking": 0.5263157894736842
+  },
+  "familiar": {
+   "n": 154,
+   "accuracy": 0.4675324675324675,
+   "parsed": 1.0,
+   "p_above_chance": 0.8122715559134107,
+   "accuracy_when_frame_order_favours_far": 0.4155844155844156,
+   "n_frame_order_favours_far": 77,
+   "picked_first_listed": 0.4155844155844156,
+   "picked_more_similar_looking": 0.5064935064935064
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD8-256px-max64": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.90625,
+   "parsed": 1.0,
+   "p_above_chance": 1.5311536397163127e-33,
+   "accuracy_when_frame_order_favours_far": 0.9166666666666666,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.5208333333333334,
+   "picked_more_similar_looking": 0.53125
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.868421052631579,
+   "parsed": 1.0,
+   "p_above_chance": 2.127981133526191e-06,
+   "accuracy_when_frame_order_favours_far": 0.8947368421052632,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.4473684210526316,
+   "picked_more_similar_looking": 0.6052631578947368
+  },
+  "familiar": {
+   "n": 154,
+   "accuracy": 0.9155844155844156,
+   "parsed": 1.0,
+   "p_above_chance": 1.2590281322482908e-28,
+   "accuracy_when_frame_order_favours_far": 0.922077922077922,
+   "n_frame_order_favours_far": 77,
+   "picked_first_listed": 0.538961038961039,
+   "picked_more_similar_looking": 0.512987012987013
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-roomHSSD8-256px-nowalk": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.5052083333333334,
+   "parsed": 1.0,
+   "p_above_chance": 0.4712462848266119,
+   "accuracy_when_frame_order_favours_far": 0.4791666666666667,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.18229166666666666,
+   "picked_more_similar_looking": 0.578125
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.5526315789473685,
+   "parsed": 1.0,
+   "p_above_chance": 0.31355128507857444,
+   "accuracy_when_frame_order_favours_far": 0.5789473684210527,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.13157894736842105,
+   "picked_more_similar_looking": 0.5
+  },
+  "familiar": {
+   "n": 154,
+   "accuracy": 0.4935064935064935,
+   "parsed": 1.0,
+   "p_above_chance": 0.5954636574055697,
+   "accuracy_when_frame_order_favours_far": 0.45454545454545453,
+   "n_frame_order_favours_far": 77,
+   "picked_first_listed": 0.19480519480519481,
+   "picked_more_similar_looking": 0.5974025974025974
+  }
+ },
  "Qwen3-VL-8B-Instruct+qwen8b-proc-roomP5000-256px-max64-mps": {
   "all": {
    "n": 192,
@@ -2527,6 +3295,1734 @@
    "picked_more_similar_looking": 0.4966442953020134
   }
  },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s0-5090-dissimilar-256px-max64-shuffled": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.5729166666666666,
+   "parsed": 0.9895833333333334,
+   "p_above_chance": 0.025532377339088332,
+   "accuracy_when_frame_order_favours_far": 0.6346153846153846,
+   "n_frame_order_favours_far": 52,
+   "picked_first_listed": 0.43157894736842106,
+   "picked_more_similar_looking": 0.45789473684210524
+  },
+  "novel": {
+   "n": 102,
+   "accuracy": 0.5882352941176471,
+   "parsed": 0.9803921568627451,
+   "p_above_chance": 0.04591883913454116,
+   "accuracy_when_frame_order_favours_far": 0.6857142857142857,
+   "n_frame_order_favours_far": 35,
+   "picked_first_listed": 0.46,
+   "picked_more_similar_looking": 0.49
+  },
+  "familiar": {
+   "n": 90,
+   "accuracy": 0.5555555555555556,
+   "parsed": 1.0,
+   "p_above_chance": 0.17141655971039413,
+   "accuracy_when_frame_order_favours_far": 0.5294117647058824,
+   "n_frame_order_favours_far": 17,
+   "picked_first_listed": 0.4,
+   "picked_more_similar_looking": 0.4222222222222222
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s0-5090-dissimilar-256px-max64": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.9427083333333334,
+   "parsed": 1.0,
+   "p_above_chance": 4.145385014121999e-41,
+   "accuracy_when_frame_order_favours_far": 0.9807692307692307,
+   "n_frame_order_favours_far": 52,
+   "picked_first_listed": 0.4947916666666667,
+   "picked_more_similar_looking": 0.4947916666666667
+  },
+  "novel": {
+   "n": 102,
+   "accuracy": 0.9411764705882353,
+   "parsed": 1.0,
+   "p_above_chance": 2.8285926416588546e-22,
+   "accuracy_when_frame_order_favours_far": 0.9714285714285714,
+   "n_frame_order_favours_far": 35,
+   "picked_first_listed": 0.5098039215686274,
+   "picked_more_similar_looking": 0.5294117647058824
+  },
+  "familiar": {
+   "n": 90,
+   "accuracy": 0.9444444444444444,
+   "parsed": 1.0,
+   "p_above_chance": 3.766421031742021e-20,
+   "accuracy_when_frame_order_favours_far": 1.0,
+   "n_frame_order_favours_far": 17,
+   "picked_first_listed": 0.4777777777777778,
+   "picked_more_similar_looking": 0.45555555555555555
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s0-5090-dissimilar-256px-nowalk": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.6041666666666666,
+   "parsed": 1.0,
+   "p_above_chance": 0.0023776187427737698,
+   "accuracy_when_frame_order_favours_far": 0.6923076923076923,
+   "n_frame_order_favours_far": 52,
+   "picked_first_listed": 0.3541666666666667,
+   "picked_more_similar_looking": 0.46875
+  },
+  "novel": {
+   "n": 102,
+   "accuracy": 0.6078431372549019,
+   "parsed": 1.0,
+   "p_above_chance": 0.018533383719280268,
+   "accuracy_when_frame_order_favours_far": 0.6857142857142857,
+   "n_frame_order_favours_far": 35,
+   "picked_first_listed": 0.4117647058823529,
+   "picked_more_similar_looking": 0.47058823529411764
+  },
+  "familiar": {
+   "n": 90,
+   "accuracy": 0.6,
+   "parsed": 1.0,
+   "p_above_chance": 0.036274766096230905,
+   "accuracy_when_frame_order_favours_far": 0.7058823529411765,
+   "n_frame_order_favours_far": 17,
+   "picked_first_listed": 0.28888888888888886,
+   "picked_more_similar_looking": 0.4666666666666667
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s0-5090-roomB-256px-max64-shuffled": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.5885416666666666,
+   "parsed": 1.0,
+   "p_above_chance": 0.008506031791220546,
+   "accuracy_when_frame_order_favours_far": 0.5520833333333334,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.421875,
+   "picked_more_similar_looking": 0.5052083333333334
+  },
+  "novel": {
+   "n": 106,
+   "accuracy": 0.5943396226415094,
+   "parsed": 1.0,
+   "p_above_chance": 0.03223179599474686,
+   "accuracy_when_frame_order_favours_far": 0.5283018867924528,
+   "n_frame_order_favours_far": 53,
+   "picked_first_listed": 0.44339622641509435,
+   "picked_more_similar_looking": 0.5377358490566038
+  },
+  "familiar": {
+   "n": 86,
+   "accuracy": 0.5813953488372093,
+   "parsed": 1.0,
+   "p_above_chance": 0.0802892095669899,
+   "accuracy_when_frame_order_favours_far": 0.5813953488372093,
+   "n_frame_order_favours_far": 43,
+   "picked_first_listed": 0.3953488372093023,
+   "picked_more_similar_looking": 0.46511627906976744
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s0-5090-roomB-256px-max64": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.953125,
+   "parsed": 1.0,
+   "p_above_chance": 1.3526271395651635e-43,
+   "accuracy_when_frame_order_favours_far": 0.9479166666666666,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.5260416666666666,
+   "picked_more_similar_looking": 0.515625
+  },
+  "novel": {
+   "n": 106,
+   "accuracy": 0.9433962264150944,
+   "parsed": 1.0,
+   "p_above_chance": 2.23397014878559e-23,
+   "accuracy_when_frame_order_favours_far": 0.9433962264150944,
+   "n_frame_order_favours_far": 53,
+   "picked_first_listed": 0.5094339622641509,
+   "picked_more_similar_looking": 0.5094339622641509
+  },
+  "familiar": {
+   "n": 86,
+   "accuracy": 0.9651162790697675,
+   "parsed": 1.0,
+   "p_above_chance": 1.3710777147007857e-21,
+   "accuracy_when_frame_order_favours_far": 0.9534883720930233,
+   "n_frame_order_favours_far": 43,
+   "picked_first_listed": 0.5465116279069767,
+   "picked_more_similar_looking": 0.5232558139534884
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s0-5090-roomB-256px-nowalk": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.5885416666666666,
+   "parsed": 1.0,
+   "p_above_chance": 0.008506031791220546,
+   "accuracy_when_frame_order_favours_far": 0.5520833333333334,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.296875,
+   "picked_more_similar_looking": 0.484375
+  },
+  "novel": {
+   "n": 106,
+   "accuracy": 0.6415094339622641,
+   "parsed": 1.0,
+   "p_above_chance": 0.0023092678460119647,
+   "accuracy_when_frame_order_favours_far": 0.5849056603773585,
+   "n_frame_order_favours_far": 53,
+   "picked_first_listed": 0.32075471698113206,
+   "picked_more_similar_looking": 0.49056603773584906
+  },
+  "familiar": {
+   "n": 86,
+   "accuracy": 0.5232558139534884,
+   "parsed": 1.0,
+   "p_above_chance": 0.37326719114452866,
+   "accuracy_when_frame_order_favours_far": 0.5116279069767442,
+   "n_frame_order_favours_far": 43,
+   "picked_first_listed": 0.26744186046511625,
+   "picked_more_similar_looking": 0.47674418604651164
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-dissimilar-256px-max64-shuffled": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.6145833333333334,
+   "parsed": 0.9895833333333334,
+   "p_above_chance": 0.0009194303981244451,
+   "accuracy_when_frame_order_favours_far": 0.5961538461538461,
+   "n_frame_order_favours_far": 52,
+   "picked_first_listed": 0.46842105263157896,
+   "picked_more_similar_looking": 0.4368421052631579
+  },
+  "novel": {
+   "n": 102,
+   "accuracy": 0.5784313725490197,
+   "parsed": 0.9901960784313726,
+   "p_above_chance": 0.06854940287801708,
+   "accuracy_when_frame_order_favours_far": 0.6,
+   "n_frame_order_favours_far": 35,
+   "picked_first_listed": 0.45544554455445546,
+   "picked_more_similar_looking": 0.46534653465346537
+  },
+  "familiar": {
+   "n": 90,
+   "accuracy": 0.6555555555555556,
+   "parsed": 0.9888888888888889,
+   "p_above_chance": 0.002082557007912223,
+   "accuracy_when_frame_order_favours_far": 0.5882352941176471,
+   "n_frame_order_favours_far": 17,
+   "picked_first_listed": 0.48314606741573035,
+   "picked_more_similar_looking": 0.4044943820224719
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-dissimilar-256px-max64": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.8541666666666666,
+   "parsed": 1.0,
+   "p_above_chance": 6.784582072874234e-25,
+   "accuracy_when_frame_order_favours_far": 0.8461538461538461,
+   "n_frame_order_favours_far": 52,
+   "picked_first_listed": 0.4791666666666667,
+   "picked_more_similar_looking": 0.4791666666666667
+  },
+  "novel": {
+   "n": 102,
+   "accuracy": 0.8333333333333334,
+   "parsed": 1.0,
+   "p_above_chance": 2.3490515547220175e-12,
+   "accuracy_when_frame_order_favours_far": 0.8285714285714286,
+   "n_frame_order_favours_far": 35,
+   "picked_first_listed": 0.4803921568627451,
+   "picked_more_similar_looking": 0.5
+  },
+  "familiar": {
+   "n": 90,
+   "accuracy": 0.8777777777777778,
+   "parsed": 1.0,
+   "p_above_chance": 3.886880384756633e-14,
+   "accuracy_when_frame_order_favours_far": 0.8823529411764706,
+   "n_frame_order_favours_far": 17,
+   "picked_first_listed": 0.4777777777777778,
+   "picked_more_similar_looking": 0.45555555555555555
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-dissimilar-256px-nowalk": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.5572916666666666,
+   "parsed": 1.0,
+   "p_above_chance": 0.0647094657578793,
+   "accuracy_when_frame_order_favours_far": 0.6346153846153846,
+   "n_frame_order_favours_far": 52,
+   "picked_first_listed": 0.296875,
+   "picked_more_similar_looking": 0.453125
+  },
+  "novel": {
+   "n": 102,
+   "accuracy": 0.5588235294117647,
+   "parsed": 1.0,
+   "p_above_chance": 0.138006946246251,
+   "accuracy_when_frame_order_favours_far": 0.6,
+   "n_frame_order_favours_far": 35,
+   "picked_first_listed": 0.30392156862745096,
+   "picked_more_similar_looking": 0.46078431372549017
+  },
+  "familiar": {
+   "n": 90,
+   "accuracy": 0.5555555555555556,
+   "parsed": 1.0,
+   "p_above_chance": 0.17141655971039413,
+   "accuracy_when_frame_order_favours_far": 0.7058823529411765,
+   "n_frame_order_favours_far": 17,
+   "picked_first_listed": 0.28888888888888886,
+   "picked_more_similar_looking": 0.4444444444444444
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomB-256px-max64-shuffled": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.6510416666666666,
+   "parsed": 1.0,
+   "p_above_chance": 1.7139974350534815e-05,
+   "accuracy_when_frame_order_favours_far": 0.6145833333333334,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.5260416666666666,
+   "picked_more_similar_looking": 0.4947916666666667
+  },
+  "novel": {
+   "n": 106,
+   "accuracy": 0.6132075471698113,
+   "parsed": 1.0,
+   "p_above_chance": 0.012510674995949515,
+   "accuracy_when_frame_order_favours_far": 0.5283018867924528,
+   "n_frame_order_favours_far": 53,
+   "picked_first_listed": 0.5566037735849056,
+   "picked_more_similar_looking": 0.4811320754716981
+  },
+  "familiar": {
+   "n": 86,
+   "accuracy": 0.6976744186046512,
+   "parsed": 1.0,
+   "p_above_chance": 0.00015849964113882046,
+   "accuracy_when_frame_order_favours_far": 0.7209302325581395,
+   "n_frame_order_favours_far": 43,
+   "picked_first_listed": 0.4883720930232558,
+   "picked_more_similar_looking": 0.5116279069767442
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomB-256px-max64": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.8125,
+   "parsed": 1.0,
+   "p_above_chance": 2.6326695958739414e-19,
+   "accuracy_when_frame_order_favours_far": 0.7916666666666666,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.5,
+   "picked_more_similar_looking": 0.5104166666666666
+  },
+  "novel": {
+   "n": 106,
+   "accuracy": 0.8018867924528302,
+   "parsed": 1.0,
+   "p_above_chance": 1.2913369773960135e-10,
+   "accuracy_when_frame_order_favours_far": 0.7547169811320755,
+   "n_frame_order_favours_far": 53,
+   "picked_first_listed": 0.5188679245283019,
+   "picked_more_similar_looking": 0.5566037735849056
+  },
+  "familiar": {
+   "n": 86,
+   "accuracy": 0.8255813953488372,
+   "parsed": 1.0,
+   "p_above_chance": 3.5380285954724184e-10,
+   "accuracy_when_frame_order_favours_far": 0.8372093023255814,
+   "n_frame_order_favours_far": 43,
+   "picked_first_listed": 0.47674418604651164,
+   "picked_more_similar_looking": 0.45348837209302323
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomB-256px-nowalk": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.515625,
+   "parsed": 1.0,
+   "p_above_chance": 0.3591594271088474,
+   "accuracy_when_frame_order_favours_far": 0.5104166666666666,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.19270833333333334,
+   "picked_more_similar_looking": 0.4947916666666667
+  },
+  "novel": {
+   "n": 106,
+   "accuracy": 0.5188679245283019,
+   "parsed": 1.0,
+   "p_above_chance": 0.3854594954685569,
+   "accuracy_when_frame_order_favours_far": 0.5094339622641509,
+   "n_frame_order_favours_far": 53,
+   "picked_first_listed": 0.1792452830188679,
+   "picked_more_similar_looking": 0.5188679245283019
+  },
+  "familiar": {
+   "n": 86,
+   "accuracy": 0.5116279069767442,
+   "parsed": 1.0,
+   "p_above_chance": 0.45710581854122506,
+   "accuracy_when_frame_order_favours_far": 0.5116279069767442,
+   "n_frame_order_favours_far": 43,
+   "picked_first_listed": 0.20930232558139536,
+   "picked_more_similar_looking": 0.46511627906976744
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD2-256px-max64-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.90625,
+   "parsed": 1.0,
+   "p_above_chance": 1.5311536397163127e-33,
+   "accuracy_when_frame_order_favours_far": 0.8631578947368421,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.53125,
+   "picked_more_similar_looking": 0.5260416666666666
+  },
+  "novel": {
+   "n": 53,
+   "accuracy": 0.7924528301886793,
+   "parsed": 1.0,
+   "p_above_chance": 1.1237797011620643e-05,
+   "accuracy_when_frame_order_favours_far": 0.6923076923076923,
+   "n_frame_order_favours_far": 26,
+   "picked_first_listed": 0.5471698113207547,
+   "picked_more_similar_looking": 0.6037735849056604
+  },
+  "familiar": {
+   "n": 139,
+   "accuracy": 0.9496402877697842,
+   "parsed": 1.0,
+   "p_above_chance": 2.583022889403509e-31,
+   "accuracy_when_frame_order_favours_far": 0.927536231884058,
+   "n_frame_order_favours_far": 69,
+   "picked_first_listed": 0.5251798561151079,
+   "picked_more_similar_looking": 0.49640287769784175
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD2-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.6979166666666666,
+   "parsed": 0.9947916666666666,
+   "p_above_chance": 2.0895244097983614e-08,
+   "accuracy_when_frame_order_favours_far": 0.6631578947368421,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.450261780104712,
+   "picked_more_similar_looking": 0.5445026178010471
+  },
+  "novel": {
+   "n": 53,
+   "accuracy": 0.6792452830188679,
+   "parsed": 1.0,
+   "p_above_chance": 0.006330167901207107,
+   "accuracy_when_frame_order_favours_far": 0.5769230769230769,
+   "n_frame_order_favours_far": 26,
+   "picked_first_listed": 0.5471698113207547,
+   "picked_more_similar_looking": 0.6037735849056604
+  },
+  "familiar": {
+   "n": 139,
+   "accuracy": 0.7050359712230215,
+   "parsed": 0.9928057553956835,
+   "p_above_chance": 7.35308386987681e-07,
+   "accuracy_when_frame_order_favours_far": 0.6956521739130435,
+   "n_frame_order_favours_far": 69,
+   "picked_first_listed": 0.41304347826086957,
+   "picked_more_similar_looking": 0.5217391304347826
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD2-256px-nowalk-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.5208333333333334,
+   "parsed": 1.0,
+   "p_above_chance": 0.3067736187967295,
+   "accuracy_when_frame_order_favours_far": 0.5684210526315789,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.25,
+   "picked_more_similar_looking": 0.5260416666666666
+  },
+  "novel": {
+   "n": 53,
+   "accuracy": 0.5283018867924528,
+   "parsed": 1.0,
+   "p_above_chance": 0.3919231511047494,
+   "accuracy_when_frame_order_favours_far": 0.5,
+   "n_frame_order_favours_far": 26,
+   "picked_first_listed": 0.24528301886792453,
+   "picked_more_similar_looking": 0.5660377358490566
+  },
+  "familiar": {
+   "n": 139,
+   "accuracy": 0.5179856115107914,
+   "parsed": 1.0,
+   "p_above_chance": 0.3672696586364987,
+   "accuracy_when_frame_order_favours_far": 0.5942028985507246,
+   "n_frame_order_favours_far": 69,
+   "picked_first_listed": 0.2517985611510791,
+   "picked_more_similar_looking": 0.5107913669064749
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD3-256px-max64-mps": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.8722222222222222,
+   "parsed": 1.0,
+   "p_above_chance": 5.052527105728771e-26,
+   "accuracy_when_frame_order_favours_far": 0.8222222222222222,
+   "n_frame_order_favours_far": 90,
+   "picked_first_listed": 0.4777777777777778,
+   "picked_more_similar_looking": 0.5055555555555555
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.8157894736842105,
+   "parsed": 1.0,
+   "p_above_chance": 5.808350397273898e-05,
+   "accuracy_when_frame_order_favours_far": 0.7368421052631579,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.3157894736842105,
+   "picked_more_similar_looking": 0.5526315789473685
+  },
+  "familiar": {
+   "n": 142,
+   "accuracy": 0.8873239436619719,
+   "parsed": 1.0,
+   "p_above_chance": 1.1129056760254548e-22,
+   "accuracy_when_frame_order_favours_far": 0.8450704225352113,
+   "n_frame_order_favours_far": 71,
+   "picked_first_listed": 0.5211267605633803,
+   "picked_more_similar_looking": 0.49295774647887325
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD3-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.7777777777777778,
+   "parsed": 1.0,
+   "p_above_chance": 1.6581786915612366e-14,
+   "accuracy_when_frame_order_favours_far": 0.8222222222222222,
+   "n_frame_order_favours_far": 90,
+   "picked_first_listed": 0.49444444444444446,
+   "picked_more_similar_looking": 0.5666666666666667
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.8157894736842105,
+   "parsed": 1.0,
+   "p_above_chance": 5.808350397273898e-05,
+   "accuracy_when_frame_order_favours_far": 0.8421052631578947,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.3684210526315789,
+   "picked_more_similar_looking": 0.5526315789473685
+  },
+  "familiar": {
+   "n": 142,
+   "accuracy": 0.7676056338028169,
+   "parsed": 1.0,
+   "p_above_chance": 5.471438916277834e-11,
+   "accuracy_when_frame_order_favours_far": 0.8169014084507042,
+   "n_frame_order_favours_far": 71,
+   "picked_first_listed": 0.528169014084507,
+   "picked_more_similar_looking": 0.5704225352112676
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomHSSD3-256px-nowalk-mps": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.5333333333333333,
+   "parsed": 1.0,
+   "p_above_chance": 0.20617527870704347,
+   "accuracy_when_frame_order_favours_far": 0.5444444444444444,
+   "n_frame_order_favours_far": 90,
+   "picked_first_listed": 0.29444444444444445,
+   "picked_more_similar_looking": 0.4666666666666667
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.5,
+   "parsed": 1.0,
+   "p_above_chance": 0.564292660317733,
+   "accuracy_when_frame_order_favours_far": 0.5263157894736842,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.2631578947368421,
+   "picked_more_similar_looking": 0.5526315789473685
+  },
+  "familiar": {
+   "n": 142,
+   "accuracy": 0.5422535211267606,
+   "parsed": 1.0,
+   "p_above_chance": 0.1779999129575542,
+   "accuracy_when_frame_order_favours_far": 0.5492957746478874,
+   "n_frame_order_favours_far": 71,
+   "picked_first_listed": 0.3028169014084507,
+   "picked_more_similar_looking": 0.44366197183098594
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5005-256px-max64-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.8385416666666666,
+   "parsed": 1.0,
+   "p_above_chance": 1.1181485123580125e-22,
+   "accuracy_when_frame_order_favours_far": 0.8,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.5364583333333334,
+   "picked_more_similar_looking": 0.5
+  },
+  "novel": {
+   "n": 147,
+   "accuracy": 0.8367346938775511,
+   "parsed": 1.0,
+   "p_above_chance": 1.5886297940375707e-17,
+   "accuracy_when_frame_order_favours_far": 0.8082191780821918,
+   "n_frame_order_favours_far": 73,
+   "picked_first_listed": 0.5306122448979592,
+   "picked_more_similar_looking": 0.5034013605442177
+  },
+  "familiar": {
+   "n": 45,
+   "accuracy": 0.8444444444444444,
+   "parsed": 1.0,
+   "p_above_chance": 1.5606548231517081e-06,
+   "accuracy_when_frame_order_favours_far": 0.7727272727272727,
+   "n_frame_order_favours_far": 22,
+   "picked_first_listed": 0.5555555555555556,
+   "picked_more_similar_looking": 0.4888888888888889
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5005-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.6875,
+   "parsed": 1.0,
+   "p_above_chance": 1.0909303308851745e-07,
+   "accuracy_when_frame_order_favours_far": 0.6526315789473685,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.5729166666666666,
+   "picked_more_similar_looking": 0.5364583333333334
+  },
+  "novel": {
+   "n": 147,
+   "accuracy": 0.6802721088435374,
+   "parsed": 1.0,
+   "p_above_chance": 7.347126228363404e-06,
+   "accuracy_when_frame_order_favours_far": 0.6301369863013698,
+   "n_frame_order_favours_far": 73,
+   "picked_first_listed": 0.5782312925170068,
+   "picked_more_similar_looking": 0.5782312925170068
+  },
+  "familiar": {
+   "n": 45,
+   "accuracy": 0.7111111111111111,
+   "parsed": 1.0,
+   "p_above_chance": 0.003304411421140685,
+   "accuracy_when_frame_order_favours_far": 0.7272727272727273,
+   "n_frame_order_favours_far": 22,
+   "picked_first_listed": 0.5555555555555556,
+   "picked_more_similar_looking": 0.4
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomP5005-256px-nowalk-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.53125,
+   "parsed": 1.0,
+   "p_above_chance": 0.21367729469829336,
+   "accuracy_when_frame_order_favours_far": 0.5157894736842106,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.3229166666666667,
+   "picked_more_similar_looking": 0.5364583333333334
+  },
+  "novel": {
+   "n": 147,
+   "accuracy": 0.5170068027210885,
+   "parsed": 1.0,
+   "p_above_chance": 0.3707959712230802,
+   "accuracy_when_frame_order_favours_far": 0.5342465753424658,
+   "n_frame_order_favours_far": 73,
+   "picked_first_listed": 0.3469387755102041,
+   "picked_more_similar_looking": 0.5102040816326531
+  },
+  "familiar": {
+   "n": 45,
+   "accuracy": 0.5777777777777777,
+   "parsed": 1.0,
+   "p_above_chance": 0.1856490172355052,
+   "accuracy_when_frame_order_favours_far": 0.45454545454545453,
+   "n_frame_order_favours_far": 22,
+   "picked_first_listed": 0.24444444444444444,
+   "picked_more_similar_looking": 0.6222222222222222
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt0-256px-max64-mps": {
+  "all": {
+   "n": 176,
+   "accuracy": 0.7954545454545454,
+   "parsed": 1.0,
+   "p_above_chance": 5.518923086736933e-16,
+   "accuracy_when_frame_order_favours_far": 0.75,
+   "n_frame_order_favours_far": 88,
+   "picked_first_listed": 0.48863636363636365,
+   "picked_more_similar_looking": 0.5227272727272727
+  },
+  "novel": {
+   "n": 42,
+   "accuracy": 0.7380952380952381,
+   "parsed": 1.0,
+   "p_above_chance": 0.001443623987142928,
+   "accuracy_when_frame_order_favours_far": 0.6666666666666666,
+   "n_frame_order_favours_far": 21,
+   "picked_first_listed": 0.47619047619047616,
+   "picked_more_similar_looking": 0.4523809523809524
+  },
+  "familiar": {
+   "n": 134,
+   "accuracy": 0.8134328358208955,
+   "parsed": 1.0,
+   "p_above_chance": 5.266546412169305e-14,
+   "accuracy_when_frame_order_favours_far": 0.7761194029850746,
+   "n_frame_order_favours_far": 67,
+   "picked_first_listed": 0.4925373134328358,
+   "picked_more_similar_looking": 0.5447761194029851
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt0-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 176,
+   "accuracy": 0.6477272727272727,
+   "parsed": 1.0,
+   "p_above_chance": 5.438597554282478e-05,
+   "accuracy_when_frame_order_favours_far": 0.6022727272727273,
+   "n_frame_order_favours_far": 88,
+   "picked_first_listed": 0.4772727272727273,
+   "picked_more_similar_looking": 0.5227272727272727
+  },
+  "novel": {
+   "n": 42,
+   "accuracy": 0.7380952380952381,
+   "parsed": 1.0,
+   "p_above_chance": 0.001443623987142928,
+   "accuracy_when_frame_order_favours_far": 0.7142857142857143,
+   "n_frame_order_favours_far": 21,
+   "picked_first_listed": 0.42857142857142855,
+   "picked_more_similar_looking": 0.5
+  },
+  "familiar": {
+   "n": 134,
+   "accuracy": 0.6194029850746269,
+   "parsed": 1.0,
+   "p_above_chance": 0.0035890577427503886,
+   "accuracy_when_frame_order_favours_far": 0.5671641791044776,
+   "n_frame_order_favours_far": 67,
+   "picked_first_listed": 0.4925373134328358,
+   "picked_more_similar_looking": 0.5298507462686567
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt0-256px-nowalk-mps": {
+  "all": {
+   "n": 176,
+   "accuracy": 0.4943181818181818,
+   "parsed": 1.0,
+   "p_above_chance": 0.5894113612652975,
+   "accuracy_when_frame_order_favours_far": 0.48863636363636365,
+   "n_frame_order_favours_far": 88,
+   "picked_first_listed": 0.32386363636363635,
+   "picked_more_similar_looking": 0.5738636363636364
+  },
+  "novel": {
+   "n": 42,
+   "accuracy": 0.47619047619047616,
+   "parsed": 1.0,
+   "p_above_chance": 0.6780155218148138,
+   "accuracy_when_frame_order_favours_far": 0.42857142857142855,
+   "n_frame_order_favours_far": 21,
+   "picked_first_listed": 0.21428571428571427,
+   "picked_more_similar_looking": 0.5238095238095238
+  },
+  "familiar": {
+   "n": 134,
+   "accuracy": 0.5,
+   "parsed": 1.0,
+   "p_above_chance": 0.534399127183202,
+   "accuracy_when_frame_order_favours_far": 0.5074626865671642,
+   "n_frame_order_favours_far": 67,
+   "picked_first_listed": 0.3582089552238806,
+   "picked_more_similar_looking": 0.5895522388059702
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt1-256px-max64-mps": {
+  "all": {
+   "n": 168,
+   "accuracy": 0.7678571428571429,
+   "parsed": 1.0,
+   "p_above_chance": 9.450540173196367e-13,
+   "accuracy_when_frame_order_favours_far": 0.7380952380952381,
+   "n_frame_order_favours_far": 84,
+   "picked_first_listed": 0.5178571428571429,
+   "picked_more_similar_looking": 0.44642857142857145
+  },
+  "novel": {
+   "n": 6,
+   "accuracy": 0.8333333333333334,
+   "parsed": 1.0,
+   "p_above_chance": 0.109375,
+   "accuracy_when_frame_order_favours_far": 0.6666666666666666,
+   "n_frame_order_favours_far": 3,
+   "picked_first_listed": 0.5,
+   "picked_more_similar_looking": 0.5
+  },
+  "familiar": {
+   "n": 162,
+   "accuracy": 0.7654320987654321,
+   "parsed": 1.0,
+   "p_above_chance": 3.812920809863141e-12,
+   "accuracy_when_frame_order_favours_far": 0.7407407407407407,
+   "n_frame_order_favours_far": 81,
+   "picked_first_listed": 0.5185185185185185,
+   "picked_more_similar_looking": 0.4444444444444444
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt1-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 168,
+   "accuracy": 0.5714285714285714,
+   "parsed": 1.0,
+   "p_above_chance": 0.03783455805113222,
+   "accuracy_when_frame_order_favours_far": 0.5238095238095238,
+   "n_frame_order_favours_far": 84,
+   "picked_first_listed": 0.4642857142857143,
+   "picked_more_similar_looking": 0.5119047619047619
+  },
+  "novel": {
+   "n": 6,
+   "accuracy": 0.6666666666666666,
+   "parsed": 1.0,
+   "p_above_chance": 0.34375,
+   "accuracy_when_frame_order_favours_far": 0.3333333333333333,
+   "n_frame_order_favours_far": 3,
+   "picked_first_listed": 0.3333333333333333,
+   "picked_more_similar_looking": 0.6666666666666666
+  },
+  "familiar": {
+   "n": 162,
+   "accuracy": 0.5679012345679012,
+   "parsed": 1.0,
+   "p_above_chance": 0.04933044149653649,
+   "accuracy_when_frame_order_favours_far": 0.5308641975308642,
+   "n_frame_order_favours_far": 81,
+   "picked_first_listed": 0.4691358024691358,
+   "picked_more_similar_looking": 0.5061728395061729
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt1-256px-nowalk-mps": {
+  "all": {
+   "n": 168,
+   "accuracy": 0.48214285714285715,
+   "parsed": 1.0,
+   "p_above_chance": 0.7053565320703751,
+   "accuracy_when_frame_order_favours_far": 0.5119047619047619,
+   "n_frame_order_favours_far": 84,
+   "picked_first_listed": 0.31547619047619047,
+   "picked_more_similar_looking": 0.5178571428571429
+  },
+  "novel": {
+   "n": 6,
+   "accuracy": 0.8333333333333334,
+   "parsed": 1.0,
+   "p_above_chance": 0.109375,
+   "accuracy_when_frame_order_favours_far": 0.6666666666666666,
+   "n_frame_order_favours_far": 3,
+   "picked_first_listed": 0.5,
+   "picked_more_similar_looking": 0.5
+  },
+  "familiar": {
+   "n": 162,
+   "accuracy": 0.4691358024691358,
+   "parsed": 1.0,
+   "p_above_chance": 0.8062404575754736,
+   "accuracy_when_frame_order_favours_far": 0.5061728395061729,
+   "n_frame_order_favours_far": 81,
+   "picked_first_listed": 0.30864197530864196,
+   "picked_more_similar_looking": 0.5185185185185185
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt2-256px-max64-mps": {
+  "all": {
+   "n": 159,
+   "accuracy": 0.8742138364779874,
+   "parsed": 1.0,
+   "p_above_chance": 2.0078865550549288e-23,
+   "accuracy_when_frame_order_favours_far": 0.8354430379746836,
+   "n_frame_order_favours_far": 79,
+   "picked_first_listed": 0.5094339622641509,
+   "picked_more_similar_looking": 0.5220125786163522
+  },
+  "novel": {
+   "n": 10,
+   "accuracy": 0.9,
+   "parsed": 1.0,
+   "p_above_chance": 0.0107421875,
+   "accuracy_when_frame_order_favours_far": 0.8,
+   "n_frame_order_favours_far": 5,
+   "picked_first_listed": 0.5,
+   "picked_more_similar_looking": 0.7
+  },
+  "familiar": {
+   "n": 149,
+   "accuracy": 0.87248322147651,
+   "parsed": 1.0,
+   "p_above_chance": 7.922643106229368e-22,
+   "accuracy_when_frame_order_favours_far": 0.8378378378378378,
+   "n_frame_order_favours_far": 74,
+   "picked_first_listed": 0.5100671140939598,
+   "picked_more_similar_looking": 0.5100671140939598
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt2-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 159,
+   "accuracy": 0.710691823899371,
+   "parsed": 1.0,
+   "p_above_chance": 5.43625203643959e-08,
+   "accuracy_when_frame_order_favours_far": 0.7088607594936709,
+   "n_frame_order_favours_far": 79,
+   "picked_first_listed": 0.5220125786163522,
+   "picked_more_similar_looking": 0.559748427672956
+  },
+  "novel": {
+   "n": 10,
+   "accuracy": 0.7,
+   "parsed": 1.0,
+   "p_above_chance": 0.171875,
+   "accuracy_when_frame_order_favours_far": 0.4,
+   "n_frame_order_favours_far": 5,
+   "picked_first_listed": 0.5,
+   "picked_more_similar_looking": 0.7
+  },
+  "familiar": {
+   "n": 149,
+   "accuracy": 0.7114093959731543,
+   "parsed": 1.0,
+   "p_above_chance": 1.2713621660772168e-07,
+   "accuracy_when_frame_order_favours_far": 0.7297297297297297,
+   "n_frame_order_favours_far": 74,
+   "picked_first_listed": 0.5234899328859061,
+   "picked_more_similar_looking": 0.5503355704697986
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s1-roomReplicaApt2-256px-nowalk-mps": {
+  "all": {
+   "n": 159,
+   "accuracy": 0.5345911949685535,
+   "parsed": 1.0,
+   "p_above_chance": 0.21391990556251628,
+   "accuracy_when_frame_order_favours_far": 0.6455696202531646,
+   "n_frame_order_favours_far": 79,
+   "picked_first_listed": 0.3584905660377358,
+   "picked_more_similar_looking": 0.4968553459119497
+  },
+  "novel": {
+   "n": 10,
+   "accuracy": 0.5,
+   "parsed": 1.0,
+   "p_above_chance": 0.623046875,
+   "accuracy_when_frame_order_favours_far": 0.4,
+   "n_frame_order_favours_far": 5,
+   "picked_first_listed": 0.5,
+   "picked_more_similar_looking": 0.5
+  },
+  "familiar": {
+   "n": 149,
+   "accuracy": 0.5369127516778524,
+   "parsed": 1.0,
+   "p_above_chance": 0.2063712794120707,
+   "accuracy_when_frame_order_favours_far": 0.6621621621621622,
+   "n_frame_order_favours_far": 74,
+   "picked_first_listed": 0.348993288590604,
+   "picked_more_similar_looking": 0.4966442953020134
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-dissimilar-256px-max64-shuffled": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.5989583333333334,
+   "parsed": 1.0,
+   "p_above_chance": 0.0037093280633834617,
+   "accuracy_when_frame_order_favours_far": 0.6538461538461539,
+   "n_frame_order_favours_far": 52,
+   "picked_first_listed": 0.3697916666666667,
+   "picked_more_similar_looking": 0.515625
+  },
+  "novel": {
+   "n": 102,
+   "accuracy": 0.6176470588235294,
+   "parsed": 1.0,
+   "p_above_chance": 0.011148830912346466,
+   "accuracy_when_frame_order_favours_far": 0.6571428571428571,
+   "n_frame_order_favours_far": 35,
+   "picked_first_listed": 0.4019607843137255,
+   "picked_more_similar_looking": 0.5588235294117647
+  },
+  "familiar": {
+   "n": 90,
+   "accuracy": 0.5777777777777777,
+   "parsed": 1.0,
+   "p_above_chance": 0.08512119752303689,
+   "accuracy_when_frame_order_favours_far": 0.6470588235294118,
+   "n_frame_order_favours_far": 17,
+   "picked_first_listed": 0.3333333333333333,
+   "picked_more_similar_looking": 0.4666666666666667
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-dissimilar-256px-max64": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.7083333333333334,
+   "parsed": 1.0,
+   "p_above_chance": 3.635975273965385e-09,
+   "accuracy_when_frame_order_favours_far": 0.6923076923076923,
+   "n_frame_order_favours_far": 52,
+   "picked_first_listed": 0.4270833333333333,
+   "picked_more_similar_looking": 0.46875
+  },
+  "novel": {
+   "n": 102,
+   "accuracy": 0.696078431372549,
+   "parsed": 1.0,
+   "p_above_chance": 4.653825413623667e-05,
+   "accuracy_when_frame_order_favours_far": 0.6571428571428571,
+   "n_frame_order_favours_far": 35,
+   "picked_first_listed": 0.4803921568627451,
+   "picked_more_similar_looking": 0.5
+  },
+  "familiar": {
+   "n": 90,
+   "accuracy": 0.7222222222222222,
+   "parsed": 1.0,
+   "p_above_chance": 1.483226461260094e-05,
+   "accuracy_when_frame_order_favours_far": 0.7647058823529411,
+   "n_frame_order_favours_far": 17,
+   "picked_first_listed": 0.36666666666666664,
+   "picked_more_similar_looking": 0.43333333333333335
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-dissimilar-256px-nowalk": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.5052083333333334,
+   "parsed": 1.0,
+   "p_above_chance": 0.4712462848266119,
+   "accuracy_when_frame_order_favours_far": 0.6153846153846154,
+   "n_frame_order_favours_far": 52,
+   "picked_first_listed": 0.2864583333333333,
+   "picked_more_similar_looking": 0.5260416666666666
+  },
+  "novel": {
+   "n": 102,
+   "accuracy": 0.5686274509803921,
+   "parsed": 1.0,
+   "p_above_chance": 0.09889493153404162,
+   "accuracy_when_frame_order_favours_far": 0.6571428571428571,
+   "n_frame_order_favours_far": 35,
+   "picked_first_listed": 0.3333333333333333,
+   "picked_more_similar_looking": 0.5098039215686274
+  },
+  "familiar": {
+   "n": 90,
+   "accuracy": 0.43333333333333335,
+   "parsed": 1.0,
+   "p_above_chance": 0.9148788024769631,
+   "accuracy_when_frame_order_favours_far": 0.5294117647058824,
+   "n_frame_order_favours_far": 17,
+   "picked_first_listed": 0.23333333333333334,
+   "picked_more_similar_looking": 0.5444444444444444
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomB-256px-max64-shuffled": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.5625,
+   "parsed": 1.0,
+   "p_above_chance": 0.04834176568810582,
+   "accuracy_when_frame_order_favours_far": 0.5729166666666666,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.3854166666666667,
+   "picked_more_similar_looking": 0.53125
+  },
+  "novel": {
+   "n": 106,
+   "accuracy": 0.5566037735849056,
+   "parsed": 1.0,
+   "p_above_chance": 0.14264221093282908,
+   "accuracy_when_frame_order_favours_far": 0.5094339622641509,
+   "n_frame_order_favours_far": 53,
+   "picked_first_listed": 0.3867924528301887,
+   "picked_more_similar_looking": 0.5566037735849056
+  },
+  "familiar": {
+   "n": 86,
+   "accuracy": 0.5697674418604651,
+   "parsed": 1.0,
+   "p_above_chance": 0.11768993110552761,
+   "accuracy_when_frame_order_favours_far": 0.6511627906976745,
+   "n_frame_order_favours_far": 43,
+   "picked_first_listed": 0.38372093023255816,
+   "picked_more_similar_looking": 0.5
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomB-256px-max64": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.6666666666666666,
+   "parsed": 1.0,
+   "p_above_chance": 2.2477485219678163e-06,
+   "accuracy_when_frame_order_favours_far": 0.65625,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.4583333333333333,
+   "picked_more_similar_looking": 0.5416666666666666
+  },
+  "novel": {
+   "n": 106,
+   "accuracy": 0.6226415094339622,
+   "parsed": 1.0,
+   "p_above_chance": 0.007389705258519177,
+   "accuracy_when_frame_order_favours_far": 0.5849056603773585,
+   "n_frame_order_favours_far": 53,
+   "picked_first_listed": 0.4339622641509434,
+   "picked_more_similar_looking": 0.6037735849056604
+  },
+  "familiar": {
+   "n": 86,
+   "accuracy": 0.7209302325581395,
+   "parsed": 1.0,
+   "p_above_chance": 2.5418271009220785e-05,
+   "accuracy_when_frame_order_favours_far": 0.7441860465116279,
+   "n_frame_order_favours_far": 43,
+   "picked_first_listed": 0.4883720930232558,
+   "picked_more_similar_looking": 0.46511627906976744
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomB-256px-nowalk": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.453125,
+   "parsed": 1.0,
+   "p_above_chance": 0.9149260702018212,
+   "accuracy_when_frame_order_favours_far": 0.4791666666666667,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.265625,
+   "picked_more_similar_looking": 0.453125
+  },
+  "novel": {
+   "n": 106,
+   "accuracy": 0.4811320754716981,
+   "parsed": 1.0,
+   "p_above_chance": 0.6862845114606834,
+   "accuracy_when_frame_order_favours_far": 0.5471698113207547,
+   "n_frame_order_favours_far": 53,
+   "picked_first_listed": 0.29245283018867924,
+   "picked_more_similar_looking": 0.44339622641509435
+  },
+  "familiar": {
+   "n": 86,
+   "accuracy": 0.4186046511627907,
+   "parsed": 1.0,
+   "p_above_chance": 0.9473873243715281,
+   "accuracy_when_frame_order_favours_far": 0.3953488372093023,
+   "n_frame_order_favours_far": 43,
+   "picked_first_listed": 0.23255813953488372,
+   "picked_more_similar_looking": 0.46511627906976744
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD2-256px-max64-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.7708333333333334,
+   "parsed": 1.0,
+   "p_above_chance": 1.1751834453436475e-14,
+   "accuracy_when_frame_order_favours_far": 0.6947368421052632,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.40625,
+   "picked_more_similar_looking": 0.5364583333333334
+  },
+  "novel": {
+   "n": 53,
+   "accuracy": 0.7169811320754716,
+   "parsed": 1.0,
+   "p_above_chance": 0.0010950934419460268,
+   "accuracy_when_frame_order_favours_far": 0.5769230769230769,
+   "n_frame_order_favours_far": 26,
+   "picked_first_listed": 0.4339622641509434,
+   "picked_more_similar_looking": 0.6037735849056604
+  },
+  "familiar": {
+   "n": 139,
+   "accuracy": 0.7913669064748201,
+   "parsed": 1.0,
+   "p_above_chance": 1.3232188501091558e-12,
+   "accuracy_when_frame_order_favours_far": 0.7391304347826086,
+   "n_frame_order_favours_far": 69,
+   "picked_first_listed": 0.39568345323741005,
+   "picked_more_similar_looking": 0.5107913669064749
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD2-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.6614583333333334,
+   "parsed": 1.0,
+   "p_above_chance": 4.523814696022469e-06,
+   "accuracy_when_frame_order_favours_far": 0.631578947368421,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.3385416666666667,
+   "picked_more_similar_looking": 0.5833333333333334
+  },
+  "novel": {
+   "n": 53,
+   "accuracy": 0.6226415094339622,
+   "parsed": 1.0,
+   "p_above_chance": 0.04918532422024591,
+   "accuracy_when_frame_order_favours_far": 0.5,
+   "n_frame_order_favours_far": 26,
+   "picked_first_listed": 0.3018867924528302,
+   "picked_more_similar_looking": 0.660377358490566
+  },
+  "familiar": {
+   "n": 139,
+   "accuracy": 0.6762589928057554,
+   "parsed": 1.0,
+   "p_above_chance": 1.969176736274794e-05,
+   "accuracy_when_frame_order_favours_far": 0.6811594202898551,
+   "n_frame_order_favours_far": 69,
+   "picked_first_listed": 0.35251798561151076,
+   "picked_more_similar_looking": 0.5539568345323741
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD2-256px-nowalk-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.4635416666666667,
+   "parsed": 1.0,
+   "p_above_chance": 0.8605091154818044,
+   "accuracy_when_frame_order_favours_far": 0.5052631578947369,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.328125,
+   "picked_more_similar_looking": 0.5625
+  },
+  "novel": {
+   "n": 53,
+   "accuracy": 0.4716981132075472,
+   "parsed": 1.0,
+   "p_above_chance": 0.7084339228694119,
+   "accuracy_when_frame_order_favours_far": 0.4230769230769231,
+   "n_frame_order_favours_far": 26,
+   "picked_first_listed": 0.37735849056603776,
+   "picked_more_similar_looking": 0.5849056603773585
+  },
+  "familiar": {
+   "n": 139,
+   "accuracy": 0.460431654676259,
+   "parsed": 1.0,
+   "p_above_chance": 0.8456237154035863,
+   "accuracy_when_frame_order_favours_far": 0.5362318840579711,
+   "n_frame_order_favours_far": 69,
+   "picked_first_listed": 0.30935251798561153,
+   "picked_more_similar_looking": 0.5539568345323741
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD3-256px-max64-mps": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.7333333333333333,
+   "parsed": 1.0,
+   "p_above_chance": 1.4651425759989184e-10,
+   "accuracy_when_frame_order_favours_far": 0.7222222222222222,
+   "n_frame_order_favours_far": 90,
+   "picked_first_listed": 0.35,
+   "picked_more_similar_looking": 0.5222222222222223
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.631578947368421,
+   "parsed": 1.0,
+   "p_above_chance": 0.07165332714794204,
+   "accuracy_when_frame_order_favours_far": 0.631578947368421,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.18421052631578946,
+   "picked_more_similar_looking": 0.5789473684210527
+  },
+  "familiar": {
+   "n": 142,
+   "accuracy": 0.7605633802816901,
+   "parsed": 1.0,
+   "p_above_chance": 1.7833617003865803e-10,
+   "accuracy_when_frame_order_favours_far": 0.7464788732394366,
+   "n_frame_order_favours_far": 71,
+   "picked_first_listed": 0.39436619718309857,
+   "picked_more_similar_looking": 0.5070422535211268
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD3-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.6722222222222223,
+   "parsed": 1.0,
+   "p_above_chance": 2.217224631877588e-06,
+   "accuracy_when_frame_order_favours_far": 0.6888888888888889,
+   "n_frame_order_favours_far": 90,
+   "picked_first_listed": 0.36666666666666664,
+   "picked_more_similar_looking": 0.5055555555555555
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.6842105263157895,
+   "parsed": 1.0,
+   "p_above_chance": 0.016776219839812256,
+   "accuracy_when_frame_order_favours_far": 0.6842105263157895,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.23684210526315788,
+   "picked_more_similar_looking": 0.47368421052631576
+  },
+  "familiar": {
+   "n": 142,
+   "accuracy": 0.6690140845070423,
+   "parsed": 1.0,
+   "p_above_chance": 3.4565732723075836e-05,
+   "accuracy_when_frame_order_favours_far": 0.6901408450704225,
+   "n_frame_order_favours_far": 71,
+   "picked_first_listed": 0.4014084507042254,
+   "picked_more_similar_looking": 0.5140845070422535
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomHSSD3-256px-nowalk-mps": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.5055555555555555,
+   "parsed": 1.0,
+   "p_above_chance": 0.47030586835462873,
+   "accuracy_when_frame_order_favours_far": 0.5111111111111111,
+   "n_frame_order_favours_far": 90,
+   "picked_first_listed": 0.36666666666666664,
+   "picked_more_similar_looking": 0.5166666666666667
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.47368421052631576,
+   "parsed": 1.0,
+   "p_above_chance": 0.6864487149214256,
+   "accuracy_when_frame_order_favours_far": 0.47368421052631576,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.2894736842105263,
+   "picked_more_similar_looking": 0.47368421052631576
+  },
+  "familiar": {
+   "n": 142,
+   "accuracy": 0.5140845070422535,
+   "parsed": 1.0,
+   "p_above_chance": 0.4006695109052012,
+   "accuracy_when_frame_order_favours_far": 0.5211267605633803,
+   "n_frame_order_favours_far": 71,
+   "picked_first_listed": 0.3873239436619718,
+   "picked_more_similar_looking": 0.528169014084507
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5005-256px-max64-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.703125,
+   "parsed": 1.0,
+   "p_above_chance": 8.822698547504543e-09,
+   "accuracy_when_frame_order_favours_far": 0.6421052631578947,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.4010416666666667,
+   "picked_more_similar_looking": 0.53125
+  },
+  "novel": {
+   "n": 147,
+   "accuracy": 0.7074829931972789,
+   "parsed": 1.0,
+   "p_above_chance": 2.5976448717295874e-07,
+   "accuracy_when_frame_order_favours_far": 0.6438356164383562,
+   "n_frame_order_favours_far": 73,
+   "picked_first_listed": 0.3877551020408163,
+   "picked_more_similar_looking": 0.5102040816326531
+  },
+  "familiar": {
+   "n": 45,
+   "accuracy": 0.6888888888888889,
+   "parsed": 1.0,
+   "p_above_chance": 0.008047180015637423,
+   "accuracy_when_frame_order_favours_far": 0.6363636363636364,
+   "n_frame_order_favours_far": 22,
+   "picked_first_listed": 0.4444444444444444,
+   "picked_more_similar_looking": 0.6
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5005-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.59375,
+   "parsed": 1.0,
+   "p_above_chance": 0.005672745651461853,
+   "accuracy_when_frame_order_favours_far": 0.5473684210526316,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.4166666666666667,
+   "picked_more_similar_looking": 0.4947916666666667
+  },
+  "novel": {
+   "n": 147,
+   "accuracy": 0.5986394557823129,
+   "parsed": 1.0,
+   "p_above_chance": 0.010302574089588968,
+   "accuracy_when_frame_order_favours_far": 0.5753424657534246,
+   "n_frame_order_favours_far": 73,
+   "picked_first_listed": 0.41496598639455784,
+   "picked_more_similar_looking": 0.5102040816326531
+  },
+  "familiar": {
+   "n": 45,
+   "accuracy": 0.5777777777777777,
+   "parsed": 1.0,
+   "p_above_chance": 0.1856490172355052,
+   "accuracy_when_frame_order_favours_far": 0.45454545454545453,
+   "n_frame_order_favours_far": 22,
+   "picked_first_listed": 0.4222222222222222,
+   "picked_more_similar_looking": 0.4444444444444444
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomP5005-256px-nowalk-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.421875,
+   "parsed": 1.0,
+   "p_above_chance": 0.9874919515363703,
+   "accuracy_when_frame_order_favours_far": 0.47368421052631576,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.328125,
+   "picked_more_similar_looking": 0.4895833333333333
+  },
+  "novel": {
+   "n": 147,
+   "accuracy": 0.42857142857142855,
+   "parsed": 1.0,
+   "p_above_chance": 0.9653837464132339,
+   "accuracy_when_frame_order_favours_far": 0.4794520547945205,
+   "n_frame_order_favours_far": 73,
+   "picked_first_listed": 0.32653061224489793,
+   "picked_more_similar_looking": 0.5170068027210885
+  },
+  "familiar": {
+   "n": 45,
+   "accuracy": 0.4,
+   "parsed": 1.0,
+   "p_above_chance": 0.9324217745771648,
+   "accuracy_when_frame_order_favours_far": 0.45454545454545453,
+   "n_frame_order_favours_far": 22,
+   "picked_first_listed": 0.3333333333333333,
+   "picked_more_similar_looking": 0.4
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt0-256px-max64-mps": {
+  "all": {
+   "n": 176,
+   "accuracy": 0.7102272727272727,
+   "parsed": 1.0,
+   "p_above_chance": 1.174778639997368e-08,
+   "accuracy_when_frame_order_favours_far": 0.6704545454545454,
+   "n_frame_order_favours_far": 88,
+   "picked_first_listed": 0.3465909090909091,
+   "picked_more_similar_looking": 0.5284090909090909
+  },
+  "novel": {
+   "n": 42,
+   "accuracy": 0.7380952380952381,
+   "parsed": 1.0,
+   "p_above_chance": 0.001443623987142928,
+   "accuracy_when_frame_order_favours_far": 0.6666666666666666,
+   "n_frame_order_favours_far": 21,
+   "picked_first_listed": 0.38095238095238093,
+   "picked_more_similar_looking": 0.4523809523809524
+  },
+  "familiar": {
+   "n": 134,
+   "accuracy": 0.7014925373134329,
+   "parsed": 1.0,
+   "p_above_chance": 1.7518650840765905e-06,
+   "accuracy_when_frame_order_favours_far": 0.6716417910447762,
+   "n_frame_order_favours_far": 67,
+   "picked_first_listed": 0.3358208955223881,
+   "picked_more_similar_looking": 0.5522388059701493
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt0-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 176,
+   "accuracy": 0.5909090909090909,
+   "parsed": 1.0,
+   "p_above_chance": 0.009598105569917649,
+   "accuracy_when_frame_order_favours_far": 0.5795454545454546,
+   "n_frame_order_favours_far": 88,
+   "picked_first_listed": 0.3068181818181818,
+   "picked_more_similar_looking": 0.5113636363636364
+  },
+  "novel": {
+   "n": 42,
+   "accuracy": 0.6904761904761905,
+   "parsed": 1.0,
+   "p_above_chance": 0.009760236391230137,
+   "accuracy_when_frame_order_favours_far": 0.6666666666666666,
+   "n_frame_order_favours_far": 21,
+   "picked_first_listed": 0.42857142857142855,
+   "picked_more_similar_looking": 0.5
+  },
+  "familiar": {
+   "n": 134,
+   "accuracy": 0.5597014925373134,
+   "parsed": 1.0,
+   "p_above_chance": 0.09742832975353743,
+   "accuracy_when_frame_order_favours_far": 0.5522388059701493,
+   "n_frame_order_favours_far": 67,
+   "picked_first_listed": 0.26865671641791045,
+   "picked_more_similar_looking": 0.5149253731343284
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt0-256px-nowalk-mps": {
+  "all": {
+   "n": 176,
+   "accuracy": 0.5113636363636364,
+   "parsed": 1.0,
+   "p_above_chance": 0.4105886387347026,
+   "accuracy_when_frame_order_favours_far": 0.5227272727272727,
+   "n_frame_order_favours_far": 88,
+   "picked_first_listed": 0.3181818181818182,
+   "picked_more_similar_looking": 0.625
+  },
+  "novel": {
+   "n": 42,
+   "accuracy": 0.38095238095238093,
+   "parsed": 1.0,
+   "p_above_chance": 0.9557852265061229,
+   "accuracy_when_frame_order_favours_far": 0.38095238095238093,
+   "n_frame_order_favours_far": 21,
+   "picked_first_listed": 0.2619047619047619,
+   "picked_more_similar_looking": 0.5238095238095238
+  },
+  "familiar": {
+   "n": 134,
+   "accuracy": 0.5522388059701493,
+   "parsed": 1.0,
+   "p_above_chance": 0.13067514831247548,
+   "accuracy_when_frame_order_favours_far": 0.5671641791044776,
+   "n_frame_order_favours_far": 67,
+   "picked_first_listed": 0.3358208955223881,
+   "picked_more_similar_looking": 0.6567164179104478
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt1-256px-max64-mps": {
+  "all": {
+   "n": 168,
+   "accuracy": 0.6607142857142857,
+   "parsed": 1.0,
+   "p_above_chance": 1.876919967931372e-05,
+   "accuracy_when_frame_order_favours_far": 0.6666666666666666,
+   "n_frame_order_favours_far": 84,
+   "picked_first_listed": 0.30357142857142855,
+   "picked_more_similar_looking": 0.47023809523809523
+  },
+  "novel": {
+   "n": 6,
+   "accuracy": 0.6666666666666666,
+   "parsed": 1.0,
+   "p_above_chance": 0.34375,
+   "accuracy_when_frame_order_favours_far": 0.3333333333333333,
+   "n_frame_order_favours_far": 3,
+   "picked_first_listed": 0.3333333333333333,
+   "picked_more_similar_looking": 0.3333333333333333
+  },
+  "familiar": {
+   "n": 162,
+   "accuracy": 0.6604938271604939,
+   "parsed": 1.0,
+   "p_above_chance": 2.6823830417677524e-05,
+   "accuracy_when_frame_order_favours_far": 0.6790123456790124,
+   "n_frame_order_favours_far": 81,
+   "picked_first_listed": 0.30246913580246915,
+   "picked_more_similar_looking": 0.47530864197530864
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt1-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 168,
+   "accuracy": 0.6011904761904762,
+   "parsed": 1.0,
+   "p_above_chance": 0.005339646563711246,
+   "accuracy_when_frame_order_favours_far": 0.6309523809523809,
+   "n_frame_order_favours_far": 84,
+   "picked_first_listed": 0.31547619047619047,
+   "picked_more_similar_looking": 0.39880952380952384
+  },
+  "novel": {
+   "n": 6,
+   "accuracy": 0.8333333333333334,
+   "parsed": 1.0,
+   "p_above_chance": 0.109375,
+   "accuracy_when_frame_order_favours_far": 0.6666666666666666,
+   "n_frame_order_favours_far": 3,
+   "picked_first_listed": 0.16666666666666666,
+   "picked_more_similar_looking": 0.5
+  },
+  "familiar": {
+   "n": 162,
+   "accuracy": 0.5925925925925926,
+   "parsed": 1.0,
+   "p_above_chance": 0.011202845851797068,
+   "accuracy_when_frame_order_favours_far": 0.6296296296296297,
+   "n_frame_order_favours_far": 81,
+   "picked_first_listed": 0.32098765432098764,
+   "picked_more_similar_looking": 0.3950617283950617
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt1-256px-nowalk-mps": {
+  "all": {
+   "n": 168,
+   "accuracy": 0.5119047619047619,
+   "parsed": 1.0,
+   "p_above_chance": 0.40852324449039007,
+   "accuracy_when_frame_order_favours_far": 0.5357142857142857,
+   "n_frame_order_favours_far": 84,
+   "picked_first_listed": 0.38095238095238093,
+   "picked_more_similar_looking": 0.5238095238095238
+  },
+  "novel": {
+   "n": 6,
+   "accuracy": 0.8333333333333334,
+   "parsed": 1.0,
+   "p_above_chance": 0.109375,
+   "accuracy_when_frame_order_favours_far": 0.6666666666666666,
+   "n_frame_order_favours_far": 3,
+   "picked_first_listed": 0.5,
+   "picked_more_similar_looking": 0.5
+  },
+  "familiar": {
+   "n": 162,
+   "accuracy": 0.5,
+   "parsed": 1.0,
+   "p_above_chance": 0.5312955331996145,
+   "accuracy_when_frame_order_favours_far": 0.5308641975308642,
+   "n_frame_order_favours_far": 81,
+   "picked_first_listed": 0.3765432098765432,
+   "picked_more_similar_looking": 0.5246913580246914
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt2-256px-max64-mps": {
+  "all": {
+   "n": 159,
+   "accuracy": 0.7421383647798742,
+   "parsed": 1.0,
+   "p_above_chance": 3.89269930584606e-10,
+   "accuracy_when_frame_order_favours_far": 0.7215189873417721,
+   "n_frame_order_favours_far": 79,
+   "picked_first_listed": 0.389937106918239,
+   "picked_more_similar_looking": 0.5660377358490566
+  },
+  "novel": {
+   "n": 10,
+   "accuracy": 0.7,
+   "parsed": 1.0,
+   "p_above_chance": 0.171875,
+   "accuracy_when_frame_order_favours_far": 0.6,
+   "n_frame_order_favours_far": 5,
+   "picked_first_listed": 0.3,
+   "picked_more_similar_looking": 0.5
+  },
+  "familiar": {
+   "n": 149,
+   "accuracy": 0.7449664429530202,
+   "parsed": 1.0,
+   "p_above_chance": 8.685601172828367e-10,
+   "accuracy_when_frame_order_favours_far": 0.7297297297297297,
+   "n_frame_order_favours_far": 74,
+   "picked_first_listed": 0.3959731543624161,
+   "picked_more_similar_looking": 0.5704697986577181
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt2-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 159,
+   "accuracy": 0.5786163522012578,
+   "parsed": 1.0,
+   "p_above_chance": 0.028327998416885717,
+   "accuracy_when_frame_order_favours_far": 0.5949367088607594,
+   "n_frame_order_favours_far": 79,
+   "picked_first_listed": 0.37735849056603776,
+   "picked_more_similar_looking": 0.5660377358490566
+  },
+  "novel": {
+   "n": 10,
+   "accuracy": 0.5,
+   "parsed": 1.0,
+   "p_above_chance": 0.623046875,
+   "accuracy_when_frame_order_favours_far": 0.4,
+   "n_frame_order_favours_far": 5,
+   "picked_first_listed": 0.3,
+   "picked_more_similar_looking": 0.5
+  },
+  "familiar": {
+   "n": 149,
+   "accuracy": 0.5838926174496645,
+   "parsed": 1.0,
+   "p_above_chance": 0.024457578517709008,
+   "accuracy_when_frame_order_favours_far": 0.6081081081081081,
+   "n_frame_order_favours_far": 74,
+   "picked_first_listed": 0.3825503355704698,
+   "picked_more_similar_looking": 0.5704697986577181
+  }
+ },
+ "Qwen3-VL-8B-Instruct+qwen8b-proc-s2-roomReplicaApt2-256px-nowalk-mps": {
+  "all": {
+   "n": 159,
+   "accuracy": 0.44654088050314467,
+   "parsed": 1.0,
+   "p_above_chance": 0.9233925266199337,
+   "accuracy_when_frame_order_favours_far": 0.5443037974683544,
+   "n_frame_order_favours_far": 79,
+   "picked_first_listed": 0.4339622641509434,
+   "picked_more_similar_looking": 0.559748427672956
+  },
+  "novel": {
+   "n": 10,
+   "accuracy": 0.4,
+   "parsed": 1.0,
+   "p_above_chance": 0.828125,
+   "accuracy_when_frame_order_favours_far": 0.2,
+   "n_frame_order_favours_far": 5,
+   "picked_first_listed": 0.6,
+   "picked_more_similar_looking": 0.6
+  },
+  "familiar": {
+   "n": 149,
+   "accuracy": 0.44966442953020136,
+   "parsed": 1.0,
+   "p_above_chance": 0.9051207210466313,
+   "accuracy_when_frame_order_favours_far": 0.5675675675675675,
+   "n_frame_order_favours_far": 74,
+   "picked_first_listed": 0.4228187919463087,
+   "picked_more_similar_looking": 0.5570469798657718
+  }
+ },
  "Qwen3-VL-8B-Instruct-dissimilar-1024px-nowalk": {
   "all": {
    "n": 192,
@@ -3645,6 +6141,774 @@
    "n_frame_order_favours_far": 43,
    "picked_first_listed": 0.2558139534883721,
    "picked_more_similar_looking": 0.46511627906976744
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD1-256px-max64-mps": {
+  "all": {
+   "n": 188,
+   "accuracy": 0.5851063829787234,
+   "parsed": 1.0,
+   "p_above_chance": 0.01175436452711216,
+   "accuracy_when_frame_order_favours_far": 0.5319148936170213,
+   "n_frame_order_favours_far": 94,
+   "picked_first_listed": 0.5106382978723404,
+   "picked_more_similar_looking": 0.5
+  },
+  "novel": {
+   "n": 68,
+   "accuracy": 0.36764705882352944,
+   "parsed": 1.0,
+   "p_above_chance": 0.9897365331431465,
+   "accuracy_when_frame_order_favours_far": 0.35294117647058826,
+   "n_frame_order_favours_far": 34,
+   "picked_first_listed": 0.5588235294117647,
+   "picked_more_similar_looking": 0.5735294117647058
+  },
+  "familiar": {
+   "n": 120,
+   "accuracy": 0.7083333333333334,
+   "parsed": 1.0,
+   "p_above_chance": 2.866484951425488e-06,
+   "accuracy_when_frame_order_favours_far": 0.6333333333333333,
+   "n_frame_order_favours_far": 60,
+   "picked_first_listed": 0.48333333333333334,
+   "picked_more_similar_looking": 0.4583333333333333
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD1-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 188,
+   "accuracy": 0.601063829787234,
+   "parsed": 1.0,
+   "p_above_chance": 0.003403729083133142,
+   "accuracy_when_frame_order_favours_far": 0.6063829787234043,
+   "n_frame_order_favours_far": 94,
+   "picked_first_listed": 0.5585106382978723,
+   "picked_more_similar_looking": 0.44148936170212766
+  },
+  "novel": {
+   "n": 68,
+   "accuracy": 0.4264705882352941,
+   "parsed": 1.0,
+   "p_above_chance": 0.9090949727322033,
+   "accuracy_when_frame_order_favours_far": 0.47058823529411764,
+   "n_frame_order_favours_far": 34,
+   "picked_first_listed": 0.5,
+   "picked_more_similar_looking": 0.4852941176470588
+  },
+  "familiar": {
+   "n": 120,
+   "accuracy": 0.7,
+   "parsed": 1.0,
+   "p_above_chance": 6.948506060513812e-06,
+   "accuracy_when_frame_order_favours_far": 0.6833333333333333,
+   "n_frame_order_favours_far": 60,
+   "picked_first_listed": 0.5916666666666667,
+   "picked_more_similar_looking": 0.4166666666666667
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD1-256px-nowalk-mps": {
+  "all": {
+   "n": 188,
+   "accuracy": 0.5,
+   "parsed": 1.0,
+   "p_above_chance": 0.5290571907677553,
+   "accuracy_when_frame_order_favours_far": 0.5106382978723404,
+   "n_frame_order_favours_far": 94,
+   "picked_first_listed": 0.5106382978723404,
+   "picked_more_similar_looking": 0.5106382978723404
+  },
+  "novel": {
+   "n": 68,
+   "accuracy": 0.38235294117647056,
+   "parsed": 1.0,
+   "p_above_chance": 0.9807699733255363,
+   "accuracy_when_frame_order_favours_far": 0.38235294117647056,
+   "n_frame_order_favours_far": 34,
+   "picked_first_listed": 0.5441176470588235,
+   "picked_more_similar_looking": 0.5
+  },
+  "familiar": {
+   "n": 120,
+   "accuracy": 0.5666666666666667,
+   "parsed": 1.0,
+   "p_above_chance": 0.08532260656517583,
+   "accuracy_when_frame_order_favours_far": 0.5833333333333334,
+   "n_frame_order_favours_far": 60,
+   "picked_first_listed": 0.49166666666666664,
+   "picked_more_similar_looking": 0.5166666666666667
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD2-256px-max64-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.6197916666666666,
+   "parsed": 1.0,
+   "p_above_chance": 0.0005544671257743463,
+   "accuracy_when_frame_order_favours_far": 0.6,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.640625,
+   "picked_more_similar_looking": 0.5208333333333334
+  },
+  "novel": {
+   "n": 53,
+   "accuracy": 0.6415094339622641,
+   "parsed": 1.0,
+   "p_above_chance": 0.026719405268855523,
+   "accuracy_when_frame_order_favours_far": 0.6153846153846154,
+   "n_frame_order_favours_far": 26,
+   "picked_first_listed": 0.7358490566037735,
+   "picked_more_similar_looking": 0.5283018867924528
+  },
+  "familiar": {
+   "n": 139,
+   "accuracy": 0.6115107913669064,
+   "parsed": 1.0,
+   "p_above_chance": 0.005339142691277771,
+   "accuracy_when_frame_order_favours_far": 0.5942028985507246,
+   "n_frame_order_favours_far": 69,
+   "picked_first_listed": 0.60431654676259,
+   "picked_more_similar_looking": 0.5179856115107914
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD2-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.6197916666666666,
+   "parsed": 1.0,
+   "p_above_chance": 0.0005544671257743463,
+   "accuracy_when_frame_order_favours_far": 0.6210526315789474,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.6302083333333334,
+   "picked_more_similar_looking": 0.4895833333333333
+  },
+  "novel": {
+   "n": 53,
+   "accuracy": 0.6415094339622641,
+   "parsed": 1.0,
+   "p_above_chance": 0.026719405268855523,
+   "accuracy_when_frame_order_favours_far": 0.6153846153846154,
+   "n_frame_order_favours_far": 26,
+   "picked_first_listed": 0.7358490566037735,
+   "picked_more_similar_looking": 0.5283018867924528
+  },
+  "familiar": {
+   "n": 139,
+   "accuracy": 0.6115107913669064,
+   "parsed": 1.0,
+   "p_above_chance": 0.005339142691277771,
+   "accuracy_when_frame_order_favours_far": 0.6231884057971014,
+   "n_frame_order_favours_far": 69,
+   "picked_first_listed": 0.5899280575539568,
+   "picked_more_similar_looking": 0.4748201438848921
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD2-256px-nowalk-mps": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.4791666666666667,
+   "parsed": 1.0,
+   "p_above_chance": 0.7419451829335402,
+   "accuracy_when_frame_order_favours_far": 0.49473684210526314,
+   "n_frame_order_favours_far": 95,
+   "picked_first_listed": 0.5625,
+   "picked_more_similar_looking": 0.4739583333333333
+  },
+  "novel": {
+   "n": 53,
+   "accuracy": 0.5094339622641509,
+   "parsed": 1.0,
+   "p_above_chance": 0.5,
+   "accuracy_when_frame_order_favours_far": 0.5384615384615384,
+   "n_frame_order_favours_far": 26,
+   "picked_first_listed": 0.7169811320754716,
+   "picked_more_similar_looking": 0.5471698113207547
+  },
+  "familiar": {
+   "n": 139,
+   "accuracy": 0.4676258992805755,
+   "parsed": 1.0,
+   "p_above_chance": 0.801792457524137,
+   "accuracy_when_frame_order_favours_far": 0.4782608695652174,
+   "n_frame_order_favours_far": 69,
+   "picked_first_listed": 0.5035971223021583,
+   "picked_more_similar_looking": 0.4460431654676259
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD3-256px-max64-mps": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.6166666666666667,
+   "parsed": 1.0,
+   "p_above_chance": 0.0010775537762652116,
+   "accuracy_when_frame_order_favours_far": 0.6111111111111112,
+   "n_frame_order_favours_far": 90,
+   "picked_first_listed": 0.5333333333333333,
+   "picked_more_similar_looking": 0.4722222222222222
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.6052631578947368,
+   "parsed": 1.0,
+   "p_above_chance": 0.1279375397716649,
+   "accuracy_when_frame_order_favours_far": 0.5789473684210527,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.5263157894736842,
+   "picked_more_similar_looking": 0.4473684210526316
+  },
+  "familiar": {
+   "n": 142,
+   "accuracy": 0.6197183098591549,
+   "parsed": 1.0,
+   "p_above_chance": 0.0027150452267411954,
+   "accuracy_when_frame_order_favours_far": 0.6197183098591549,
+   "n_frame_order_favours_far": 71,
+   "picked_first_listed": 0.5352112676056338,
+   "picked_more_similar_looking": 0.4788732394366197
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD3-256px-max64-shuffled-mps": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.6666666666666666,
+   "parsed": 1.0,
+   "p_above_chance": 4.5722929423051e-06,
+   "accuracy_when_frame_order_favours_far": 0.6888888888888889,
+   "n_frame_order_favours_far": 90,
+   "picked_first_listed": 0.5944444444444444,
+   "picked_more_similar_looking": 0.4888888888888889
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.7105263157894737,
+   "parsed": 1.0,
+   "p_above_chance": 0.006926482630660757,
+   "accuracy_when_frame_order_favours_far": 0.6842105263157895,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.5263157894736842,
+   "picked_more_similar_looking": 0.5
+  },
+  "familiar": {
+   "n": 142,
+   "accuracy": 0.6549295774647887,
+   "parsed": 1.0,
+   "p_above_chance": 0.00013908910641037455,
+   "accuracy_when_frame_order_favours_far": 0.6901408450704225,
+   "n_frame_order_favours_far": 71,
+   "picked_first_listed": 0.6126760563380281,
+   "picked_more_similar_looking": 0.4859154929577465
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD3-256px-nowalk-mps": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.55,
+   "parsed": 1.0,
+   "p_above_chance": 0.10249586841295881,
+   "accuracy_when_frame_order_favours_far": 0.5333333333333333,
+   "n_frame_order_favours_far": 90,
+   "picked_first_listed": 0.5555555555555556,
+   "picked_more_similar_looking": 0.48333333333333334
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.5263157894736842,
+   "parsed": 1.0,
+   "p_above_chance": 0.43570733968226705,
+   "accuracy_when_frame_order_favours_far": 0.47368421052631576,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.5,
+   "picked_more_similar_looking": 0.47368421052631576
+  },
+  "familiar": {
+   "n": 142,
+   "accuracy": 0.5563380281690141,
+   "parsed": 1.0,
+   "p_above_chance": 0.10397921075931413,
+   "accuracy_when_frame_order_favours_far": 0.5492957746478874,
+   "n_frame_order_favours_far": 71,
+   "picked_first_listed": 0.5704225352112676,
+   "picked_more_similar_looking": 0.4859154929577465
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD4-256px-max64-shuffled": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.5572916666666666,
+   "parsed": 1.0,
+   "p_above_chance": 0.0647094657578793,
+   "accuracy_when_frame_order_favours_far": 0.59375,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.6510416666666666,
+   "picked_more_similar_looking": 0.578125
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.6578947368421053,
+   "parsed": 1.0,
+   "p_above_chance": 0.036475694258115254,
+   "accuracy_when_frame_order_favours_far": 0.6842105263157895,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.7368421052631579,
+   "picked_more_similar_looking": 0.6052631578947368
+  },
+  "familiar": {
+   "n": 154,
+   "accuracy": 0.5324675324675324,
+   "parsed": 1.0,
+   "p_above_chance": 0.23421038892638468,
+   "accuracy_when_frame_order_favours_far": 0.5714285714285714,
+   "n_frame_order_favours_far": 77,
+   "picked_first_listed": 0.6298701298701299,
+   "picked_more_similar_looking": 0.5714285714285714
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD4-256px-max64": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.5885416666666666,
+   "parsed": 1.0,
+   "p_above_chance": 0.008506031791220546,
+   "accuracy_when_frame_order_favours_far": 0.6041666666666666,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.5885416666666666,
+   "picked_more_similar_looking": 0.515625
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.5263157894736842,
+   "parsed": 1.0,
+   "p_above_chance": 0.43570733968226705,
+   "accuracy_when_frame_order_favours_far": 0.47368421052631576,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.6052631578947368,
+   "picked_more_similar_looking": 0.42105263157894735
+  },
+  "familiar": {
+   "n": 154,
+   "accuracy": 0.6038961038961039,
+   "parsed": 1.0,
+   "p_above_chance": 0.006118524259755644,
+   "accuracy_when_frame_order_favours_far": 0.6363636363636364,
+   "n_frame_order_favours_far": 77,
+   "picked_first_listed": 0.5844155844155844,
+   "picked_more_similar_looking": 0.538961038961039
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD4-256px-nowalk": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.5677083333333334,
+   "parsed": 1.0,
+   "p_above_chance": 0.0354597795220804,
+   "accuracy_when_frame_order_favours_far": 0.6145833333333334,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.5572916666666666,
+   "picked_more_similar_looking": 0.484375
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.5789473684210527,
+   "parsed": 1.0,
+   "p_above_chance": 0.2088460954182665,
+   "accuracy_when_frame_order_favours_far": 0.631578947368421,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.5526315789473685,
+   "picked_more_similar_looking": 0.47368421052631576
+  },
+  "familiar": {
+   "n": 154,
+   "accuracy": 0.564935064935065,
+   "parsed": 1.0,
+   "p_above_chance": 0.06273935671932082,
+   "accuracy_when_frame_order_favours_far": 0.6103896103896104,
+   "n_frame_order_favours_far": 77,
+   "picked_first_listed": 0.5584415584415584,
+   "picked_more_similar_looking": 0.487012987012987
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD5-256px-max64-shuffled": {
+  "all": {
+   "n": 156,
+   "accuracy": 0.6153846153846154,
+   "parsed": 1.0,
+   "p_above_chance": 0.0024564823104850407,
+   "accuracy_when_frame_order_favours_far": 0.5897435897435898,
+   "n_frame_order_favours_far": 78,
+   "picked_first_listed": 0.5769230769230769,
+   "picked_more_similar_looking": 0.5769230769230769
+  },
+  "novel": {
+   "n": 36,
+   "accuracy": 0.6666666666666666,
+   "parsed": 1.0,
+   "p_above_chance": 0.03262266761157662,
+   "accuracy_when_frame_order_favours_far": 0.7222222222222222,
+   "n_frame_order_favours_far": 18,
+   "picked_first_listed": 0.5277777777777778,
+   "picked_more_similar_looking": 0.6111111111111112
+  },
+  "familiar": {
+   "n": 120,
+   "accuracy": 0.6,
+   "parsed": 1.0,
+   "p_above_chance": 0.017661841268884787,
+   "accuracy_when_frame_order_favours_far": 0.55,
+   "n_frame_order_favours_far": 60,
+   "picked_first_listed": 0.5916666666666667,
+   "picked_more_similar_looking": 0.5666666666666667
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD5-256px-max64": {
+  "all": {
+   "n": 156,
+   "accuracy": 0.6474358974358975,
+   "parsed": 1.0,
+   "p_above_chance": 0.000143554258489268,
+   "accuracy_when_frame_order_favours_far": 0.6666666666666666,
+   "n_frame_order_favours_far": 78,
+   "picked_first_listed": 0.5961538461538461,
+   "picked_more_similar_looking": 0.4935897435897436
+  },
+  "novel": {
+   "n": 36,
+   "accuracy": 0.6388888888888888,
+   "parsed": 1.0,
+   "p_above_chance": 0.06624908198136836,
+   "accuracy_when_frame_order_favours_far": 0.6666666666666666,
+   "n_frame_order_favours_far": 18,
+   "picked_first_listed": 0.5,
+   "picked_more_similar_looking": 0.4722222222222222
+  },
+  "familiar": {
+   "n": 120,
+   "accuracy": 0.65,
+   "parsed": 1.0,
+   "p_above_chance": 0.000649666548625138,
+   "accuracy_when_frame_order_favours_far": 0.6666666666666666,
+   "n_frame_order_favours_far": 60,
+   "picked_first_listed": 0.625,
+   "picked_more_similar_looking": 0.5
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD5-256px-nowalk": {
+  "all": {
+   "n": 156,
+   "accuracy": 0.48717948717948717,
+   "parsed": 1.0,
+   "p_above_chance": 0.655472863534266,
+   "accuracy_when_frame_order_favours_far": 0.5,
+   "n_frame_order_favours_far": 78,
+   "picked_first_listed": 0.6025641025641025,
+   "picked_more_similar_looking": 0.5512820512820513
+  },
+  "novel": {
+   "n": 36,
+   "accuracy": 0.3888888888888889,
+   "parsed": 1.0,
+   "p_above_chance": 0.9337509180186316,
+   "accuracy_when_frame_order_favours_far": 0.4444444444444444,
+   "n_frame_order_favours_far": 18,
+   "picked_first_listed": 0.5833333333333334,
+   "picked_more_similar_looking": 0.6111111111111112
+  },
+  "familiar": {
+   "n": 120,
+   "accuracy": 0.5166666666666667,
+   "parsed": 1.0,
+   "p_above_chance": 0.39216408866613833,
+   "accuracy_when_frame_order_favours_far": 0.5166666666666667,
+   "n_frame_order_favours_far": 60,
+   "picked_first_listed": 0.6083333333333333,
+   "picked_more_similar_looking": 0.5333333333333333
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD6-256px-max64-shuffled": {
+  "all": {
+   "n": 170,
+   "accuracy": 0.6235294117647059,
+   "parsed": 1.0,
+   "p_above_chance": 0.000792781951684675,
+   "accuracy_when_frame_order_favours_far": 0.5764705882352941,
+   "n_frame_order_favours_far": 85,
+   "picked_first_listed": 0.611764705882353,
+   "picked_more_similar_looking": 0.4588235294117647
+  },
+  "novel": {
+   "n": 40,
+   "accuracy": 0.6,
+   "parsed": 1.0,
+   "p_above_chance": 0.13409362552738457,
+   "accuracy_when_frame_order_favours_far": 0.6,
+   "n_frame_order_favours_far": 20,
+   "picked_first_listed": 0.625,
+   "picked_more_similar_looking": 0.35
+  },
+  "familiar": {
+   "n": 130,
+   "accuracy": 0.6307692307692307,
+   "parsed": 1.0,
+   "p_above_chance": 0.0018170056464033243,
+   "accuracy_when_frame_order_favours_far": 0.5692307692307692,
+   "n_frame_order_favours_far": 65,
+   "picked_first_listed": 0.6076923076923076,
+   "picked_more_similar_looking": 0.49230769230769234
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD6-256px-max64": {
+  "all": {
+   "n": 170,
+   "accuracy": 0.5470588235294118,
+   "parsed": 1.0,
+   "p_above_chance": 0.12494301592271845,
+   "accuracy_when_frame_order_favours_far": 0.47058823529411764,
+   "n_frame_order_favours_far": 85,
+   "picked_first_listed": 0.6294117647058823,
+   "picked_more_similar_looking": 0.4647058823529412
+  },
+  "novel": {
+   "n": 40,
+   "accuracy": 0.5,
+   "parsed": 1.0,
+   "p_above_chance": 0.5626853438097896,
+   "accuracy_when_frame_order_favours_far": 0.45,
+   "n_frame_order_favours_far": 20,
+   "picked_first_listed": 0.675,
+   "picked_more_similar_looking": 0.35
+  },
+  "familiar": {
+   "n": 130,
+   "accuracy": 0.5615384615384615,
+   "parsed": 1.0,
+   "p_above_chance": 0.09405374200794592,
+   "accuracy_when_frame_order_favours_far": 0.47692307692307695,
+   "n_frame_order_favours_far": 65,
+   "picked_first_listed": 0.6153846153846154,
+   "picked_more_similar_looking": 0.5
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD6-256px-nowalk": {
+  "all": {
+   "n": 170,
+   "accuracy": 0.4764705882352941,
+   "parsed": 1.0,
+   "p_above_chance": 0.7549307164480498,
+   "accuracy_when_frame_order_favours_far": 0.4588235294117647,
+   "n_frame_order_favours_far": 85,
+   "picked_first_listed": 0.5470588235294118,
+   "picked_more_similar_looking": 0.5
+  },
+  "novel": {
+   "n": 40,
+   "accuracy": 0.475,
+   "parsed": 1.0,
+   "p_above_chance": 0.6820859986855794,
+   "accuracy_when_frame_order_favours_far": 0.5,
+   "n_frame_order_favours_far": 20,
+   "picked_first_listed": 0.6,
+   "picked_more_similar_looking": 0.525
+  },
+  "familiar": {
+   "n": 130,
+   "accuracy": 0.47692307692307695,
+   "parsed": 1.0,
+   "p_above_chance": 0.7302902238591404,
+   "accuracy_when_frame_order_favours_far": 0.4461538461538462,
+   "n_frame_order_favours_far": 65,
+   "picked_first_listed": 0.5307692307692308,
+   "picked_more_similar_looking": 0.49230769230769234
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD7-256px-max64-shuffled": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.5611111111111111,
+   "parsed": 1.0,
+   "p_above_chance": 0.05863932655373011,
+   "accuracy_when_frame_order_favours_far": 0.550561797752809,
+   "n_frame_order_favours_far": 89,
+   "picked_first_listed": 0.6222222222222222,
+   "picked_more_similar_looking": 0.5111111111111111
+  },
+  "novel": {
+   "n": 55,
+   "accuracy": 0.6,
+   "parsed": 1.0,
+   "p_above_chance": 0.08850068238517908,
+   "accuracy_when_frame_order_favours_far": 0.5555555555555556,
+   "n_frame_order_favours_far": 27,
+   "picked_first_listed": 0.5272727272727272,
+   "picked_more_similar_looking": 0.5454545454545454
+  },
+  "familiar": {
+   "n": 125,
+   "accuracy": 0.544,
+   "parsed": 1.0,
+   "p_above_chance": 0.1855803474254048,
+   "accuracy_when_frame_order_favours_far": 0.5483870967741935,
+   "n_frame_order_favours_far": 62,
+   "picked_first_listed": 0.664,
+   "picked_more_similar_looking": 0.496
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD7-256px-max64": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.6444444444444445,
+   "parsed": 1.0,
+   "p_above_chance": 6.520061648869889e-05,
+   "accuracy_when_frame_order_favours_far": 0.5842696629213483,
+   "n_frame_order_favours_far": 89,
+   "picked_first_listed": 0.6388888888888888,
+   "picked_more_similar_looking": 0.5277777777777778
+  },
+  "novel": {
+   "n": 55,
+   "accuracy": 0.6909090909090909,
+   "parsed": 1.0,
+   "p_above_chance": 0.0032279015549783185,
+   "accuracy_when_frame_order_favours_far": 0.6296296296296297,
+   "n_frame_order_favours_far": 27,
+   "picked_first_listed": 0.6181818181818182,
+   "picked_more_similar_looking": 0.5636363636363636
+  },
+  "familiar": {
+   "n": 125,
+   "accuracy": 0.624,
+   "parsed": 1.0,
+   "p_above_chance": 0.003523658271283066,
+   "accuracy_when_frame_order_favours_far": 0.5645161290322581,
+   "n_frame_order_favours_far": 62,
+   "picked_first_listed": 0.648,
+   "picked_more_similar_looking": 0.512
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD7-256px-nowalk": {
+  "all": {
+   "n": 180,
+   "accuracy": 0.5777777777777777,
+   "parsed": 1.0,
+   "p_above_chance": 0.021935505726951743,
+   "accuracy_when_frame_order_favours_far": 0.5730337078651685,
+   "n_frame_order_favours_far": 89,
+   "picked_first_listed": 0.5277777777777778,
+   "picked_more_similar_looking": 0.48333333333333334
+  },
+  "novel": {
+   "n": 55,
+   "accuracy": 0.6363636363636364,
+   "parsed": 1.0,
+   "p_above_chance": 0.029032073396204533,
+   "accuracy_when_frame_order_favours_far": 0.6296296296296297,
+   "n_frame_order_favours_far": 27,
+   "picked_first_listed": 0.4909090909090909,
+   "picked_more_similar_looking": 0.509090909090909
+  },
+  "familiar": {
+   "n": 125,
+   "accuracy": 0.552,
+   "parsed": 1.0,
+   "p_above_chance": 0.1415426197913738,
+   "accuracy_when_frame_order_favours_far": 0.5483870967741935,
+   "n_frame_order_favours_far": 62,
+   "picked_first_listed": 0.544,
+   "picked_more_similar_looking": 0.472
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD8-256px-max64-shuffled": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.546875,
+   "parsed": 1.0,
+   "p_above_chance": 0.10988580552544037,
+   "accuracy_when_frame_order_favours_far": 0.5208333333333334,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.5989583333333334,
+   "picked_more_similar_looking": 0.5572916666666666
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.5263157894736842,
+   "parsed": 1.0,
+   "p_above_chance": 0.43570733968226705,
+   "accuracy_when_frame_order_favours_far": 0.5789473684210527,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.5789473684210527,
+   "picked_more_similar_looking": 0.5789473684210527
+  },
+  "familiar": {
+   "n": 154,
+   "accuracy": 0.551948051948052,
+   "parsed": 1.0,
+   "p_above_chance": 0.11332533100395634,
+   "accuracy_when_frame_order_favours_far": 0.5064935064935064,
+   "n_frame_order_favours_far": 77,
+   "picked_first_listed": 0.6038961038961039,
+   "picked_more_similar_looking": 0.551948051948052
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD8-256px-max64": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.578125,
+   "parsed": 1.0,
+   "p_above_chance": 0.018041701146467044,
+   "accuracy_when_frame_order_favours_far": 0.5833333333333334,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.5885416666666666,
+   "picked_more_similar_looking": 0.5364583333333334
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.5263157894736842,
+   "parsed": 1.0,
+   "p_above_chance": 0.43570733968226705,
+   "accuracy_when_frame_order_favours_far": 0.5789473684210527,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.631578947368421,
+   "picked_more_similar_looking": 0.47368421052631576
+  },
+  "familiar": {
+   "n": 154,
+   "accuracy": 0.5909090909090909,
+   "parsed": 1.0,
+   "p_above_chance": 0.01462278428598392,
+   "accuracy_when_frame_order_favours_far": 0.5844155844155844,
+   "n_frame_order_favours_far": 77,
+   "picked_first_listed": 0.577922077922078,
+   "picked_more_similar_looking": 0.551948051948052
+  }
+ },
+ "Qwen3-VL-8B-Instruct-roomHSSD8-256px-nowalk": {
+  "all": {
+   "n": 192,
+   "accuracy": 0.4791666666666667,
+   "parsed": 1.0,
+   "p_above_chance": 0.7419451829335402,
+   "accuracy_when_frame_order_favours_far": 0.5,
+   "n_frame_order_favours_far": 96,
+   "picked_first_listed": 0.6458333333333334,
+   "picked_more_similar_looking": 0.4895833333333333
+  },
+  "novel": {
+   "n": 38,
+   "accuracy": 0.5263157894736842,
+   "parsed": 1.0,
+   "p_above_chance": 0.43570733968226705,
+   "accuracy_when_frame_order_favours_far": 0.5789473684210527,
+   "n_frame_order_favours_far": 19,
+   "picked_first_listed": 0.6842105263157895,
+   "picked_more_similar_looking": 0.3684210526315789
+  },
+  "familiar": {
+   "n": 154,
+   "accuracy": 0.4675324675324675,
+   "parsed": 1.0,
+   "p_above_chance": 0.8122715559134107,
+   "accuracy_when_frame_order_favours_far": 0.4805194805194805,
+   "n_frame_order_favours_far": 77,
+   "picked_first_listed": 0.6363636363636364,
+   "picked_more_similar_looking": 0.5194805194805194
   }
  },
  "Qwen3-VL-8B-Instruct-roomP5000-256px-max64-mps": {

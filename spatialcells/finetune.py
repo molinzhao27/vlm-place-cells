@@ -14,7 +14,9 @@ The last --val rooms are held out: after every --eval-every updates, accuracy on
 question (greedy, as in two_choice.py) is logged. Saves the adapter to --out after each epoch.
 Frames are 256 px, 64 visual tokens each (as every other Qwen run here). --seed changes the LoRA
 initialisation, dropout and room order but not the data or the held-out rooms; seed 0 is the
-original run.
+original run. Seed 0 does not seed torch (as the original run), and torch 2.14 seeds its default
+generator differently in every process, so a seed-0 run's initialisation and dropout are not
+reproducible; only its room order is. Non-zero seeds are reproducible.
 """
 from __future__ import annotations
 
@@ -99,7 +101,7 @@ def main():
     ap.add_argument("--max-rooms", type=int, help="train on only this many rooms (smoke test)")
     ap.add_argument("--seed", type=int, default=0)
     args = ap.parse_args()
-    if args.seed:                       # seed 0 keeps torch's default generator, as the original run
+    if args.seed:                       # seed 0 keeps torch's default generator (random per process in torch 2.14), as the original run
         torch.manual_seed(args.seed)
     from peft import LoraConfig, get_peft_model
     from transformers import AutoModelForImageTextToText, AutoProcessor

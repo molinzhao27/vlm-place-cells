@@ -883,7 +883,8 @@ Paired on the novel trials: fine-tuned vs base 44 trials better, 1 worse (p = 3e
 no walk 43 better, 3 worse; shuffled vs ordered walk 4 better, 47 worse (p = 2e-10).
 
 - **The skill transfers to the held-out room.** Trained only on procedural rooms, the 8B model
-  gets 92% of room A's novel trials, more than Opus 5.5.
+  gets 92% of room A's novel trials, more than Opus 5.5. This run turned out to be the best of three
+  training seeds (experiment 9b: 70-92%, mean 82%).
 - **It is not a shortcut we balanced for.** It is right 91% of the time when frame order points to
   the far option, it picks the more similar-looking option 53% of the time (view matching would
   be 50%), and first-listed 47%.
@@ -927,7 +928,7 @@ no walk 43 better, 3 worse; shuffled vs ordered walk 4 better, 47 worse (p = 2e-
 - So the model learned the behaviour much more than it learned a place code at the new view's
   token. The comparison probably happens when the question is asked, by attending back over
   the walk. These recordings read each image's last token with no question in the prompt.
-- Caveats: one training run (one seed). Room A shares picture and pattern families with the
+- Caveats: one training run (experiment 9b adds two seeds and room B). Room A shares picture and pattern families with the
   procedural rooms, though not their layout. The 192 room-A trials are the same ones every model
   got. The unit analysis uses experiment 2's prompts (256 frames, no question), not the trained
   format.
@@ -938,13 +939,118 @@ Run with `python -m spatialcells.procedural_data --rooms 1200` (CPU, ~10 min), t
 are in `results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-*.jsonl`, and the comparison is in
 `results/two_choice/finetune_comparison.json`. The adapter is at `data/ft/qwen8b-proc` on the host.
 
-## Experiment 9b (in progress): training seeds and a second room
+## Experiment 9b: training seeds and a second room
 
-Two more LoRA seeds with the same data and settings, each tested on room A's and room B's
-lure-free trials (64-frame walk, no walk, shuffled walk). Run with `scripts/run_ft_seed.sh SEED`;
-`python -m spatialcells.ft_seeds` summarises the three seeds. Results will be added here.
+Experiment 9 rests on one training run tested in one room. This repeats the fine-tune with two more
+seeds and tests all three runs in room B as well as room A. `finetune.py --seed` changes the LoRA
+initialisation, the dropout and the order of the training rooms, while the data, the held-out rooms
+and every other setting stay the same (seed 0 is experiment 9's run). Room B is experiment 4's
+second room (the same 10 m box with other walls, floor, posters and pillar positions). Its
+lure-free trials come from `dissimilar_trials.py --room B` under room A's rules (near option within
+1 m, far more than 3 m away, both facing more than 90° away from the new view, no shared poster or
+pillar), with one addition: frame order is balanced as well as pixel similarity, as in the training
+rooms. Each favours the near option in 50-51% of both the novel and the familiar trials, whereas in
+room A frame order favours it in 66% of the novel trials. That gives 192 trials (106 novel, 86
+familiar; near / far medians 0.62 / 4.14 m). Room B is a second layout rather than a different kind
+of room: its wall patterns (tiles, stripes, plain, panels) and its posters (skimage's camera, retina,
+coins, moon, logo and page) belong to families the procedural generator also draws from.
 
-*Platform (2026-10-25):* seeds 1 and 2 are trained and tested on vast-3's RTX 5090 (32 GB), not vast-1's
+**Training.** The three runs differ mainly in how long they stay at the coin-flip loss before they
+start to learn (`results/two_choice/ft_seed_logs/train_log_s*.json`; loss per answer token, where a
+coin flip gives ln 2 / 4 ≈ 0.17):
+
+| | seed 0 | seed 1 | seed 2 |
+|---|---|---|---|
+| update at which the loss first falls below 0.15 (of 284) | 135 | 175 | 215 |
+| loss over the last 5 updates | 0.034 | 0.079 | 0.137 |
+| held-out procedural rooms, first question, end of training | 92% | 84% | 69% |
+
+**Results** (`python -m spatialcells.ft_seeds` -> `results/two_choice/ft_seeds.json`; 64-frame walks;
+base Qwen3-VL-8B and seed 0 in room B ran on Apple MPS, see the platform note below):
+
+| room A, lure-free trials | base | seed 0 | seed 1 | seed 2 | three seeds: mean (range) |
+|---|---|---|---|---|---|
+| novel (102), walk | 50% | 92% | 83% | 70% | **82%** (70-92%) |
+| novel, no walk | 59% | 53% | 56% | 57% | 55% (53-57%) |
+| novel, walk shuffled (real frame numbers) | | 50% | 58% | 62% | 57% (50-62%) |
+| familiar (90), walk | 57% | 91% | 88% | 72% | 84% (72-91%) |
+| familiar, no walk | 47% | 56% | 56% | 43% | 51% (43-56%) |
+| familiar, walk shuffled | | 51% | 66% | 58% | 58% (51-66%) |
+
+| room B, lure-free trials | base | seed 0 | seed 1 | seed 2 | three seeds: mean (range) |
+|---|---|---|---|---|---|
+| novel (106), walk | 54% | 95% | 80% | 62% | **79%** (62-95%) |
+| novel, no walk | 46% | 60% | 52% | 48% | 53% (48-60%) |
+| novel, walk shuffled (real frame numbers) | | 52% | 61% | 56% | 56% (52-61%) |
+| familiar (86), walk | 50% | 95% | 83% | 72% | 83% (72-95%) |
+| familiar, no walk | 51% | 52% | 51% | 42% | 48% (42-52%) |
+| familiar, walk shuffled | | 55% | 70% | 57% | 60% (55-70%) |
+
+Opus 5.5 at low effort with the 256-frame walk gets 75% of room A's novel trials (61% without the
+walk) and 64% of room B's (63% without; `results/claude/claude-opus-5-5-roomB{,-nowalk}-low.jsonl`).
+
+Paired by trial on the novel trials, with the walk (trials better / worse, two-sided sign test):
+
+| | seed 0 | seed 1 | seed 2 |
+|---|---|---|---|
+| room A: vs base | 44 / 1 (p = 3e-12) | 39 / 5 (p = 1e-7) | 29 / 9 (p = 0.002) |
+| room A: vs the same model without the walk | 43 / 3 (p = 5e-10) | 33 / 5 (p = 4e-6) | 28 / 15 (p = 0.07) |
+| room A: vs the same model, walk shuffled | 47 / 4 (p = 2e-10) | 34 / 8 (p = 7e-5) | 21 / 13 (p = 0.23) |
+| room A: vs Opus 5.5 | 23 / 5 (p = 9e-4) | 20 / 11 (p = 0.15) | 18 / 23 (p = 0.53) |
+| room B: vs base | 45 / 1 (p = 1e-12) | 34 / 6 (p = 8e-6) | 22 / 13 (p = 0.18) |
+| room B: vs the same model without the walk | 39 / 2 (p = 8e-10) | 39 / 9 (p = 2e-5) | 32 / 17 (p = 0.04) |
+| room B: vs the same model, walk shuffled | 50 / 4 (p = 4e-11) | 28 / 8 (p = 0.001) | 19 / 12 (p = 0.28) |
+| room B: vs Opus 5.5 | 36 / 3 (p = 4e-8) | 28 / 11 (p = 0.009) | 23 / 25 (p = 0.89) |
+
+- **The training seed matters a lot, and experiment 9's run was the best of three.** Over the three
+  seeds the fine-tuned model gets 82% of room A's novel trials (range 70-92%) and 79% of room B's
+  (62-95%). Every seed beats the base model in room A, and seeds 0 and 1 do in room B, where seed 2's
+  62% is not significantly above the base model's 54%. The claim that the fine-tuned 8B does better
+  than Opus 5.5 holds on average and for seed 0, but seed 1's lead in room A is not significant and
+  seed 2 does slightly worse than Opus in room A and about as well in room B.
+- **The spread follows how long each run took to leave the coin-flip plateau.** All three runs first
+  sit at the coin-flip loss, and the later a run leaves it (update 135, 175, 215), the less learning
+  rate the cosine schedule has left and the higher its final loss. Held-out accuracy on the training
+  generator's own rooms ranks the seeds in the same order (92%, 84%, 69%) as rooms A and B do. Seed 2
+  therefore looks unfinished rather than broken, and the two-epoch schedule is too short to train
+  this skill reliably. Whether longer training closes the gap was not tested.
+- **Room B shows what room A shows, with frame order balanced as well.** In room B the trials where
+  frame order points to the far option are half the novel trials (53). The seeds get 96%, 75% and
+  58% of them; they pick the more similar-looking option 52%, 56% and 60% of the time and the
+  first-listed one 50%, 52% and 43% of the time. So the strongest run does not rely on the cues the
+  trials balance, and the weakest leans slightly towards the look-alike.
+- **The dependence on the walk's order is clearest in the strongest run.** Seed 0 falls to chance
+  when the walk is shuffled, in both rooms (50% and 52%). Seeds 1 and 2 keep 56-62% with a shuffled
+  walk, and for seed 2 the ordered walk is not significantly better than the shuffled one in either
+  room. The weaker runs therefore use something a shuffle leaves intact, which these tests do not
+  identify.
+- **Without the walk, every model mostly picks the second-listed option** (67-82% of its answers on
+  novel trials). Averaging accuracy over the two listing orders gives 53-59% in room A and 47-53% in
+  room B, close to chance, except for seed 0 in room B at 61% (48 of 52 right when the near option is
+  listed second, 16 of 54 when it is listed first). With the walk the fine-tuned runs pick the
+  first-listed option 43-52% of the time, so their walk-versus-no-walk gains are not a listing
+  artefact.
+- **Opus gains nothing from the walk in room B** (64% vs 63%), unlike room A (75% vs 61%), so the
+  fine-tuned model's lead over Opus is larger there for seeds 0 and 1.
+- Caveats: the three seeds share one recipe (data, held-out rooms, hyperparameters), so this
+  measures variation between training runs, not between recipes. Seeds 1 and 2 also trained on a
+  different GPU type from seed 0 (below), so their difference from seed 0 mixes seed and platform,
+  though the plateau-escape account fits all three runs (resolved by the GPU control below: a second
+  run of the seed-0 configuration on that GPU reaches the original's level). Rooms A and B both share picture and
+  pattern families with the training rooms. Experiments 10 and 12 tested seed 0 only.
+
+Run with `python -m spatialcells.render_probes --room B --data data/walks-roomB` and
+`python -m spatialcells.dissimilar_trials --room B` (CPU; room B's walks from
+`render_data --room B --out data/walks-roomB`), then `scripts/run_roomB.sh` for base and seed 0 in
+room B and `scripts/run_ft_seed.sh SEED` (~2 h each: training, then the six tests in rooms A and B)
+for seeds 1 and 2, and `python -m spatialcells.ft_seeds`. Per-trial results are in
+`results/two_choice/Qwen3-VL-8B-Instruct{,+qwen8b-proc,+qwen8b-proc-s1,+qwen8b-proc-s2}-{dissimilar,roomB}-256px-*.jsonl`.
+The seed-1 and seed-2 adapters are at `data/ft/qwen8b-proc-s{1,2}` on vast-3 (seed 0 on vast-1).
+
+*Platform (2026-10-25):* room B's runs of the base model and seed 0 ran on Apple silicon
+(`two_choice.py --device mps`, tags ending `-mps`), after the same command reproduced the CUDA
+answers of seed 0 on room A trial for trial (192 of 192); room B's walks on the Mac are byte-identical
+to vast-1's. Seeds 1 and 2 are trained and tested on vast-3's RTX 5090 (32 GB), not vast-1's
 RTX PRO 6000 (seed 0). The training code (`run_ft_seed.sh`, `finetune.py`) is unchanged, the packages
 are vast-1's exact versions (`requirements-lock.txt`), and the training data are seed 0's byte for byte (all 1,205 files of
 `data/proc` checked by md5). Regenerating them would not do: `room.py` draws `skimage.data.binary_blobs()`
@@ -953,6 +1059,170 @@ were copied from vast-1. Training also sets `PYTORCH_CUDA_ALLOC_CONF=expandable_
 changes memory layout, not the arithmetic (seed 0 peaked at 29 GiB). The tests use the current
 `two_choice.py`; before the move, it reproduced on vast-3 vast-1's CUDA answers for the seed-0 model on
 room A (48 of 48 trials, the same answers and text).
+
+*Amendment to experiments 9b, 10, 12 and 16 (2026-10-25, after the room-A/B seed results, before any
+seed-1 or seed-2 answer in these scenes): all three seeds everywhere, and a GPU control.* Seed 0, used for
+every fine-tuned result so far, is the best of three (room A 92 / 83 / 70%). So:
+1. *GPU control:* seed 0 is retrained on vast-3's RTX 5090 with the identical script, data and settings
+   (seeds 1-2 trained there; the original seed 0 on vast-1's RTX PRO 6000), then scored on room A and room
+   B. If its room-A novel accuracy is within the range of the other seeds' spread of the original (i.e.
+   at or above 83%) and its loss leaves the plateau at a similar update, the spread is attributed to the
+   seeds; otherwise the GPU is reported as a possible cause and the three-seed numbers are qualified.
+2. *Seeds 1-2 in every scene:* the ten held-out rooms (experiment 10), the three apartments (experiment
+   12, which registered "seeds 1-2 when trained") and the eight houses (experiment 16), each with the
+   64-frame walk, no walk and the shuffled walk, as for seed 0. Analysis: each experiment's registered
+   contrasts per seed, and the three-seed mean with the range; the per-seed results are reported
+   whichever way they go.
+Platforms: vast-3 (CUDA) for scenes whose renders it has or can re-render byte-identically; the Mac
+(MPS) for the apartments, HSSD2-3 and P5005 (its blobs poster cannot be re-rendered). Every run records
+its platform.
+*vast-3 inputs (2026-10-25):* the nine re-rendered held-out rooms (P5000-P5009 without P5005, with
+experiment 10's commands) gave frames and probes byte-identical to the Mac's. Their walk poses differ by
+at most 6e-14 m (rounding differences between the Mac's and vast-3's floating-point maths, which add up
+along a walk); `two_choice.py` reads only the walk and step columns. The Mac's pose files and
+`trials.json` were copied over, so all 36 walk files match the Mac's by md5. The houses (HSSD1, HSSD4-8)
+are md5-identical copies of the Mac's. The GPU control is `run_ft_seed.sh 0 data/ft/qwen8b-proc-s0-5090`
+(the script now takes the adapter folder as an optional second argument; nothing else changed).
+
+**GPU control result (2026-10-25, gq vast3:152, 2.2 h).** A second run of the seed-0 configuration on
+the RTX 5090 reaches the original seed 0's level, so by the registered criterion the spread between
+the three runs is attributed to run-to-run variation, not to the GPU (`python -m spatialcells.ft_seeds`,
+entry "0-5090"; training log `results/two_choice/ft_seed_logs/train_log_s0-5090.json`).
+
+*Correction (2026-10-25, found by the vast-3 session after this result):* the control is not a replay of
+seed 0. `finetune.py` calls `torch.manual_seed` only for a non-zero seed; seed 0 keeps torch's default
+generator, and in the torch used here (2.14) that generator is seeded differently in every process (two
+fresh processes gave different `torch.initial_seed()` values on vast-3 and on the Mac). So every seed-0
+run, the original included, starts from its own random LoRA initialisation and dropout stream, and only
+the room order (`random.Random(epoch)`) is shared; two 5-update seed-0 runs on the same GPU have
+uncorrelated `lora_A` matrices. Seeds 1 and 2 do set the generator. The registered wording ("identical
+script, data and settings") holds, but the rows below compare two independently initialised runs of one
+configuration, and the answer agreement is between independent runs, not a numerical replay. On the
+RTX 5090 the three runs span 70-94% on room A's novel trials (seeds 2 and 1, and this run). The
+original seed 0 cannot be retrained exactly; its results reproduce from its saved adapter.
+
+
+| | seed 0 (RTX PRO 6000) | seed-0 configuration, second run (RTX 5090) | seeds 1 / 2 (RTX 5090) |
+|---|---|---|---|
+| update at which the loss first falls below 0.15 (of 284) | 135 | 135 | 175 / 215 |
+| loss at the end (update 280) | 0.034 | 0.032 | 0.079 / 0.137 |
+| held-out procedural rooms, first question, end of training | 92% | 92% | 84% / 69% |
+| room A novel (102), walk | 92% | **94%** | 83% / 70% |
+| room A novel, no walk / shuffled walk | 53% / 50% | 61% / 59% | seed 1: 56% / 58%; seed 2: 57% / 62% |
+| room B novel (106), walk | 95% (MPS) | 94% | 80% / 62% |
+| room B novel, no walk / shuffled walk | 60% / 52% (MPS) | 64% / 59% | seed 1: 52% / 61%; seed 2: 48% / 56% |
+
+- The two seed-0 loss curves are nearly the same (correlation 0.998 over the 56 logged updates, median
+  difference 0.003), although their initialisations differ; they separate most around the escape from
+  the plateau (largest difference 0.028 at update 150), which the second run leaves slightly faster.
+  Both escape at the same update, so with the same room order the escape time did not depend on the
+  initialisation here.
+- With the walk, the second run gives the same answer as the original on 98 of room A's 102 novel
+  trials (3 better, 1 worse) and on 103 of room B's 106 (1 better, 2 worse). Without the walk and with
+  the shuffled walk, where both models are near chance, they agree on fewer trials (room A 84 and 81 of
+  102; room B 92 and 86 of 106), and over all 192 of room A's trials the second run is right more
+  often (no walk 19 / 7 trials, p = 0.03; shuffled 22 / 9, p = 0.03).
+- Before training, held-out accuracy (the base model, since LoRA starts as the identity) is 61% on all
+  three RTX 5090 runs and 59% on vast-1: one of the 64 first questions is answered differently, a
+  platform difference.
+- One reading in experiment 9b changes. The original seed 0 fell to chance with a shuffled walk (50%
+  and 52%), and that section took the 56-62% of seeds 1 and 2 to mean that weaker runs use something a
+  shuffle leaves intact. The second seed-0 run, as strong as the original with the walk, keeps 59% in
+  both rooms with a shuffled walk (14 / 5 and 14 / 6 trials against the original, p = 0.06 and 0.12),
+  within the range of seeds 1 and 2. So accuracy with a shuffled walk varies between runs by about as
+  much as the seeds differ there, and what separates the seeds is accuracy with the ordered walk. The
+  second run still needs the order (ordered vs shuffled 39 / 3 trials in room A, 41 / 4 in room B).
+- Experiment 9b's caveat that seeds 1 and 2 mix seed and platform no longer applies: a run on the
+  RTX 5090 reaches seed 0's level. Its adapter stays on vast-3 (`data/ft/qwen8b-proc-s0-5090`); every
+  other experiment keeps using the original seed 0.
+
+**Seeds 1-2 in every scene: results (2026-10-25).** `.venv-claude/bin/python scripts/seed_scenes_analysis.py`
+-> `results/seed_scenes_summary.json`, with each experiment's own units: experiment 10 on novel trials
+with rooms as the unit, experiment 12 on all lure-free trials pooled (novel trials as the secondary
+outcome), experiment 16 on all lure-free trials with houses as the unit. Seed 0 is the original run
+(the numbers already reported in each experiment; the script reproduces them). Platforms as registered:
+seeds 1-2 on vast-3 (CUDA) in HSSD1, HSSD4-8 and the nine re-rendered held-out rooms, on the Mac (MPS) in
+the apartments, HSSD2-3 and P5005; the JSON names every file. Four of the 63 vast-3 files hold one answer
+that names neither option (scored wrong, as before; seed 0's scene files have 51 such answers).
+Contrasts are paired by trial: trials better / worse, two-sided sign test; for experiments 10 and 16
+also the mean over rooms or houses with its 95% bootstrap CI and the count of rooms or houses where the
+difference is positive / negative.
+
+*Experiment 10, ten held-out procedural rooms* (1,299 novel trials; mean over rooms [95% CI over rooms],
+rooms positive / negative, and trials better / worse pooled):
+
+| | seed 0 | seed 1 | seed 2 | three seeds: mean (range) |
+|---|---|---|---|---|
+| novel trials, walk | 92.5% | 80.6% | 68.7% | **80.6%** (68.7-92.5%) |
+| novel trials, no walk | 55.9% | 54.9% | 49.7% | 53.5% (49.7-55.9%) |
+| novel trials, shuffled walk | 51.3% | 63.4% | 60.9% | 58.5% (51.3-63.4%) |
+| walk vs base (base 51.8%) | +40.7 [38.2, 43.4], 10 / 0 | +28.7 [26.1, 31.4], 10 / 0 | +16.8 [13.2, 20.7], 10 / 0 | |
+| walk vs no walk | +36.6 [33.9, 39.6], 10 / 0 | +25.7 [23.3, 28.1], 10 / 0 | +19.0 [14.3, 23.5], 10 / 0 | |
+| walk vs shuffled walk | +41.2 [38.9, 43.8], 10 / 0 | +17.2 [15.1, 19.3], 10 / 0 | +7.8 [4.4, 11.6], 10 / 0 | |
+| walk vs Opus 5.5 (low effort, 69.2%) | +23.3 [20.7, 26.2], 10 / 0 (343 / 46) | +11.3 [7.7, 15.3], 10 / 0 (284 / 142) | -0.6 [-5.0, 3.5], 4 / 6 rooms (room sign test p = 0.75); 263 / 276 trials (p = 0.61) | |
+
+Every contrast against base, no walk and shuffled walk is positive in all ten rooms for every seed
+(pooled p <= 4e-7).
+
+*Experiment 12, three Replica apartments* (503 lure-free trials, 58 novel; pooled):
+
+| | seed 0 | seed 1 | seed 2 | three seeds: mean (range) |
+|---|---|---|---|---|
+| all trials, walk | 86.7% | 81.1% | 70.4% | **79.4%** (70.4-86.7%) |
+| all trials, no walk | 52.5% | 50.3% | 49.1% | 50.6% (49.1-52.5%) |
+| all trials, shuffled walk | 53.5% | 64.2% | 59.0% | 58.9% (53.5-64.2%) |
+| novel trials, walk | 79.3% | 77.6% | 72.4% | 76.4% (72.4-79.3%) |
+| walk vs base (base 55.1%) | +31.6 (187 / 28) | +26.0 (158 / 27) | +15.3 (118 / 41) | |
+| walk vs no walk | +34.2 (197 / 25) | +30.8 (185 / 30) | +21.3 (148 / 41) | |
+| walk vs shuffled walk | +33.2 (202 / 35) | +16.9 (115 / 30) | +11.3 (91 / 34) | |
+| walk vs Opus 5.5 (84.1%) | +2.6 (62 / 49, p = 0.25) | -3.0 (52 / 67, p = 0.20) | -13.7 (50 / 119, p = 1e-7) | |
+
+Every contrast against base, no walk and shuffled walk has p < 1e-6 on all trials. On the 58 novel
+trials every seed beats base and its own no-walk run (p <= 0.012), but only seed 0 beats its shuffled
+walk (24.1 points, p = 0.016; seeds 1 and 2 both 5.2 points, 7 / 4 trials, p = 0.55).
+
+*Experiment 16, eight HSSD houses* (1,450 lure-free trials, 366 novel; mean over houses [95% CI over
+houses], houses positive / negative, and trials better / worse pooled):
+
+| | seed 0 | seed 1 | seed 2 | three seeds: mean (range) |
+|---|---|---|---|---|
+| all trials, walk | 92.0% | 87.6% | 73.2% | **84.3%** (73.2-92.0%) |
+| all trials, no walk | 51.0% | 52.6% | 48.0% | 50.5% (48.0-52.6%) |
+| all trials, shuffled walk | 54.4% | 68.7% | 63.3% | 62.1% (54.4-68.7%) |
+| novel trials, walk | 86.4% | 81.6% | 66.3% | 78.1% (66.3-86.4%) |
+| walk vs base | +31.7 [28.4, 34.8], 8 / 0 | +27.3 [24.6, 30.3], 8 / 0 | +12.9 [9.9, 15.7], 8 / 0 | |
+| walk vs no walk | +41.0 [38.4, 43.3], 8 / 0 | +35.0 [32.1, 37.9], 8 / 0 | +25.2 [19.9, 31.1], 8 / 0 | |
+| walk vs shuffled walk | +37.6 [35.9, 39.5], 8 / 0 | +18.9 [15.4, 22.1], 8 / 0 | +9.9 [7.3, 12.3], 8 / 0 | |
+| walk vs Opus 5.5 | +4.1 [2.5, 5.7], 8 / 0 (140 / 79) | -0.3 [-1.2, 0.8], 2 / 6 (125 / 129) | -14.7 [-16.8, -12.5], 0 / 8 (106 / 320) | |
+
+On novel trials: vs base +30.2, +25.4, +10.1 (8 / 0, 8 / 0, 7 / 1 houses; p <= 0.003 pooled); vs no walk
++35.3, +29.5, +20.8 (8 / 0 each); vs shuffled walk +30.7, +14.6, +4.4 (seed 2: [0.3, 8.5], 5 / 2 houses,
+54 / 39 trials, p = 0.15); vs Opus +2.2, -2.6, -17.9 (seed 2: 0 / 7 houses, p = 9e-10).
+
+Reading:
+- **Every run learns a skill that transfers to every kind of new scene.** All three seeds beat the base
+  model and their own no-walk run in all ten held-out rooms, all eight houses and the apartments, and
+  without the walk every seed is near chance (48-56%). The skill comes from the walk in every run, and
+  the transfer from ray-cast training rooms to photoreal homes is a property of the recipe, not of the
+  one run tested before.
+- **How much each run learned keeps the order of rooms A and B.** Seed 0 > seed 1 > seed 2 in every
+  experiment (held-out rooms 92.5 / 80.6 / 68.7%, apartments 86.7 / 81.1 / 70.4%, houses 92.0 / 87.6 /
+  73.2%), following how late each run left the loss plateau (experiment 9b).
+- **The comparison with Opus depends on the run.** In the procedural held-out rooms, where Opus gains
+  little from the walk, seeds 0 and 1 beat Opus in all ten rooms and seed 2 ties it. In the photoreal
+  scenes, where Opus gains much more, seed 0 matches it (apartments, p = 0.25) or beats it slightly
+  (houses, 8 / 0), seed 1 ties it, and seed 2 is 14-15 points behind. Over the three runs the fine-tuned
+  model is ahead of Opus in the procedural rooms (80.6% vs 69.2%) and a few points behind in the photoreal
+  scenes (apartments 79.4% vs 84.1%; houses 84.3% vs 87.9%, both means over houses). So "the fine-tuned 8B beats
+  Opus" holds for the best run everywhere, and for the average run only in rooms like those it was
+  trained on.
+- **Every run uses the walk's order, the weaker ones less.** Ordered beats shuffled in every room and
+  house for every seed, but the margin shrinks from seed 0 to seed 2 (held-out rooms 41 / 17 / 8 points;
+  houses 38 / 19 / 10), because the weaker seeds keep 59-69% with a shuffled walk where seed 0 is at
+  chance. With the second seed-0 run's 59% (GPU control above), accuracy with a shuffled walk varies
+  between runs, so the claim that holds across runs is "ordered beats shuffled", not "shuffled is at
+  chance".
+- The analyses inside the fine-tuned model (experiments 13a, 14a, 15, unit scoring) used seed 0 only.
 
 ## Experiment 10 (pre-registered 2026-10-22, run 2026-10-23): many held-out rooms
 
@@ -1212,6 +1482,45 @@ StepFun's own fp8 host before being called untestable. MiniMax-M3 and MiMo-V2.6-
 malformed replies from their hosts (not rejections); such replies are now retried, and both are rerun.
 Muse Spark Open, tested: 64.7% with the walk vs 59.8% without, 21 better / 16 worse, p = 0.51, no gain
 (hosts Fireworks, Modal and Together, precision undeclared; $4.92).
+
+**Screen result (2026-10-25, second pass complete; `scripts/or_screen.py` -> `results/api/or_screen.json`).**
+No open-weight model passes. Three of the eight could be tested, and none gains from the walk, even
+nominally; the other five cannot take the 257-image request on any allowed host. Room A, novel trials
+(102), walk vs no walk, trials better / worse with the walk, two-sided sign test:
+
+| model | walk | no walk | better / worse | p | hosts (precision) | cost |
+|---|---|---|---|---|---|---|
+| MiniMax-M3 | 52.9% | 58.8% | 21 / 27 | 0.47 | DeepInfra, GMICloud, Minimax, ModelRun, Novita, Parasail, StreamLake, Venice | $2.72 |
+| MiMo-V2.6-Pro | 53.9% | 56.9% | 20 / 23 | 0.76 | DeepInfra, GMICloud, Novita, Xiaomi | $2.54 |
+| Muse Spark Open | 64.7% | 59.8% | 21 / 16 | 0.51 | Fireworks, Modal, Together (undeclared) | $4.92 |
+| Nemotron 3.5 Super VL, Qwen3.5-397B | untestable | | | | walk needs ~389k tokens; 262k context on allowed hosts | |
+| Qwen3.8-Flash | untestable | | | | Alibaba: at most 250 images per request | |
+| Step-5 (preview) | untestable | | | | DeepInfra: at most 8 images; StepFun: "exceeds the model's limitation" | |
+| Inkling | untestable | | | | Together: request too large | |
+
+With the walk, the tested models stay within 4 points of their no-walk accuracy, where GPT-6 Astra
+gains 21 points and Opus 5.5 14 points (low effort, as here) on the same trials. Since no model passed, none had
+the shuffled-walk run. The OpenRouter key spent $10.30 of its $50 (including preflights and the first
+pass's runs that stopped on malformed replies).
+
+**Amendment 6 (2026-10-25, after the screen, before any trial of this model): the largest Qwen with a
+shorter walk.** The user asked to try the largest open Qwen, Qwen3.5-397B-A17B, which was untestable
+only because OpenRouter's own estimate of the request (about 1,445 tokens per image, 388,798 in all)
+exceeds the 262,144-token context of the hosts allowed by precision. A shorter walk fits.
+- Walk: 160 frames per walk (`api_test.py --walk-frames 160`) if the preflight is accepted, otherwise
+  128; nothing else is tried. The frames always include every option frame of the walk's trials, and
+  the rest are spread evenly (farthest-point fill), shown in walk order with their real frame numbers.
+  Precedent: Opus 5.5 with a 64-frame walk chosen the same way gets 77.5% of room A's novel trials
+  (256 frames: 74.5%; no walk 60.8%; 29 better / 12 worse than no walk), so a shorter walk keeps the
+  gain for a model that uses it.
+- Everything else as in amendment 5: room A, the same 192 trials and prompts, reasoning at low effort,
+  temperature not sent, OpenRouter restricted to hosts declaring bf16, fp16 or fp8, the host recorded per
+  answer. The no-walk run is the usual one (two option frames only).
+- Test: the registered walk-gain sign test on novel trials at two-sided p < 0.05 (a single model,
+  tested on its own after the screen); p is also reported against the screen's 0.00625. If it passes,
+  the shuffled walk with the same frames follows. Budget: what is left on the OpenRouter key.
+- The result does not change the screen's verdict, which used the full walk; it is reported as a
+  follow-up with a shorter walk.
 
 *Logistics (2026-10-23, no protocol change).* GPT-6 Astra and Gemini 4 Argon are run on the user's
 university lab PC, billed to the lab, from a self-contained

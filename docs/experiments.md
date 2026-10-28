@@ -4416,7 +4416,7 @@ mac:132 (run 3), mac:133 (run 4) and mac:134 (run 6), each with an estimate of 9
 at submission: Thu 21:42, Fri 06:57, Fri 16:12, Sat 01:27 and Sat 10:42 PDT, so the last should end about
 Sat 20:00 PDT. When they finish: `.venv-claude/bin/python scripts/lora256_analysis.py`.
 
-## Experiment 25 (pre-registered 2026-10-28 10:10 PDT, before the assay was run on any recorded network or real control): a population-level test of a heading-invariant place code
+## Experiment 25 (pre-registered 2026-10-28 10:08 PDT, before the assay was run on any recorded network or real control): a population-level test of a heading-invariant place code
 
 **Why.** All three GPT-6 Astra reviewers of round R1 (`writeup/paper/kit/paperscorer/rounds/R1/packet.md`) rate
 this as the main remaining major issue: a low share of strictly invariant units is not evidence against a
@@ -4564,6 +4564,117 @@ directory, `/workspace/MechInterp/exp25`, which holds copies of the committed `a
 `grid_rnn.py`, both scripts and the reference JSON files (md5s recorded), with `data/` linked to the project's; only
 the result JSON comes back. The four-epoch part runs on vast-3 as a CPU job after vast3:305. Outputs:
 `results/population_assay.json` (top-level `summary` with the paper's values) and this entry's results section.
+
+## Experiment 26 (pre-registered 2026-10-28 10:15 PDT, before any walk-relative readout was fit): is the new view's position coded in the walk's own coordinates?
+
+**Why.** Experiment 14a read the residual stream of the base Qwen3-VL-8B and of run 0 (the original two-epoch
+LoRA) while each did the two-choice task, and found no cross-room code for the new view's position: the best R^2
+for its (x, y) in room coordinates was 0.03, over four sites, 36 layers and two readouts in both models. Two of the
+three GPT-6 Astra reviewers of the conference version (`writeup/paper/kit/paperscorer/rounds/R2a/packet.md`) ask
+which coordinate frame was probed. The question is fair. Nothing in the prompt fixes a room's origin or axes, so a
+model that tracked where it is along the walk would most naturally hold the new view's position relative to the
+walk itself, for example relative to the walk's first frame, which is how VGGT expresses every camera. Such a code
+would not appear as room (x, y) shared across rooms, because the walk's starting pose varies from walk to walk.
+A walk-relative frame, by contrast, is defined the same way in every room, so a cross-room readout is the right test
+for it. This is proposal P12, approved by the user on 2026-10-28.
+
+**Inputs, checked before registration (geometry only, no readout fit).**
+- Experiment 14a's recordings are on the Mac: `data/acts_task/qwen8b` and `data/acts_task/qwen8b+qwen8b-proc`
+  (2.1 GB each), with 1,920 of 1,920 trials, all 36 layers and all four sites. Nothing needs copying.
+- Every trial's walk poses are recoverable. Each trial in `meta.json` carries its room, walk and the new view's pose
+  (from `probes_meta.npz`), and each room's `data/walks-roomP50xx/meta.npz` holds the pose of every walk frame.
+  Every walk has 256 steps; P5000, P5004, P5007 and P5009 have 16 walks and the other rooms 32, with 6-12 trials
+  per walk.
+- The 64-frame prompt always shows frame 1 and frame 256, because `two_choice.present` keeps 61 frames evenly spaced
+  from 1 to 256 and adds the two options.
+- Heading convention: theta is the facing direction measured counterclockwise from +x. Consecutive steps move
+  along (cos theta, sin theta), with a mean cosine of 0.95 between step direction and heading. Every room spans
+  0.4-9.6 m on both axes.
+- Whether a last-frame frame is meaningful: frame 256 is the last image before "New view:", so it marks where the
+  walk left off. A walk's first and last frames are a median 4.1-6.5 m apart (per room) with unrelated headings,
+  so the two frames are genuinely different references. The new view is not especially near the walk's end,
+  however: its median distance is 3.7 m to frame 256, 4.0 m to frame 1 and 0.6 m to the nearer option, and it is
+  closer to frame 256 than to frame 1 on 54% of trials. So the last-frame frame is tested as the "most recent
+  pose" reference, and it is secondary.
+
+**Targets**, each computed from the trial's own walk:
+- `first_xy` (primary): the new view's position in the first frame's coordinates. It is translated to frame 1's
+  position and rotated by frame 1's heading, so that frame 1 faces +x (x forward, y to its left), in meters.
+- `last_xy` (secondary): the same in frame 256's coordinates.
+- `first_heading` (secondary): the new view's heading minus frame 1's, as (cos, sin).
+- `world_xy`: experiment 14a's target, recomputed with the same code as a check. On 8 cells (run 0, last token and
+  visual-token mean, layers 20 and 24, ridge and MLP) the script reproduces 14a's stored R^2 and median errors
+  exactly (difference 0.0).
+
+**Readouts.** Exactly experiment 14a's protocol, using `task_probe.py`'s own `ridge_fit`, `mlp_fit` and `r2`:
+ridge on inputs z-scored over the training rooms, with lambda from 1e1 to 1e5 chosen on the validation room and then
+refit on all five training rooms; and the one-hidden-layer MLP (256 ReLU units, early stopping on the validation
+room). Each readout is trained on five rooms and tested on the other five, both ways (P5000-P5004 and
+P5005-P5009), and the two directions are averaged. The sites are the new view's image-end token, the mean of its
+64 visual tokens, the question's last token and the last prompt token, at all 36 layers. That makes 288 cells
+(site x layer x readout) per model and target. R^2 is 1 - SS_res / SS_tot about the test rooms' mean, averaged over
+the two columns. Median errors are in meters for positions and in degrees for the heading (the absolute angle
+between atan2 of the predicted and true (sin, cos)).
+
+**Chance and control.**
+- Chance is predicting the training rooms' mean, reported as R^2 and median error.
+- The walk-shuffled control recomputes each target from another walk of the same room: a random derangement of
+  the room's walks, so every trial is paired with a walk it did not see, with three seeds (0-2). The control keeps
+  the room geometry and the targets' distribution but breaks their tie to the walk in the prompt. It is fit at
+  every cell with the same readouts, and its mean over the three seeds is the comparison. It rules out the
+  possibility that what reads out is the new view's own content, for example its heading in room coordinates,
+  rather than its relation to the walk.
+- Self-test on synthetic activations (`--selftest`, the real targets, random activations with a planted 2-d code):
+  a planted first-frame code reads out at ridge R^2 0.47 (MLP 0.27) while its shuffled control gives -0.01
+  (-0.08); a planted room-coordinate code reads out at 0.69 as world (x, y) but at -0.01 as `first_xy`. So the two
+  frames do not leak into each other, and the control falls to zero when the tie to the walk is broken.
+
+**Decision rule, set now.** It is applied to each model and target over all 288 cells:
+- *absent* if the best cross-room R^2 is at most 0.10;
+- *present* if some cell reaches R^2 of at least 0.30 and beats the mean of its three walk-shuffled controls at the
+  same cell (same model, site, layer and readout) by at least 0.20;
+- *not walk-specific* if R^2 reaches 0.30 somewhere but no cell beats its control by 0.20;
+- *weak* otherwise, that is, a best R^2 between 0.10 and 0.30.
+
+The primary verdict is `first_xy`. "No first-frame-relative position code" is claimed only if `first_xy` is absent
+in both models. `last_xy` and `first_heading` are secondary under the same rule. The median errors, the layer
+profile and the comparison with room coordinates are descriptive. The threshold of 0.10 sits above the best of
+14a's 288 null-like room-coordinate cells per model (0.03).
+
+**What each outcome would mean.**
+- *Absent in both models:* the reviewers' alternative is ruled out for these recordings. Under the task prompt,
+  neither the base model nor run 0 holds a room-general code for the new view's position in the walk's own frame
+  (VGGT's convention), just as there is none in room coordinates. The paper can say that both frames were probed.
+  The limits stay as stated: this is a cross-room readout by ridge and a small MLP, so a code that exists only
+  within one room, or one that these readouts cannot reach, is not excluded; and the four-epoch runs are covered
+  only once the rerun below is done.
+- *Present in run 0 but not in the base model:* fine-tuning built a walk-anchored position code. That contradicts
+  "no room-general position code", and the paper would then say that the model codes the new view's position
+  relative to the walk rather than the room, and test whether the decision reads that code.
+- *Present in both models:* the base model already tracks position along the walk, so its failure on the task
+  (52.8%) does not come from missing position information. This would be reported as such.
+- *Weak:* the numbers are reported, and the paper says at most a weak walk-relative component (R^2 under 0.30).
+- *Not walk-specific:* something in the new view alone predicts the target, so it is not a code for position along
+  the walk; the paper reports it that way.
+- The same readings apply to `last_xy`. For `first_heading`, *present* would mean that the model holds the new
+  view's heading relative to the walk's start, which is a direction code rather than a position code.
+
+**Four-epoch runs.** Experiment 22 records the four-epoch runs under the same prompt on vast-3 (vast3:306, projected
+to start about Sat 17:07 PDT). This experiment does not wait for them. Once those recordings exist, the same script
+and rule run there as a CPU job, with the script copied to vast-3 first (MD5 checked):
+`gq submit --on vast3 --cpu --project mechinterp --name e26_frame_rel_e4 --priority 150 --after 306 --est 4h --
+.venv/bin/python scripts/frame_relative_probe.py --models qwen8b+qwen8b-proc-cuda qwen8b+qwen8b-proc-e4-s3
+qwen8b+qwen8b-proc-e4-s4 qwen8b+qwen8b-proc-e4-s5 qwen8b+qwen8b-proc-e4-s6 qwen8b+qwen8b-proc-e4-s7 --out
+results/e4_internals/frame_relative_probe.json`. The rule is applied to each run, and those verdicts are added to
+this entry's results.
+
+**Where it runs and outputs.** CPU only, no cost: one Mac job through gq (`--cpu`, about 1-1.5 h at 6 threads; one
+cell with both splits, both readouts and all 13 targets takes about 3 s). Code: `scripts/frame_relative_probe.py`
+(new; it imports `task_probe.py` without changing it). Output: `results/frame_relative_probe.json`, with every cell,
+`_chance`, `_exp14a` (the stored room-coordinate values and the largest difference from the recomputation) and a
+top-level `summary`. Its keys are `summary.models.<model>.<target>.best_r2`, `best_r2_at`, `best_median_m` (or
+`_deg`), `chance_median_m` (or `_deg`), `shuf_r2_at_best`, `margin_at_best` and `verdict`, together with
+`summary.verdict_first_xy`, `verdict_last_xy` and `verdict_first_heading`.
 
 ## Prior work this builds on
 

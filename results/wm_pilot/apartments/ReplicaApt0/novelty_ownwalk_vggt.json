@@ -1,0 +1,100 @@
+{
+ "_about": {
+  "data": "data/walks-roomReplicaApt0-p256",
+  "n_probes": 8192,
+  "n_novel": 108,
+  "n_familiar": 8084,
+  "n_walks": 32,
+  "decoder": "Amendment 2's WP2 decoder: for every walk, ridge from its own walk frames to (x, y), tested on its own probes,",
+  "unit": "median position error (m); CIs from a bootstrap over walks (10,000, seed 0)"
+ },
+ "pixels": {
+  "pix": {
+   "novel": 2.204372928379513,
+   "familiar": 0.7743635821031896,
+   "all": 0.7842689270347156,
+   "novelty_cost": 1.4300093462763235,
+   "lambda": 100.0,
+   "novelty_cost_ci95": [
+    1.015597886516337,
+    2.208895583058797
+   ]
+  }
+ },
+ "pixels-recall-ema8": {
+  "pix": {
+   "novel": 2.3136978347247337,
+   "familiar": 0.4161557730673437,
+   "all": 0.41971632940892334,
+   "novelty_cost": 1.89754206165739,
+   "lambda": 100.0,
+   "novelty_cost_ci95": [
+    1.3361075218663467,
+    2.3379290977028604
+   ]
+  }
+ },
+ "vggt-single-ReplicaApt0 -> vggt-single-probes-ReplicaApt0": {
+  "L19": {
+   "novel": 1.0677390970350422,
+   "familiar": 0.3146467159678038,
+   "all": 0.31694774210309296,
+   "novelty_cost": 0.7530923810672384,
+   "lambda": 10.0,
+   "novelty_cost_ci95": [
+    0.6282648968817333,
+    0.998535069906392
+   ],
+   "novel_minus_pixels-recall-ema8": -1.2459587376896915,
+   "novel_minus_pixels-recall-ema8_ci95": [
+    -1.6572204586090369,
+    -0.582256997636764
+   ],
+   "novelty_cost_minus_pixels": -0.6769169652090851,
+   "novelty_cost_minus_pixels_ci95": [
+    -1.487421163336419,
+    -0.12325009310086858
+   ],
+   "beyond_view_recognition": true,
+   "probe_cross_quadrant": 4.772781431674957,
+   "probe_within_quadrant": 0.40737593173980713,
+   "probe_cross_quadrant_chance": 3.4194833636283875
+  },
+  "L21": {
+   "novel": 0.7458750385824726,
+   "familiar": 0.2779789308298941,
+   "all": 0.28155000843626704,
+   "novelty_cost": 0.4678961077525785,
+   "lambda": 10.0,
+   "novelty_cost_ci95": [
+    0.25157041970927624,
+    0.6092028026977745
+   ],
+   "novel_minus_pixels-recall-ema8": -1.567822796142261,
+   "novel_minus_pixels-recall-ema8_ci95": [
+    -2.0186328713366954,
+    -1.0038366444694162
+   ],
+   "novelty_cost_minus_pixels": -0.962113238523745,
+   "novelty_cost_minus_pixels_ci95": [
+    -1.7933215771463118,
+    -0.487579189050618
+   ],
+   "beyond_view_recognition": true,
+   "probe_cross_quadrant": 4.268158197402954,
+   "probe_within_quadrant": 0.30119966715574265,
+   "probe_cross_quadrant_chance": 3.4194833636283875
+  }
+ },
+ "vggt-single-probes-ReplicaApt0 pose head": {
+  "novel": 0.7832440877247193,
+  "familiar": 1.0695425370382918,
+  "novelty_cost": -0.2862984493135725,
+  "novelty_cost_ci95": [
+   -0.5590230256111448,
+   -0.08165733673933648
+  ],
+  "all": 1.0619591661943477,
+  "within_1m": 0.476318359375
+ }
+}

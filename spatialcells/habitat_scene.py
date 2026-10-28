@@ -382,6 +382,76 @@ def walks(args):
                       "landmarks_per_view": round(float(np.mean([len(m) for m in marks])), 2)}), flush=True)
 
 
+def anchor_poses(xy):
+    """Eight anchor poses for a scene, by room A's pattern (vggt_cells.ANCHORS: the centre facing E, N, W, S, then
+    spots 3 m in x and y from it facing it, SW, SE, NE, NW), on walk positions so that each is navigable: the centre is
+    the walk position nearest the median of all of them, each other spot the walk position nearest centre + (+-3, +-3)."""
+    c = xy[np.argmin(np.linalg.norm(xy - np.median(xy, 0), axis=1))]
+    poses = [(c[0], c[1], th) for th in (0.0, np.pi / 2, np.pi, 3 * np.pi / 2)]
+    for sx, sy in ((-1, -1), (1, -1), (1, 1), (-1, 1)):
+        p = xy[np.argmin(np.linalg.norm(xy - (c + 3.0 * np.array([sx, sy])), axis=1))]
+        poses.append((p[0], p[1], float(np.arctan2(c[1] - p[1], c[0] - p[0]) % (2 * np.pi))))
+    return np.array(poses)
+
+
+def probes_for(args):
+    """Follow-up pilot WP, amendment 2: for walks rendered earlier by walks() (--probes-for SRC), new teleport probes
+    (--probes-per-walk per walk, drawn as walks() draws them, with their own seed --probe-seed) into --probes-out, which
+    links SRC's frames.npy and meta.npz as data/walks-p256 does room A's, and the scene's 8 anchor views (anchor_poses)
+    into SRC/anchors.npz, linked from --probes-out. The pathfinder is seeded with the walks' --seed, so the floor height
+    is walks()'s. The first 16 frames of walk 0 are rendered again and must equal SRC's byte for byte (exit 4 if not)."""
+    src, out = args.probes_for, args.probes_out
+    meta = dict(np.load(f"{src}/meta.npz"))
+    sim = make_sim(args.dataset, args.scene, semantic=True, zup=args.zup)      # walks()'s sensors
+    pf = sim.pathfinder
+    pf.seed(args.seed)
+    island = max(range(pf.num_islands), key=pf.island_area)
+    floor = from_habitat(pf.get_random_navigable_point(island_index=island))[2]
+
+    def shoot(poses):
+        imgs, holes = [], []
+        for x, y, th in poses:
+            obs = render(sim, x, y, th, from_habitat(pf.snap_point(nav(x, y, floor)))[2])
+            imgs.append(obs["rgb"][..., :3].copy())
+            holes.append(float((obs["depth"] <= 0).mean()))
+        return np.stack(imgs), np.array(holes)
+
+    rows0 = np.flatnonzero(meta["walk"] == 0)[:16]
+    again, _ = shoot(np.stack([meta["x"][rows0], meta["y"][rows0], meta["theta"][rows0]], 1))
+    same = bool((again == np.load(f"{src}/frames.npy", mmap_mode="r")[rows0]).all())
+    if not same:
+        print(json.dumps({"scene": args.scene, "rerender_identical": False}), flush=True)
+        sys.exit(4)
+    os.makedirs(out, exist_ok=True)
+    A = anchor_poses(np.stack([meta["x"], meta["y"]], 1))
+    aimg, ahol = shoot(A)
+    np.savez(f"{src}/anchors.npz", images=aimg, poses=A, holes=ahol)
+    rel = os.path.relpath(src, out)
+    for f in ("frames.npy", "meta.npz", "anchors.npz"):
+        if not os.path.lexists(f"{out}/{f}"):
+            os.symlink(f"{rel}/{f}", f"{out}/{f}")
+    rng = np.random.default_rng(args.probe_seed)
+    walks = np.unique(meta["walk"])
+    poses = {w: np.stack([meta[k][meta["walk"] == w] for k in ("x", "y")], 1) for w in walks}
+    rows = []
+    for w in walks:                     # as walks(): near a visited place of the walk, random heading
+        for k in range(args.probes_per_walk):
+            while True:
+                x, y = poses[w][rng.integers(len(poses[w]))] + rng.normal(0, 0.15, 2)
+                if walkable(pf, x, y, floor, island, args.margin):
+                    break
+            rows.append((w, k, x, y, rng.uniform(0, 2 * np.pi)))
+    rows = np.array(rows)
+    probes, pholes = shoot(rows[:, 2:])
+    np.save(f"{out}/probes.npy", probes)
+    np.savez(f"{out}/probes_meta.npz", walk=rows[:, 0].astype(int), idx=rows[:, 1].astype(int),
+             x=rows[:, 2], y=rows[:, 3], theta=rows[:, 4], holes=pholes)
+    print(json.dumps({"scene": args.scene, "rerender_identical": same, "probes": len(probes),
+                      "probe_holes_over_5pct": round(float((pholes > 0.05).mean()), 3),
+                      "anchors": [[round(float(v), 3) for v in a] for a in A],
+                      "anchor_holes": [round(float(h), 3) for h in ahol]}), flush=True)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", help="scene_dataset_config.json (omit to load --scene as a file)")
@@ -404,8 +474,13 @@ def main():
                     "if none ships, and (with --walks-out) experiment 16's checks first (scene_check; exit 3 if one fails)")
     ap.add_argument("--island-range", type=float, nargs=2, default=ISLAND_M2, metavar=("LO", "HI"),
                     help="--hssd: accepted area of the largest navigable island (m^2)")
+    ap.add_argument("--probes-for", help="amendment 2: new probes and the anchors for the walks in this folder (probes_for)")
+    ap.add_argument("--probes-out", help="--probes-for: the output folder")
+    ap.add_argument("--probe-seed", type=int, default=17, help="--probes-for: seed of the probe draws (--seed is the walks')")
     args = ap.parse_args()
-    if args.pilot:
+    if args.probes_for:
+        probes_for(args)
+    elif args.pilot:
         pilot(args)
     elif args.scenes:
         survey(args)

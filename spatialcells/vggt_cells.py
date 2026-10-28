@@ -82,6 +82,8 @@ def main():
     ap.add_argument("--anchor-set", choices=["standard", "reordered", "rot45"],
                     help="experiment 14e: these anchors, saved to data/acts/vggt-<mode>-anchors-<set>")
     ap.add_argument("--batch", type=int, help="sequences per batch (default 48 single, 64 alone, 1 walk)")
+    ap.add_argument("--out-tag", help="save to data/acts/<OUT_TAG>, pose.npz included (follow-up pilot: the 256-per-walk "
+                    "probes as frames, --data data/walks-p256-arena)")
     args = ap.parse_args()
     sys.path.insert(0, args.vggt)
     from vggt.models.vggt import VGGT
@@ -152,10 +154,11 @@ def main():
             print(f"{b0 + batch}/{len(groups)} sequences, {time.time() - t0:.0f}s, median position error so far "
                   f"{err:.2f} m, peak {torch.cuda.max_memory_allocated() / 2**30:.0f} GiB", flush=True)
     if not args.walks:
-        out = (f"data/acts/vggt-{args.mode}" + ("" if args.room == "A" else f"-room{args.room}")
+        out = (f"data/acts/{args.out_tag}" if args.out_tag else
+               f"data/acts/vggt-{args.mode}" + ("" if args.room == "A" else f"-room{args.room}")
                + (f"-anchors-{args.anchor_set}" if args.anchor_set else ""))
         save(out, acts)
-        if not args.blocks or args.anchor_set:
+        if not args.blocks or args.anchor_set or args.out_tag:
             np.savez(f"{out}/pose.npz", x=xy[:, 0], y=xy[:, 1], theta=heading)
     if n_anchor:
         done = np.isfinite(xy[:, 0])

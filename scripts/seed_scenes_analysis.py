@@ -13,6 +13,9 @@ LoRA model, then the three-seed mean and range. The units are those of each expe
 Each contrast is on the same trials for both runs. Every run is checked against its scene's trial manifest;
 a seed whose runs are missing or incomplete in an experiment is reported as such and left out of the mean.
 
+Experiment 9c's four-epoch runs (seeds 3-7) are analysed the same way and summarised separately
+("four_epoch_runs"); the two recipes are never pooled.
+
 Platforms: Qwen ran on the Mac (MPS, files tagged -mps) or on CUDA (untagged). For base and seed 0 the
 files are those of each experiment's analysis; for seeds 1-2 whichever exists (the JSON names it), and a
 scene with both is an error. Seed 0 here reproduces the seed-0 accuracies, differences and counts of
@@ -26,7 +29,9 @@ import os
 import numpy as np
 
 Q = "results/two_choice/Qwen3-VL-8B-Instruct"
-SEEDS = {0: "qwen8b-proc", 1: "qwen8b-proc-s1", 2: "qwen8b-proc-s2"}
+SEEDS = {0: "qwen8b-proc", 1: "qwen8b-proc-s1", 2: "qwen8b-proc-s2",
+         **{k: f"qwen8b-proc-e4-s{k}" for k in range(3, 8)}}             # 3-7: experiment 9c, four epochs
+RECIPES = {"three_seeds": (0, 1, 2), "four_epoch_runs": (3, 4, 5, 6, 7)}    # summary key -> runs (never mixed)
 CONDS = {"walk": "-256px-max64", "no walk": "-256px-nowalk", "shuffled": "-256px-max64-shuffled"}
 MAC_SEED0 = {"10": "all", "12": "all", "16": {"HSSD1", "HSSD2", "HSSD3"}}     # scenes whose base/seed-0 runs are -mps
 EXPS = {
@@ -146,44 +151,53 @@ def analyse(exp, seed):
     return out
 
 
+def summarise(exp, cfg, seeds, label):
+    """Mean and range over the runs of one recipe that are done, with each run's contrasts printed."""
+    done = [s for s, v in seeds.items() if v["status"] == "done"]
+    print(f"\n=== experiment {exp} ({len(cfg['scenes'])} scenes), {label}; runs done: {done}")
+    for seed, v in seeds.items():
+        if v["status"] != "done":
+            print(f"  seed {seed}: {v['status']} {v.get('missing') or v.get('incomplete')}"[:300])
+    if not done:
+        return None
+    key = "scene_mean" if cfg["scene_unit"] else "pooled_difference"
+    out = {}
+    for split in cfg["splits"]:
+        print(f"  {split} trials" + (" (scene mean [95% CI over scenes])" if cfg["scene_unit"] else " (pooled)"))
+        for n in ("LoRA, walk", "LoRA, no walk", "LoRA, shuffled"):
+            vals = []
+            for seed in done:
+                o = seeds[seed]["accuracy"][split][n]
+                vals.append(o["scene_mean"] if cfg["scene_unit"] else o["pooled"])
+            out.setdefault(split, {})[n] = {"seeds": done, "values": vals, "mean": float(np.mean(vals)),
+                                            "min": float(min(vals)), "max": float(max(vals))}
+            print(f"    {n:16s} " + "  ".join(f"s{s} {x:.1%}" for s, x in zip(done, vals))
+                  + f"   mean {np.mean(vals):.1%} (range {min(vals):.1%}-{max(vals):.1%})")
+        for cname, _, _ in CONTRASTS:
+            vals = [seeds[s]["contrasts"][split][cname][key] for s in done]
+            out[split][cname] = {"seeds": done, "values": vals, "mean": float(np.mean(vals)),
+                                 "min": float(min(vals)), "max": float(max(vals))}
+            cells = []
+            for s in done:
+                c = seeds[s]["contrasts"][split][cname]
+                cell = f"s{s} {100 * c[key]:+.1f}"
+                if cfg["scene_unit"]:
+                    cell += f" [{100 * c['scene_ci95'][0]:+.1f}, {100 * c['scene_ci95'][1]:+.1f}] {c['scenes_up']}/{c['scenes_down']}"
+                cell += f" ({c['better']}/{c['worse']}, p {c['sign_p']:.2g})"
+                cells.append(cell)
+            print(f"    {cname:24s} " + "; ".join(cells))
+    return out
+
+
 def main():
     res = {}
     for exp, cfg in EXPS.items():
         res[exp] = {"seeds": {seed: analyse(exp, seed) for seed in SEEDS}}
-        done = [s for s, v in res[exp]["seeds"].items() if v["status"] == "done"]
-        print(f"\n=== experiment {exp} ({len(cfg['scenes'])} scenes); seeds done: {done}")
-        for seed, v in res[exp]["seeds"].items():
-            if v["status"] != "done":
-                print(f"  seed {seed}: {v['status']} {v.get('missing') or v.get('incomplete')}"[:300])
-        if not done:
-            continue
-        key = "scene_mean" if cfg["scene_unit"] else "pooled_difference"
-        three = {}
-        for split in cfg["splits"]:
-            print(f"  {split} trials" + (" (scene mean [95% CI over scenes])" if cfg["scene_unit"] else " (pooled)"))
-            for n in ("LoRA, walk", "LoRA, no walk", "LoRA, shuffled"):
-                vals = []
-                for seed in done:
-                    o = res[exp]["seeds"][seed]["accuracy"][split][n]
-                    vals.append(o["scene_mean"] if cfg["scene_unit"] else o["pooled"])
-                three.setdefault(split, {})[n] = {"seeds": done, "values": vals, "mean": float(np.mean(vals)),
-                                                  "min": float(min(vals)), "max": float(max(vals))}
-                print(f"    {n:16s} " + "  ".join(f"s{s} {x:.1%}" for s, x in zip(done, vals))
-                      + f"   mean {np.mean(vals):.1%} (range {min(vals):.1%}-{max(vals):.1%})")
-            for cname, _, _ in CONTRASTS:
-                vals = [res[exp]["seeds"][s]["contrasts"][split][cname][key] for s in done]
-                three[split][cname] = {"seeds": done, "values": vals, "mean": float(np.mean(vals)),
-                                       "min": float(min(vals)), "max": float(max(vals))}
-                cells = []
-                for s in done:
-                    c = res[exp]["seeds"][s]["contrasts"][split][cname]
-                    cell = f"s{s} {100 * c[key]:+.1f}"
-                    if cfg["scene_unit"]:
-                        cell += f" [{100 * c['scene_ci95'][0]:+.1f}, {100 * c['scene_ci95'][1]:+.1f}] {c['scenes_up']}/{c['scenes_down']}"
-                    cell += f" ({c['better']}/{c['worse']}, p {c['sign_p']:.2g})"
-                    cells.append(cell)
-                print(f"    {cname:24s} " + "; ".join(cells))
-        res[exp]["three_seeds"] = three
+        for key, runs in RECIPES.items():
+            label = "two-epoch runs" if key == "three_seeds" else "four-epoch runs (experiment 9c)"
+            summary = summarise(exp, cfg, {s: res[exp]["seeds"][s] for s in runs}, label)
+            if summary is not None:
+                res[exp][key] = summary
     json.dump(res, open("results/seed_scenes_summary.json", "w"), indent=1)
     print("\n-> results/seed_scenes_summary.json")
 

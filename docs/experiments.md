@@ -1321,6 +1321,118 @@ left. The two-epoch runs left the plateau at updates 135-215 of 284.
   experiment 12 still applies: the walk may help partly by grouping views by room.
 - The internal analyses stay on run 0, as registered.
 
+## Experiment 18 (pre-registered 2026-10-27 22:00 PDT, before any Gemma 4 model trained or saw a test trial): a second model family
+
+**Why.** Every fine-tuned result so far comes from one model family, Qwen3-VL-8B. A reviewer can ask
+whether the recipe teaches the skill only to Qwen. This repeats experiment 9c's recipe on Gemma 4,
+Google's open vision-language family. Gemma is already in the paper as a base model: Gemma-4-31B is at
+chance with the walk on room A's lure-free trials (experiment 5). The design mirrors experiment 9c,
+so the two families can be compared run for run.
+
+**Model.** `google/gemma-4-12B-it`, the instruction-tuned 12B (48 layers, 23.9 GB of bf16 weights,
+Apache 2.0, on Hugging Face since 2026-05-23). Gemma 4 comes in five sizes: E2B, E4B, 12B, 26B-A4B (a
+mixture of experts) and 31B. The 31B (62 GB in bf16) and the 26B-A4B (52 GB) cannot be trained with
+plain bf16 LoRA on vast-3's 32 GB RTX 5090. The 12B is the largest Gemma 4 that might be. It differs
+from Qwen3-VL-8B in one way that matters here: it has no vision encoder. A small linear embedder
+projects 48-pixel patches of the image into the language model, so the language-model layers that
+get the LoRA do all the visual processing. In Qwen, a frozen vision transformer does that first.
+Here the embedder is frozen instead. The 31B, by contrast, has a vision encoder. Images get
+`--image-tokens 70` (two_choice.py's Gemma setting), which gives 64 tokens per 256-px frame, the same
+as Qwen. A training room is 5,736 tokens (Qwen: 5,701).
+
+**Fit check, before any training run.** On vast-3, seed 3 with `finetune.py --max-updates 5`: the
+untrained model's accuracy on the 64 held-out training-style rooms, as at the start of every run,
+then five updates on training rooms. Nothing is saved and no test trial is seen. It measures peak
+memory and time per update. To make the 12B fit, two settings that leave the computation the same are
+already in the code: the loss is computed from the logits at the answer positions only (the full
+sequence's logits over Gemma's 262k-token vocabulary would need about 10 GB), and the allocator uses
+`expandable_segments`, as for Qwen's seeds 1-2. If the 12B still does not fit, the fallback is
+`google/gemma-4-E4B-it` with the same recipe, recorded here as an amendment before any training run.
+
+**Recipe.** Experiment 9c's, unchanged (`spatialcells/finetune.py --model google/gemma-4-12B-it
+--epochs 4`):
+- the same `data/proc` rooms: 1,136 for training and the same 64 held out;
+- LoRA with rank 16, alpha 32 and dropout 0.05 on every attention and MLP projection of the language
+  model (q, k, v, o, gate, up, down; Gemma's global-attention layers have no v projection, because
+  their keys double as values); everything else frozen;
+- loss on the answers only; AdamW with lr 1e-4, 30 warm-up updates and cosine decay over 568 updates
+  (four epochs of 142 updates of 8 rooms); bf16 with gradient checkpointing; 64-frame walks of 256-px
+  frames;
+- held-out accuracy on the first question of each of the 64 held-out rooms every 25 updates (greedy).
+
+The prompt is two_choice.py's, in Gemma's chat template. Gemma's generation prompt ends with an empty
+thought block, which the template leaves out of earlier model turns. So each training answer is put
+right after that exact generation prompt, and the first turn is exactly what two_choice.py asks at
+test time (`finetune.py` checks this for every room). Runs: seeds 3, 4, 5, 6 and 7, with
+`torch.manual_seed` set, the same seeds as experiment 9c, so the same room orders. Adapters go in
+`data/ft/gemma12b-proc-e4-s<seed>`. Training runs on vast-3 through gq, one after another
+(`MODEL=google/gemma-4-12B-it EPOCHS=4 scripts/run_ft_seed.sh <seed> data/ft/gemma12b-proc-e4-s<seed>`).
+
+**Number of runs and time.** Five. A Qwen run trained in 4.0 h. The 12B has about 1.35 times the
+language-model compute per token, so a run should take about 5.5 h to train and about 2 h to test on
+vast-3, or about 37 h for all five. If the fit check measures more than 10 h of training per run,
+the experiment drops to three runs (seeds 3-5), recorded here before the first full run, and the
+decision rule below then applies to three runs.
+
+*Fit check result (gq vast3:290, 2026-10-27 22:05 PDT, before the first full run).* The 12B fits:
+peak 29 GiB, the same as Qwen. It has 65,568,768 trainable LoRA parameters (0.55%; Qwen 43.6M, 0.50%).
+Untrained, it gets 45% of the held-out rooms' first questions. Its loss over the first five updates is
+0.332 (Qwen's run 3: 0.610). Training is slower than estimated: 54.6 s per update against Qwen's
+22.8 s, while validation runs at about Qwen's speed. That projects about 8.6 h for 568 updates plus
+about 0.6 h of validation, about 9.2 h per run, under the 10 h limit. So all five runs stay, and the
+experiment needs about 55 h on vast-3 with the tests.
+
+**Training checks** (reported for every run, never used to drop one): the update at which the loss
+first falls below 0.15, the final loss, and the held-out accuracy curve. Each answer is scored the
+same way as Qwen's: three digits and an end-of-turn token, so a coin flip gives the same loss (about
+0.17 per answer token). Every run that finishes is tested and reported, whatever its curve. A run
+that crashes is restarted with the same seed.
+
+**Tests.** Experiment 9c's, each with the 64-frame walk, no walk and the shuffled walk (real frame
+numbers):
+- room A and room B (lure-free trials);
+- the ten held-out procedural rooms P5000-P5009 (experiment 10);
+- the three Replica apartments (experiment 12);
+- the eight HSSD houses (experiment 16).
+
+Base Gemma-4-12B-it, with no adapter, gets the same scenes and conditions. Platforms are those of
+experiment 9c. vast-3 (CUDA) runs rooms A and B, HSSD1, HSSD4-8 and the nine re-rendered held-out
+rooms (`scripts/run_ft_seed.sh`, `scripts/run_scene_tests.sh` with `MODEL`). The Mac (MPS) runs the
+apartments, HSSD2-3 and P5005 (`scripts/mac/run_heldout.sh` with `MODEL`). Platform check: base
+Gemma, room A, walks 0-3 with the walk (48 trials), runs on both machines, and the number of same
+answers is reported. If fewer than 90% agree, the Mac's scenes are rerun on vast-3 from copies of
+the Mac's walks, and both sets are reported. If experiment 19's new scenes (six more Replica
+apartments and twelve more HSSD houses) are registered and rendered, the five Gemma runs and base
+Gemma are tested there too, under that experiment's registration.
+
+*Amendment 1 (2026-10-27 22:45 PDT, before any Gemma test in the apartments, HSSD2-3 or P5005): every
+Gemma test runs on vast-3.* The Mac cannot run the 12B at a usable speed. The platform check ran about
+4 minutes per trial on MPS, against 48 trials in 1 minute on CUDA, because the 24 GB of weights leave
+the 48 GB Mac short of memory. It was stopped after 7 trials, of which MPS and CUDA gave the same
+answer on 5. The prompts were identical (the same token counts). So the apartments, HSSD2-3 and P5005
+run on vast-3 too, from byte copies of the Mac's walks and trial lists (md5 checked); P5005 is the
+Mac's own render, which cannot be re-rendered. All Gemma results are therefore CUDA, while Qwen's in
+those six scenes are MPS. Qwen's MPS and CUDA answers agreed on 192/192 trials in room A and 72/72 in
+HSSD1, so the family comparison does not depend on the platform. The 7 MPS answers and the CUDA
+check's 48 are kept in `data/smoke/` and are not part of any result. Base Gemma on CUDA got 20 of the
+48 (11 of 24 novel).
+
+**Analysis.** As in experiment 9c, with Gemma reported next to Qwen and never pooled with it:
+- rooms A and B: `spatialcells/ft_seeds.py`, with the training checks and the decision rule;
+- the scenes: a sibling of `scripts/seed_scenes_analysis.py` that applies each experiment's
+  registered contrasts per run (each run vs base Gemma, vs no walk, vs the shuffled walk, and vs
+  Opus 5.5 with the walk), on the same units: room means for experiment 10, pooled trials for
+  experiment 12, and house means plus pooled trials for experiment 16;
+- the five-run mean and range for every primary measure, with Qwen's five four-epoch runs beside it.
+The family comparison is descriptive. The runs are not paired across families, so there is no test
+between them.
+
+**Decision rule, set now (the same as experiment 9c's).** The recipe "transfers to Gemma 4" if all
+five runs end with at least 85% held-out accuracy on the training-style rooms, the five-run mean on
+room A's novel trials is at least 85%, and no run is below 80% there. Otherwise the result is
+reported as the recipe not transferring, or transferring partly, with the numbers. All runs are
+reported either way, and nothing is selected after the tests.
+
 ## Experiment 10 (pre-registered 2026-10-22, run 2026-10-23): many held-out rooms
 
 **Deviation found after the results below (2026-10-23, by an external review of the preprint).**
@@ -3103,6 +3215,1031 @@ on metric estimates, and the model draws less on the video for them. On MindCube
 runs, including the paper's run 0, change nothing. The four-epoch recipe's +4.1 meets the registered
 "transfers" rule, and it depends on the images. But every model, base and fine-tuned, is at or below
 chance there, so the gain shows the model losing some of its biases, not learning to reason about space.
+
+## Experiment 19 (pre-registered 2026-10-27 22:00 PDT, before any new scene was rendered or shown to a model): more photoreal scenes
+
+**Why.** The photoreal results rest on three Replica apartments (experiment 12) and eight HSSD houses
+(experiment 16), and a reviewer can fairly call that thin. This experiment adds six Replica apartments
+and twelve HSSD houses, with the same walks, trials, models and analysis, so that the photoreal claims
+are tested again on new scenes and can then be pooled over 29. The user chose the scope (+6
+apartments, +12 houses, and Opus within the money that is left). None of these scenes has been
+rendered as walks, and no model has seen any of them. The results go into the paper's second arXiv
+version and the conference version, not into v1.
+
+**Scenes.**
+- *Replica FRL apartments* frl_apartment_0 to frl_apartment_5, named ReplicaFRL0-5 (Replica Research
+  Terms, as in experiment 12). They are the six apartment scenes of Replica that experiment 12 did not
+  use. They are not six independent apartments. Replica scanned one apartment (the "FRL apartment")
+  six times with its furniture rearranged, and ReplicaCAD is an artist's recreation of those
+  variations. So they add one new floor plan with six furnishings, and the analysis below treats them
+  that way.
+  - Data on the PC: only frl_apartment_0's mesh is present (2.8 GB). The folders of frl_apartment_1-5
+    hold only Habitat's config files, so their meshes have to be fetched from the Replica v1.0 release
+    before rendering. That download waits for the user's OK. If it does not happen, experiment 19 has
+    one new apartment (ReplicaFRL0), and this is recorded as an amendment before any FRL rendering.
+  - Holes: a survey of 300 random views (`results/preview/replica_survey_apartments/survey.json`,
+    2026-10-23, no model involved) found 75% of frl_apartment_0's views with more than 5% of pixels
+    showing no geometry, against 0-35% in apartments 0-2. So some FRL scenes may yield few trials
+    under the hole rule.
+  - Rendered as in experiment 12 (`scripts/rtx4070/render_replica.sh`: habitat-sim 0.3.3, the
+    vertex-coloured mesh, `--zup`, the shipped navmesh), with walk seeds 210-215.
+  - An apartment is used if it loads, renders and yields at least 60 lure-free trials (experiment 16's
+    threshold; experiment 12's apartments gave 159-176). Otherwise it is reported as skipped. Replica
+    has no other apartments to replace it.
+- *HSSD houses* HSSD9-20: experiment 16's draw, continued. `spatialcells/hssd_select.py --houses 20`
+  resumes from `results/hssd_selection.json` (13 drawn, 8 accepted) and goes on down the same order
+  (the 168 sorted ids shuffled with `random.Random(16)`) from draw position 13. The acceptance checks
+  are the same: the house loads, has a computed navmesh, its largest island is 40-250 m^2, its objects
+  carry instance labels, and it yields at least 60 trials. The walk seed is 1600 plus the draw
+  position, and houses are named in draw order. Skipped houses are reported with their reasons. All
+  objects of the first 95 houses in the draw are on the PC (checked 2026-10-27); the download's
+  completion marker is missing, so `.priority_done`, which `hssd_select.py` reads, is extended to
+  those 95 houses.
+
+**Walks, probes and trials.** Exactly as in experiments 12 and 16: 32 walks of 256 steps on the
+largest navigable island with 0.15 m clearance, 128 probes per walk, and lure-free trials from
+`dissimilar_trials --walks 32 --per-walk 6` with the same rules (near option within 1 m, far more than
+3 m away, both facing more than 90 deg from the new view, pixel similarity and frame order balanced,
+no shared landmark by instance labels, no view with more than 5% holes). Rendering and trials are made
+on the RTX 4070 through gq (`--on pc`). Every copy to the Mac or vast-3 is checked against the PC's
+checksums.
+
+**Models and conditions** (prompts and settings as in experiments 12 and 16):
+- base Qwen3-VL-8B;
+- every Qwen LoRA run: run 0 (`data/ft/qwen8b-proc`), the two-epoch runs 1-2 (`qwen8b-proc-s1`,
+  `-s2`) and the four-epoch runs 3-7 (`qwen8b-proc-e4-s3` to `-s7`, experiment 9c);
+- base Gemma 4 and the Gemma LoRA runs of experiment 18, with that experiment's settings, once its
+  adapters exist. If they arrive after the Qwen runs, they are added then and reported in the same
+  tables.
+
+Each of these runs with the 64-frame walk, with no walk and with the 64-frame walk shuffled.
+- Opus 5.5 at low effort (`claude_test.py`, every walk, as in experiments 12 and 16), with the
+  256-frame walk and with no walk. The shuffled walk is not run for Opus: experiments 12, 14b and 16
+  already found Opus at least as accurate with the walk shuffled, and the money buys more scenes this
+  way.
+- VGGT is not run. None of the questions below needs it, and it could be added by an amendment before
+  any of its results.
+
+**Opus budget rule, set now.** About $55 is left (`scripts/cost_log.py`, 2026-10-27 21:50 PDT): the
+first Claude key has $18.18 of its $138 limit until its monthly reset, and the second key has $36.63
+of its $200. Past photoreal scenes cost $0.032-0.036 per trial with the walk and $0.004-0.005 without
+it. The scenes are taken in a fixed order, in one queue per key:
+- key 1 takes the apartments, ReplicaFRL0, ReplicaFRL1 and so on, in index order (accepted ones only);
+- key 2 takes the new houses, HSSD9, HSSD10 and so on, in draw order.
+
+Before each scene, its cost is estimated as its number of trials times $0.041, both conditions at the
+highest past rate. The scene starts only if the key has at least 1.25 times that estimate left. Each
+run's `--budget-usd` keeps the key under its limit, and the walk run leaves the no-walk run's estimate
+in reserve. A queue stops at the first scene that does not fit. This should give about two apartments
+and four houses. If a run stops before it has answered every trial, the scene is reported as partial
+and left out of the Opus contrasts. Every run is logged with `cost_log.py` under the key that paid it.
+If more money is approved later, the same queues continue, and those scenes are labelled with the date
+they ran.
+
+**Platforms.** Qwen (and Gemma) run on vast-3's RTX 5090 (CUDA, `scripts/run_scene_tests.sh`) and on
+the Mac (MPS, `scripts/mac/run_heldout.sh`, files tagged `-mps`), split by scene, so all the runs of a
+scene are on one machine. Plan: the Mac takes HSSD9 and HSSD10, the first scenes ready, which need no
+upload, and vast-3 takes the rest. The walks go to vast-3 from the Mac at no more than 3 MB/s and are
+md5-checked there. Before the split counts, the Mac answers walks 0-3 of one vast-3 scene with the base
+model (walk) and run 0 (walk and no walk), and those answers must match vast-3's (as in experiment 16;
+the Mac's copies are kept out of `results/`). Scenes may move between machines for throughput. Any
+such move is decided without looking at answers and is recorded.
+
+**Outcomes and analysis** (`scripts/exp19_analysis.py` -> `results/exp19_summary.json`, built from
+`photoreal_analysis.py`, `hssd_analysis.py` and `seed_scenes_analysis.py`). As in experiments 12 and 16,
+the primary measure is accuracy on all lure-free trials, and accuracy on novel trials is secondary.
+Every run is checked against its scene's trial manifest. Results are reported for:
+- the new scenes alone, reported first: the FRL apartments, the new houses, and all new scenes
+  together;
+- the new scenes pooled with the old ones: all apartments (Apt0-2 and FRL0-5), all houses (HSSD1-20)
+  and all photoreal scenes (29 if every scene is accepted). These pooled summaries are labelled as
+  such.
+
+For every model and condition the report gives accuracy per scene with an exact 95% CI, pooled over
+scenes, and as the mean over scenes with a 95% bootstrap CI (10,000 resamples, seed 0).
+
+The contrasts are reported per LoRA run and as each recipe's mean and range (the two-epoch runs 0-2
+and the four-epoch runs 3-7, never mixed):
+- LoRA with the walk against the base model with the walk, against itself with no walk, against itself
+  with the shuffled walk, and against Opus with the walk (on the Opus scenes only, on the same trials);
+- Opus with the walk against Opus with no walk;
+- the base model with the walk against itself with no walk.
+
+Each contrast gets the pooled trial-level sign test, a bootstrap over walks, and scenes as the unit
+(the mean of per-scene differences with its bootstrap CI, and a scene-level sign test). Gemma's
+contrasts are those of experiment 18, in these scenes. For the apartments, scenes as the unit overstate
+the evidence, because FRL0-5 share one floor plan. So the FRL scenes are also averaged into one layout,
+and the apartments are reported with layouts as the unit (four layouts in all, reported descriptively,
+with no test).
+
+**Replication criteria, set now** (reported whichever way they come out):
+1. The LoRA model transfers to the new scenes if, for each four-epoch run, LoRA with the walk beats the
+   base model with the walk, itself with no walk and itself with the shuffled walk. In the new houses
+   the test is the scene-level bootstrap CI (above zero); in the FRL apartments it is the pooled
+   trial-level sign test (p < 0.05), because they are one layout. Runs 0-2 are reported the same way.
+2. The Opus walk gain replicates if Opus with the walk beats Opus with no walk on the Opus scenes
+   (pooled sign test, p < 0.05).
+3. LoRA against Opus is reported as the difference with its CIs, on all trials and on novel trials,
+   separately for apartments and houses, with no threshold. With two to four new scenes of each kind,
+   it cannot settle the comparison alone; pooled with experiments 12 and 16, it adds to it. The novel
+   apartment trials, where Opus led in experiment 12 (not significantly), are also reported pooled
+   over the old and new apartments.
+
+Scope: Replica's vertex-coloured renders, HSSD's artist-made houses, and one new apartment floor plan.
+The caveat of experiments 12 and 16 still applies: in apartments and houses the walk may help partly
+by grouping views into rooms.
+
+*Amendment 1 (2026-10-27 22:45 PDT, after HSSD9-20 were rendered and their trials built, before any
+model saw a new scene).* The user approved, through the coordinating session, the Replica download of
+frl_apartment_1-5 and six more houses.
+- The draw goes on to eighteen new houses, HSSD9-26 (`hssd_select.py --houses 26`), in the same order
+  and with the same rules. Everywhere above, "HSSD9-20" now means HSSD9-26 and "twelve new houses"
+  means eighteen. The Opus queue for key 2 continues in draw order, and the analysis groups and
+  replication criteria take in the extra houses.
+- The draw so far (gq pc:588): positions 13-31, 12 accepted and 7 skipped. Four were skipped for their
+  largest island (405, 658, 2,120 and 263 m^2) and three for too few lure-free trials (16, 0 and 0).
+  Trials (all / novel): HSSD9 166/53, HSSD10 192/110, HSSD11 146/13, HSSD12 174/23, HSSD13 192/85,
+  HSSD14 192/123, HSSD15 188/69, HSSD16 156/30, HSSD17 181/59, HSSD18 181/48, HSSD19 61/0, HSSD20
+  192/75. HSSD19 passes the 60-trial rule with no novel trial, so it counts only for all-trial measures.
+
+*Amendment 2 (2026-10-27 22:55 PDT, platforms only, before any answer was looked at).* Experiment 18's
+Gemma training chain holds vast-3 until about Fri 2026-10-30 10:15 PDT (gq vast3:294-304), and Gemma
+12B runs only on vast-3. So the Mac takes more of the Qwen scenes. After HSSD9-10, it runs HSSD11-18,
+one gq job per scene at a lower priority (150) so that other projects' and sessions' Mac jobs go first.
+vast-3 runs the remaining scenes after experiment 18's chain. A scene that has not started on the Mac
+when vast-3 frees up may move there, and every move is recorded. Every new scene goes to vast-3
+anyway, for Gemma. The Mac-vast-3 parity check runs on the first vast-3 scene.
+
+*Scenes final (2026-10-27 23:40 PDT, before any model answer was looked at; `results/exp19_scenes.json`).*
+- Replica: five of the six FRL apartments pass. Trials (all / novel): ReplicaFRL0 70/2, ReplicaFRL1 90/3,
+  ReplicaFRL3 71/3, ReplicaFRL4 68/1, ReplicaFRL5 100/1, so 399 trials with 10 novel. ReplicaFRL2 is
+  skipped: its shipped navmesh's largest island is about 1.6 x 2.8 m, 97% of its views have more than 5%
+  holes, and it gives no lure-free trial. In the other five, 71-78% of walk frames have more than 5% holes
+  (apartments 0-2: 0-35%), which is why they give fewer trials than experiment 12's apartments. With 10
+  novel trials, the FRL apartments add almost nothing to novel-trial measures.
+- HSSD: the draw reached position 40 for HSSD9-26 (41 drawn in all, 26 accepted). HSSD21-26 (all / novel):
+  192/28, 186/85, 166/15, 160/47, 186/33, 156/51. Skipped since amendment 1: one island of 33.8 m^2, one of
+  262.4 m^2, and one house with 17 trials. The eighteen new houses give 3,067 trials, 947 of them novel.
+- In all, 23 new scenes with 3,466 lure-free trials (957 novel). The PC's renders were copied to the Mac
+  and every file's SHA-256 matched.
+- Opus's key-1 queue is therefore ReplicaFRL0, 1, 3, 4, 5. Its parity scene on vast-3 is HSSD20 (walks
+  0-3, 24 trials).
+
+## Experiment 20 (pre-registered 2026-10-28 00:30 PDT, before any new baseline was scored): retrieval baselines on the same trials
+
+**Why.** All three reviewers of the conference version (R0 packet, issue 1; triage proposal P1, approved by
+the user 2026-10-28) point out that a novel trial does not rule out appearance matching. A trial is novel
+when no walk frame within 1 m of the new view faces within 45 degrees of it, so a frame just past 1 m can
+still look much like it. A rule that finds the look-alike walk frames and then picks the option close to
+them in frame number could then solve the near-or-far choice without any sense of place. This experiment
+scores such retrieval rules on exactly the trials the models answered, in every scene with lure-free
+trials, and sets them beside the four-epoch LoRA runs and Opus, overall and in the trials where retrieval
+should work best. The results go into the second arXiv version and the conference version.
+
+**What is already known** (stated here so that only the new parts count as tests):
+- The "look-alike, then time" rule (`spatialcells/adjacency_baseline.py`: the most similar walk frame, or
+  the median frame number of the three most similar, then the option closer to it in frame number) scores
+  58-69% on room A's novel trials over its eight variants (pixels or DINOv2, all 256 frames or the 64
+  shown; `results/adjacency_baseline.json`). In the ten held-out rooms P5000-P5009 with the ordered walk it
+  scores 52.8-54.6% with pixels and 58.3-59.2% with DINOv2 (`results/adjacency_presentations.json`,
+  experiment 13a). Room A's trials do not balance frame order; the other rooms' do.
+- DINOv2's similarity between each option and the new view favours the near option on 52.0% of novel
+  trials over rooms A, B and P5000-P5009 (44-60% per P room; `results/appearance_cue.json`, experiment 13d).
+- The models' overall novel accuracies are known: in the held-out rooms the four-epoch runs score
+  96.3-97.4% (mean 97.1%) and Opus 69.2% (room mean); the photoreal accuracies are in experiments 12, 16
+  and 9c.
+- Nothing else here has been computed: no retrieval rule has been scored in rooms B, the apartments or the
+  houses, no rule of the two new families below anywhere, and no accuracy of any model or rule split by the
+  bins below. Before writing this, only the distributions of the trial geometry (heading gaps, distances,
+  the distance to the nearest same-facing walk frame) and of HSSD's room labels over trials were looked at,
+  to place the bins; no accuracy was.
+
+**Scenes.** Every scene with lure-free trials:
+- the *held-out procedural rooms* P5000-P5009 (10 rooms, 1,920 trials, 1,299 novel);
+- the *photoreal scenes* of experiments 12 and 16, Replica apartments 0-2 and HSSD houses 1-8 (11 scenes,
+  1,953 trials, 424 novel), reported also as apartments and houses separately;
+- rooms A and B, reported on their own (room A's frame order is unbalanced, so it stays out of the rule);
+- experiment 19's new scenes, HSSD9-26 and ReplicaFRL0, 1, 3, 4 and 5, whose walks and trials have been
+  final on the Mac since 2026-10-27 23:40 PDT. The rules are scored there now. The models are added where
+  their runs are complete; no four-epoch run has answered these scenes yet. They are reported as a separate
+  set and do not enter the verdict below. When the four-epoch runs finish there, the same script and rule
+  are applied to them as a replication, reported on its own.
+
+**Features.** Each rule compares the new view with walk frames by cosine similarity of one of four features,
+computed per scene:
+- *pixels*: 32 x 32 RGB block averages (`analyze_probes.pixel_feats`), each dimension z-scored over the
+  scene's walk frames, as in `adjacency_baseline.py`;
+- *DINOv2 CLS*: the CLS token of DINOv2-base (frames resized to 224 px, bicubic with antialiasing, ImageNet
+  normalization, as in `adjacency_baseline.py` and `appearance_cue.py`), z-scored the same way;
+- *DINOv2 CLS, raw*: the same token without z-scoring, as in experiment 13d;
+- *DINOv2 patch mean*: the mean of DINOv2-base's 256 patch tokens, z-scored.
+
+**Frame sets.** A rule sees either *the 64 shown*, exactly the frames the LoRA model's prompt shows
+(`two_choice.present` with `--max-images 64`, ordered: 61 evenly spaced frames plus both options, labelled
+with their real frame numbers), or *all 256* frames, which is what Opus sees. A rule uses only the images,
+the frame numbers and which two frames are the options; never any position.
+
+**Rules.** Every rule scores a trial 1 if it picks the near option, 0 if it picks the far one, and 0.5 for a
+tie, except where stated.
+1. *Option similarity*: pick the option frame that looks more like the new view (4 variants, one per feature;
+   the frame set does not matter).
+2. *Look-alike, then time* (the existing rule): take the m most similar frames of the set (m = 1, 3 or 5),
+   take their median frame number, and pick the option closer to it in frame number; ties go to the far
+   option, as in `adjacency_baseline.py` (24 variants; m = 5 is new).
+3. *Window maximum*: for each option, find the most similar frame of the set whose frame number lies within
+   k of the option's (the option itself included), and pick the option whose best frame is more similar.
+   k = 2, 4, 8, 16 or 32 frames; at about 0.2 m per step that is about 0.4, 0.8, 1.6, 3.3 and 6.6 m of
+   walking. This is retrieval restricted to each option's stretch of the walk (40 variants).
+4. *Window vote*: take the m most similar frames of the set (m = 1 or 5), count how many lie within k frames
+   of each option (the same k values), and pick the option with more; a tie, including none near either,
+   scores 0.5 (80 variants).
+5. *Combined*: a logistic regression (scikit-learn, L2 with C = 1, no intercept, inputs standardized on the
+   training trials) on the 148 rules' signed scores for one option against the other (similarity, frame
+   distance, window maximum or vote count), trained with both option orders. It is trained
+   leave-one-scene-out on the novel trials of the other scenes of the same group (procedural or photoreal)
+   and scored on the left-out scene. Rooms A and B use a model trained on all ten P rooms, and experiment
+   19's scenes one trained on all eleven photoreal scenes. This stands in for a retrieval system that
+   learns how to weigh these cues.
+
+So 149 variants in all. The models are scored the same way: Opus with the 256-frame walk at low effort
+(`results/claude/claude-opus-5-5-<room>-low.jsonl`), and the four-epoch LoRA runs 3-7 with the 64-frame
+walk (`Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s<k>-<room>-256px-max64[-mps].jsonl`), whose per-trial score is
+the share of the five runs that answered correctly. An unparsed answer counts as wrong. Every file is
+checked against its scene's trial manifest.
+
+**Breakdowns** (novel trials; the bins are fixed now):
+- *heading gap*: how far the near option faces from the new view (more than 90 degrees by construction):
+  90-120, 120-150 and 150-180 degrees;
+- *distance margin*: the far option's distance from the new view minus the near option's (at least 2 m by
+  construction): 2-3 m, 3-4 m, 4 m or more;
+- *visual overlap*: the raw DINOv2 CLS cosine similarity between the new view and the most similar of the
+  64 shown frames, cut at the tertiles of the group's novel trials (the edges go into the JSON); rooms A and
+  B use the procedural edges and experiment 19's scenes the photoreal ones;
+- *novelty margin*: the distance from the new view to the nearest of the walk's 256 frames facing within 45
+  degrees of it, which the novelty rule requires to exceed 1 m: 1-1.25 m, 1.25-1.5 m, 1.5-2 m, 2 m or more.
+  This addresses "frames just past 1 m" directly;
+- *rooms* (HSSD houses only): which annotated room each of the new view, the near option and the far option
+  was taken in. The rooms come from HSSD's own region annotations (`semantics/scenes/<id>.semantic_config.json`
+  of the `hssd-hab` revision of experiment 16, copied from the PC to `data/hssd_regions/` with matching md5
+  sums), with a position (x, y) at (x, -y) in the annotation's floor plane, as `habitat_scene.to_habitat`
+  places the camera. Checked before writing this: 97-100% of each house's walk frames fall inside exactly one
+  room polygon and none in two, while the mirrored mapping places 0-94%. Categories: both options in the same
+  room; options in different rooms with the new view in the near option's room; options in different rooms
+  otherwise; and unlabeled, when any of the three lies outside every polygon (9 of HSSD1-8's 366 novel
+  trials). The Replica apartments have no room labels: our trial data has none, and Replica's semantic
+  annotations list objects and classes only. So the apartments are not split by room, and no labels are
+  made up for them.
+
+**Analysis** (`scripts/retrieval_baselines.py` -> `results/retrieval_baselines.json`). For each group, rule
+variant and model: novel accuracy per scene, the mean over scenes with a 95% bootstrap CI over scenes
+(10,000 resamples, seed 0), and pooled over trials; familiar and all-trial accuracy too, for context. In
+each bin: accuracy pooled over the group's trials in the bin, with a 95% CI from a bootstrap over scenes
+(resampling scenes and pooling their trials in the bin), for the rules, the four-epoch mean and Opus, and
+the four-epoch mean minus the rule. Also, descriptively: the models' accuracy on the trials that the best
+rule gets right and on those it gets wrong, and in each bin the best variant for that bin alone (chosen
+per bin, so optimistic).
+
+**Checks before any new number is read.** The pixel versions of the existing rule must reproduce
+`adjacency_presentations.json` (P rooms, 64 shown, top 1 and 3, ordered, time from labels) and
+`adjacency_baseline.json` (room A) exactly, and the DINOv2 versions within a trial or two (CPU against CUDA).
+The raw-CLS option-similarity rule must reproduce experiment 13d's share of trials favouring near in each
+room. If a check fails, the code is fixed first.
+
+**Decision rule.** In each group G (held-out procedural rooms; photoreal scenes of experiments 12 and 16),
+let b* be the variant with the highest scene-mean novel accuracy among all 149. Choosing it on the same
+trials favours the retrieval account.
+1. Overall: the four-epoch mean minus b*, as the mean over scenes of the per-scene differences, is at least
+   15 points.
+2. Where retrieval does best: for each breakdown (heading gap, distance margin, visual overlap, novelty
+   margin, and in the photoreal group the HSSD room categories), take the bin with at least 30 novel trials
+   in the group in which b* scores highest; there, the four-epoch mean minus b*, pooled in the bin, is at
+   least 15 points.
+
+The retrieval account is rejected as an explanation of the LoRA model's novel-trial accuracy if 1 and 2
+both hold in both groups. What each outcome would mean:
+- *Both hold in both groups*: no rule tested here, whatever its features, frame set or frame-order window,
+  comes within 15 points of the model, even on the trials where retrieval works best. The paper can then say
+  that retrieval plus local frame order, as implemented here, does not account for the model's accuracy. It
+  does not show that the model uses no retrieval at all.
+- *1 holds but 2 fails in a group*: the model's lead comes from the trials where retrieval fails, and where
+  retrieval works it is not clearly better than retrieval. Its accuracy there is compatible with
+  retrieval, and the paper narrows its claim for that group to the trials where retrieval fails.
+- *1 fails in a group*: in that group these trials do not separate localization from retrieval plus frame
+  order, and the paper says so and drops the localization reading there.
+- *The procedural rooms pass and the photoreal scenes fail* (or the reverse): the claim holds only where it
+  passes, and the paper states the split.
+Opus is set beside the rules in every table without a threshold. Its accuracy near the rules' would say that
+its walk gain could come from retrieval, which is worth knowing but is not tested here.
+
+Cost: none. DINOv2 features on the Mac's CPU through gq (`--on mac --cpu`; the Mac's GPU is busy with
+experiment 19), cached in `data/retrieval_feats/` (not in git); the analysis is CPU only.
+
+*Results (2026-10-28 07:20 PDT; features gq mac:126 and mac:127; `scripts/retrieval_baselines.py analyze` ->
+`results/retrieval_baselines.json`; the values a paper would cite are under its `summary` key, as fractions).*
+All 13 reproduction checks passed with no trial off, the DINOv2 ones included (CPU against the CUDA-era
+numbers), before any new number was read. Novel trials, means over scenes with 95% bootstrap CIs over scenes:
+
+| scenes (novel trials) | best rule (chosen in the group) | best rule | four-epoch LoRA | Opus | LoRA minus rule |
+|---|---|---|---|---|---|
+| held-out rooms P5000-P5009 (1,299) | combined | 67.7% [63.4, 71.6] | 97.1% [96.3, 97.9] | 69.2% [66.3, 71.7] | +29.4 [24.9, 34.2] |
+| photoreal, Apt0-2 + HSSD1-8 (424) | window maximum, DINOv2 CLS, all 256, k 32 | 74.9% [70.1, 80.8] | 88.1% [85.0, 91.7] | 84.5% [80.2, 88.7] | +13.2 [5.6, 19.4] |
+| apartments (58) | the photoreal rule | 82.2% [66.7, 100] | 84.0% [82.0, 86.7] | 85.4% [80.0, 92.9] | +1.8 [-16.7, 20.0] |
+| houses (366) | the photoreal rule | 72.1% [69.0, 75.1] | 89.6% [85.6, 94.0] | 84.2% [78.6, 89.6] | +17.5 [13.1, 22.0] |
+| room A (102) | the procedural rule | 66.7% | 98.4% | 74.5% | +31.8 |
+| room B (106) | the procedural rule | 69.8% | 97.9% | 64.2% | +28.1 |
+
+The best rule of each family, in the held-out rooms and then the photoreal scenes: option similarity 51.7% /
+58.8%, look-alike then time 61.1% / 70.0%, window maximum 64.6% / 74.9%, window vote 63.5% / 71.8%, and the
+combined regression 67.7% / 68.3%. So looking only at the two options does almost nothing, as experiment 13d
+found. Restricting retrieval to each option's stretch of the walk does best. The learned combination helps
+in the procedural rooms but not in the photoreal ones, where weights learned in other scenes transfer poorly.
+In room A the window maximum (DINOv2 patch mean, k 32) reaches 73.5%, above the 58-69% that the existing rule
+gave there.
+
+In the bin where the group's best rule does best, for each breakdown (rule, LoRA, difference with its CI):
+- held-out rooms: heading gap 90-120 degrees 70.5% vs 97.7%, +27.2 [20.2, 33.4]; distance margin 4 m or more
+  72.7% vs 99.9%, +27.2 [22.4, 32.0]; novelty margin 1.5-2 m 68.6% vs 97.4%, +28.8 [23.8, 34.4]; lowest
+  visual overlap 70.7% vs 97.4%, +26.7 [20.9, 31.6]. Every bin of every breakdown leaves the LoRA ahead by
+  26.7-31.5 points, and Opus within 10 points of the rule in every bin.
+- photoreal scenes: heading gap 90-120 degrees 77.8% vs 87.4%, +9.6 [3.9, 15.2]; distance margin 4 m or more
+  77.6% vs 89.3%, +11.7 [3.8, 18.3]; novelty margin 1-1.25 m 76.5% vs 87.8%, +11.3 [6.9, 15.8]; middle
+  visual overlap 74.8% vs 87.8%, +13.0 [4.4, 21.0]; options in different rooms with the new view in the near
+  option's room 78.7% vs 93.7%, +15.0 [8.3, 21.8]. Where the options share a room (176 trials), the rule
+  scores 64.5% and the LoRA 84.3% (+19.8 [9.9, 26.7]).
+In words: retrieval works best in the photoreal scenes when the near option faces closest to the new view,
+when some same-facing walk frame lies just past the 1 m novelty limit, when the far option is far away, and
+when the options are in different rooms. In those trials it comes within 10-15 points of the model.
+
+How the models' accuracy depends on whether the best rule is right (rule right / rule wrong): held-out
+rooms, LoRA 97.7% / 95.8% (879 / 420 trials) and Opus 72.9% / 62.9%; photoreal scenes, LoRA 91.6% / 81.2%
+(287 / 101 trials, 36 ties) and Opus 89.2% / 77.2%. In the procedural rooms the LoRA model's accuracy hardly
+depends on whether retrieval works, while Opus's does. In the photoreal scenes both models lose about 10-12
+points on the trials that retrieval gets wrong.
+
+Room labels: of HSSD1-8's 366 novel trials, 176 have both options in the same annotated room, 169 have them
+in different rooms with the new view in the near option's room, 12 have them in different rooms otherwise,
+and 9 are unlabeled. The apartments have no room labels and are not split.
+
+**Verdict: the retrieval account is not rejected.** It is rejected in the held-out procedural rooms, where
+criteria 1 and 2 hold with margins of 26.7-29.4 points. In the photoreal scenes, criterion 1 fails (+13.2,
+under 15, although the interval excludes zero), and criterion 2 fails in four of the five breakdowns
+(+9.6 to +13.0; the room breakdown passes narrowly, at +15.03). In the apartments alone, the best rule (82.2%)
+is level with both the LoRA model (84.0%) and Opus (85.4%), on 58 trials. In the houses alone the LoRA model
+leads by 17.5 points overall, but by only 11.6-13.9 in the best bins of four breakdowns. Following the
+registered meaning:
+- In the procedural rooms, retrieval plus local frame order, as implemented by these 149 rules, does not
+  account for the model's accuracy, even on the trials where retrieval works best. This does not show that
+  the model uses no retrieval.
+- In the photoreal scenes, these trials do not separate localization from retrieval plus frame order by the
+  registered margin. The paper should say so and drop the localization reading there. It can still say that
+  the model beats every rule tested, by 13.2 points [5.6, 19.4], and that retrieval comes within 10-15 points
+  of it where retrieval works best.
+- Opus in the held-out rooms is no better than the best retrieval rule (+1.6 [-3.9, 7.3]; Opus minus rule in
+  room B -5.7). In the photoreal scenes it is 9.6 points [2.5, 16.2] above it.
+
+Not registered, reported apart from the verdict:
+- *Rules that see only what the LoRA model saw.* The best rule restricted to the 64 shown frames scores 62.7%
+  in the held-out rooms (window maximum, DINOv2 patch mean, k 32; LoRA +34.4 [31.4, 37.5]) and 68.1% [63.1,
+  72.9] in the photoreal scenes (window maximum, DINOv2 CLS, k 32; LoRA +20.0 [14.1, 25.6]). So part of the
+  photoreal rule's strength comes from the 192 frames the LoRA model never saw. Even so, with the same rule
+  applied, the photoreal scenes still fail in one bin: where a same-facing walk frame lies 1-1.25 m from the
+  new view, the 64-frame rule scores 74.0% against the LoRA's 87.8% (+13.8 [9.0, 18.4]); in the houses alone
+  +13.4.
+- *Larger windows.* The window maximum with k = 64 or 128 frames scores lower than with k = 32 in every
+  group (best 60.7% in the held-out rooms, 68.8% in the photoreal scenes), so the registered window sizes did
+  not cap the rules.
+
+*Experiment 19's scenes (2026-10-28 08:20 PDT; rules only, so no rule verdict yet).* With the photoreal group's
+best rule, the eighteen new houses HSSD9-26 score 71.8% [69.0, 74.6] on their 947 novel trials (scene mean;
+the old houses gave 72.1%), and 76.0% on all 3,067 trials. So the rule's strength in houses carries over to new
+houses. The FRL apartments have only 10 novel trials, and the rule gets all of them right (83.5% of their 399
+trials). The four-epoch runs have so far answered only HSSD9 (LoRA 89.4% against the rule's 75.5% on its 53
+novel trials). Opus has answered HSSD9-13 (80.5% against the rule's 73.6%, novel) and FRL0, 1, 3 and 4. When
+the four-epoch runs are complete, `analyze` applies the rule to `exp19_houses` as the registered replication;
+the FRL apartments cannot meet the 30-trial bins.
+
+## Experiment 21 (pre-registered 2026-10-28 00:20 PDT, before any synthetic unit was scored): what the heading-invariance statistic does on units whose answer is known
+
+**Why.** Reviewer issue 8 (round R0, `writeup/paper/kit/paperscorer/rounds/R0/packet.md`) says the
+statistic behind the paper's strict heading-invariance numbers is blind to gain: a unit whose rate
+changes a lot with heading could still score as invariant. That statistic (experiment 13e,
+`analyze.py --quadrant`) builds a unit's rate map twice, once only from frames facing north (a
+90-degree sector centered on north) and once only from frames facing south, and correlates the two
+over the bins both sectors visit. It does the same for east and west and averages the two
+correlations. A place unit counts as invariant when the average is above 0.5 (`\HeadInvThresh`). A
+correlation ignores a change of scale, so by design the statistic asks whether the field stays in the
+same place when the view reverses, not whether the firing rate stays the same. This experiment runs
+the unchanged statistic on synthetic units whose answer is known, and adds a gain index that
+measures the rate change the correlation ignores. It is proposal P4 of the R0 triage
+(`writeup/paper/kit/notes_R0_triage.md`), approved by the user on 2026-10-28. Results go into the
+second arXiv version and the conference version, not into v1.
+
+**Synthetic units.** Every unit is read out along room A's 48 walks of 256 steps
+(`data/walks/meta.npz`, 12,288 frames), the positions and headings every model in experiment 13e was
+scored on, so occupancy and the mix of headings in each bin are the real ones. A place field is a sum
+of one Gaussian bump (70% of units) or two (30%), with widths (SD) drawn from 0.4-0.9 m and centers
+drawn from the walk positions. There are four kinds of unit:
+- (a) *Invariant place units*: the field alone (300 units).
+- (b) *Gain-modulated place units*: the field times exp(beta cos(theta - phi)), with a random
+  preferred heading phi. The field stays where it is, and the rate at the preferred heading is R times
+  the rate at the opposite heading. R = 1.25, 1.5, 2, 3, 5, 10 and 30, with 100 units each.
+- (c) *Conjunctive place-by-heading units*: the field, but only while the heading is within w/2 of phi,
+  and zero otherwise. w = 60, 90, 120 and 180 degrees, with 100 units each. A fifth group with w = 270
+  degrees (100 units) is reported as a boundary case and is not part of the decision rule.
+- (d) *View-dependent units*: they fire when a target point is inside the camera's 90-degree field of
+  view and not hidden behind a pillar (both pillars are taller than the 1 m camera). The response has
+  a Gaussian preference for where in the image the target appears (preferred offset from the image
+  center drawn from -30 to +30 degrees, width 8-25 degrees) and grows as the target gets closer
+  (min(1, d0 / distance), with d0 drawn from 0.75-2.5 m). The targets are random points on the walls at
+  camera height (200 units) and the centers of room A's two pillars (200 units). Where such a unit
+  fires depends on which way it faces, so its field moves with heading.
+
+Each unit gets a constant offset (0-10% of its peak) and additive noise. The noise is an AR(1)
+process within each walk, with correlation rho from one step to the next, scaled to k times the SD of
+the unit's noise-free signal. The primary runs use rho = 0.5 and k = 0, 0.5, 1, 2, 3, 4, 5, 6, 8, 10
+and 12. Sensitivity runs repeat the same k at rho = 0 (independent noise) and rho = 0.9. All seeds are
+fixed.
+
+**Scoring.** Each population (one per rho and k, all 1,900 units together) goes through
+`analyze.analyze_layer(X, meta, np.random.default_rng(0), quadrant=True)` unchanged. This is the
+paper's place selection (spatial information above the unit's own 99th shuffle percentile, split-half
+stability above 0.5, one to three fields covering at most 40% of the room) and the paper's
+opposite-sector correlation. `analyze_layer` returns only population fractions for the strict
+statistic, so the script recomputes each unit's opposite-sector score with analyze.py's own functions
+(`sectors`, `rate_maps`, `map_corr`), line for line as `analyze_layer` does, and it stops unless this
+reproduces `analyze_layer`'s `frac_place_heading_invariant_quadrant` exactly. `analyze_layer` scores
+relu(X) and relu(-X) as separate units (poles); only the positive pole of each synthetic unit is
+analyzed, since the negative pole is mostly noise. The older 180-degree-halves score (`hi`) is
+reported beside it as a secondary measure.
+
+**Gain index.** For each opposite pair (north vs south, east vs west), the in-field bins are the bins
+where the unit's map from all headings is above half its range (the rule `field_stats` uses), among
+bins that both sector maps visit (at least 3 frames each). The field amplitude in a sector is the
+sector map's mean over in-field bins minus its mean over the other shared bins. The pair's index is
+log2 of the ratio of the two amplitudes, each floored at 5% of the all-heading map's amplitude on the
+same bins (so a field that vanishes in one sector gives about 4.3, not infinity). The gain index G is
+the length of the vector of the two pair indices, in log2 units: G = 1 means the field's amplitude
+changes about twofold between opposite headings. A unit is flagged as rate-modulated when G > 1. As a
+secondary measure, the same index is computed from raw in-field rates without subtracting the
+out-of-field level.
+
+**The real units' noise level.** The script reads the median split-half stability of place units
+(`place_stability_median`) for every condition and layer in `results/summary_quadrant.json` (220
+entries). Their median is 0.859 and they range from 0.575 to 0.954. Synthetic units are compared with
+real ones at the same measured stability, not the same k: the primary window is every selected
+synthetic unit whose own split-half stability is within 0.05 of 0.859 (0.809-0.909), pooled over k at
+rho = 0.5. Results are also reported in stability bins of 0.1 from 0.5 to 1.0, which cover the real
+range, and per k.
+
+**Decision rule.** The statistic is validated for the paper's use if, in the primary window, at least
+90% of selected kind-(a) units score above 0.5, and at least 90% of selected kind-(c) units (w = 60-180
+degrees, pooled) and kind-(d) units (both target types, pooled) score 0.5 or less. Each of the three
+needs at least 30 selected units in the window, or the verdict is "not determined" and the population
+is enlarged by an amendment. If the rule holds at rho = 0.5 but fails at rho = 0 or 0.9, the verdict is
+"validated, with a caveat about the noise's time structure", and the report says which part fails.
+The rule says nothing about kind (b). The report states, for each R, the fraction counted invariant
+and the gain index, and the R at which the pass rate falls below one half.
+
+**What the outcomes would mean.** If the rule holds, the strict statistic finds invariant units at
+the real units' reliability and rejects conjunctive and view-dependent units, so the paper's low
+fractions (single frames 0-6%, the fine-tuned model) are not the test missing invariant units, and its
+high ones (the RNN's 98-100%, the moving averages) are not conjunctive or view units counted by
+mistake. Whatever it does with kind (b) defines what "invariant" means in the paper: the same field
+location, with a rate that may change by up to the R where the pass rate falls. If (a) fails, the
+statistic undercounts invariant units at real reliability, and the paper must lean on the
+stability-normalized ratio or a reliability-adjusted threshold. If (c) or (d) fails, it overcounts, and
+the positive results may include heading-dependent units. The per-bin results also show whether the
+conclusion holds at the low stabilities of the fine-tuned model's walk conditions (medians 0.64-0.79).
+
+**Real units (descriptive, no rule).** Room-A activations on the Mac are VGGT-single blocks 19 and 21
+(`data/acts/vggt-single`) and the pixels (from `data/walks/frames.npy`). For these conditions, and for
+pixels with the 8-frame moving average, the script first reproduces `frac_place` and
+`frac_place_heading_invariant_quadrant` from `results/summary_quadrant.json`. It then reports the
+gain index of the place units counted invariant and of those not counted, the fraction with G > 1, and
+the synthetic kind-(a) false-flag rate at the same stability for comparison. The other conditions'
+activations (Qwen, the fine-tuned run 0, VGGT-walk) and the RNN checkpoints are on vast-1, so they are
+not part of this run. The same script runs there with `--real` and `--rnn`.
+
+Script: `scripts/heading_stat_validation.py` -> `results/heading_stat_validation.json`. CPU only, on the
+Mac through gq if it takes longer than about 10 minutes.
+
+### Exp 21 results (2026-10-28 07:41 PDT)
+
+Run as gq mac:128 (Mac CPU, 24 min, rc 0), the registered design unchanged. The verdict is
+**validated**: the rule holds at rho = 0.5 and at both sensitivity settings. Before the run, a count of
+selected view-dependent units in the window (no pass rates looked at) showed 251 at rho = 0.5, so no
+population had to be enlarged. All four real conditions reproduce `frac_place` and
+`frac_place_heading_invariant_quadrant` from `results/summary_quadrant.json` exactly (difference 0), so
+the scoring is the paper's.
+
+**Pass rates at the real units' reliability.** These are selected place units whose own split-half
+stability is 0.809-0.909, around the real median of 0.859, with rho = 0.5 and all noise levels pooled. The
+pass rate is the fraction the statistic counts as strictly invariant (score above 0.5).
+- (a) Invariant place units: 100% (376 of 376). The median score is 0.83, and the median score divided
+  by stability is 0.96.
+- (c) Conjunctive units, w = 60-180 degrees: 0.9% (4 of 436), so 99.1% are correctly rejected. By width
+  the pass rates are 0, 0, 0 and 3.8%; all four errors are 180-degree units.
+- (d) View-dependent units: 0% (0 of 251; wall points 0 of 165, pillars 0 of 86). Their median scores
+  are -0.07 and -0.31: a pillar unit's field sits on opposite sides of the pillar for opposite headings,
+  so the two maps anticorrelate.
+- With independent noise (rho = 0) the three groups are classified correctly 100%, 99.0% and 100% of
+  the time (n = 499, 580 and 351); with rho = 0.9, 100%, 97.2% and 100% (n = 237, 363 and 174).
+- The 270-degree conjunctive units (the boundary case, outside the rule) pass 90% of the time. They
+  fire at their field for three quarters of the compass, so they behave like strongly gain-modulated
+  units.
+
+**What the statistic does with gain-modulated units (b).** It counts them as invariant. At the real
+reliability the pass rates are:
+
+| R (preferred / opposite rate) | 1.25 | 1.5 | 2 | 3 | 5 | 10 | 30 |
+|---|---|---|---|---|---|---|---|
+| counted invariant | 100% | 100% | 100% | 99.2% | 97.5% | 74% | 28% |
+| median gain index G | 0.46 | 0.60 | 1.05 | 1.60 | 2.48 | 3.41 | 4.63 |
+| log2 R, for comparison | 0.32 | 0.58 | 1.00 | 1.58 | 2.32 | 3.32 | 4.91 |
+
+The pass rate falls below one half at R of about 18 (about 15 with rho = 0, above 30 with rho = 0.9).
+In plain terms, a place unit whose rate at one heading is five times its rate at the opposite heading
+still counts as invariant, because its field stays in the same place. The statistic rejects such a unit
+only when the weak direction's map is so faint that noise swamps it, which is a side effect of noise and
+not a test of rate. How much gain it tolerates also grows with reliability: the pass rate falls below one
+half at R = 3.9 for stability 0.6-0.7, 7.2 for 0.7-0.8, 16 for 0.8-0.9 and above 30 for 0.9-1.0. So in
+the paper "heading-invariant" means that the field stays put across opposite headings, not that the
+rate does.
+
+**The gain index.** G follows the modulation closely: its median is within 0.16 of log2 R up to R = 10,
+and 0.28 below it at R = 30 (table above). For invariant units the median G is 0.29, and 1.1% of them exceed G = 1 at the
+real reliability. By stability bin that false-flag rate is 11%, 5.6%, 2.6%, 1.1% and 0% from 0.5-0.6 up to
+0.9-1.0. G > 1 flags about half of the R = 2 units and all units with R of 3 or more. Conjunctive and view
+units have median G of 5.6-7.2 and 2.4-5.9. G cannot tell a smooth gain from a broad heading window: a
+270-degree conjunctive unit has G of about 2 and passes the correlation, just like a gain-modulated unit
+with R of about 4. Both have the same field and a heading-dependent rate. A clarification of the
+registration: it said a field that vanishes in one sector gives a pair index of about 4.3. Because the
+floor is 5% of the all-heading amplitude and one sector can carry up to about four times that amplitude,
+a pair index can reach about 6.3, which is why the conjunctive medians are 6-7. The method is unchanged.
+The secondary index from raw in-field rates moves the same way but is compressed by the out-of-field
+level (for example, 1.01 at R = 3).
+
+**Reliability matters for invariant units.** By stability bin at rho = 0.5, invariant units pass 49% at
+0.5-0.6, 85% at 0.6-0.7, 98% at 0.7-0.8 and 100% above 0.8 (rho = 0: 28%, 64%, 95%, 100%; rho = 0.9: 87%,
+98.5%, 99.5%, 100%). In every bin below 0.9, conjunctive and view units pass at most 0.5% at rho = 0.5
+(at most 3.2% at rho = 0.9). So where
+real place units have median stability below about 0.7, the statistic undercounts invariant units: a
+fully invariant population there would read roughly 64-85%, not 100%. This applies to the fine-tuned
+model's walk condition at blocks 23-35 (medians 0.64-0.67) and to the late layers of the `qwen32b-walk`
+and `qwen38-walk` conditions (0.59-0.66). The fine-tuned walk condition's observed fractions (2-14%) are far
+below what an undercount of that size could produce from a mostly invariant population, so "few invariant
+units" stands, but the exact fractions in those layers are undercounts. The stability-normalized ratio
+(`place_inv_quadrant_over_stab_median`) is the measure to quote beside them.
+
+**At the highest reliability.** Above stability 0.9, 25% of the 180-degree conjunctive units are counted
+invariant (319 units; 27% at k = 0.5, where there is noise, so this is not the rounding effect described
+below). A unit that fires for half of the compass, centered on a cardinal direction, gives a north-south
+correlation near 0 and an east-west one near 1, which averages to exactly the threshold. Narrower windows
+stay at or below 3%. This matters for conditions whose place units are very reliable, such as the RNN
+(0.88-0.98) and VGGT-single block 19 (0.95).
+
+**The strict split against 180-degree halves.** At the real reliability, the older 180-degree score
+counts 92% of the 180-degree conjunctive units and 45% of the 120-degree ones as invariant, against 3.8%
+and 0% under the strict split. This is why the paper uses the strict split. View units fail both (0%).
+
+**A caveat about the noise-free population.** At k = 0, a sector where a unit is silent gives a map
+equal to its constant offset, and the correlation is then computed on floating-point rounding residue,
+which is an arbitrary number. This affects only the noise-free synthetic units. A real relu pole that is
+silent gives exact zeros and a correlation of 0. The noise-free units are 29 of the 436 conjunctive units
+and 140 of the 251 view units in the primary window, and all were scored correctly. Without them the rule
+still holds: 403 of 407 (99.0%) and 111 of 111 (exploratory check).
+
+**Real units (descriptive).** "Counted invariant" is the share of place units above 0.5. "Expected if
+pure place" is the G > 1 rate that synthetic invariant units show at the same stability.
+
+| condition (room A) | counted invariant | median G of those | G > 1 among those | expected if pure place | G > 1 among the rest |
+|---|---|---|---|---|---|
+| VGGT-single block 19 | 45% (675 of 1,502) | 1.77 | 77% | 0.04% | 99% |
+| VGGT-single block 21 | 34% (1,136 of 3,376) | 1.55 | 74% | 0.26% | 94% |
+| pixels | 1.2% (52 of 4,449) | 1.23 | 75% | 0% | 89% |
+| pixels, 8-frame moving average | 97% (5,815 of 5,987) | 0.45 | 9.7% | 0.08% | 35% |
+
+Most of VGGT's place units that the statistic counts as invariant keep their field but change its
+amplitude about threefold between opposite headings (median G 1.77 is about 3.4 times). They look like
+kind (b) with R around 3, or like broad conjunctive units, and not like kind (a), whose G > 1 rate at that
+reliability is near zero. The moving average's counted units mostly keep their rate as well. Units that
+pass both tests, the field location (score above 0.5) and the rate (G of 1 or less), are 10% of
+VGGT-single block 19's place units, 8.6% at block 21, 0.3% for pixels and 88% for the moving average
+(exploratory). So the paper's VGGT figure of 45% should be read as "field location stays put across
+opposite headings", and the paper can add that about three quarters of those units change their rate by
+more than twofold.
+
+**Not done here, and what it needs.**
+- The other room-A conditions (Qwen, the fine-tuned run 0, VGGT-walk and the rest of
+  `summary_quadrant.json`) have their activations on vast-1, and the RNN checkpoints
+  (`data/grid_rnn{,_s093}/model.pt`) are there too. The pass over them first copies the script and this
+  results file to vast-1, then runs `gq submit --on vast1 --project mechinterp --name e21_real --cpu --est 8h
+  -- .venv/bin/python -u scripts/heading_stat_validation.py --skip-synthetic --real <tags> --rnn base:1
+  s093:3`. With `--skip-synthetic` the comparison with synthetic units is read from the results file.
+  The cost is roughly one `analyze_layer` pass per layer, about as long as experiment 13e's CPU pass.
+- Experiment 22's four-epoch recordings (vast-3, `data/acts/qwen8b-ft-e4-s<k>-walk` and `-single`, and
+  `qwen8b-ft-rerun-*`, on room A's walks) can be scored the same way on vast-3 once recorded. Copy
+  `results/heading_stat_validation.json` to `results/e4_internals/heading_stat_e4.json` there, then run
+  `gq submit --on vast3 --project mechinterp --name e21_gain_e4 --cpu --est 3h -- .venv/bin/python -u
+  scripts/heading_stat_validation.py --skip-synthetic --out results/e4_internals/heading_stat_e4.json
+  --ref-summary results/e4_internals/summary_quadrant.json --real qwen8b-ft-rerun-walk
+  qwen8b-ft-e4-s3-walk qwen8b-ft-e4-s4-walk qwen8b-ft-e4-s5-walk qwen8b-ft-e4-s6-walk qwen8b-ft-e4-s7-walk`.
+  Add the `-single` and `-single+ema8` tags if wanted.
+
+## Experiment 22 (pre-registered 2026-10-28 00:30 PDT, before any four-epoch run was recorded): the unit and task-readout analyses on the four-epoch runs
+
+**Why.** The paper's behavioral headline is the mean of the five four-epoch runs (experiment 9c, runs 3-7),
+but every analysis inside the fine-tuned model used run 0, the original two-epoch run. That covers the strict
+heading invariance of its units (experiment 9's recordings, scored in experiment 13e) and the readouts under
+the real two-choice prompt (experiment 14a). Reviewer issue 3 of the R0 conference review
+(`writeup/paper/kit/paperscorer/rounds/R0/packet.md`) asks for the unit analyses on the recipe the headline
+describes. It is proposal P2 in `writeup/paper/kit/notes_R0_triage.md`, approved by the user on 2026-10-28.
+The question is a real one. The four-epoch runs are better trained than run 0 (room A novel 98-99% against
+92%), and they differ in how much they need the walk's order, so a better-trained model might grow more
+heading-invariant units. Results go into v2 and the conference version, not v1.
+
+**Runs.** All five four-epoch runs (adapters `data/ft/qwen8b-proc-e4-s3` to `-s7`), plus run 0 recorded
+again on the same machine as a parity reference. The supervisor suggested at least the most and the least
+shuffle-sensitive runs. "Shuffle-sensitive" means how much accuracy drops when the walk's frames are shuffled.
+On the held-out rooms' novel trials (experiment 9c), run 5 loses the most (ordered minus shuffled +42.9
+points; shuffled 54.4%) and run 7 the least (+15.1 points; shuffled 82.1%), with run 4 (+32.3), run 3 (+27.2)
+and run 6 (+22.4) in between. All five fit in about four hours of GPU time:
+- run 0's four unit recordings took 6 minutes on vast-1's RTX PRO 6000 (walk 126 s, shuffled 126 s,
+  probes-only 20 s, single 95 s; `data/logs/extract_ft_*.log` there), and their scoring took about 4 s per
+  layer on the GPU;
+- the four-epoch runs' experiment-10 tests ran at 0.63 s per trial on vast-3, so recording 1,920 task
+  trials takes about 20-25 minutes per run.
+The jobs run in the order run 0, run 5, run 7, run 3, run 4, run 6, so the two extremes come first.
+
+**Platform and inputs.** vast-3's RTX 5090 (CUDA, bf16), through gq. The jobs queue behind experiment 18's
+Gemma chain at priority 150, below the project's 200, so other sessions' MechInterp jobs go first. Run 0's
+unit recordings were made on vast-1 (CUDA) and its task recording on the Mac (MPS). The four-epoch runs'
+experiment-10 answers come from vast-3 (CUDA), except P5005's (MPS). So run 0 is recorded again on vast-3,
+under the names `qwen8b-ft-rerun` (units) and `qwen8b+qwen8b-proc-cuda` (task), and the parity check below
+compares the new recordings with the originals. Checked before submission:
+- room A's walks and probes, the ten held-out rooms' walks and trial lists, and all six adapters have the
+  same MD5 on the Mac and vast-3 (room A also on vast-1);
+- vast-3's 45 experiment-10 answer files for the four-epoch runs match the local copies;
+- run 0's ten and the four-epoch runs' five P5005 MPS answer files were copied to vast-3 (checksums verified),
+  so every task prompt's token count is checked against experiment 10's run of the same prompt;
+- `analyze.py` on vast-3 is the committed version (MD5 `bd0658199e7cd2c2283cd684acb8a152`); the pilot WP's
+  amendment 2 showed that it scores room A bit-identically to the earlier version. Each job writes the
+  MD5 of its code, data and adapters to `results/e4_internals/*_inputs.md5`.
+
+**Part 1: units (experiment 9's recordings, experiment 13e's strict scoring).** For each run,
+`extract.py`'s four modes run on room A's 48 walks with the adapter merged:
+- *walk*: the 256-frame walk in one context, then its 64 teleport probes in random order;
+- *shuffled*: the same frames in random order, then the same probes;
+- *probes-only*: the probes with no walk;
+- *single*: every frame on its own.
+Each records the SwiGLU MLP neurons at the `<|vision_end|>` token of each image in layers 3, 8, 13, 18, 23,
+29 and 35. The scoring is exactly the paper's for the fine-tuned 8B. `analyze.py --quadrant` scores the walk,
+single and single+ema8 conditions into `results/e4_internals/summary_quadrant.json`. `e4_internals probes`
+repeats `analyze_probes --quadrant`'s strict teleport-probe decoding into
+`results/e4_internals/probes_quadrant.json`. The measure is the one the paper reports: the share of place units
+that are strictly heading-invariant, `frac_place_heading_invariant_quadrant / frac_place`. A place unit
+counts as strictly invariant when its rate maps from opposite 90-degree heading sectors (N vs S, E vs W)
+correlate above 0.5. The share is taken as the maximum over the seven layers (`make_facts.py`'s
+`QuadShareFt*`). Run 0's values: 14.2% with the walk in context (layer 35), 0.7% for single frames, and 90.0%
+for single frames smoothed by an 8-step moving average; in layers 23-35, 1.4-2.9% of all units are strictly
+invariant. The references from experiments 13e-f: single frames give 0-6% in every model, the moving average
+88-97%, and the path-integrating RNN 98-100%. Experiment 13f showed that strict cross-sector population
+decoding is not a valid test (the RNN fails it). So the probe and unit decoding errors are reported only as
+descriptions.
+
+**Part 2: task readout (experiment 14a).** For each run, `task_record.py` runs all 1,920 lure-free trials of
+P5000-P5009 with the exact experiment-10 prompts. It reads the residual stream after every layer at four
+sites: the new view's image-end token, the mean of its visual tokens, the question's last token and the last
+prompt token. Then `task_probe.py` runs unchanged: ridge and the one-hidden-layer MLP, trained on five rooms
+and tested on the other five, both ways.
+
+Two further readouts were run by hand in experiment 14a and are quoted in the paper. They are now in
+`e4_internals task-extras`, so that every run gets the same computation:
+- the R^2 of the distance difference d_a - d_b (the new view's distance to option a minus its distance to
+  option b) when it is predicted from the model's answer alone, from the true nearer option alone, and by a
+  ridge readout of what is left after the answer;
+- the new view's position read out within each room (five folds of walks).
+On run 0's MPS recording this script gives R^2 0.69, 0.87 and 0.03-0.07 (layers 20-30) for the first item,
+against experiment 14a's 0.69, 0.87 and 0.03-0.06. The within-room readout gives 2.09 m at the last token
+(14a: 2.10 m) and 1.53 m at the visual tokens (14a: 1.43 m; the folds differ slightly). These run-0 numbers
+were computed before this registration, to check the script; every run is compared with this script's values.
+
+**Decision rules, set now.** All thresholds are absolute, so the verdicts do not depend on which run-0
+recording is the reference.
+
+*Units (primary).* Let W be a run's strictly invariant share of place units with the walk in context (the
+maximum over layers), and S the same for single frames.
+- The paper's claim that few of the fine-tuned model's place units are strictly heading-invariant *carries
+  over* to the four-epoch recipe if all five runs have W at most 25% (within about 10 points of run 0's 14%)
+  and S at most 6% (the single-frame range of every model).
+- It *does not carry over* if any run has W of at least 85%, near the moving average (88-97%) or the RNN
+  (98-100%).
+- Otherwise it carries over *partly*.
+Reported for every run either way: whether the moving-average account holds (the run's moving-average share
+is at least its walk share, as in every model so far); the late-layer fractions; the 180-degree versions; and
+the probe decoding errors. With five runs, whether W tracks shuffle sensitivity is described with a Spearman
+correlation, without a test.
+
+*Task readout.*
+- Pipeline check, per run: the nearer option read out at the last token (ridge, best layer) is within 3
+  points of the run's accuracy on the same prompts. A run that fails is flagged, and its other readouts are
+  reported with the flag.
+- No room-general position code (primary for the readout): this *carries over* if every run's best
+  cross-room R^2 for the new view's (x, y), over all sites, layers and both readouts, is at most 0.10 (run 0:
+  0.03). It *does not carry over* if any run reaches 0.30, and carries over *partly* otherwise.
+- Where the decision forms: a run's decision layer is the first layer at which the last-token ridge R^2 for
+  d_a - d_b reaches half of its maximum over layers (run 0: layer 20, maximum 0.76). The paper's "between
+  layers 18 and 20" carries over if every run's decision layer is between 18 and 22. Otherwise the paper
+  gives each run's layer.
+- The readout is mostly the answer (secondary): this holds if the R^2 of the readout of what is left after
+  the answer stays at or below 0.10 at every last-token layer from 20 to 30, in every run (run 0: at most 0.07).
+- The within-room position readout, the heading-sector readouts and the comparison with the base model
+  (whose recording is not repeated) are descriptions only.
+
+*Parity of run 0's re-recording.*
+- Units: the rerun's strictly invariant shares are within 2 points of the stored run-0 values at every layer
+  in all three conditions, and its strict probe decoding is within 0.10 m at every layer.
+- Task: the last-token ridge accuracy for the nearer option is within 2 points at every layer from 20 on,
+  the R^2 for d_a - d_b is within 0.05 at every layer, and the decision layer is the same.
+If parity fails, the four-epoch runs are compared with the vast-3 rerun (same machine, code and device), both
+sets of run-0 numbers are reported, and the cause is found before the paper's run-0 values change.
+
+**What each outcome would mean.**
+- *Units carry over:* the paper's reading of the fine-tuned model holds for the recipe whose behavior it
+  headlines: the model learned the behavior much more than a place code at the view's token. The paper gives
+  the five-run range next to run 0.
+- *Units do not carry over:* better training produced place-like units at the image token. The paper then
+  restricts its unit claim to run 0, changes its account of the mechanism, and narrows "recognizing views,
+  not places" for the four-epoch model.
+- *Units carry over partly:* with more training, the late layers move toward VGGT-single's intermediate 45%
+  (the Qwen family's walk-in-context range is 7-63%). The paper reports this as an effect of training and
+  keeps the comparison with the moving average and the RNN.
+- *Task readout:* if all rules carry over, the paper's account of where and how the decision forms holds
+  for the recipe. A different decision layer is reported per run, without changing the conclusion. A
+  cross-room position code in any run would contradict "no room-general position code" and is reported as
+  such.
+
+**Jobs, analysis and files.** Cost: none (vast-3). Jobs, submitted 2026-10-28 00:35 PDT at priority 150,
+behind experiment 18's chain (projected PDT times):
+- vast3:305 `e22_units` (GPU, about 1.5 h): Friday about 10:15-11:45;
+- vast3:306 `e22_task` (GPU, about 2.25 h): Friday about 11:45-14:00;
+- vast3:307 `e22_readout` (CPU, after 306, about 1.25 h): Friday about 14:00-15:15.
+Logs: `gq log vast3:305` and so on, plus `data/logs/e4_internals/` on vast-3. Analysis, on the Mac after the
+jobs finish: `.venv-mac/bin/python scripts/e4_internals_analysis.py --fetch`. It copies
+`results/e4_internals/` (only that folder) from vast-3, applies the rules above and writes
+`results/e4_internals_summary.json`. Code: `spatialcells/extract.py` (new `FINETUNED` entries
+`qwen8b-ft-e4-s3` ... `-s7` and `qwen8b-ft-rerun`; existing entries unchanged); `spatialcells/task_record.py`
+(uses the other device's experiment-10 file when this device's is missing, and records the device);
+`spatialcells/task_probe.py` (`--out`, default unchanged); `spatialcells/e4_internals.py` (new);
+`scripts/e4_internals_{units,task,readout}.sh` (the vast-3 jobs); `scripts/e4_internals_analysis.py`. Smoke
+tests (CPU only, no GPU queue touched):
+- `task_record --dry-run` for run 5 on P5000 and P5005: 384/384 token counts match experiment 10;
+- `task_probe --out` reproduces run 0's stored last-token readouts exactly;
+- `e4_internals task-extras` on run 0 gives the values above;
+- `e4_internals probes` runs on synthetic activations;
+- the analysis script runs on run 0's stored scores, reproducing the paper's 14.2%, 0.7%, 90.0%, 3.63 m,
+  decision layer 20 and best (x, y) R^2 0.03.
+
+## Experiment 23 (pre-registered 2026-10-28 01:40 PDT, before any unit's weights were projected or any residual re-recorded): do VGGT's strictly invariant place units write into the causal position subspace?
+
+**Why.** The neuroscience reviewer of round R0f (issue W3,
+`writeup/paper/kit/paperscorer/rounds/R0f/reviews/conference_neuro.json`) points out that the paper's VGGT
+tests do not touch the same representation. The unit test (experiment 13e) scores MLP neurons, while the
+causal test (experiments 4 and 8, `vggt_patch.py`) writes a 10-dimensional position subspace of the
+residual stream from a donor frame into a target frame. This is proposal P8 of the R0 triage
+(`writeup/paper/kit/notes_R0_triage.md`), approved by the user on 2026-10-28. Experiments 4 and 8 already
+showed that replacing the place neurons' activations by their mean, or writing a location into them, barely
+moves VGGT's predicted camera. Those tests ask whether the neurons' activity at one token is needed or
+sufficient. They do not ask whether the directions the neurons write lie inside the code the camera head
+uses, which is the question here.
+
+**The pieces.**
+- *Units.* VGGT single mode (8 anchors plus one walk frame), global block 19, the layer the paper reports
+  (45% of place units strictly invariant: 675 of 1,503 place poles among 4,164 active poles). They are the
+  4,096 GELU outputs at the input of the block's second MLP layer (fc2), at the walk frame's camera token
+  (`vggt_cells.py`, `data/acts/vggt-single/L19.npy`; the Mac's copy is byte-identical to vast-1's).
+  `analyze.py` scores each neuron's two signs as separate units ("poles").
+- *Subspace.* Position PCA 10 at block 19, as `vggt_patch.py` builds it: the residual at the walk frame's
+  camera token right after global block 19, on 2,048 fit frames from even walks (the `default_rng(0)` draw),
+  averaged per 1 m position bin (bins with at least 5 frames), and the top 10 principal directions of those
+  bin means. The basis was never saved, so the same 2,048 residuals are recorded again on the RTX 4070 with
+  the same frames, anchors and code path.
+- *What a neuron writes.* Global block 19 computes x_mid = x + attention, then
+  out = x_mid + γ2 ⊙ fc2(GELU(fc1(LN2(x_mid)))), where γ2 is the block's LayerScale. Neuron j therefore adds
+  a_j(t) · v_j to exactly the residual vector the causal test patches (same token, same block), with
+  v_j = γ2 ⊙ W_fc2[:, j]. The recording checks this: the recorded block output minus the recorded MLP input
+  must equal γ2 ⊙ (W_fc2 a + b_fc2) to bf16 rounding (median relative error below 2%).
+
+**Groups.** Both poles of a neuron share one write vector, and its sign does not change the measure, so
+groups are formed per neuron, as in `vggt_ablate.py`. A neuron is *strictly invariant* if at least one of
+its poles is a place unit with an opposite-sector score above 0.5. It is *non-invariant place* if it has a
+place pole but none strictly invariant, and *non-place* if neither pole is a place unit. The null is an
+isotropic random direction in the 1,024-dimensional residual, whose expected fraction inside any 10-d
+subspace is exactly 10/1024 = 0.0098 (100,000 sampled directions are reported beside it).
+
+**Reproduction checks.** The groups come from `analyze.analyze_layer(X, meta, np.random.default_rng(0),
+quadrant=True)`, unchanged, on the stored activations. Each pole's opposite-sector score is recomputed as
+`analyze_layer` does (as in experiment 21) and must reproduce its count exactly. `frac_place` and
+`frac_place_heading_invariant_quadrant` must match `results/summary_quadrant.json` within 0.001; the scoring
+runs on the 4070's GPU and is repeated on CPU if it misses. The rebuilt subspace must reproduce the stored
+4070 run (`results/vggt_patch_probes_4070.json`) on `vggt_patch.py`'s 128 target-donor pairs, drawn by the
+same random sequence: the median share of the target-donor difference within 0.02 of 0.926 (block 19) and
+0.935 (block 21), and the transfer from writing the donor's subspace component within 0.05 of 0.400 and
+0.854. If any check fails, no fraction is reported until the cause is found.
+
+**Primary measure.** For each neuron, the fraction of its write vector's squared norm inside the subspace,
+f_j = |Qᵀ v_j|² / |v_j|², with Q the 1,024 × 10 orthonormal basis. Each group is summarized by its median,
+with 95% bootstrap intervals (10,000 resamples of neurons within each group, seed 0) for each median and for
+the differences of medians.
+
+**Decision rule** (primary: VGGT-single block-19 units, the block-19 subspace, write vectors with LayerScale;
+r = 10/1024):
+- *Connect*: (i) the strictly invariant neurons' median fraction is at least 2r = 0.0195; (ii) the 95%
+  interval of its difference from the non-invariant place neurons' median lies entirely above 0; and (iii)
+  the same holds for its difference from the non-place neurons' median.
+- *Don't connect*: the strictly invariant median is below 2r, and the interval of its difference from the
+  non-place median does not lie entirely above 0. Their writes put no more into the subspace than twice what a
+  random direction would, and no more than the block's other neurons do.
+- *Partial*: anything else. The report names which of (i)-(iii) held. If (i) holds but (ii) or (iii) fails,
+  the subspace collects writes from many neurons and invariance does not single these out ("partial, not
+  specific to invariant units").
+
+**Secondary measures** (the same measure, and the same rule where one applies, reported beside the primary
+verdict without changing it):
+- (a) block-21 units (single mode, 34% strictly invariant) against the block-21 subspace, where writing the
+  subspace transfers 0.85;
+- (b) VGGT-walk block-19 units (63%; `data/acts/vggt-walk/L19.npy`, fetched from vast-1, md5 checked) against
+  the single-mode block-19 subspace. The weights are the same; only the groups differ. The causal test used
+  single mode, and the walk-mode residual is not recorded;
+- (c) the input side: neuron j's pre-activation is (1/σ) r_j · x_mid plus a constant, with
+  r_j = C(w_LN2 ⊙ W_fc1[j, :]), where C removes the mean component (LayerNorm subtracts each token's mean)
+  and σ is the token's standard deviation. Its subspace is position PCA 10 of x_mid, the residual entering
+  the MLP, from the same fit frames and bins, recorded in the same run;
+- (d) write vectors without LayerScale (the raw fc2 column);
+- (e) block-19 write vectors against the block-21 subspace, and the overlap of the two subspaces (mean squared
+  cosine of their principal angles), descriptive;
+- (f) magnitude, descriptive: how much of the subspace's position signal at block 19 a group writes. On the
+  fit frames, the group's summed write Σ_j a_j(t) v_j is projected onto Q and averaged per 1 m bin, and its
+  share of the residual's bin-mean signal in Q is ⟨M_G, M_H⟩ / |M_H|² (bin means centered across bins).
+  Over the residual's parts (the incoming x_mid, every neuron, the bias) these shares add up to 1. It is
+  reported for each group, for all 4,096 neurons, and for 1,000 random sets of place neurons of the
+  invariant group's size.
+
+**Causal check** (GPU, the 4070, in the same job as the recording). At fc2's input at the walk frame's camera
+token in global block g, on the same 128 targets and donors:
+- *interchange*: the target's activations of a neuron set are replaced by the donor's, from the donor's clean
+  run, and transfer toward the donor is scored as in `vggt_patch.py` (0 = no effect, 1 = placed where the
+  donor was);
+- *mean replacement*: the set is replaced by its mean over all 12,288 walk frames (stored activations, as
+  `vggt_ablate.py`), scored by how far the prediction moves from the clean one and by its position error.
+The sets at block 19, and at block 21 with that block's groups, are all N strictly invariant neurons, N
+non-invariant place neurons drawn at random (seed 0), N place neurons drawn at random from all place
+neurons, and all 4,096 neurons (the block's whole MLP output at that token, the most any neuron set there
+can do). The position-PCA-10 references (written: transfer; erased to the fit-frame mean: error) run in the
+same job. Rule: at a block, the invariant neurons *carry the causal code* if their interchange transfer is
+at least 0.1 and the 95% interval of the paired difference over targets (mean ± 1.96 SEM) between them and
+each equal-size comparison set lies above 0; otherwise they have *no measurable causal role at this token*.
+If the all-neuron ceiling is itself below 0.1, no neuron set at this token can pass, and the report says so.
+
+**What the outcomes would mean for the paper.**
+- *Connect*: the strictly invariant units' outputs point into the subspace that carries position causally
+  at the same block, more than other neurons' do. The unit test and the causal test then touch the same code,
+  and the paper can say the invariant units write into VGGT's pose code. If the causal check finds no effect,
+  their contribution at a single token is small or redundant: they are among the code's writers but are not
+  needed.
+- *Don't connect*: the units are tuned to position but write elsewhere, so the unit test and the causal test
+  probe different parts of VGGT. The Limitations sentence says so, and the paper's unit claim about VGGT stays
+  a claim about tuning.
+- *Partial*: the subspace collects writes from many neurons at this block, and invariance does not pick the
+  units out; the paper says the two tests overlap only weakly.
+
+**Code and files.** `scripts/vggt_units_subspace.py`: `record` (the 4070 through gq: scoring the units,
+re-recording the residuals, the reproduction checks and the causal check; about 1.5 h, into
+`data/units_subspace/`) and `analyze` (Mac CPU, `results/vggt_units_subspace.json` with a top-level
+`summary`). Cost: none.
+
+### Exp 23 results (2026-10-28 03:20 PDT)
+
+**Runs.** gq pc:611 scored the units and ran a smoke recording (384 fit frames, 8 pairs; 01:33-01:44 PDT), and
+pc:612 ran the registered recording (01:44-03:14 PDT). Both were on the RTX 4070 at batch 2. The analysis ran
+on the Mac.
+
+**Every reproduction check passed before a fraction was read.**
+- The unit scoring matches `results/summary_quadrant.json` exactly in all three conditions:
+  - single, block 19: 0.3607 and 0.1621, with 1,502 place poles, 675 of them strictly invariant (the
+    registration's 1,503 was a rounding);
+  - single, block 21: 0.8117 and 0.2731;
+  - walk, block 19: 0.2355 and 0.1492.
+- The rebuilt subspaces reproduce the stored 4070 run to three decimals: share 0.926 and 0.935, transfer 0.400
+  and 0.854, error after erasing 1.65 and 3.38 m, clean error 0.432 m.
+- The block output minus the residual entering the MLP equals LayerScale times the fc2 output, to within 0.25%
+  (block 19) and 0.22% (block 21). So v_j is what neuron j adds to the patched residual.
+- The 4070's recorded neurons match vast-1's stored ones: median per-frame r 1.0000, relative difference 0.9%.
+
+**Groups.**
+- Block 19: 673 strictly invariant neurons, 810 non-invariant place and 2,613 non-place. 98% of the strictly
+  invariant poles are the negative side of their neuron, GELU's small negative lobe, as experiment 8 found.
+- Block 21: 1,136, 2,222 and 738.
+- Walk, block 19: 616, 348 and 3,132.
+
+**Primary: the rule's verdict is "connect".** The fraction of each neuron's write vector inside position PCA 10
+at block 19 (median and 95% interval):
+
+| group | fraction in the subspace | times a random direction |
+|---|---|---|
+| strictly invariant (673) | 0.057 [0.055, 0.061] | 5.9 |
+| non-invariant place (810) | 0.044 [0.041, 0.046] | 4.5 |
+| non-place (2,613) | 0.041 [0.040, 0.042] | 4.2 |
+| random direction | 0.0098 (expected; sampled median 0.0091) | 1 |
+
+The strictly invariant median exceeds the non-invariant place median by 0.014 [0.010, 0.019] and the non-place
+median by 0.016 [0.014, 0.021]. So all three conditions hold. Of the invariant neurons, 96% load more than 95%
+of random directions do.
+
+**Secondary measures** (median fraction for strictly invariant / non-invariant place / non-place neurons):
+
+| measure | invariant | non-inv. place | non-place | invariant, times random | rule |
+|---|---|---|---|---|---|
+| (a) block-21 writes, block-21 subspace | 0.030 | 0.031 | 0.029 | 3.1 | partial, not specific to invariant units |
+| (b) walk-mode groups, block-19 writes | 0.060 | 0.041 | 0.042 | 6.1 | connect |
+| (c) reads, block 19 (subspace of the MLP's input) | 0.018 | 0.007 | 0.007 | 1.8 | partial: (ii) and (iii) hold, (i) does not |
+| (c) reads, block 21 | 0.020 | 0.019 | 0.018 | 2.1 | connect, by small margins |
+| (d) raw fc2 columns, block 19 | 0.0105 | 0.0108 | 0.0113 | 1.1 | don't connect (see below) |
+| (e) block-19 writes, block-21 subspace | 0.049 | 0.038 | 0.036 | 5.0 | connect |
+
+The block-19 and block-21 subspaces overlap 0.69 (mean squared cosine of their principal angles). The subspace of
+the MLP's input and that of the block's output are nearly the same (0.99 at both blocks).
+
+**Why every neuron sits near 4 times chance and the raw columns sit at chance** (post-hoc diagnostics, added
+after the smoke run).
+- The LayerScale gains γ2 have mixed signs (49% negative) and similar sizes. Their median |γ2| is 1.39, and
+  their squares have a participation ratio of 847 of 1,024 coordinates. Multiplying an fc2 column by γ2 flips
+  half its coordinates, so the raw column is not a vector in the residual's coordinates. Measure (d) is
+  therefore at chance, and it does not bear on the question.
+- γ2 alone does not create the loading. A random vector multiplied by γ2 lands at 0.0099, which is chance.
+- The 4-times baseline comes from the MLP's own main output directions overlapping the subspace. Its third,
+  fourth and fifth singular directions put 0.35, 0.20 and 0.16 of their norm inside it.
+- The invariant neurons' excess survives removing the block's mean write direction: 0.056 against 0.036 and
+  0.033.
+
+**Magnitude (f): the units' writes are small.** On the fit frames, at block 19:
+- *The whole MLP* writes a position signal inside the subspace whose size (bin means, as for the residual) is
+  3.0% of the residual's. Its signed share is -1.4%, so it slightly opposes the code.
+- *The strictly invariant neurons*: size 2.1% and share -0.9%. That share is at the 18th percentile of
+  equal-size random sets of place neurons, so it is not unusual.
+- *The incoming residual* x_mid carries 101.4% of the signal.
+
+At block 21 the MLP's share is -0.04% and its size 2.6%. The sizes are post-hoc; the shares were registered.
+
+**Causal check: no measurable role at this token.** Mean ± SEM over 128 targets; at fc2's input, at the walk
+frame's camera token:
+
+| | block 19 | block 21 |
+|---|---|---|
+| interchange transfer: strictly invariant (673 / 1,136 neurons) | -0.000 ± 0.001 | -0.001 ± 0.001 |
+| same count of non-invariant place neurons | -0.002 ± 0.000 | +0.001 ± 0.001 |
+| same count of random place neurons | -0.000 ± 0.000 | -0.001 ± 0.001 |
+| all 4,096 neurons | -0.002 ± 0.001 | -0.001 ± 0.001 |
+| reference: position PCA 10 written | 0.400 ± 0.020 | 0.854 ± 0.018 |
+| mean replacement, median movement: invariant / all 4,096 | 1.1 / 2.0 cm | 1.3 / 3.3 cm |
+| mean replacement, position error (clean 0.43 m): invariant / all 4,096 | 0.43 / 0.43 m | 0.43 / 0.43 m |
+| reference: position PCA 10 erased, position error | 1.65 m | 3.38 m |
+
+Neither block meets the causal rule. The all-neuron ceiling is below 0.1 at both, so no neuron set at this
+token could have passed. This repeats experiments 4 and 8 with the strict set, and with an interchange that
+matches the patching test.
+
+**What it means for the paper.** By the registered rule, the two tests connect at block 19. The strictly
+invariant units read from the 10-d subspace that carries VGGT's position, and their writes point into it, more
+than the block's other neurons do (writes 5.9 times chance, against 4.2-4.5). So the unit test and the causal
+test touch the same code.
+
+What these units write there is small, though:
+- at the walk frame's token, it is about 2% of the size of the position signal already in the subspace, and
+  slightly against it;
+- swapping them between frames moves the predicted camera by nothing measurable, while writing the subspace
+  moves it 40% (block 19) and 85% (block 21) of the way.
+
+The code the camera head uses arrives at block 19 in the residual stream. The invariant units read it, and
+their outputs point back into it, but they are not where it is carried. At block 21 the geometry of the writes is
+not specific to invariant units.
+
+A sentence the paper could use: VGGT's strictly invariant units read from and write into the causal pose
+subspace more than other neurons do (5.9 times chance, against 4.2-4.5), but at the camera token their writes
+are about 2% of its position signal, and swapping them between frames moves nothing (transfer 0.000, against
+0.40 for the subspace). They read the pose code; they do not carry it.
+
+Caveats:
+- Only one token was tested: the walk frame's camera token, in single mode, at blocks 19 and 21. Neurons at the
+  patch tokens, and all blocks at once, were not tested.
+- The primary measure is directional. The magnitude measure uses the 2,048 fit frames.
+
+**Files.**
+- `scripts/vggt_units_subspace.py`; `results/vggt_units_subspace.json`. Its `summary` holds the verdict, the
+  group medians and intervals, the secondary verdicts, the magnitude shares and sizes, and the causal transfers.
+- Gitignored: `data/units_subspace/` (`units.npz`, `record.npz` of 181 MB, the smoke run). On the PC it lives
+  at `/mnt/bigd/mechinterp/units_subspace`, and `data/acts/vggt-single` and `vggt-walk` are symlinks into
+  `/mnt/bigd/mechinterp/acts`. `data/acts/vggt-walk/L19.npy` was copied from vast-1 (md5 checked).
 
 ## Prior work this builds on
 

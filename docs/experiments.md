@@ -3918,6 +3918,95 @@ by side. The paper's statements that VLMs have few strictly invariant units hold
 what the rule decides is whether the RNN still shows the test can be passed. Results merge into
 `results/heading_stat_validation.json` under the key `axis_check`.
 
+### Exp 21 amendment 1 results (2026-10-28 13:10 PDT)
+
+The registered design was run unchanged as gq vast1:58 (vast-1 CPU, pinned to CPUs 8-15,24-31,
+09:53-13:09 PDT; it shared those CPUs with another session's job, which is why it took 3 h 15 min). Only
+the script went to vast-1 (md5 checked), and only its JSON came back (md5 checked). The verdict is
+**closed**: all four RNN conditions keep at least 95% of their place units under (2). All 102
+reproduction checks (`frac_place` and the mean-of-two fraction, for 51 conditions) match
+`summary_quadrant.json` or `grid_rnn_quadrant.json` exactly. On vast-1, kinds a-d reproduce the main
+run's synthetic results.
+
+**Synthetic units at the real reliability.** These are selected place units with stability 0.809-0.909,
+rho = 0.5, all noise levels pooled. The three numbers are the shares passing the mean of two, (1) and (2).
+
+| kind | n | mean of two | (1) both opposite pairs | (2) all six pairs |
+|---|---|---|---|---|
+| (a) invariant | 376 | 100% | 99.7% | 98.9% |
+| (e) axis-split, hard | 106 | 100% | 100% | 4.7% |
+| (e) axis-split, smooth | 110 | 100% | 99.1% | 9.1% |
+| (c) conjunctive, 60-180 degrees | 436 | 0.9% | 0% | 0% |
+| (c) conjunctive, 270 degrees | 108 | 90% | 64% | 56% |
+| (d) view-dependent | 251 | 0% | 0% | 0% |
+| (b) gain, R = 2 / 5 / 10 / 30 | 122 / 119 / 115 / 107 | 100 / 97.5 / 74 / 28% | 97.5 / 85 / 49 / 9.3% | 95 / 74 / 31 / 4.7% |
+
+- *The reviewer's concern is real for the measure as written.* Axis-split units pass the mean of two
+  every time, and (1) does not help, because each axis on its own sees one consistent field. Only (2)
+  catches them.
+- *(1) removes the four 180-degree conjunctive units* that the mean of two let through.
+- *(2) costs invariant units almost nothing at the real reliability.* The cost grows at low reliability,
+  though. Invariant units pass (2) 21% of the time at stability 0.5-0.6, 59% at 0.6-0.7, 90% at 0.7-0.8,
+  99% at 0.8-0.9 and 100% above 0.9 (the mean of two: 49%, 85%, 98%, 100%, 100%).
+- *(2) also rejects strongly gain-modulated units sooner* (R = 5: 74%), because the weakest sector
+  enters every pair it is part of.
+- With rho = 0, invariant units pass (2) 97.4% and axis-split units 6.7%; with rho = 0.9, 100% and 6.0%.
+  Above stability 0.9, 13% of axis-split units pass (2). These are probably units whose two field
+  centers happened to be drawn close together (not checked).
+
+**Real conditions** (room A; percent of place units; "reference" is the synthetic invariant units' pass
+rate under (2) in the condition's stability bin):
+
+| condition | place units | stability | mean of two | (1) | (2) | reference |
+|---|---|---|---|---|---|---|
+| RNN base, anchored | 2,653 | 0.98 | 99.3 | 98.3 | **98.3** | 100 |
+| RNN base, free | 2,874 | 0.97 | 98.3 | 97.0 | **96.6** | 100 |
+| RNN s093, anchored | 2,194 | 0.98 | 99.9 | 99.9 | **99.9** | 100 |
+| RNN s093, free | 2,150 | 0.88 | 99.7 | 99.5 | **99.5** | 99 |
+| VGGT-single block 19 | 1,502 | 0.95 | 44.9 | 37.0 | 33.6 | 100 |
+| VGGT-single block 21 | 3,376 | 0.90 | 33.6 | 24.4 | 19.3 | 100 |
+| VGGT-walk block 19 | 980 | 0.95 | 63.4 | 55.3 | 52.3 | 100 |
+| fine-tuned run 0, walk (7 layers) | 3,861-8,301 | 0.64-0.79 | 2.0-14.2 | 1.0-8.4 | 0.3-6.3 | 59-90 |
+| fine-tuned run 0, single | 5,928-8,946 | 0.83-0.85 | 0.1-0.7 | 0.0-0.3 | 0.0-0.1 | 99 |
+| fine-tuned run 0, single + 8-frame average | 5,174-6,795 | 0.88-0.91 | 85.0-90.0 | 77.4-83.9 | 75.2-82.2 | 99-100 |
+| base Qwen3-VL-8B, walk | 1,731-7,711 | 0.58-0.79 | 0.7-6.9 | 0.4-3.2 | 0.0-1.6 | 21-90 |
+| base Qwen3-VL-8B, single | 5,672-8,788 | 0.84-0.85 | 0.1-0.4 | 0.0-0.2 | 0.0 | 99 |
+| Qwen3-VL-2B, walk (block 2 / others) | 761-2,859 | 0.58-0.76 | 47.3 / 2.3-21.7 | 32.5 / 1.2-13.5 | 25.0 / 0.5-9.0 | 21-90 |
+| pixels | 4,449 | 0.92 | 1.2 | 0.7 | 0.0 | 100 |
+| pixels + 8-frame average | 5,987 | 0.95 | 97.1 | 95.1 | 95.0 | 100 |
+
+The fine-tuned run 0's walk condition by layer (blocks 3, 8, 13, 18, 23, 29 and 35) is 4.6 / 4.7 / 2.0 /
+4.4 / 4.9 / 8.7 / 14.2% under the mean of two and 1.3 / 1.1 / 0.3 / 1.5 / 1.6 / 2.9 / 6.3% under (2).
+
+**What this means.**
+- *The RNN positive control survives the stricter test.* Its place units keep their field in all four
+  facing sectors (96.6-99.9%), so the strict test can still be passed by a real position code, and the
+  axis issue is closed.
+- *VGGT's shares fall by a sixth to two fifths* (block 19: 44.9 to 33.6%; walk block 19: 63.4 to 52.3%;
+  block 21: 33.6 to 19.3%), while invariant units at the same reliability lose nothing. So some of
+  VGGT's counted units do not hold their field across all four sectors. This run cannot say whether
+  that comes from fields that move between the axes or from strong heading gain: the gain index already
+  showed that 77% of VGGT's counted units change their amplitude more than twofold, and gain-modulated
+  units with R of 5 or more also start failing (2).
+- *The VLM conditions stay low or fall further.* Single frames go to 0.0-0.1%. The walk conditions go to
+  0.0-9.0%, except Qwen3-VL-2B's block 2 at 25%. Their low reliability (stability 0.58-0.79) makes (2)
+  itself harsh there (the reference is 21-90%), so for those conditions (1) or the mean of two, read
+  beside the stability, is the fairer number.
+- *The moving averages stay high* (75-82% for the fine-tuned model, 95% for pixels).
+- *Even the RNN changes rate with heading.* A side result of the gain index: 28% of the base RNN's
+  counted units and 7.6-13% of the s093 RNN's have G > 1, against at most 1% expected for pure place
+  units at that reliability. Its only heading information is the direction of recent motion. So a
+  heading-dependent rate does not by itself rule out a position code, which fits biological place cells
+  often being directional. For the fine-tuned run 0's walk condition, 23-46% of the counted units have
+  G > 1.
+
+**For the paper.** Report (2) beside the mean of two for the headline conditions, and define (2) as the
+field staying put in all four facing sectors. The RNN passes (2) at 96.6-99.9%. For low-reliability
+conditions, quote (2) together with the synthetic reference. JSON: `axis_check.rule` (verdict and the
+RNN rows), `axis_check.real[<tag>][<layer or mode>].axis` (the three shares, place stability, reference),
+`axis_check.synthetic["rho=0.5"].window` (synthetic shares). Script `scripts/heading_stat_validation.py
+--axis-check`.
+
 ## Experiment 22 (pre-registered 2026-10-28 00:30 PDT, before any four-epoch run was recorded): the unit and task-readout analyses on the four-epoch runs
 
 **Why.** The paper's behavioral headline is the mean of the five four-epoch runs (experiment 9c, runs 3-7),
@@ -5476,8 +5565,46 @@ unpack and parity steps); `scripts/mac/trajectory_shift_prep.sh` (Mac: render, b
 `results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s<k>-roomE30-256px-max64.jsonl`. `two_choice.py`,
 `dissimilar_trials.py`, `room.py` and `retrieval_baselines.py` are imported and not changed.
 
-**Status.** Registered; nothing rendered. The renders and model jobs are queued once the hub has committed this
-registration.
+**Status.** Registered at 12:53 PDT; committed and pushed as 3791578 (12:54 PDT, docs only).
+
+*Note (2026-10-28 13:10 PDT; implementation, no design change; nothing of the new walks rendered before the commit).*
+Checks so far:
+- `trajectory_shift.py --check-builder` reproduces experiment 10's trial lists byte for byte in P5000, P5001, P5004
+  and P5008, and the stored 8 x 8 block sums give `analyze_probes.pixel_feats` exactly.
+- A smoke test after the commit rendered 2 patrol walks in P5000 (73 images per second with 6 workers) and built both
+  trial sets from them; nothing from it was kept.
+- `scripts/trajectory_shift_analysis.py --test` runs the whole analysis on stand-in data, with experiment 10's renders,
+  trials and DINOv2 features used as every condition's scene and synthetic answers of known accuracy. It returns each
+  verdict as built (survives, fails and reduced; geometric proximity wins and local association). It also reproduces
+  experiment 20's best procedural rule (the combined regression, 67.8% over the nine rooms, against 67.7% over ten).
+
+Choices the registration left open:
+- The images for vast-3 travel as compressed archives and are checked image by image against the Mac's MD5s when
+  `data/walks-roomE30` is unpacked there.
+- The parity answers go to `results/two_choice/e30/`, so `two_choice --score` does not pick them up.
+- The DINOv2 job uses 4 threads and 4 render processes at nice 10, to leave the Mac's GPU job its CPU.
+
+Jobs (projected PDT times at submission):
+- Mac CPU, gq mac:145 `e30_prep`, queued 13:09 after experiment 29's resubmitted stimulus job (mac:143): renders, trial
+  lists and copies to vast-3, about 3 h, Wed about 15:09-18:09. That start moves later if mac:143 runs long (about
+  1.5-3.5 h). If mac:143 fails, mac:145 does not start and must be submitted again.
+  - At its end it submits vast-3's `e30_unpack` CPU job, days before vast3:339 needs the data; each GPU job also
+    unpacks the data itself if it finds them missing.
+  - Once it is done, `.venv-mac/bin/python scripts/trajectory_shift_analysis.py --stimulus` gives the registered checks
+    before any model run (counts, walk statistics, the pixel window-maximum rule on neighborhood trials) in
+    `results/trajectory_shift_stimulus.json`.
+- Mac CPU, gq mac:146 `e30_dino` (after mac:145): every walk rendered again and checked by MD5, then DINOv2 features,
+  about 14 h, Wed about 18:09 to Thu about 08:09; needed only for the retrieval rules.
+- vast-3 GPU, priority 150, each after experiment 31's last job (vast3:338), about 1 h 20 min each, queued 13:06:
+  vast3:339 run 5 (Sun about 05:55), vast3:340 run 7 (about 07:15), vast3:341 run 3 (about 08:35), vast3:342 run 4
+  (about 09:55), vast3:343 run 6 (about 11:15 to 12:35).
+- If vast3:338 fails, these five do not start and must be submitted again.
+- *Incident:* the first Mac jobs (the old mac:143 and mac:144) were cancelled and replaced by the two above. While
+  cleaning up a stuck smoke test at 12:57 PDT, a `pkill -f` matched experiment 29's stimulus-check workers too. That
+  job (mac:139) then deadlocked and was cancelled and resubmitted by the hub. No experiment-30 data was involved.
+- Analysis once they finish: `.venv-mac/bin/python scripts/trajectory_shift_analysis.py --fetch`, then the same script
+  without flags -> `results/trajectory_shift.json`. `--fetch` copies only the five answer files and the five parity
+  files, never vast-3's whole `results/`.
 
 ## Experiment 31 (pre-registered 2026-10-28 12:51 PDT, before any four-epoch run saw a reordered walk or a cut): walk-order controls and attention cuts on four-epoch runs 5 and 7
 
@@ -5633,6 +5760,35 @@ a top-level `summary`; its `--test` reproduces run 0's experiment-13a and experi
 `results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s{5,7}-roomP50xx-256px-max64-{reversed,window8,renumbered,shuffled-relabel}.jsonl`;
 `results/two_choice/exp31/` (the parity rerun and P5005's CUDA reruns, kept out of `two_choice --score`);
 `results/frame_cut/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s{5,7}-<condition>[-layersLO-HI].jsonl`.
+
+**Status.** The registration was committed and pushed as e5abf39 (12:52 PDT).
+
+*Note (2026-10-28 12:58 PDT, before any model run; implementation, no design change).*
+- *Checks before submission (no model).*
+  - The walks (all ten rooms' frames, probes and metadata), trial lists, both adapters and experiment 9c's ordered and
+    shuffled answer files have the same MD5s on the Mac and in the vast-3 container.
+  - Rebuilt for both adapters, all 4 x 1,299 cut sets equal the sets stored in run 0's experiment-15 files.
+  - All 1,299 trials have experiment 9c's prompt token counts; the stored reference answers are CUDA for 1,152 trials
+    and MPS for P5005's 147.
+  - A dry run shows `--shuffle-walk` with and without `--relabel` giving the same frame order with different labels.
+- *Analysis checks.*
+  - `scripts/exp31_analysis.py --test` reproduces run 0's stored experiment-13a and experiment-15 summaries: 35 of 35
+    entries (means and sign tests exactly, CIs within 1 point, since the bootstrap draws differ).
+  - On run 0's own data the rule gives "replicates" for 31a and 31b on both scales.
+  - The full path was smoke-tested with run 0's files standing in for the four-epoch ones. Nothing was written to
+    `results/`.
+- *31c precedence.* Where the registration's readings overlap (L's CI above 0 and also within +-3 points), the first
+  listed reading is used and flagged "(the effect also lies within +-3 points)".
+- *Files on vast-3.* `scripts/run_exp31.sh`, `scripts/exp31_analysis.py` and `data/frame_cut/dino_lookalike.json` were
+  copied into the vast-3 container and checked by MD5. `two_choice.py`, `frame_cut.py` and `task_record.py` were already
+  identical there.
+- *Jobs*, queued 12:58 PDT at priority 150 after experiment 29's last vast-3 job (`--after 335`). No experiment-30 job
+  was queued yet. Projected at submission; the clocks go back at 02:00 on Sunday:
+  - gq vast3:337 `e31_s5` (run 5, about 3 h 30 min): Sat about 23:44 PDT to Sun about 02:14 PST;
+  - gq vast3:338 `e31_s7` (run 7, about 3 h 30 min): Sun about 02:14 to 05:44 PST.
+  - Because both jobs depend on vast3:335, they start only if experiment 29's run-7 job succeeds.
+- *Analysis once both jobs finish:* `.venv-claude/bin/python scripts/exp31_analysis.py --fetch` ->
+  `results/exp31_summary.json`.
 
 ## Prior work this builds on
 

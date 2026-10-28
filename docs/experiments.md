@@ -5252,6 +5252,233 @@ than on the device of its experiment-10 answers. Nothing is rented. Analysis onc
 `.venv-claude/bin/python scripts/vlm_intervention_analysis.py --fetch` -> `results/vlm_intervention.json`. `--fetch`
 copies only runs 5 and 7's JSONL files from vast-3, never its whole `results/`.
 
+## Experiment 30 (pre-registered 2026-10-28 12:53 PDT, before any shifted walk was rendered or any model saw one): the fine-tuned model on walks it was not trained on
+
+**Why.** The four-epoch LoRA runs (experiment 9c, runs 3-7) answer 96.3-97.4% of the novel two-choice trials in the
+held-out procedural rooms (experiment 10's trials), and there they lead the best of 149 fixed retrieval rules by 29.4
+points (experiment 20). All three GPT-6 Astra reviewers of round R2a still rate the paper weak reject
+(`writeup/paper/kit/paperscorer/rounds/R2a/reviews/conference_{vision,interp}.json`, W2 and W4). Their main remaining
+objection is that a *learned local sequence matcher* could solve these trials "without constructing a reusable metric
+representation". They point to two facts: shuffling 8-frame blocks keeps 74% of run 0's ordered-walk advantage
+(experiment 13a), and hiding the frames around the near option costs the most (experiment 15). Experiment 28 trains such
+a matcher. This experiment is the other test they ask for: the fine-tuned model "under changes to trajectory sampling,
+turn rate, or revisitation structure while preserving the geometric question", with "trials that separate local
+temporal association from geometric proximity". The user approved it on 2026-10-28.
+
+The test has two parts. The first changes one property of the walks at a time (step length, turning, revisits) and
+asks whether the model's lead over view retrieval survives. A strategy fitted to the motion statistics of the training
+walks should break when those statistics change. The second builds trials, in walks from the training distribution, in
+which the walk around the near option shows none of what the new view shows while the walk around the far option does.
+*Local view association* (link the new view to the stretch of the walk that shows its scene, then pick the option in
+that stretch) then points to the far option, and geometric proximity points to the near one.
+
+**What is already known**, so that only the new parts count as tests:
+- In experiment 10's trials in these nine rooms (P5005 is excluded below), the four-epoch runs' novel accuracies and
+  the retrieval rules' scores are known (experiments 9c and 20). No four-epoch run has seen a walk from any of the
+  distributions below, or any trial built from the walks below.
+- Before writing this, only geometry was computed for the new walks: poses, probe positions, landmark visibility and
+  counts of candidate option pairs (`python -m spatialcells.trajectory_shift --dry-run` -> `data/e30/dry_run.json`). No
+  image of a new walk has been rendered. The same counts were made on experiment 10's own poses for calibration, and the
+  neighborhood trial builder below was run on two of experiment 10's existing renders (P5000 and P5001) to see how many
+  trials it keeps. No model answer was looked at, and no existing trial's accuracy was split by the neighborhood types
+  below.
+
+**Rooms.** The held-out procedural rooms P5000-P5009 without P5005: nine rooms. P5005 is left out, as in experiment 29.
+One of its posters is `skimage.data.binary_blobs()` drawn without a seed (experiment 15's reproducibility note), so new
+walks there cannot show the room that experiment 10's models saw. A fresh render would not even give one consistent
+room, because each render worker process builds its own copy of the room and draws its own blobs.
+
+**Walks.** Four walk distributions, 256 steps per walk, from new seeds (walks `30000 + 10 x (room seed - 5000) +
+condition index`, probes `31000 + ...`; experiment 10 used the room seed and 1). The training distribution is
+`room.foraging_walk` with its defaults: steps of 0.22 m x U(0.7, 1.3), heading drift with SD 15 degrees per step,
+on-the-spot head scans of 30-90 degrees with probability 0.15 per step, and turns away from walls and pillars. Each
+shifted condition changes one property of it:
+- *control*: the training distribution itself, new walks. It separates the effect of a shift from the effect of new
+  walks and new trials.
+- *long-step*: steps twice as long (0.44 m). Shown frames are then about 1.6 m of walking apart instead of 0.8 m, so
+  temporal neighbors are farther apart in space.
+- *low-turn*: much less turning, with heading drift SD 5 degrees and no head scans. Shown frames then change view
+  slowly, and a stretch of the walk faces mostly one way. More turning was tried first (drift SD 45 degrees, and 30
+  degrees): those walks stay in a small area and see each place from most directions, so most new views become familiar
+  (about 21 novel probes per room at 45 degrees, against 129 in control walks of the same number). Less turning keeps
+  the novel trials.
+- *patrol*: a 128-step walk from the training distribution (the route), then a return to its start and the same route
+  walked again in the same direction until step 256. After the route, each step is a training-distribution step (drift,
+  head scans, wall turns) with the heading also pulled halfway toward the route point three steps beyond the last one
+  reached (within 0.5 m). Most places are then visited twice, about 150 steps apart. Walking the route back the other
+  way was tried first: every place is then seen facing both ways, and only 10-37 novel probes per room remain.
+
+Per-step statistics from the dry run (means over the nine rooms):
+
+| walks | walks per room | step when moving | turn per step, mean / median | path | frames revisited (within 0.5 m) after 64 or more steps |
+|---|---|---|---|---|---|
+| control | 48 | 0.22 m | 23.5 / 13.1 deg | 48 m | 30% |
+| long-step | 16 | 0.44 m | 28.0 / 14.0 deg | 95 m | 41% |
+| low-turn | 16 | 0.22 m | 9.8 / 3.6 deg | 56 m | 29% |
+| patrol | 32 | 0.22 m | 28.4 / 18.2 deg | 48 m | 86% |
+
+Each condition moves its own property well away from control. Side effects, stated now: long steps meet the walls more
+often (more wall turns) and cover more ground (more revisits), and the patrol's pull toward the route adds turning
+(median 18 against 13 degrees). Probes: 64 per walk, as `render_probes.py` makes them (a visited place plus N(0, 0.15
+m) noise, a random heading).
+
+**Trials.**
+- *Standard trials* (every condition): `dissimilar_trials.py`'s rules exactly, as experiment 10 built them. The near
+  option lies within 1 m of the new view and the far option more than 3 m away; both face more than 90 degrees away from
+  it and within 45 degrees of each other's turn; neither shows a poster or pillar the new view shows; the pair with the
+  closest pixel similarities to the new view is chosen; and pixel similarity and frame order each favor the near option
+  in half the trials. Up to 192 / (walks per room) trials per walk, novel first. `spatialcells/trajectory_shift.py`
+  reimplements the builder so that it takes new walks. Run on experiment 10's renders, it reproduces experiment 10's
+  trial lists byte for byte (P5000, P5001, P5004 and P5008, rooms with 16 and with 32 walks; `--check-builder`).
+- *Neighborhood trials* (control and patrol walks): the same option rules, with each candidate pair typed by its
+  options' *neighborhoods*. An option's neighborhood is the 4 shown frames before it and the 4 after it in the 64-frame
+  prompt (experiment 15's near and far sets: never an option, topped up from the other side at a walk end).
+  - *conflict*: no frame in the near option's neighborhood shows a poster or pillar that the new view shows (by
+    `dissimilar_trials.landmarks`, the trials' own lure test), and at least one frame in the far option's neighborhood
+    does;
+  - *agreement*: the reverse.
+  Trials cycle through conflict and agreement crossed with which option pixel similarity favors. The two types
+  therefore come in equal numbers, and pixel similarity favors the near option in half of each. Frame order (whether the
+  near option is nearer in frame number to the walk frame that looks most like the new view) is not balanced, because it
+  follows the type; it is recorded per trial. Novel new views only, one trial per new view, up to 192 / (walks per room)
+  per walk. In a conflict trial the near option's stretch of the walk passes the new view's place but shows none of its
+  scene, and the far option's stretch shows some of it.
+- Only novel trials are run. Familiar trials stay in the standard lists, as experiment 10 built them, but no model
+  answers them.
+
+Expected counts, from the dry run: standard novel trials about 140-180 per room in control, 110-150 in long-step, 185-192
+in low-turn and 90-130 in patrol, about 5,000 in all (upper bounds: the pixel and frame-order balance needs the renders,
+and experiment 10's builds kept about 80% of the dry run's count). New views that allow a conflict pair: 65-99 per room
+in control and 35-59 in patrol. The balanced builder keeps about 55% of them (36 of 69 in experiment 10's P5001), so
+about 45 conflict and 45 agreement trials per room in control and about 27 of each in patrol. A room with fewer than 20
+conflict trials in control is reported but left out of the separation verdict; this is decided from the counts alone,
+before any model sees a trial.
+
+**What each account predicts.**
+- *Local view association fitted to the training walks:* the lead over retrieval shrinks under each shift, most where a
+  stretch of the walk stops showing the new view's scene (low-turn) or where temporal neighbors stop being spatial
+  neighbors (long-step). In conflict trials, accuracy falls to about 50% or below.
+- *Geometric localization* (a position estimate for the options and the new view, however it is computed): the lead
+  survives the shifts, and conflict trials are answered about as well as agreement trials.
+
+**Visual difficulty.** Shifted walks can make trials easier or harder for reasons that have nothing to do with the
+mechanism. The controls:
+- *Retrieval rules on the same trials.* All 149 of experiment 20's variants (`scripts/retrieval_baselines.py`'s
+  `score_trial`, imported unchanged), with its four features (pixels, DINOv2-base CLS z-scored and raw, DINOv2 patch
+  mean) and both frame sets (the 64 shown and all 256). The combined logistic regression is trained leave-one-room-out
+  on the same condition's standard novel trials. For each condition the best rule b* is chosen on that condition's own
+  trials, which favors retrieval, as in experiment 20. The model's margin over b* is the measure that controls for visual
+  difficulty.
+- *The control condition*, so that each shift is compared with new walks of the training distribution in the same rooms.
+- *Geometry*: experiment 20's breakdowns (heading gap, distance margin, novelty margin, visual overlap), per condition.
+- *Experiment 28's matcher*, if its five chosen checkpoints exist when these trials are final: the hub has experiment
+  28's session score them on these trial lists, from this experiment's DINOv2 features. Descriptive, beside the rules,
+  with no threshold. This experiment does not touch experiment 28's files.
+
+**Models and platform.** The five four-epoch runs (`data/ft/qwen8b-proc-e4-s3` to `-s7`) with experiment 10's 64-frame
+prompt (`two_choice.py --max-images 64`: 61 evenly spaced frames plus both options, labeled with their real frame
+numbers, at 256 px, then the new view and the question). bf16, the adapter merged, greedy decoding with at most 16 new
+tokens, on vast-3 (CUDA), where their experiment-10 answers were made. Unparsed answers count as wrong. All trials of one
+run go through one `two_choice.py` call on a combined trial list (`--trials roomE30`), so the model loads once per run.
+- *Renders* on the Mac's CPU through gq, with `room.Room`, the renderer of every procedural frame so far. The images that
+  the novel trials' prompts show (each walk's 61 evenly spaced frames, the options and the new views) are copied into
+  the vast-3 container and checked frame by frame by MD5. vast-3 has rendered procedural rooms byte-identically to the
+  Mac (experiment 29's check).
+- *Parity check.* Each run's job first answers experiment 10's 192 P5000 trials again (64-frame walk) and compares the
+  answers with that run's stored vast-3 answers. If fewer than 98% (189) are identical, the job stops before any
+  experiment-30 trial.
+
+**Analysis** (`scripts/trajectory_shift_analysis.py` -> `results/trajectory_shift.json`, with the numbers below in its
+top-level `summary` as fractions). As in experiments 10 and 24: accuracy on each room's novel trials; per room, the
+five-run mean (the mean over runs 3-7); a summary is the mean over the nine rooms with a 95% bootstrap CI over rooms
+(10,000 resamples, seed 0); a difference is taken per room, then averaged, with the same bootstrap. Room-level sign tests
+and pooled trial-level sign tests are supplements. Each run's answer file is checked against the manifests.
+
+**Decision rule, set now.**
+
+*Part 1, the shifts* (standard trials). For each shifted condition c (long-step, low-turn, patrol):
+- the shift effect Δ(c) = A(c) - A(control): the five-run mean accuracy in c minus that in control walks of the same
+  room, averaged over rooms;
+- the margin M(c) = A(c) - b*(c): the five-run mean minus the best retrieval rule on the same trials, averaged over
+  rooms.
+Verdicts:
+- *survives* if M(c) is at least 15 points with its CI above 0, and Δ(c) is at least -10 points;
+- *fails* if M(c) is under 5 points or its CI includes 0;
+- *reduced* otherwise: the lead over retrieval stays above zero but under 15 points, or it stays at 15 or more while
+  accuracy drops by more than 10 points.
+Why these thresholds: 15 points is experiment 20's registered margin for saying that retrieval does not account for the
+model's accuracy, so a condition that survives meets the same bar as the original trials. A drop of 10 points would still
+leave about two-thirds of the 29.4-point lead that the four-epoch runs had over retrieval in experiment 10's trials; it
+is far above the spread between runs there (96.3-97.4%) and about the cost of hiding the near option's whole
+neighborhood from run 0 (9.5 points, experiment 15). A margin under 5 points, or one whose CI includes 0, means that the
+model does no better than view retrieval on those walks. M(control) and A(control) are reported as the reference, with
+A(control) beside experiment 10's four-epoch mean in the same nine rooms. If M(control) is itself under 15 points, the
+shift verdicts are still computed, and the paper says that fresh walks of the training distribution already narrow the
+lead.
+
+*Part 2, the separation test* (neighborhood trials in control walks). A(conflict) and A(agreement) are the five-run mean
+accuracies on conflict and agreement trials, and the conflict cost is K = A(agreement) - A(conflict), averaged over
+rooms.
+- *Geometric proximity wins* if K is at most 10 points: when the walk around the near option shows nothing of the new
+  view's scene and the walk around the far option does, the model loses at most 10 points.
+- *Local association* if A(conflict) lies at most halfway from chance to A(agreement), that is, A(conflict) <=
+  (A(agreement) + 50%) / 2: the conflict removes at least half of the model's above-chance accuracy.
+- *Partial* otherwise.
+The same rule is applied to the patrol walks' neighborhood trials as a secondary result. Point estimates decide, and
+their CIs are reported. Each verdict is also given per run, as the number of runs that meet it, but the verdict is the
+five-run mean's.
+
+**What each outcome means for the paper.**
+- *All shifts survive and geometric proximity wins:* the skill does not depend on the step length, turning or revisit
+  structure of the training walks, and when local view association and geometric proximity disagree, the model follows
+  proximity at close to its usual accuracy. The paper can then say that a local view-sequence association fitted to the
+  training walks does not explain the accuracy, as tested here. This does not show a place code; the unit and readout
+  analyses remain the evidence there. It also does not exclude strategies that chain views across the whole walk, for
+  example linking the new view to the near option through another visit to the same place, which need no metric map.
+- *Local association:* the model needs the walk near the right option to show the new view's scene. The paper must then
+  describe the skill as local view-sequence association, the reviewers' alternative, and drop any reading of the behavior
+  as localization in these rooms.
+- *Partial:* both contribute, and the paper reports the conflict cost with its CI.
+- *A shift reduces or fails:* the skill is tied to that property of the training walks. The paper states the limit with
+  the numbers and restricts the procedural-room claim to walks like the training ones.
+
+**Also reported** (no thresholds):
+- Experiment 10's existing novel trials in all ten rooms, typed by the same neighborhood rule (conflict, agreement or
+  neither), with the four-epoch runs' accuracy in each type (existing answers, not looked at before this registration).
+- In each condition's standard trials, the share of conflict- and agreement-type pairs and the accuracy in each.
+- On neighborhood trials: the retrieval rules (b* chosen per set; the window maximum with k = 16 frames is expected to
+  fall below 50% on conflict trials), and accuracy split by whether frame order favors the near option.
+- Per-run accuracies and the share of unparsed answers.
+
+**Checks before any model run** (reported with the trial counts, before the jobs start):
+- the trial counts per room, condition and type, against the minimum above;
+- each condition's walk statistics (the table above, recomputed from the rendered walks);
+- the pixel window-maximum rule (64 shown frames, k = 16) on control conflict and agreement trials. If it is not below
+  50% on conflict trials and above 50% on agreement trials, the trials do not oppose pixel similarity as intended. That
+  is stated with the result; the decision rule is not changed;
+- every walk rendered a second time for the DINOv2 features must match the first render's MD5, frame by frame.
+
+**Cost and time.** No API cost.
+- Mac CPU (gq): rendering about 322,000 images (walk frames and new views) at about 40 per second with 8 workers
+  (experiment 29's build ran at that speed), plus trial building and copying, about 3.5 h. DINOv2 features of every walk
+  frame (rendered again) on CPU, about 8-10 h (experiment 20's feature jobs ran at 8-15 images per second); these are
+  needed only for the analysis.
+- vast-3: about 5,900 novel trials per run (control about 1,300 standard and 900 neighborhood; long-step about 1,000;
+  low-turn about 1,400; patrol about 800 standard and 500 neighborhood), plus the 192 parity trials, at 0.65 s per trial
+  (experiment 9c's tests there). That is about 1 h 10 min per run with loading and about 6 h for all five, queued after
+  experiment 29's last vast-3 job.
+
+**Files.** `spatialcells/trajectory_shift.py` (walks, the trial builder, renders and the payload for vast-3, the vast-3
+unpack and parity steps); `scripts/mac/trajectory_shift_prep.sh` (Mac: render, build, copy); `scripts/run_trajectory_shift.sh`
+(vast-3, one job per run); `scripts/trajectory_shift_analysis.py` (with `--test` on stand-in answers). Data go to
+`data/e30/` (poses, pixel sums, landmarks, frame MD5s, DINOv2 features; not in git), trial lists to
+`results/export/e30/<room>-<condition>/{standard,nbhd}.json`, and answers to
+`results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s<k>-roomE30-256px-max64.jsonl`. `two_choice.py`,
+`dissimilar_trials.py`, `room.py` and `retrieval_baselines.py` are imported and not changed.
+
+**Status.** Registered; nothing rendered. The renders and model jobs are queued once the hub has committed this
+registration.
+
 ## Experiment 31 (pre-registered 2026-10-28 12:51 PDT, before any four-epoch run saw a reordered walk or a cut): walk-order controls and attention cuts on four-epoch runs 5 and 7
 
 **Why.** The paper now reports the four-epoch recipe (experiment 9c, runs 3-7) as its fine-tuned model; the two-epoch

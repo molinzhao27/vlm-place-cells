@@ -4313,6 +4313,104 @@ Caveats:
   at `/mnt/bigd/mechinterp/units_subspace`, and `data/acts/vggt-single` and `vggt-walk` are symlinks into
   `/mnt/bigd/mechinterp/acts`. `data/acts/vggt-walk/L19.npy` was copied from vast-1 (md5 checked).
 
+## Experiment 24 (pre-registered 2026-10-28 09:52 PDT, before any four-epoch run saw a 256-frame walk in the held-out rooms): the fine-tuned model with the walk Opus saw
+
+**Why.** In the ten held-out procedural rooms (experiment 10), the four-epoch LoRA runs (experiment 9c, runs
+3-7) get 97.1% of the novel trials and Opus 5.5 gets 69.2%. The two models do not see the same walk. The LoRA
+sees 64 frames of it (`two_choice.py --max-images 64`: 61 frames evenly spaced in time plus the two options,
+each labeled with its real frame number), which is the format it was trained on. Opus sees all 256 frames. A
+GPT-6 Astra reviewer of the conference version (`writeup/paper/kit/paperscorer/rounds/R1/packet.md`) objects
+that the comparison is therefore unmatched. Proposal P10, which the user approved on 2026-10-28, runs the
+four-epoch LoRA on the same 256-frame walks Opus saw. Matching the other way, Opus with 64 frames, was not
+approved and is not run; in room A, Opus got 77% of the novel trials with 64 frames and 75% with 256
+(experiments 5-6). One earlier result says a drop is possible: run 0, the original two-epoch run, carried the
+skill only partly to the 256-frame walk in room A (79% against 92% with 64 frames, experiment 9).
+
+**Condition.** The experiment-10 trial lists, walks and prompt, with `two_choice.py` run without
+`--max-images`. Each prompt then shows all 256 walk frames in time order, labeled "Frame 001:" to "Frame 256:",
+followed by the new view and the question. These are the frames, order, labels and question text Opus got
+(`claude_test.py`); Opus received the frames as JPEGs at quality 92, while the LoRA gets the rendered frames
+at 256 px, 64 tokens each. The prompt grows from about 4,600 tokens to 18,582. Decoding is greedy, in bf16,
+with the adapter merged, as in every earlier LoRA test. The walks and trial lists are the Mac's
+(`data/walks-roomP5000` to `P5009`, `results/export/dissimilar-roomP50xx/trials.json`), the files Opus's
+prompts were made from; vast-3's renders of nine of the rooms are byte-identical, and P5005 is the Mac's
+original.
+
+**Scope and time.** All five four-epoch runs, on the novel trials only: 1,299 over the ten rooms, 102-152 per
+room. Familiar trials are not run, because no registered contrast uses them. The estimate comes from the Mac's
+own logs:
+- A 256-frame prompt took 24.45 s per trial on MPS: 111 trials of experiment 14c's base-model run, 18,582
+  prompt tokens, at most 25 GiB of driver memory (`data/logs/mac_lure_edit.log`, 2026-10-24). A 64-frame
+  prompt takes 4.8 s (experiment 9c's P5005 run on 2026-10-27, 913 s for 192 trials), the same speed as on
+  2026-10-23, so the Mac has not slowed since.
+- One run is therefore 1,299 × 24.45 s = 8.8 h, plus the parity subset below (249 trials × 4.8 s, about 20
+  minutes) and model loading, about 9.2 h in all. Five runs take about 46 h.
+- The Mac's queue holds experiment 19's jobs until about Thu 21:40 PDT. The five jobs then end around Sat 20:00
+  PDT, or around Sat 23:30 if experiment 19 overruns its estimates as its first Mac job did (9.8 h against 9).
+  Both are inside the target of Sun 12:00 PDT, so all five runs are run rather than the fallback of runs 5 and
+  7 alone.
+- The jobs run in the order run 5, run 7, run 3, run 4, run 6. Runs 5 and 7 are the most and the least
+  shuffle-sensitive runs in these rooms (ordered minus shuffled walk +42.9 and +15.1 points; experiment 22),
+  so if the queue slips, that pair is complete first.
+- Memory: the 256-frame base-model run peaked at 25 GiB on the 48 GB Mac, and merging an adapter adds no
+  parameters. gq runs one GPU job at a time on the Mac.
+
+**Platform.** The Mac (MPS), through gq: `scripts/mac/run_lora256.sh`, which calls `scripts/lora256_run.py`, a
+wrapper around `two_choice.py` that keeps only the room's novel trials and changes nothing else. The answers go
+to `results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s<k>-roomP50xx-256px-mps.jsonl`. The four-epoch runs'
+64-frame answers in these rooms come from vast-3 (CUDA), except P5005's (MPS), and vast-3 is busy until Saturday.
+So each job first repeats the 64-frame walk on MPS for the novel trials of P5000 and P5001 (249 per run; the
+first room with 16 walks and the first with 32), as a check that the device does not change the answers. These
+files are tagged `-256px-max64-parity-mps`, so they never mix with experiment 9c's files. Qwen's MPS and CUDA
+answers agreed on 192 of 192 trials in room A and 72 of 72 in HSSD1, but the four-epoch adapters have not been
+checked across devices.
+
+**Analysis** (`scripts/lora256_analysis.py` -> `results/lora_256frames.json`, whose `summary` holds the
+numbers below as fractions). As in experiment 10: accuracy on each room's novel trials, with unparsed answers
+counted as wrong; rooms are the unit, and a summary is the mean over the ten rooms with a 95% bootstrap CI over
+rooms (10,000 resamples), with room-level and pooled trial-level sign tests as supplements. The recipe's number
+is the five-run mean: for each room the mean over runs, then the bootstrap over rooms. Every file is checked
+against the room's trial manifest.
+- *Primary:* the LoRA with the 256-frame walk minus Opus with the 256-frame walk (69.2%), on the same 1,299
+  novel trials, as the five-run mean (`lead256_mean`, `lead256_ci95`).
+- *Secondary:* 256 minus 64 frames for the same runs on the same trials, per run and as the five-run mean
+  (`lora256_minus_64_mean`, `lora256_minus_64_ci95`).
+- Reported with them: each run's accuracy and lead over Opus, the share of the 64-frame lead that remains at
+  256 frames (`lead_retained`), and the share of unparsed answers.
+- The analysis was tested with the existing 64-frame files standing in for the 256-frame ones (`--test`). It
+  reproduces experiment 9c's numbers: recipe mean 97.1%, leads over Opus of +27.0 to +28.2 points per run.
+
+**Parity rule.** The parity check passes if the MPS and CUDA 64-frame answers are identical on at least 98% of
+the parity trials, pooled over runs (1,245). If it passes, the secondary contrast uses the existing 64-frame
+files (CUDA in nine rooms, MPS in P5005), as experiment 9c does. If it fails, the secondary contrast is reported
+only within the Mac, on P5000, P5001 (the parity files) and P5005, and the ten-room version becomes a supplement
+marked as confounded by device. The primary contrast does not depend on parity: every 256-frame answer comes
+from the Mac, and Opus answered through the API.
+
+**Decision rule, set now.**
+- *The lead survives a matched frame count* if the five-run mean of the LoRA at 256 frames minus Opus at 256
+  frames is at least 10 points and its 95% CI over rooms excludes 0. The paper can then say that the fine-tuned
+  model leads Opus with the same walk, and give both numbers.
+- *The lead shrinks* if the CI excludes 0 but the mean is under 10 points. The model still leads with matched
+  inputs, but part of the 28-point gap came from the 64-frame format. The paper then gives the matched number as
+  the comparison with Opus and the 64-frame number as the model's own format.
+- *The lead is gone* if the CI includes 0, and *reversed* if the whole CI lies below 0. The advantage would
+  then depend on the 64-frame walks the model was trained on, and the paper must not say that the fine-tuned
+  model beats Opus with matched inputs. A drop toward Opus would mean that the frame-count mismatch was hiding a
+  training-length effect: the LoRA learned the skill on 64-frame walks (frames about four steps apart, prompts
+  of about 4,600 tokens) and does not fully carry it to walks four times as long. That is a finding about how
+  the trained model generalizes. It would not show that Opus was handicapped by its longer walk, since Opus did
+  as well with 64 frames as with 256 in room A.
+- The same rule is applied to each run and reported as the number of runs that meet it, but the verdict is the
+  five-run mean's. The 256-minus-64 contrast has no threshold; it is reported with its CI and the number of
+  rooms where accuracy drops.
+- *Stopping.* The verdict uses the runs that answered every novel trial in all ten rooms. If fewer than five are
+  complete at Sun 12:00 PDT, the result on the complete runs is reported as interim (`summary.status`), and the
+  verdict is restated once all five finish. No run is dropped or repeated because of its result. A job that
+  crashes is restarted, and it resumes where it stopped.
+
+**Status.** Registered; jobs not yet submitted.
+
 ## Prior work this builds on
 
 - Luo, Mok & Love 2024, *The inevitability and superfluousness of cell types in

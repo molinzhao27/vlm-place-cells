@@ -28,6 +28,14 @@ across to the opposite facing half (the allocentric test).
 --quadrant (experiment 13e) adds the same invariance and decoding measures on
 opposite 90-degree sectors centred on E, N, W, S (N vs S, E vs W; no shared view),
 as in heading_matrix, and writes results/summary_quadrant.json without figures.
+
+--arena (follow-up pilot WP, amendment 2) is for scenes other than room A's 10 m box (the
+photoreal apartments): the grid is a square of 0.5 m bins laid over the bounding box of the
+positions in --data's meta.npz, its corner on the 0.5 m lattice through (0, 0), so walk and
+probe arenas of one scene share bin edges. Bins the walk never visits (walls, rooms outside
+the walks, the square's padding) drop out of every score through the occupancy mask that room
+A already uses (valid = at least MIN_OCC frames). In room A the box gives the default grid.
+Without --arena nothing changes.
 """
 from __future__ import annotations
 
@@ -43,6 +51,7 @@ from scipy import ndimage
 NB = 20           # spatial bins per side (0.5 m)
 NH = 36           # heading bins (10 deg)
 L = 10.0
+X0 = Y0 = 0.0     # the grid's corner (room A's); set_arena moves it, NB and L to another scene's box
 MIN_OCC = 3
 N_SHUF = 100
 N_SHUF_GRID = 10
@@ -57,6 +66,23 @@ def _kernel(sigma=1.0, r=3):
 
 
 KER = _kernel()
+
+
+def set_arena(meta, bin_m=0.5):
+    """--arena: a square grid of bin_m bins over the bounding box of meta's positions (the corner on the bin_m
+    lattice through the origin). Returns the grid, which is recorded with every score."""
+    global NB, L, X0, Y0
+    X0, Y0 = (float(np.floor(meta[k].min() / bin_m) * bin_m) for k in ("x", "y"))
+    NB = int(np.ceil(max(meta["x"].max() - X0, meta["y"].max() - Y0) / bin_m))
+    L = NB * bin_m
+    return {"x0": X0, "y0": Y0, "bins_per_side": NB, "bin_m": bin_m}
+
+
+def spatial_bins(meta):
+    """Spatial bin id of every frame (row = y, col = x)."""
+    ix = np.clip(((meta["x"] - X0) / L * NB).astype(int), 0, NB - 1)
+    iy = np.clip(((meta["y"] - Y0) / L * NB).astype(int), 0, NB - 1)
+    return torch.from_numpy(iy * NB + ix).to(dev)
 
 
 # ---------------------------------------------------------------- maps and scores
@@ -268,10 +294,8 @@ def load_units(tag, layer, data_dir, meta):
 def analyze_layer(X, meta, rng, quadrant=False):
     N = len(X)
     walk, step = meta["walk"], meta["step"]
-    ix = np.clip((meta["x"] / L * NB).astype(int), 0, NB - 1)
-    iy = np.clip((meta["y"] / L * NB).astype(int), 0, NB - 1)
-    bins = torch.from_numpy(iy * NB + ix).to(dev)      # row = y, col = x
-    hb = torch.from_numpy(np.clip((meta["theta"] / (2 * np.pi) * NH).astype(int), 0, NH - 1)).to(dev)
+    bins = spatial_bins(meta)
+    hb =torch.from_numpy(np.clip((meta["theta"] / (2 * np.pi) * NH).astype(int), 0, NH - 1)).to(dev)
     R = torch.cat([X.clamp_min(0), (-X).clamp_min(0)], 1)
     active = (R > 0).float().mean(0) >= 0.01
     pole_ids = torch.nonzero(active).squeeze(1)
@@ -379,12 +403,13 @@ def plot_examples(tag, layer, pu, R_maps_by_half, path):
         m[~v] = np.nan
         mn, ms = R_maps_by_half(u)
         kind = "place" if r < len(picks) else "grid?"
-        axs[r, 0].imshow(m, origin="lower", extent=(0, L, 0, L), cmap="jet")
+        ext = (X0, X0 + L, Y0, Y0 + L)
+        axs[r, 0].imshow(m, origin="lower", extent=ext, cmap="jet")
         axs[r, 0].set_title(f"{kind} pole {int(pu['pole'][u])}: SI {pu['si'][u]:.2f}, stab {pu['stab'][u]:.2f}", fontsize=8)
         if kind == "place":
-            axs[r, 1].imshow(mn, origin="lower", extent=(0, L, 0, L), cmap="jet")
+            axs[r, 1].imshow(mn, origin="lower", extent=ext, cmap="jet")
             axs[r, 1].set_title("facing north half", fontsize=8)
-            axs[r, 2].imshow(ms, origin="lower", extent=(0, L, 0, L), cmap="jet")
+            axs[r, 2].imshow(ms, origin="lower", extent=ext, cmap="jet")
             axs[r, 2].set_title(f"facing south half (inv {pu['hi'][u]:.2f})", fontsize=8)
         else:
             ac = autocorr(pu["maps"][u:u + 1], pu["valid"])[0].cpu().numpy()
@@ -408,11 +433,14 @@ def main():
     ap.add_argument("--max-walks", type=int, help="match activations extracted with --max-walks")
     ap.add_argument("--quadrant", action="store_true",
                     help="experiment 13e: add opposite-90-degree-sector measures, write summary_quadrant.json, no figures")
+    ap.add_argument("--arena", action="store_true",
+                    help="0.5 m bins over the scene's bounding box (meta.npz) instead of room A's 10 m box; recorded as 'arena'")
     args = ap.parse_args()
     meta = dict(np.load(os.path.join(args.data, "meta.npz")))
     if args.max_walks:
         n = int((meta["walk"] < args.max_walks).sum())
         meta = {k: v[:n] for k, v in meta.items()}
+    grid = set_arena(meta) if args.arena else None
     os.makedirs(os.path.join(args.out, "figs"), exist_ok=True)
     summary_path = os.path.join(args.out, "summary_quadrant.json" if args.quadrant else "summary.json")
     summary = json.load(open(summary_path)) if os.path.exists(summary_path) else {}
@@ -442,6 +470,8 @@ def main():
             X = load_units(tag, layer, args.data, meta)
             stats, pu = analyze_layer(X, meta, rng, args.quadrant)
             stats.update({f"decode_{k}": v for k, v in decoding_suite(X, meta, args.quadrant).items()})
+            if grid:
+                stats["arena"] = grid
             summary.setdefault(tag, {})[layer] = stats
             print(tag, layer, json.dumps({k: round(v, 3) if isinstance(v, float) else v for k, v in stats.items()}), flush=True)
             if args.quadrant:
@@ -450,9 +480,7 @@ def main():
                 continue
 
             north = torch.from_numpy(np.sin(meta["theta"]) > 0).to(dev)
-            ix = np.clip((meta["x"] / L * NB).astype(int), 0, NB - 1)
-            iy = np.clip((meta["y"] / L * NB).astype(int), 0, NB - 1)
-            bins = torch.from_numpy(iy * NB + ix).to(dev)
+            bins = spatial_bins(meta)
             Rfull = torch.cat([X.clamp_min(0), (-X).clamp_min(0)], 1)
             def by_half(u, Rfull=Rfull):
                 col = Rfull[:, int(pu["pole"][u])][:, None]

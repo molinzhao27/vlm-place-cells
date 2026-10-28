@@ -1224,6 +1224,103 @@ Reading:
   chance".
 - The analyses inside the fine-tuned model (experiments 13a, 14a, 15, unit scoring) used seed 0 only.
 
+## Experiment 9c (pre-registered 2026-10-25, before any training): a longer training schedule
+
+**Why.** In experiment 9b the three two-epoch runs differ mainly in when they leave the coin-flip
+loss plateau (updates 135, 175, 215 of 284). The cosine learning rate then decays to near zero, and
+the late runs stall before they finish learning: over their last ~100 updates, accuracy on the 64
+held-out training-style rooms stays at 84% (run 1) and 67-70% (run 2), with the loss still at 0.079
+and 0.137 (run 0: 92%, 0.034). The paper states that the schedule may be too short and that a longer
+one was not tested. The user asked for more runs that are properly trained. The schedule below is
+set from the training logs and the held-out training-style rooms only; the test scenes play no part
+in choosing it. The two-epoch runs stay in every analysis and in the paper as the first recipe.
+
+**Recipe.** Identical to experiment 9 (`spatialcells/finetune.py`: the same `data/proc` rooms, 1,136
+for training and the same 64 held out; LoRA rank 16, alpha 32, dropout 0.05 on the language model;
+answer-only loss; AdamW lr 1e-4, 30 warm-up updates, cosine decay; 8 rooms per update; 64-frame walks
+of 256-px frames), except `--epochs 4` (568 updates, the cosine schedule stretched over all of them).
+Runs: seeds 3, 4, 5, 6 and 7, each with `torch.manual_seed` set (unlike seed 0), adapters
+`data/ft/qwen8b-proc-e4-s<seed>`. Training on vast-3's RTX 5090 (as seeds 1-2), through gq, one after
+another (`EPOCHS=4 scripts/run_ft_seed.sh <seed> data/ft/qwen8b-proc-e4-s<seed>`).
+
+**Training checks** (reported for every run, not used to drop any): the update at which the loss
+first falls below 0.15, the loss at the end, and the held-out accuracy curve. Every run that finishes
+is tested and reported, whatever its curve; a run that crashes is restarted with the same seed.
+
+**Tests.** The same as for seeds 1-2 everywhere, each with the 64-frame walk, no walk and the shuffled
+walk: room A and room B (experiment 9b), the ten held-out procedural rooms (experiment 10), the three
+apartments (experiment 12) and the eight houses (experiment 16). Platforms as for seeds 1-2: vast-3
+(CUDA) for rooms A and B, HSSD1, HSSD4-8 and the nine re-rendered held-out rooms (`scripts/run_scene_tests.sh`);
+the Mac (MPS) for the apartments, HSSD2-3 and P5005 (`scripts/mac/run_heldout.sh`).
+
+**Analysis.** Per run, each experiment's registered contrasts (as in `scripts/seed_scenes_analysis.py`
+and `spatialcells/ft_seeds.py`); the five-run mean and range; and the two recipes side by side (three
+two-epoch runs, five four-epoch runs) for every experiment's primary measure.
+
+**Decision rule, set now.** The longer schedule "makes the recipe reliable" if all five runs end with
+at least 85% held-out accuracy on the training-style rooms, the five-run mean on room A's novel trials
+is at least 85%, and no run is below 80% there. Otherwise the result is reported as the longer schedule
+not closing the gap (or closing it partly, with the numbers). Either way all five runs are reported,
+and the paper shows both recipes; nothing is selected after the tests. The analyses inside the model
+(experiments 13a, 14a, 15, unit scoring) stay on the original seed 0 and are not repeated here.
+
+### Exp 9c results (2026-10-27 06:00 PDT)
+
+All five runs trained without a crash or restart: gq vast3:253-254 and 275-282, then mac:75, 80 and 86. Every
+test file is complete, 63 per run. Summaries are in `results/two_choice/ft_seeds.json` (`e4-s<k>`, `runs4ep/<cond>`,
+`training`, `decision_rule_9c`) and `results/seed_scenes_summary.json` (`four_epoch_runs`, next to `three_seeds`).
+
+**The decision rule is met: the four-epoch schedule makes the recipe reliable.**
+
+| run | loss < 0.15 at update | held-out end | room A novel | room B novel |
+|---|---|---|---|---|
+| e4-s3 | 235 | 95.3% | 98.0% (100/102) | 97.2% (103/106) |
+| e4-s4 | 180 | 95.3% | 99.0% (101/102) | 99.1% (105/106) |
+| e4-s5 | 150 | 98.4% | 98.0% (100/102) | 98.1% (104/106) |
+| e4-s6 | 185 | 96.9% | 99.0% (101/102) | 97.2% (103/106) |
+| e4-s7 | 140 | 96.9% | 98.0% (100/102) | 98.1% (104/106) |
+
+- Every run ends with at least 85% held-out accuracy (95.3-98.4%).
+- The five-run room A novel mean is 98.4%, against a required 85%.
+- No run is below 80% (minimum 98.0%).
+
+Every run leaves the plateau by update 235 of 568, so the slowest run has 333 updates of learning
+left. The two-epoch runs left the plateau at updates 135-215 of 284.
+
+**Both recipes side by side** (primary measures; Opus 5.5 with the walk for reference):
+
+| scene and measure | 2 epochs, runs 0/1/2 (mean) | 4 epochs, runs 3-7 (mean) | Opus |
+|---|---|---|---|
+| held-out procedural rooms, novel, room mean | 92.5 / 80.6 / 68.7 (80.6) | 96.3-97.4 (97.1) | 69.2 |
+| apartments, all lure-free trials, pooled | 86.7 / 81.1 / 70.4 (79.4) | 90.9-92.2 (91.5) | 84.1 |
+| apartments, novel trials only (58), pooled | 79.3 / 77.6 / 72.4 (76.4) | 84.5-87.9 (85.5) | 89.7 |
+| houses, all trials, house mean | 92.0 / 87.6 / 73.2 (84.3) | 93.9-95.0 (94.5) | 87.9 |
+| houses, novel trials, house mean | 86.4 / 81.6 / 66.3 (78.1) | 88.7-90.5 (89.6) | 84.2 |
+
+**Each four-epoch run, by scene:**
+- *Held-out procedural rooms:* every run beats the base model (+44.4 to +45.6 points), no walk and the
+  shuffled walk in 10/10 rooms, and beats Opus by +27.0 to +28.2 in 10/10 rooms.
+- *Houses:* every run beats base, no walk and shuffled in 8/8 houses, and beats Opus in 8/8 on all trials
+  (+6.0 to +7.1). On novel trials the margin over Opus is +4.5 to +6.3 (sign tests p 0.006-0.06).
+- *Apartments:* every run beats base, no walk and shuffled on all trials and on novel trials. On all trials
+  it beats Opus by +6.8 to +8.2 (p ≤ 0.0006). On the 58 novel trials it is 1.7-5.2 points below Opus, a
+  difference of 3 to 6 trials (p 0.51-1.0).
+- *Ordered vs shuffled walk:* the ordered walk beats the shuffled one in every run and scene: by +15.1 to +42.9
+  in the held-out rooms, +23.3 to +36.4 in the apartments and +17.7 to +40.2 in the houses. Shuffled-walk
+  accuracy varies across runs (held-out rooms 54.4-82.1%; room A 59-81%). It is higher than in the two-epoch
+  runs (51-63%), so how much of the order a run needs varies between runs. Run 7 depends on it least.
+
+**Reading.**
+- The spread across the two-epoch runs (experiment 9b) came from a schedule too short for late plateau
+  escapes. With four epochs, all five runs land within 1-1.5 points of each other on every primary measure,
+  at or above the original run 0.
+- The comparison with Opus now holds for the recipe, not only for the best run, in the held-out rooms, on
+  all apartment trials and in the houses.
+- The exception is the apartments' 58 novel trials, where Opus is level or slightly ahead (not
+  significant). This is the same subset where the two-epoch runs trailed. The apartment caveat from
+  experiment 12 still applies: the walk may help partly by grouping views by room.
+- The internal analyses stay on run 0, as registered.
+
 ## Experiment 10 (pre-registered 2026-10-22, run 2026-10-23): many held-out rooms
 
 **Deviation found after the results below (2026-10-23, by an external review of the preprint).**
@@ -1521,6 +1618,17 @@ exceeds the 262,144-token context of the hosts allowed by precision. A shorter w
   the shuffled walk with the same frames follows. Budget: what is left on the OpenRouter key.
 - The result does not change the screen's verdict, which used the full walk; it is reported as a
   follow-up with a shorter walk.
+
+**Amendment 6 result (2026-10-25).** The 160-frame preflight was accepted (161 images; the model's own
+count was 11,672 prompt tokens, about 72 per image, so the full 256-frame walk would be about 19k tokens
+and only OpenRouter's estimate blocks it). Qwen3.5-397B-A17B does not gain from the walk: on room A's 102
+novel trials 52.9% with the 160-frame walk vs 56.9% without, 17 better / 21 worse, two-sided p = 0.63;
+familiar trials 51.1% vs 50.0% (17 / 16). No shuffled run followed. Its reasoning often runs past the
+16,000-token output cap at low effort: 30 walk and 29 no-walk answers stopped at the cap with no answer
+(scored wrong, as for every model); on the 74 novel trials both runs answered, 63.5% vs 64.9%. It picks
+the first-listed option on 53% / 48% of the novel trials it answered (52% / 48% of all answered trials). Hosts: AtlasCloud and Parasail (walk), plus DeepInfra and
+GMICloud (no walk), all serving fp8. Cost $14.13 (key: $24.49 used of $50). Per-trial answers in
+`results/api/qwen_qwen3.5-397b-a17b-dissimilar-{f160,nowalk}-low.jsonl`.
 
 *Logistics (2026-10-23, no protocol change).* GPT-6 Astra and Gemini 4 Argon are run on the user's
 university lab PC, billed to the lab, from a self-contained
@@ -2274,6 +2382,727 @@ on vast-3's RTX 5090 (CUDA, untagged files; gq jobs vast3:83-86 and 88). All six
 ran on one machine, in `scripts/mac/run_heldout.sh`'s order, from md5-identical copies of the walks and
 trials. Before the split, vast-3 reproduced the Mac's HSSD1 answers on walks 0-3 for the base model with
 the walk and the LoRA model with and without it (72 of 72 trials, the same answers and text).
+
+## Follow-up pilot WP (pre-registered 2026-10-26, before any of these models saw our walks): navigation policies and a streaming 3D model
+
+`docs/followup_world_models.md` plans a follow-up paper that asks which models trained on egocentric
+video and self-motion form a place code that passes our tests. This pilot runs the plan's ranks 2 and 4
+on the Mac and the RTX 4070: the Berkeley navigation policies ViNT and NoMaD (GNM as a check), which
+were trained on real robot driving and have a head that predicts how many steps away a goal image is,
+and CUT3R, a streaming 3D reconstruction model that carries a learned state across the whole walk,
+together with TTT3R's update rule on the same weights. NWM (rank 1) waits for the user to accept its
+gated license. When this section was written, the weights had been downloaded and the code read, but
+no model had seen any frame of ours. The section fixes the plan's W0, W1, W2, W4 and W5 for these
+models (as WP0-WP5). Room A is the selection scene, so the pilot's labels are provisional; the follow-up
+registers its own confirmation scenes.
+
+**Models, code and weights** (official pages, licenses and weights re-checked on 2026-10-26):
+- ViNT, NoMaD and GNM: `robodhruv/visualnav-transformer` (MIT, commit dca7981), with the weights
+  `vint.pth`, `nomad.pth` and `gnm.pth` from the Google Drive folder that its README links, and the
+  configs `train/config/{vint,nomad,gnm}.yaml`. ViNT and GNM see the current frame and the 5 before it
+  at 85 × 64 px; NoMaD sees the current frame and the 3 before it at 96 × 96 px. Their distance heads
+  were trained on goals 0-20 steps ahead.
+- CUT3R: `CUT3R/CUT3R` (CC BY-NC-SA 4.0, commit 8bc15dc), the final checkpoint
+  `cut3r_512_dpt_4_64.pth` from the README's Google Drive link. TTT3R: `Inception3D/TTT3R` (CC BY-NC-SA
+  4.0 for the CUT3R parts and MIT for its own, commit edd6d8c), the same checkpoint, with its
+  `ttt3r` state-update rule.
+- License handling (plan Section 7): the repositories and weights live outside this repository
+  (`~/wm_models/`), and each model family has its own virtual environment. Our adapters
+  (`spatialcells/wm_vint.py`, `spatialcells/wm_cut3r.py`, MIT) put a checkout on `sys.path` and import
+  from it; no code is copied. Checkpoints are unpickled only with `weights_only=True` and an allowlist
+  of the classes they contain, and models are built from our own reading of the stored configuration.
+
+**Inputs.** The existing renders (256 px, 90° horizontal field of view, camera 1 m above the floor),
+each passed through the model's own preprocessing:
+- ViNT family: its training preprocessing, a center crop to 4:3 (256 × 192) resized to the model's
+  input size, then ImageNet normalization. One walk step (0.22 m × U(0.7, 1.3)) counts as one model
+  step: the training data are spaced 0.25 m (RECON) and 0.255 m (SACSoN), and RECON's camera is
+  0.95 m high.
+- CUT3R and TTT3R: the demo's loader for a square image at size 512, which upsamples to 512 × 512 and
+  center-crops to 512 × 384.
+- "Anchored" sequences start with the 8 anchor views of experiment 4 (`vggt_cells.anchors`), so every
+  sequence's output frame is the first anchor's, as it was for VGGT. The state is never reset.
+Scenes: room A for every analysis, Replica apartment 0 (`walks-roomReplicaApt0`) also for the
+competence gates, and the registered lure-free trials for WP5. The only new render is a set of 256
+teleport probes per walk in room A (WP1).
+
+**WP0. Competence gates** (the plan's thresholds, fixed before any run). A model that fails its gate in
+room A but passes in the apartment is reported as competent only on photoreal scenes; its WP1, WP2 and
+WP4 analyses, which need the 10 m arena of `analyze.py`, are left to the follow-up. A model that fails
+in both scenes is reported as not competent on our renders and left out of everything below.
+- ViNT, NoMaD and GNM: Spearman ρ ≥ 0.5 between the predicted temporal distance and the true step
+  distance k, pooled over pairs. The observation is the frame at step t = 5, 15, ..., 235 of every
+  walk, with its own past walk frames as context; the goal is the frame k = 0, 1, ..., 20 steps later
+  (NoMaD with the goal unmasked). 95% CI from a bootstrap over walks (10,000 resamples, seed 0).
+- CUT3R and TTT3R: median camera-position error ≤ 0.5 m after a similarity alignment. The first 16 walks
+  of each scene are each streamed from a fresh state without anchors, and each walk's predicted camera
+  centers are aligned to the true ones (x, y, 1 m) by one similarity transform (Umeyama, all 256
+  frames). Also reported: the error over the first and the last 64 frames (forgetting) and, in room A,
+  the anchored error with the alignment fit on the 8 anchors only (VGGT single: 0.42 m).
+
+**WP1. Strict heading invariance of place units.** `analyze.py --quadrant`, unchanged: rodent place
+criteria against circular-shift shuffles, and invariance as the correlation between rate maps built
+from opposite 90° heading sectors (N vs S, E vs W). The measure is the share of place units that are
+strictly invariant (correlation > 0.5), `frac_place_heading_invariant_quadrant / frac_place`. On this
+measure the path-integrating RNNs score 98-100%, VGGT single 45% (block 19), VGGT with the walk 63%, and
+single-frame models 0-6% (experiments 13e-f).
+- Units recorded (float16, `data/acts/<tag>/L<k>.npy`, rows in `frames.npy` order):
+  - ViNT: L0 the current frame's EfficientNet-B0 feature (1,280); L1-L4 the MLP hidden units (2,048)
+    of transformer layers 1-4 at the current frame's token; L5-L9 the five layers after the transformer
+    (512, 256, 128, 64 and 32 units, after ReLU), which mix all tokens.
+  - NoMaD: L0 as for ViNT; L1-L4 the MLP hidden units (1,024) at the current frame's token, with the
+    goal masked (its exploration mode); L5 the pooled observation encoding (256) that its distance head
+    and diffusion policy read.
+  - GNM: L0 the pooled features of its observation encoder, which stacks the context frames as
+    channels (1,280); L1 the compressed observation encoding (1,024); L2-L3 its joint layers (256 and
+    32), with the goal equal to the current frame.
+  - CUT3R and TTT3R: L3, L6, L9 and L12 the MLP hidden units (3,072) of image-decoder blocks 3, 6, 9
+    and 12 at the pose token, the counterpart of VGGT's camera token; L13 the state after this frame's
+    update, averaged over its 768 tokens (768); L0 the encoder's mean patch token (1,024), a
+    single-frame reference.
+- Conditions (room A, 48 walks of 256 steps):
+  - ViNT family: *walk* (the model's past walk frames as context; ViNT and GNM take the current frame
+    as the goal, NoMaD masks the goal), *single* (the context is the current frame repeated), and
+    *shuffled* (the context frames are drawn at random from the same walk, seeded by walk and step).
+  - CUT3R: *walk* (anchors, then the walk with the state carried), *single* (anchors, then the frame
+    alone), *alone* (the frame as the first view of a fresh sequence), and *shuffled* (anchors, then
+    the walk's frames in an order shuffled with the walk as seed; rows are put back in walk order
+    before scoring). TTT3R: *walk* and *single*.
+  - For every model, the 8-step moving average of *single* (`<tag>-single+ema8`), the control that
+    reaches 90-97% in every model tested so far.
+- Each condition is reported at its layer with the highest share, with every layer in the file. The
+  provisional labels are "place-like" at ≥ 45% (VGGT single's share), "view-like" at ≤ 10%, and
+  "intermediate" in between. Because the moving average alone reaches 90-97%, a high share along the
+  walk counts as evidence of integration only when the walk condition beats the model's own
+  *single* + EMA-8. The test that removes smoothing is the one on teleport probes, next.
+- *Teleport probes* (the plan's W1 measure): 256 probes per walk in room A (12,288; `render_probes
+  --per-walk 256 --seed 17` into `data/walks-p256/`, which links room A's walks), about 30 per 0.5 m
+  bin. Units are scored on the probe activations with the same criteria: `analyze.py` runs on a probe
+  arena in which a probe's walk is its walk and its step is its index, and since probes come in random
+  order, the circular shifts act as permutations. Probe conditions: for CUT3R and TTT3R, *probes-walk*
+  (each probe read against the state at the end of its anchored walk, with the state's write disabled,
+  `update = False`) and *probes-single* (read against the state after the anchors); for the ViNT family,
+  *probes-single* (the context is the probe repeated: these models keep at most 5 frames, so after a
+  teleport they have nothing else). References on the same probes: pixels, and VGGT single at blocks
+  19 and 21 (`vggt_cells` on the 4070). Same labels and layer rule.
+
+**WP2. Teleport probes across headings.**
+- *Primary (the plan's W2):* the novelty cost. A ridge decoder (λ chosen as in `analyze.decode`) is
+  trained on the even walks' walk-frame activations at all headings, in the condition that matches the
+  probe condition (walk for probes-walk, single for probes-single), and tested on the odd walks'
+  256-per-walk probes, split into familiar probes (some walk frame within 1 m faced within 45°,
+  `analyze_behave.geometry`) and novel ones. The novelty cost is the median error on novel probes minus
+  that on familiar ones. Baselines under the same protocol: pixels, and the recall baseline (the 8-step
+  moving average of pixels at the walk frame that looks most like the probe). Decision rule: "beyond
+  view recognition" requires a novel-probe error below the recall baseline's and a novelty cost below
+  the pixels', each difference with a 95% CI that excludes zero (paired bootstrap over the 24 odd
+  walks). Layer: the one WP1 selects on probes.
+- *Model-native (CUT3R, TTT3R):* the pose head's position for each probe, read with `update = False`
+  after the anchored walk and mapped to room coordinates by the similarity fit on that sequence's
+  anchors: median error on novel and familiar probes, and its novelty cost.
+- *Strict cross-sector decoding:* a ridge decoder trained on one 90° sector of the even walks' probes
+  and tested on the opposite sector of the odd walks' (as `analyze_probes --quadrant`), reported with
+  experiment 13f's caveat and used for no claim.
+
+**WP4. CUT3R pose-head patching** (experiments 4, 13c and 14d; the plan's W4). Single mode (anchors,
+then one walk frame), so that the anchors' poses, and with them the alignment to the room, are the same
+in every run. The 128 targets, their donors (more than 3 m away) and the 2,048 fit frames are drawn as
+in `vggt_patch.py` (rng seed 0 and the same metadata, hence VGGT's frames). Sites: the pose token's
+residual stream after each of the 12 image-decoder blocks. Written from the donor: the whole token;
+position PCA-10 and PCA-2 (`vggt_patch.mean_subspace`, the mean token per 1 m bin); the ridge probe for
+(x, y) at the λ with the best held-out R² (`ridge_subspace`); a random 10-d subspace (seeded by block);
+and the exact complement of PCA-10. Erased (set to the fit frames' mean): PCA-10 and random-10, scored
+by position error. Readout: the pose head's camera position for the walk frame in room coordinates.
+Transfer is how far that position moves toward the donor's clean prediction, as a fraction of the
+distance between them (`vggt_patch`'s definition). Decision rule (plan): a "causal position code"
+requires PCA-10 transfer ≥ 0.5 at some site, complement and random-10 transfer ≤ 0.05, and an erasure
+error at least twice the clean error with the random erasure within 10% of clean (VGGT: 0.85, 0.00 and
+0.00; 3.38 m vs 0.43 m). Secondary, in walk mode: the state and the pose memory entering a target walk
+frame are replaced by those of a donor walk at the donor frame, and transfer is scored the same way;
+this asks whether the remembered map, rather than the view, sets the pose. If the primary rule passes,
+experiment 14d's cross-room test follows (subspaces fit in room A and written in room B; the test is
+whether room-A-fit minus room-B-fit transfer lies within 0.1).
+
+**WP5. The temporal-distance head on the registered two-choice trials** (the plan's W5; ViNT, NoMaD,
+GNM). For each option X (a walk frame), the observation is X with the walk frames before it as context
+(5 for ViNT and GNM, 3 for NoMaD; at the start of a walk the earliest frame is repeated), and the goal
+is the new view. The model picks the option with the smaller predicted temporal distance; a tie counts
+as half. No-walk control: the context is X repeated. Secondary: the reverse direction, with the new view
+(repeated as context) as the observation and each option as the goal. Trials: every registered
+lure-free trial, i.e. rooms A and B (192 each), P5000-P5009 (1,920, of which 1,299 novel), the three
+apartments (503) and the eight houses (1,450). Outcomes as in experiments 10, 12 and 16: novel-trial
+accuracy in P5000-P5009 with rooms as the unit (mean over rooms, 95% bootstrap CI, room-level sign
+test); all-trial accuracy in the apartments and houses, pooled with exact binomial CIs and with houses
+as the unit; rooms A and B with exact binomial CIs. "Above chance" requires a CI that excludes 50%;
+"uses the walk" requires walk minus no walk above zero with a 95% CI over rooms that excludes zero.
+References: base Qwen3-VL-8B near 50%, the LoRA model 92.5%, Opus 69.2% (novel trials, P rooms) and
+VGGT 82-83% (photoreal).
+
+**Predictions** (from the plan; every result is reported either way): ViNT, NoMaD and GNM are view-like
+in WP1 and WP2 and near 50% on novel trials in WP5; CUT3R is place-like in WP1 and WP4 if any learned
+state is.
+
+**Multiple comparisons.** Holm across the five models for each primary decision (the WP1 probe label,
+WP2, WP4 and WP5).
+
+**Compute and cost.** No API and no paid service. Jobs go through gq on the Mac (`--priority 150`, below
+experiment 9c's) and, if its system disk allows, the PC, each split to about an hour so that 9c's Mac
+tests never wait longer. Outputs: `results/wm_pilot/` (gates, probes, patching, two-choice) and
+`results/wm_pilot/summary_quadrant.json` (unit scores; the main `results/summary_quadrant.json` is
+not touched).
+
+*Implementation notes (2026-10-26, no change to any test).* The unit scores are written per model
+(`results/wm_pilot/units/<model>/` and `results/wm_pilot/probes/<model>/`, so that two scoring jobs
+never write one file); `scripts/wm_pilot/*.sh` run the steps; `spatialcells/wm_pilot.py` builds the
+probe arena and computes WP2, WP5 and the summary (`results/wm_pilot/summary.json`). The probes rendered
+on the PC are byte-identical to the Mac's (MD5). CUT3R's final checkpoint was over its Google Drive
+quota, so it came from the authors' Hugging Face release (`zhangify/CUT3R_release`, which a CUT3R
+author links in the official issue tracker); its SHA-256 matches the release's LFS hash. The stored
+model string matches our configuration apart from training-only fields, and every weight loads (no
+missing or unexpected keys). On the Mac, CUT3R's PyTorch fallback for rotary embeddings cannot take
+the pose token's position −1, so the adapter replaces it with the closed form that the CUDA kernel
+computes (identical for positions ≥ 0). Check (`scripts/wm_pilot/cut3r_check.py`): our preprocessing
+equals CUT3R's `load_images` exactly, and our step loop reproduces CUT3R's own forward pass (the demo's
+path) bit for bit over 12 frames; over 24 frames batched encoding drifts by up to 3.5 cm.
+
+*Results (2026-10-26).*
+- **WP0.** ViNT, NoMaD and GNM pass in room A and fail in the apartment (Spearman ρ, 95% CI over walks):
+  ViNT 0.570 [0.549, 0.590] and 0.407 [0.381, 0.434]; NoMaD 0.512 [0.494, 0.531] and 0.382 [0.352, 0.413];
+  GNM 0.536 [0.516, 0.556] and 0.377 [0.353, 0.402]. In room A the mean predicted distance rises over all
+  20 steps (ViNT 1.5 at k = 0, 4.1 at k = 1, 11.8 at k = 10, 13.7 at k = 20); in the apartment it is flat
+  after about 6 steps. **CUT3R fails in both scenes**: median error after alignment 0.99 m in room A
+  (first 64 frames 1.10 m, last 64 1.15 m) and 0.85 m in the apartment (0.71 and 1.05 m); CUT3R's own
+  forward pass gives 1.04 m on walk 0. As registered, CUT3R is reported as not competent on our renders,
+  and its WP1, WP2 and WP4 are not run. Exploratory: on walk 0, 54 of 255 steps turn more than 30°
+  (median 59°); CUT3R's per-step displacement error is 0.53 m after those steps and 0.19 m after the
+  others (true step 0.22 m). **TTT3R fails in room A and passes in the apartment**: 0.59 m (first and
+  last 64 frames 0.48 and 0.65 m) and 0.40 m (0.39 and 0.43 m). It is therefore reported as competent
+  only on photoreal scenes, and its WP1 and WP2, which need the 10 m arena, are left to the follow-up.
+  TTT3R ran on the RTX 4070 (CUDA, 2 walks per batch) and CUT3R on the Mac; CUT3R's gate rerun on the
+  4070 gives 1.03 and 0.80 m (`results/wm_pilot/pc/`), so the gap is the update rule's, not the
+  platform's.
+- **WP1** (room A; share of place units that are strictly heading-invariant, at each condition's best
+  layer; references: path-integrating RNNs 98-100%, VGGT single 45%, VGGT with the walk 63%):
+  ViNT walk 1.3%, single 2.0%, shuffled 2.8%, its 8-step moving average 97.0%, teleport probes 3.0%;
+  NoMaD walk 5.2% (77 place units), single 0.3%, shuffled 0.1%, moving average 56.9%, probes 0.3%;
+  GNM walk 40.2% (layer L0, 117 place units), shuffled 29.2%, single 0.4%, moving average 69.7% at the
+  same layer (86.7% at its best layer, 15 units), probes 0.4%; pixels on the probes 0.9%; VGGT single on
+  the probes 36.7% (block 19; 33.0% at block 21), against its 45% along the walk, with probe positions
+  from its camera head at 0.41 m median (novel 0.39 m, familiar 0.41 m). All three policies are
+  view-like on the probes, and the probe measure gives a model that localizes an intermediate share. GNM's walk share comes from its input layer, which stacks the 6 context frames
+  as channels, and stays below its own moving average there, so it counts as smoothing. ViNT barely uses
+  its context: the walk and single contexts change its units after the transformer by 0.1-0.2% and its
+  predicted distance by 0.004 steps on average.
+- **WP2.** No model is "beyond view recognition". Novel-probe error at the probe-selected layer: ViNT
+  2.49 m, NoMaD 2.08 m, GNM 2.36 m, against the recall baseline's 2.28 m and the pixels' 1.14 m. The
+  novelty cost is negative for every single-frame representation (pixels −0.16 m, the models −0.3 to
+  −0.6 m), so the cost criterion is met by ViNT and GNM only because of a flaw in the measure:
+  "familiar" is defined against the probe's own walk, which a decoder trained on other walks never saw,
+  so the split tracks where the probe is rather than what the decoder knows. The follow-up should define
+  familiarity against the decoder's training frames, or train on the probe's own walk. Strict
+  cross-sector probe decoding is worse than chance for all three (4.5-5.3 m; chance 3.68 m).
+- **WP5** (walk; P5000-P5009 novel trials, mean over rooms [95% CI], rooms above/below 50%): ViNT 51.5%
+  [49.1, 54.2], 4/4; NoMaD 47.3% [44.7, 49.7], 4/6; GNM 53.5% [51.6, 55.8], 8/1 (sign test p = 0.039,
+  0.12 after Holm over the three). Walk minus no walk: 0.0, −1.6 and −0.4 points, all with CIs that
+  include zero, so none uses the walk. All trials in the apartments 53.3%, 53.7%, 50.1% and in the houses
+  51.7%, 53.0%, 51.2% (NoMaD's houses pooled [50.4, 55.6], houses as the unit [49.3, 56.5]). Room A novel
+  60.8% [50.6, 70.3], 55.9%, 57.8%. Reverse direction (secondary), P rooms novel: 54.3% [51.8, 56.4],
+  50.7%, 55.6% [51.7, 58.8]. The base 8B is near 50%, the LoRA model 92.5% and Opus 69.2% on the same
+  trials.
+
+*Amendment 1 (2026-10-26 11:26 PDT, approved by the user; written before any sub-stepped frame was rendered
+or shown to a model): CUT3R and TTT3R gated again on walks whose turns are split into sub-steps.* CUT3R
+failed its gate in both scenes and TTT3R in room A. The exploratory per-step errors above point to the
+walks' large turns between consecutive frames, which are rare in these models' training videos (plan
+Section 3.2). This amendment gates both models again on the same walks, rendered with extra frames inside
+every large turn. It adds a test and changes nothing above: the first gates stand as registered and are
+reported beside the new ones.
+- *Re-render rule.* Between original steps t and t + 1 of a walk, let Δθ be the heading change wrapped to
+  (−180°, 180°]. If |Δθ| > 15°, n − 1 sub-frames are inserted, with n = ceil(|Δθ| / 15°): sub-frame j
+  (j = 1, ..., n − 1) sits at step t's position (x_t, y_t) with heading θ_t + j Δθ / n. The camera thus
+  turns on the spot and then steps, as the walk generator moves (`room.foraging_walk` turns first and
+  then steps along the new heading), and the last transition turns Δθ / n ≤ 15° and takes the original
+  step. Every sub-frame is rendered at its exact pose, with the scene's renderer and settings unchanged
+  (256 px, 90° field of view, camera 1 m above the floor; in the apartment the floor height is snapped at
+  (x_t, y_t), as for step t). The original frames keep their poses, read from each scene's `meta.npz`,
+  and their re-renders must be byte-identical to the existing frames; if they are not, the difference is
+  reported here and no model sees the new frames until it is resolved. On the first 16 walks this gives
+  510-574 frames per walk in room A (8,557 in all; 44% of transitions turn more than 15°) and 612-941 in
+  the apartment (11,700; 53%).
+- *Scenes and files.* Room A (ray cast with `room.py` on the Mac, and again on the RTX 4070 PC, where the
+  gates run; the two renders must match by MD5) and Replica apartment 0 (`habitat_scene.py` with
+  experiment 12's settings, on the RTX 4070), the first 16 walks of each, in the
+  new folders `data/walks-sub15` and `data/walks-roomReplicaApt0-sub15` (`data/walks` and
+  `data/walks-roomReplicaApt0` are not touched). Their `meta.npz` adds, per frame, `orig` (true for an
+  original step) and `orig_step` (the original step it belongs to, or that it follows for a sub-frame).
+- *Gate.* As registered in WP0, with one change of input: each model streams every frame of a sub-stepped
+  walk, original and inserted, from a fresh state without anchors. Each walk's similarity alignment
+  (Umeyama) is fit on its 256 original frames only, and only those frames are scored: the median
+  camera-position error, and the error over the first and the last 64 original frames. The threshold
+  stays at a median of 0.5 m, with the same consequences as registered (fails in room A but passes in the
+  apartment: competent only on photoreal scenes; fails in both: not competent on our renders). CUT3R and
+  TTT3R both run on the RTX 4070 (CUDA), where CUT3R's first gate gave 1.03 and 0.80 m and TTT3R's 0.59
+  and 0.40 m. Exploratory: the per-step displacement error between consecutive original steps, after
+  steps that turn more than 30° and after the others, as in the first gate.
+- *If a model now passes in room A,* its registered WP1, WP2 and WP4 analyses follow, and the conditions
+  that stream a walk (WP1 *walk*; WP2 *probes-walk* and the model-native probe positions, read against
+  the state at the end of the walk; WP4's secondary walk mode) take the sub-stepped walks as input: all
+  48 room-A walks, rendered by the same rule, with units, poses and swaps recorded at the original steps
+  only. The conditions without a walk sequence (*single*, *alone*, *probes-single*, WP4's single mode) and
+  the *shuffled* control (the original frames in shuffled order) stay as registered. These runs start
+  only after the gate results are reported here.
+
+*Amendment 1 results (2026-10-26 14:00 PDT).* The renders followed the rule: no transition turns more
+than 15° (largest 15.0°). Room A has 8,557 frames, ray cast on the Mac and on the PC with the same MD5.
+Apartment 0 has 11,700 frames. In both scenes all 4,096 re-rendered original frames are byte-identical
+to the existing ones (`results/wm_pilot/substep_<scene>-sub15.json`; the apartment's frames stay on the
+PC). The gates ran on the
+RTX 4070 (gq pc:567 and pc:568; `results/wm_pilot/gate_<rule>_<scene>-sub15.json`). **Neither model
+passes in room A, so no WP1, WP2 or WP4 run follows.** Median camera-position error over the original
+steps after alignment, with the first gates on the same GPU in brackets:
+- CUT3R: room A 1.44 m (1.03 m), first and last 64 original frames 1.68 and 1.61 m, per walk 0.76-2.11 m;
+  apartment 0.75 m (0.80 m). It fails in both scenes again and stays "not competent on our renders".
+- TTT3R: room A 0.59 m (0.59 m), first and last 64 frames 0.44 and 0.65 m, per walk 0.45-0.97 m;
+  apartment 0.40 m (0.40 m), passing as before. It stays "competent only on photoreal scenes".
+- Exploratory, per-step displacement error between consecutive original steps (median), after steps that
+  turn more than 30° and after the others (22% of the room-A steps and 32% of the apartment's turn that
+  far): CUT3R 0.33 vs 0.17 m in room A and 0.25 vs 0.14 m in the apartment; TTT3R 0.47 vs 0.13 m and
+  0.35 vs 0.10 m. The first gate's figure (0.53 vs 0.19 m) came from walk 0 only, so it is not strictly
+  comparable. Still, a large turn costs both models two to four times the error of an ordinary step,
+  even when it reaches them in steps of 15° or less.
+
+Splitting the turns does not make either model competent in room A. The large turns still carry most of
+the per-step error when they come in small pieces, so the size of a single frame-to-frame rotation was
+not the cause. The inserted frames are pure rotations on the spot, which carry no parallax, and that
+may matter more. CUT3R does worse on the longer sequences (about 535 frames per walk instead of 256),
+already over the first 64 original frames; this fits the forgetting reported for CUT3R's state, but we
+did not test it. TTT3R is unchanged in both scenes. Its unit and probe tests stay with the photoreal
+scenes (Amendment 2).
+
+*Amendment 2 (2026-10-26 11:49 PDT; written before TTT3R or VGGT saw any frame of the new probes or anchors, before any
+TTT3R unit was recorded in an apartment, and before any unit was scored there; only the apartments' positions,
+headings and probe counts had been looked at): TTT3R's WP1 and WP2 in the Replica apartments, and a corrected WP2
+novelty cost.* TTT3R passed WP0 only in apartment 0 (0.40 m; room A 0.59 m), so as registered it counts as competent
+only on photoreal scenes, and its WP1 and WP2 were left until `analyze.py` could score units outside room A's 10 m
+box. This amendment adds that option, replaces WP2's decoder (the results above show that its novelty cost is
+confounded), and runs both analyses in the apartments. It changes no earlier result: the registered WP2 numbers
+stay above, and the corrected ones are reported beside them. CUT3R stays out (it failed in both scenes), WP4 is not
+part of this amendment, and amendment 1 (sub-stepped walks) is unaffected; if TTT3R passes room A there, amendment
+1's room-A runs follow as it says.
+- *Scenes.* Replica apartment 0 is the primary scene, since TTT3R passed its gate there. Apartments 1 and 2 first
+  take the same WP0 gate (the first 16 walks, each from a fresh state without anchors, per-walk similarity alignment
+  over all 256 frames, median ≤ 0.5 m), and WP1 and WP2 run in each one that passes. Results are reported per
+  apartment. The label that counts is apartment 0's, and it is called consistent across apartments if every
+  apartment that passes gets the same label. Apartments 1 and 2 have rendering holes (29% and 45% of frames have
+  more than 5% of their pixels with no geometry; apartment 0 has none), which is a reason to expect worse gates
+  there.
+- *Arena* (`analyze.py --arena`; without the flag nothing changes). The grid is a square of 0.5 m bins laid over the
+  bounding box of the positions in the scored folder's `meta.npz`, with its corner on the 0.5 m lattice through
+  (0, 0), so a scene's walk and probe arenas share bin edges. Bins with fewer than 3 frames are masked, as in room A,
+  so walls, unvisited rooms and the square's padding drop out of every score; the field-size criterion (≤ 40% of
+  the arena) counts only those visited bins. Everything else in `analyze.py --quadrant` is unchanged: the place
+  criteria, 100 circular-shift shuffles, the opposite 90° sectors, the 1-bin (0.5 m) smoothing, and the share of
+  strictly invariant place units. The grids: apartment 0 26 × 26 bins with 218 visited (≥ 3 walk frames),
+  apartment 1 21 × 21 with 214, apartment 2 20 × 20 with 170 (room A 20 × 20 with 384). The smoothing can blend
+  two bins on either side of a thin wall; this is a known limitation and is not corrected. Check on room A, where
+  the bounding box gives the default grid exactly (corner (0, 0), 20 bins): the HEAD version of `analyze.py`, the new one and the new one with `--arena` give bit-identical output for pixels and pixels + EMA-8 along the walk, GNM's walk layer L0 and pixels on the 256-per-walk probes, and match `results/summary_quadrant.json` and the pilot's own files in every unit score (the ridge decoding errors in `results/summary_quadrant.json`, computed on vast-1, differ by at most 0.6 mm for the HEAD version too).
+- *Probes.* The apartments were rendered with 128 probes per walk (about 20 per visited bin, so many opposite-sector
+  maps fall below 3 probes per bin). To match room A's probe test (256 per walk, about 30 per visited bin), 256 new
+  probes per walk are rendered on the PC through gq (`habitat_scene.py --probes-for`, drawn as the existing probes
+  are: the position of a random frame of the walk plus N(0, 0.15 m) noise in x and y, redrawn until navigable and
+  0.15 m from obstacles, heading uniform; probe seed 17, the pathfinder seeded as the walks were), into
+  `data/walks-roomReplicaApt<k>-p256` (8,192 per apartment, 38-48 per visited bin), with a probe arena as for room
+  A (`wm_pilot arena`). The existing 128-per-walk probes are not used. The renderer is checked first: the first 16
+  frames of walk 0 rendered again must equal the stored frames byte for byte, or nothing runs.
+- *Anchors.* Each apartment gets 8 anchor views in room A's pattern (the centre facing E, N, W and S, then four
+  spots 3 m from it in x and in y, SW, SE, NE and NW, each facing the centre), placed on walk positions so that each
+  is navigable: the centre is the walk position nearest the median of all walk positions, and each other spot is
+  the walk position nearest centre + (±3 m, ±3 m). They are rendered with the walks' settings into
+  `data/walks-roomReplicaApt<k>/anchors.npz`. As registered, the first anchor sets the output frame, and a
+  similarity fit on the anchors' predicted cameras maps the pose head to apartment coordinates (used only by the
+  pose-head readout).
+- *TTT3R conditions and units* (as registered for TTT3R in WP1): *walk* (anchors, then the walk with the state
+  carried), *single* (anchors, then the frame alone) and *single* + EMA-8, on all 32 walks; on the probes,
+  *probes-walk* (each probe read against the state at the end of its own anchored walk, with the state's write
+  disabled) and *probes-single* (read against the state after the anchors). Units L0, L3, L6, L9, L12 and L13 as
+  registered. Each condition is reported at its best layer, with the registered labels (place-like ≥ 45%,
+  view-like ≤ 10%), and a high share along the walk counts as integration only if *walk* beats *single* + EMA-8.
+  The labels' thresholds come from room A, so scene-matched references are scored the same way: pixels and pixels
+  + EMA-8 on the walk frames and pixels on the probes in every apartment, and in apartment 0 VGGT single at blocks
+  19 and 21 (the registered probe reference) on the walk frames and the probes, with the same anchors.
+- *WP2, corrected decoder.* In the registered WP2, the decoder was trained on the even walks and tested on the odd
+  walks' probes, while familiarity was defined against the probe's own walk, which that decoder never saw. The
+  split therefore tracked where and which way the probe looked rather than what the decoder knew, and the cost came
+  out negative even for pixels (−0.16 m). Defining familiarity against the decoder's training frames does not work
+  here: the even walks cover room A so densely that only 6 of 6,144 odd-walk probes are novel. Instead, every
+  probe is decoded by a ridge trained on its own walk's frames (`wm_pilot novelty --own-walk`): the decoder has
+  then seen exactly the walk that familiarity refers to, which is also the walk that a model's state carries in
+  *probes-walk*. Familiarity is unchanged (a frame of the probe's own walk within 1 m, facing within 45°). λ is
+  chosen once per representation from the registered grid, with each walk's first half of steps predicting its
+  second half and vice versa (median error over all walks). The novelty cost is the median error on novel probes
+  minus that on familiar ones, pooled over all walks' probes. 95% CIs come from a paired bootstrap over walks
+  (with repetition, 10,000 resamples). The recall baseline uses the same protocol. The decision rule is unchanged:
+  "beyond view recognition" needs a novel-probe error below the recall baseline's and a novelty cost below the
+  pixels', each with a CI that excludes zero, at the layer that WP1 selects on the probes. The model-native readout
+  (the pose head's probe positions after the anchored walk) and strict cross-sector probe decoding are reported as
+  registered. Check on room A's existing data (`results/wm_pilot/novelty_ownwalk.json`): pixels novel 2.51 m,
+  familiar 1.21 m, cost +1.30 m [1.11, 1.52]; recall novel 2.12 m, cost +1.40 m; VGGT single (block 19) novel
+  0.37 m, familiar 0.19 m, cost +0.18 m [0.15, 0.21] (block 21 +0.19 m); VGGT's pose head 0.39 m novel, 0.41 m
+  familiar. A view code thus pays a large cost, and a model that localizes from the anchors pays a small one. The
+  navigation policies, rescored with the corrected decoder: at the layer each selects on the probes, ViNT (L4) novel 2.81 m, familiar 2.08 m, cost +0.73 m [0.56, 0.92]; NoMaD (L4) 2.82 m, 2.24 m, +0.58 m [0.37, 0.77]; GNM (L0) 2.67 m, 2.09 m, +0.58 m [0.38, 0.82]. Their costs are below the pixels' only because they decode badly everywhere: their novel-probe errors exceed the recall baseline's by 0.55-0.71 m (CIs exclude zero), so none is beyond view recognition, as before. VGGT single (block 19) passes both parts (novel minus recall −1.75 m [−1.92, −1.60], cost minus pixels −1.12 m [−1.32, −0.95]).
+- *Compute.* On the RTX 4070 PC through gq (`scripts/wm_pilot/pc_apartments.sh`): renders, TTT3R's gates and
+  activations at priority 150, then the VGGT reference at 140, and the scoring as CPU jobs there. TTT3R runs with
+  CUDA and 2 walks per batch, as in its gate. The order is fixed: renders and gates, then activations only in
+  apartments that pass, then scoring. If the PC stays unreachable, TTT3R's activations may move to the Mac (MPS,
+  gq, priority 150), but the renders must wait for the PC. Holm across the five models applies as registered.
+- *Scene-matched pixel references (2026-10-26 11:58 PDT; scored before any TTT3R unit was recorded in an
+  apartment; `results/wm_pilot/apartments/ReplicaApt<k>/units/pixels/`).* The share of place units that are
+  strictly heading-invariant is much higher for pixels along the walk in the apartments than in room A (1%):
+  18% in apartment 0, 38% in apartment 1 and 72% in apartment 2 (place units 63%, 89% and 42% of poles).
+  Pixels + EMA-8 reach 100% in all three (room A 95%). In these apartments, then, a pure view code clears the
+  room-A threshold for "intermediate" in apartments 0 and 1 and for "place-like" in apartment 2. A likely cause
+  is that the apartments' rooms differ in appearance, so any view from inside a room carries the room's identity
+  whichever way it faces; room A is one room. The registered labels are therefore not interpretable in the
+  apartments on their own, and TTT3R's shares are read only against the same apartment's references (pixels on
+  the same frames and probes, and VGGT single in apartment 0). The rule for that comparison is set in a further
+  dated note before any TTT3R unit is recorded.
+- *Comparison rule in the apartments (2026-10-26 12:00 PDT; no TTT3R unit has been recorded in an apartment, and
+  no probe or anchor has been rendered).* This replaces the registered labels in the apartments.
+  - *Primary test (apartment 0, teleport probes).* Take the layer at which TTT3R's *probes-walk* share is highest,
+    and read *probes-single* at that same layer. A condition's own best layer is not used, since choosing the best
+    layer separately for each condition would bias the difference in favor of a gap. The finding "TTT3R's state
+    adds a place code" requires the *probes-walk* share at that layer to exceed the *probes-single* share there by
+    at least 10 percentage points, and the pixels' share on the same 256-per-walk probes by at least 10 points.
+    Otherwise the result reads "no evidence that the state carries a place code beyond the scene's view floor."
+    Every layer of both conditions is reported, with each condition's share of place units and their number, so
+    that a margin resting on a handful of units is visible.
+  - *Positive reference.* VGGT single (the same 8 anchors as TTT3R, then the probe), blocks 19 and 21, on the same
+    apartment-0 probes. It shows whether a model that localizes clears the pixel floor there by the same 10-point
+    margin. If VGGT cannot be run, or does not clear the floor, a TTT3R null in the apartment is uninterpretable,
+    and it is reported that way.
+  - *Secondary.* The along-walk shares (*walk*, *single*, *single* + EMA-8, against pixels and pixels + EMA-8) are
+    reported, but EMA-8 already reaches 100% there, so they carry no decision. Apartments 1 and 2, if they pass
+    their gates, are descriptive only. WP2 (own-walk decoder) is unchanged, since its baselines already come from
+    the same scene. No new invariance measure (for example, one computed within rooms) is built for this
+    amendment.
+
+*Amendment 2 results (2026-10-26 15:10 PDT; VGGT's apartment reference added 20:05 PDT).*
+`results/wm_pilot/apartments/ReplicaApt0/`, `results/wm_pilot/summary.json` ("apartments (amendment 2)"); jobs on the
+RTX 4070 through gq (pc:554-582).
+- *Setup.* Apartment 0's renders passed the check: the first 16 frames of walk 0 rendered again were byte-identical.
+  It has 8,192 new probes (none with holes) and the 8 anchors. TTT3R's gate failed in apartments 1 and 2, with a
+  median error of 0.57 m in both (first and last 64 frames 0.63 and 0.54 m; 0.53 and 0.65 m). So, as registered,
+  WP1 and WP2 ran only in apartment 0, and apartments 1 and 2 have only their pixel references. The first TTT3R
+  activation run crashed on a bug in `wm_cut3r.py`: the recording hook returned `False` when recording was off,
+  and PyTorch passes a pre-hook's non-None return value on as the layer's input. It was fixed, checked on the PC
+  and rerun; no unit had been recorded before the fix.
+- *The anchored stream is not competent.* TTT3R places the 8 anchors badly (the similarity fit's RMS is 2.1 m;
+  four of the views turn 90° on the spot), so the pose-head readout in apartment coordinates is unusable: median
+  4.2 m for walk frames and 4.3 m for probes (chance about 3.4 m). Exploratory: WP0's gate measure on the anchored
+  stream (the 8 anchors, then each of the first 16 walks, aligned per walk in 3D as in the gate) gives 0.77 m
+  (first and last 64 frames 0.93 and 0.79 m), against 0.40 m for the same walks from a fresh state. The
+  registered anchored conditions therefore put TTT3R below its own competence threshold.
+- *WP1, primary test (teleport probes, the comparison rule).* The share of place units that are strictly
+  heading-invariant, per layer (place units as a share of active poles in parentheses), is:
+
+  | layer | *probes-walk* | *probes-single* |
+  |---|---|---|
+  | L0 | 0.6% (45.3%) | 0.6% (45.5%) |
+  | L3 | **39.2%** (12.7%, 492 units) | 0.3% (27.4%) |
+  | L6 | 16.3% (14.9%) | 0.8% (33.6%) |
+  | L9 | 23.8% (16.4%) | 1.4% (39.6%) |
+  | L12 | 27.7% (18.6%) | 1.7% (36.6%) |
+  | L13 | (not recorded; the write is disabled) | 0.4% (29.2%) |
+
+  Pixels on the same probes score 19.3%. At L3, the layer where *probes-walk* is highest, the margins are 38.9 points
+  over *probes-single* and 19.9 points over pixels, so **the registered rule is met**. Three observations limit
+  what that means. First, all 256 probes of a walk are read against one state, the one at the end of that walk.
+  Second, the walk's probes lie along its path, so a component that marks which walk a probe belongs to also marks
+  roughly where the probe is, whichever way it faces. Third, the state makes the probe code worse across walks:
+  at L3, ridge decoding of probe positions trained on even walks and tested on odd ones gives 2.49 m with the
+  state and 0.74 m without (chance 3.40 m), and the place units' split-half stability falls from 0.92 to 0.67.
+  - Exploratory, not registered: removing each walk's mean probe activation, per unit, before scoring leaves
+    *probes-walk* at 0.1-6.4% (L3-L12), *probes-single* at 0.0-0.7% and pixels at 0.0%. The same transform on room
+    A's probes, however, cuts VGGT single from 36.7% to 9.7% (block 19) and 13.6% (block 21) and raises ViNT (L4)
+    from 3.0% to 20.3%, because a different offset per walk breaks the cross-walk consistency that the rate maps
+    need. The control thus fails its own validation, and it cannot separate a walk signature from a code for the
+    probe's position. It is reported and used for nothing.
+- *WP1 along the walk (secondary).* *Walk* 94.6% at L13 (the state itself, 315 place units) and 13.5-30.5% at
+  L3-L12; *single* 0.4-1.2%; *single* + EMA-8 95.6-99.1% at every layer; pixels 18.1%, pixels + EMA-8 100%. The
+  walk does not beat its own EMA-8 control at any layer, so along the walk the registered reading is smoothing.
+- *WP2 (own-walk decoder).* The apartment's walks cover headings so densely that only 108 of the 8,192 probes are
+  novel, so every CI is wide. Pixels: novel 2.20 m, familiar 0.77 m, cost +1.43 m [1.02, 2.21]. Recall: novel
+  2.31 m, cost +1.90 m. At L3, the probe-selected layer, *probes-walk* has novel 2.34 m, familiar 1.22 m, cost
+  +1.12 m; novel minus recall is +0.03 m [−1.07, 1.18] and cost minus pixels −0.31 m [−1.77, 0.56], so it is not
+  beyond view recognition. No layer of either condition passes both parts; the closest is *probes-walk* L12
+  (novel minus recall −0.98 m [−1.61, −0.27], but cost minus pixels −0.56 m [−1.40, 0.05]). The pose head's
+  readout (median 4.3 m) is uninterpretable, for the anchor reason above. Strict cross-sector probe decoding
+  (L3-L12) is 3.7-3.9 m with the state and 4.0-4.2 m without (chance 3.42 m).
+- *Positive reference: VGGT single in apartment 0* (the same 8 anchors, then the frame; pc:569, 5 h). Its pose
+  head localizes walk frames and probes to 1.06 m median (room A 0.43 and 0.41 m). On the probes, VGGT's share is
+  25.7% at block 19 (1,280 place units, split-half stability 0.97) and 15.1% at block 21. That is only 6.4 points
+  above the pixels' 19.3%, so **VGGT does not clear the floor by the registered 10-point margin**. Along the walk it
+  scores 25.5% and 13.0% (pixels 18.1%). Its units still decode probe positions across walks to 0.55 and 0.50 m
+  (TTT3R with the state: 2.15-2.52 m). In WP2, VGGT is beyond view recognition at both blocks: at block 19, novel
+  1.07 m, familiar 0.31 m, cost +0.75 m [0.63, 1.00], novel minus recall −1.25 m [−1.66, −0.58] and cost minus
+  pixels −0.68 m [−1.49, −0.12]; at block 21, novel 0.75 m, cost +0.47 m, −1.57 m [−2.02, −1.00] and −0.96 m
+  [−1.79, −0.49]. The exploratory walk-centring leaves VGGT at 0.1-0.2%, which confirms that the centring control
+  is unusable.
+- *Reading.* By the registered rule, TTT3R's state adds heading-invariant place-like units on the apartment
+  probes. In this scene, however, the WP1 probe test has not shown that it can detect a localizer: VGGT, which
+  localizes and decodes well across walks, gains only 6.4 points over pixels. TTT3R's state-carried units score
+  higher than VGGT's (39.2% against 25.7%), yet decode position four to five times worse across walks, and they come
+  from an anchored stream that fails the competence threshold (0.77 m). That combination fits a state that carries
+  a signature of the walk and its region more than a code for the probe's position. WP2 separates the two models
+  cleanly: VGGT is beyond view recognition at both blocks, and TTT3R is not at any layer. The pilot therefore makes
+  no claim that TTT3R has a place code. A swap control (each walk's probes read against another walk's final
+  state) or anchors that TTT3R can track (for example, sub-stepped turns as in amendment 1) would test the walk
+  signature directly; neither is registered.
+
+## Experiment 17 (pre-registered 2026-10-26, before any model saw benchmark data): standard spatial benchmarks
+
+**Why.** Every test so far uses our own two-choice task. Two questions about the fine-tune are still
+open. Does the walk skill carry over to spatial questions it was never trained on? And does the training
+cost the model spatial skills it already had? Here the base model and every LoRA run take two published
+spatial benchmarks, each with its authors' prompts, frame sampling and metrics, so the scores can be set
+beside published ones. Nothing is tuned on either benchmark. When this section was written the data had
+been downloaded and counted, and only a timing run on synthetic frames had touched the model.
+
+**Benchmarks and versions.** The protocol details below were checked against the official pages and code
+on 2026-10-26 (notes with sources: the session notes `std-bench/vsibench_spec.md` and `mindcube_spec.md`).
+- *VSI-Bench* (Yang et al., CVPR 2025; Hugging Face `nyu-visionx/VSI-Bench` at revision 3a6a1cf9).
+  It has 5,130 questions on 288 videos of real indoor scenes (ARKitScenes 150, ScanNet 88, ScanNet++ 50;
+  all 640x480). There are eight tasks. Four ask for a number: object count, absolute distance, object
+  size and room size. Four are multiple choice: relative distance, relative direction (easy, medium and
+  hard), route planning and appearance order. The authors' VSI-Bench-Debiased subset (the 2,362 questions
+  not listed in `pruned_ids.txt`) is scored as well, as the dataset card recommends.
+- *MindCube* (Yin et al., ICLR 2026; `MLL-Lab/MindCube` at revision 9c941b46; code `mll-lab-nu/MindCube`
+  at b8b7062). We use MindCube-Tiny (`MindCube_tinybench.jsonl`), the authors' official test set: 1,050
+  multiple-choice questions on 2-4 views of a scene, in three settings (among 600, around 250,
+  rotation 200) and 124 image groups.
+- No subset is drawn: both sets are run in full for every model.
+
+**Models.** Base Qwen3-VL-8B-Instruct. The two-epoch runs 0, 1 and 2 (`data/ft/qwen8b-proc`,
+`-s1`, `-s2`; experiments 9 and 9b). The four-epoch runs with seeds 3-7 (`data/ft/qwen8b-proc-e4-s<seed>`,
+experiment 9c), every run that finishes training, whether or not it meets 9c's decision rule. Each adapter
+is merged into the base weights, as in every other test. Run 0's second copy (the GPU control) is not
+included.
+
+**Protocol, VSI-Bench** (lmms-eval's `vsibench` task as the authors wrote it, with lmms-eval's default
+settings for Qwen3-VL):
+- the system message "You are a helpful assistant.", then one user turn with the video and then the text;
+- the text is "These are frames of a video.", the question, and for multiple choice "Options:" with the
+  options one per line and "Answer with the option's letter from the given choices directly.", or for
+  numbers "Please answer the question using a single word or phrase.";
+- 32 frames at `round(linspace(0, N - 1, 32))` of the video's N decoded frames (qwen-vl-utils' rule),
+  at their native 640x480 (300 visual tokens per pair of frames), with the frame times taken from the
+  video's frame rate (Qwen3-VL writes a timestamp before each pair of frames);
+- greedy decoding with at most 16 new tokens;
+- scoring as the authors' `utils.py`. The first space-separated token of the reply, with a final "."
+  removed, must equal the letter. For numbers it is read as a float and scored by mean relative accuracy
+  over the thresholds 0.50, 0.55, ..., 0.95. A reply that cannot be read scores 0. The overall score is
+  the mean of the eight task scores, with relative direction scored as the mean of its three levels.
+  The more lenient number parser that lmms-eval adopted in July 2026 is logged as a secondary score.
+
+**Protocol, MindCube-Tiny** (the repo's raw-QA setting, the baseline used for off-the-shelf models):
+- no system message; one user turn with the views first, in their listed order, and then the raw-QA text
+  (the "[Task]" and "[Answer Instruction]" block, then "[Question]" and the question with its options);
+- each view capped at 480 x 480 = 230,400 pixels, as the repo's processor does (Qwen3-VL's own minimum);
+- greedy decoding with at most 4,096 new tokens; whitespace collapsed;
+- the repo's `extract_answer`, unchanged. A question is correct when the extracted letter equals the
+  answer; a reply with no letter is wrong. The overall score is accuracy over all 1,050 questions, and
+  there is one score per setting.
+
+**Platforms.** VSI-Bench runs on CUDA: vast-3's RTX 5090, bf16, after experiment 9c's jobs there
+finish. If vast-1 is used as well, the videos are split between the machines, and every model answers a
+given video's questions on the same machine, so paired comparisons never cross machines. MindCube-Tiny
+runs on the Mac (MPS, bf16) for every model. Every job goes through gq at priority 150, below 9c's, and
+each Mac job stops after about 20 minutes (the next one resumes), so 9c's Mac tests never wait for long.
+
+**Hypotheses.** For each benchmark, the walk fine-tune either (H1) improves the score, (H2) lowers it,
+or (H0) leaves it unchanged. We have no strong prior. The walk skill relates views taken from different
+places, which some VSI-Bench and MindCube questions need. But the training covered one answer format
+(a frame number) in one kind of scene, so a small loss is also plausible.
+
+**Primary measures and contrasts.** The VSI-Bench overall score (full set) and MindCube-Tiny overall
+accuracy, in points. On each benchmark, three contrasts, each a model minus the base:
+- C1: run 0 (the model analyzed in the paper);
+- C2: the mean of the two-epoch runs 0-2;
+- C3: the mean of the four-epoch runs 3-7.
+A recipe mean averages its runs' scores. The range over runs is reported beside it.
+
+**Statistics.** The comparisons are paired by question: both models answer the same questions. The 95% CI
+of a contrast comes from a bootstrap that resamples scenes with replacement (VSI-Bench: the 288 videos;
+MindCube: the 124 image groups). Every question of a drawn scene is kept and both models' official scores
+are recomputed (10,000 resamples, seed 0). The runs of a recipe are held fixed. A bootstrap over
+questions, stratified by task, is reported beside it. Code: `scripts/std_bench_analysis.py` ->
+`results/std_bench_summary.json`.
+
+**Decision rule, set now.** Each contrast is labeled "helps" if its scene-bootstrap CI lies above 0,
+"hurts" if it lies below 0, "no change" if it lies within plus or minus a margin, and "inconclusive"
+otherwise. The margin is 2 points for VSI-Bench and 5 for MindCube-Tiny. Two published evaluations of
+the base model on VSI-Bench differ by 1.5 points (57.9 and 59.4). MindCube-Tiny's 1,050 questions in 124
+groups give a CI of about plus or minus 3 points. The verdict for each benchmark is:
+- "transfers" if C2 or C3 helps and none of C1-C3 hurts;
+- "hurts" if any of C1-C3 hurts and none helps;
+- "no change" if all three are "no change";
+- otherwise "mixed", with the numbers.
+No correction is applied for the six primary labels, so a single label on its own is weak evidence.
+Every model's scores are reported, whatever the verdict.
+
+**Secondary analyses** (all reported, none with a decision rule):
+1. Per-task scores and per-task contrasts with scene-bootstrap CIs.
+2. Where a transfer would show. On VSI-Bench, the tasks that relate views taken at different places or
+   times (relative direction, relative distance, route planning, appearance order) against the metric
+   estimates (counting, object size, room size, absolute distance), as a difference of differences with
+   a CI, for C1-C3. If the fine-tune transfers, we expect it to transfer more to the first group.
+   MindCube is reported per setting, with no prediction.
+3. Answer format: the share of replies each official parser can read, per model and task; the score on
+   readable replies; and VSI-Bench with lmms-eval's lenient number parser. A loss that comes only from
+   unreadable replies means a format effect rather than a loss of skill.
+4. VSI-Bench-Debiased: every model and contrast, labeled separately (margin 3 points, as it has fewer
+   questions).
+5. A language-prior control: the base model and run 0 with no video and no images, on both benchmarks
+   (the same text). If C2 or C3 is labeled "helps" or "hurts" on a benchmark, that recipe's other runs
+   are run without the visual input there too.
+6. MindCube's yes/no shortcut ("Yes" is correct on 243 of Tiny's 244 yes/no questions): accuracy on the
+   other questions.
+7. The four-epoch mean minus the two-epoch mean.
+8. Exploratory, across the eight runs: the rank correlation between each run's two-choice accuracy
+   (room A novel trials) and its benchmark change from the base model.
+
+**Checks before any LoRA run is scored.** Every prompt is printed in a dry run first. Then the base model
+answers 20 questions of each benchmark on the Mac as a smoke test (`data/smoke/`; these are not counted).
+The base model's full VSI-Bench score is compared with the published 57.9 (32 frames) and 59.4 (Qwen's
+report). If it is more than 8 points below 57.9, or fewer than 95% of its replies can be read, the
+pipeline is checked for bugs before any LoRA run is scored. The settings stay as registered unless a bug
+is found, and any change is recorded here as an amendment first. The published MindCube-Tiny score of the
+base model (29.4, on 1,040 of the questions, through another toolkit) is only reported.
+
+**Compute and cost.** No API. VSI-Bench takes about 1.5 hours per model on the 5090 (estimated from
+synthetic frames), about 15 hours for all nine models and the two runs without video, starting when 9c's
+vast-3 jobs end (about Tue 05:30 PDT). MindCube-Tiny takes about 30 minutes per model on the Mac: the base
+model and runs 0-2 first, then each four-epoch run once 9c has copied its adapter to the Mac. Outputs:
+`results/std_bench/<benchmark>/<model>[-blind].jsonl`, one line per question, and
+`results/std_bench_summary.json`.
+
+*Execution note (2026-10-27, before the analysis).* Because 9c's vast-3 chain failed for a few hours on
+Monday (its jobs had been submitted with a malformed option), VSI-Bench started on vast-3 about a day
+early. 9c was resubmitted and went first again; the one VSI-Bench job it interrupted resumed where it
+stopped. Two VSI-Bench runs, run 2 and the four-epoch seed 3, ran back to back on vast-3 (05:00-07:42
+PDT) and answered every question with "!!!!!!!!!!!!!!!!". That is token 0 at every step, which greedy
+decoding gives when the logits are not finite. It was a fault on the machine, not a property of the two
+models:
+- the runs just before and after were normal;
+- both adapters are identical on the two machines and contain only finite values;
+- the same adapters answered MindCube normally on the Mac;
+- 20-question reruns of both on vast-3 were normal.
+Both runs were redone in full on vast-3. The failed files are kept in `results/std_bench/failed_nan/`.
+The runner now stops with an error instead of saving such a reply. No other file has one.
+
+*Result (2026-10-27; `scripts/std_bench_analysis.py` -> `results/std_bench_summary.json`).*
+- Platforms were as registered: VSI-Bench on vast-3 (CUDA) and MindCube-Tiny on the Mac (MPS).
+- Every model answered every question, and the official parsers could read 100% of every model's
+  replies on both benchmarks. So none of the differences below comes from the answer format. lmms-eval's
+  lenient number parser gives the same VSI-Bench scores to 0.1 point.
+- The base model passed the registered check: 55.4 on VSI-Bench, against the published 57.9 (32 frames)
+  and 59.4 (Qwen's report). On MindCube-Tiny it scores 30.1 (published 29.4), where chance (one over the
+  number of options, averaged over questions) is 33.0.
+
+Scores in points; "no input" means the same question without the video or images.
+
+| | VSI-Bench | VSI-Bench, no input | VSI-Bench-Debiased | MindCube-Tiny | MindCube-Tiny, no input |
+|---|---|---|---|---|---|
+| base | 55.4 | 35.0 | 48.9 | 30.1 | 31.6 |
+| run 0 | 53.6 | 36.5 | 45.9 | 30.0 | 29.1 |
+| run 1 | 54.7 | 36.5 | 47.3 | 30.2 | |
+| run 2 | 54.5 | 36.6 | 47.1 | 30.8 | |
+| 4 epochs, seed 3 | 53.3 | 37.6 | 46.5 | 36.6 | 31.7 |
+| seed 4 | 54.0 | 37.0 | 46.4 | 33.9 | 30.3 |
+| seed 5 | 53.3 | 37.4 | 46.1 | 30.5 | 30.8 |
+| seed 6 | 52.5 | 36.8 | 45.5 | 32.4 | 34.8 |
+| seed 7 | 53.6 | 36.9 | 46.0 | 37.7 | 31.8 |
+
+Primary contrasts (model minus base, points, with the 95% scene-bootstrap CI, the range over the runs and
+the registered label):
+
+| | VSI-Bench | MindCube-Tiny |
+|---|---|---|
+| C1 run 0 | -1.83 [-2.90, -0.78], hurts | -0.10 [-3.13, +2.93], no change |
+| C2 two-epoch mean | -1.19 [-2.05, -0.34], hurts (runs -1.83 to -0.79) | +0.22 [-2.54, +2.87], no change (-0.10 to +0.67) |
+| C3 four-epoch mean | -2.12 [-3.14, -1.13], hurts (runs -2.96 to -1.40) | +4.11 [+1.02, +7.25], helps (+0.38 to +7.62) |
+| verdict | **hurts** | **transfers** (by the registered rule; see below) |
+
+The question bootstrap gives nearly the same CIs. Run by run, seven of the eight runs are labeled "hurts"
+on VSI-Bench. The exception is run 1: -0.79 [-1.75, +0.18], within the 2-point margin. On MindCube-Tiny,
+the four-epoch seeds 3, 4 and 7 are labeled "helps" (+6.5, +3.8, +7.6), seed 5 "no change" (+0.4) and
+seed 6 "inconclusive" (+2.3). Runs 0-2 are all "no change".
+
+Secondary analyses (as registered):
+1. *Per task.* The VSI-Bench loss sits in two metric tasks:
+   - object counting: run 0 -5.7, two-epoch mean -4.0, four-epoch mean -5.4;
+   - absolute distance: -6.3, -3.3 and -6.4 (every CI below 0);
+   - appearance order: -4.1 [-7.5, -0.8] for the four-epoch mean; the two-epoch mean (-1.9) and run 0
+     (-2.4) have CIs that include 0.
+   Object size, room size, relative distance, relative direction and route planning change by 1.6 points
+   or less, with CIs that include 0. On MindCube-Tiny the four-epoch gain is in the "around" setting:
+   +14.9 [+8.0, +21.9]. The "among" setting moves +1.7 [-1.2, +4.8] and rotation -2.2 [-11.8, +5.8].
+2. *View-relating against metric tasks (VSI-Bench).* The tasks that relate views taken at different places
+   or times are unchanged: run 0 -0.6 [-2.6, +1.4], two-epoch mean -0.3, four-epoch mean -0.9, every CI
+   including 0. The metric estimates lose: -3.0 [-3.9, -2.2], -2.1 [-2.8, -1.4] and -3.4 [-4.2, -2.5]. The
+   difference of differences is +2.4 [+0.1, +4.6], +1.9 [+0.0, +3.6] and +2.5 [+0.4, +4.5]. The registered
+   prediction (a transfer would be larger on view-relating tasks) has no transfer to test. What the
+   contrast does show is that the loss falls on the metric estimates.
+3. *Answer format.* Every reply was readable (above), so no part of the loss on either benchmark is a
+   format effect.
+4. *VSI-Bench-Debiased* (margin 3 points). C1 -2.97 [-4.66, -1.30], C2 -2.13 [-3.41, -0.83] and C3 -2.81
+   [-4.37, -1.24] are all labeled "hurts", and so is every run (-1.6 to -3.4), so the verdict is "hurts".
+5. *Without the visual input.* Run on every model, because both recipe means were labeled on both
+   benchmarks.
+   - VSI-Bench: without the video, the fine-tuned models score slightly above the base model. The
+     two-epoch mean is +1.5 [+0.5, +2.5] and the four-epoch mean +2.1 [+1.0, +3.2]. So the loss with the
+     video is not a worse language prior: the video helps them less. The base model gains 20.4 points from
+     the video. That gain shrinks by 3.3 [1.9, 4.8] for run 0, by 2.7 [1.4, 4.0] for the two-epoch mean
+     and by 4.2 [2.8, 5.7] for the four-epoch mean.
+   - MindCube-Tiny: the base model gains nothing from the images (with minus without: -1.5 [-4.2, +1.2]).
+     Without images, the four-epoch mean matches the base model (+0.3 [-2.2, +2.6]; "around" -2.5
+     [-6.0, +1.0]). So its gain needs the images: it gains 3.9 [+1.0, +6.9] points more from them than
+     the base model does.
+6. *MindCube without its yes/no questions* (244 questions, where "Yes" is correct on 243). The base model
+   scores 23.9; chance on the remaining questions is 27.9. Against it, the four-epoch mean is +5.1 [+1.6,
+   +8.5], the two-epoch mean +2.4 [-0.8, +5.4] and run 0 +2.2 [-1.2, +5.5].
+7. *The four-epoch mean minus the two-epoch mean*: VSI-Bench -0.93 [-1.60, -0.29], MindCube-Tiny +3.89
+   [+2.00, +5.95]. The longer recipe costs slightly more on VSI-Bench and gains more on MindCube-Tiny.
+8. *Exploratory, across the eight runs.* The rank correlation between room-A novel two-choice accuracy and
+   the change from the base model is -0.67 on VSI-Bench and +0.52 on MindCube-Tiny. With eight runs, and
+   all five four-epoch runs at 98-99% in room A, this mostly separates the two recipes.
+
+*Exploratory, chosen after seeing the results (not registered).*
+- MindCube-Tiny. Every model scores at or below chance. The four-epoch mean (34.2) moves from below
+  chance to about chance.
+  - On the 87 yes/no "around" questions, where "Yes" is always correct, the four-epoch runs answer "Yes"
+    62-69 times against the base model's 33. That accounts for most of their "around" gain. On the other
+    "around" questions the four-epoch runs score 28.2-41.7 (base 30.7, chance 28.1).
+  - On the "among" questions without yes/no, the base model scores 17.8, well below chance (25.3), and
+    every LoRA run scores 22-29.
+  - So the gain is best read as the fine-tuned models losing some of the base model's below-chance
+    answer biases, mostly on questions they answer from the images. No model shows MindCube skill
+    clearly above chance.
+- VSI-Bench. The fine-tuned models more often give a default answer:
+  - "2" for counts: 417 of 565 counting answers for run 0 and 434 for seed 6, against 385 for the base
+    model;
+  - shorter, rounder distances: a median of 1.3 m (run 0) and 1.2 m (seed 6) against 1.7 m for the base
+    model, with 1.8 m correct.
+  This fits the smaller gain from the video: the fine-tune makes the model rely more on typical values
+  when it has to estimate from the video.
+
+**In short.** The walk fine-tune does not carry over to VSI-Bench. The VSI-Bench questions that relate
+views taken at different places or times are unchanged, so the walk skill shows no transfer there. The
+training costs 1.2-2.1 points of VSI-Bench's overall score (2.1-2.8 on the Debiased subset), all of it
+on metric estimates, and the model draws less on the video for them. On MindCube-Tiny, the two-epoch
+runs, including the paper's run 0, change nothing. The four-epoch recipe's +4.1 meets the registered
+"transfers" rule, and it depends on the images. But every model, base and fine-tuned, is at or below
+chance there, so the gain shows the model losing some of its biases, not learning to reason about space.
 
 ## Prior work this builds on
 

@@ -1,0 +1,42 @@
+{
+ "_about": {
+  "split": "*_quadrant keys use four 90-degree facing sectors centred on E, N, W, S (heading_matrix) and compare only opposite sectors (N vs S, E vs W); the other keys are recomputed here (on CPU) as in summary.json, with heading invariance and decoding on 180-degree halves",
+  "stability": "place_inv_quadrant_over_stab_median divides by the same split-half stability as summary.json: even vs odd walks, all headings",
+  "decoding": "decode_cross_quadrant / decode_within_quadrant: ridge trained on one sector (even walks), tested on the opposite / same sector (odd walks), mean over the 4 sectors",
+  "chance": "decode_cross_heading_chance / decode_cross_quadrant_chance: median error of predicting the training half's / sector's mean position on the opposite one; decode_chance as in summary.json"
+ },
+ "pixels": {
+  "pix": {
+   "n_neurons": 3072,
+   "n_poles_active": 6144,
+   "frac_place": 0.5213215947151184,
+   "frac_grid": 0.0428059883415699,
+   "frac_hd": 0.98291015625,
+   "grid_threshold": -0.035518303513526917,
+   "place_stability_median": 0.9573147892951965,
+   "place_heading_inv_median": 0.5455524325370789,
+   "place_inv_over_stab_median": 0.583270251750946,
+   "all_stable_heading_inv_median": 0.5230331420898438,
+   "frac_place_heading_invariant": 0.2923177182674408,
+   "max_gridness": 0.19199126958847046,
+   "place_heading_inv_quadrant_median": 0.34444963932037354,
+   "place_inv_quadrant_over_stab_median": 0.36704349517822266,
+   "all_stable_heading_inv_quadrant_median": 0.31178969144821167,
+   "frac_place_heading_invariant_quadrant": 0.1007486954331398,
+   "decode_all": 2.075054168701172,
+   "decode_within_heading": 1.698365718126297,
+   "decode_cross_heading": 4.1685711145401,
+   "decode_chance": 3.402695655822754,
+   "decode_cross_heading_chance": 3.40459668636322,
+   "decode_within_quadrant": 1.43112912774086,
+   "decode_cross_quadrant": 6.016549348831177,
+   "decode_cross_quadrant_chance": 3.4194833636283875,
+   "arena": {
+    "x0": -3.0,
+    "y0": -9.0,
+    "bins_per_side": 26,
+    "bin_m": 0.5
+   }
+  }
+ }
+}

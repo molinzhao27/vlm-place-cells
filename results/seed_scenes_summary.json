@@ -744,6 +744,1246 @@
       }
      }
     }
+   },
+   "3": {
+    "status": "done",
+    "platform": {
+     "P5000": "CUDA",
+     "P5001": "CUDA",
+     "P5002": "CUDA",
+     "P5003": "CUDA",
+     "P5004": "CUDA",
+     "P5005": "MPS",
+     "P5006": "CUDA",
+     "P5007": "CUDA",
+     "P5008": "CUDA",
+     "P5009": "CUDA"
+    },
+    "files": {
+     "LoRA, walk": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5000-256px-max64.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5001-256px-max64.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5002-256px-max64.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5003-256px-max64.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5004-256px-max64.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5005-256px-max64-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5006-256px-max64.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5007-256px-max64.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5008-256px-max64.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5009-256px-max64.jsonl"
+     },
+     "LoRA, no walk": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5000-256px-nowalk.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5001-256px-nowalk.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5002-256px-nowalk.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5003-256px-nowalk.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5004-256px-nowalk.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5005-256px-nowalk-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5006-256px-nowalk.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5007-256px-nowalk.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5008-256px-nowalk.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5009-256px-nowalk.jsonl"
+     },
+     "LoRA, shuffled": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5000-256px-max64-shuffled.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5001-256px-max64-shuffled.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5002-256px-max64-shuffled.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5003-256px-max64-shuffled.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5004-256px-max64-shuffled.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5005-256px-max64-shuffled-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5006-256px-max64-shuffled.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5007-256px-max64-shuffled.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5008-256px-max64-shuffled.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomP5009-256px-max64-shuffled.jsonl"
+     }
+    },
+    "accuracy": {
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.9738260200153964,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.9831932773109243,
+        "P5001": 0.9692307692307692,
+        "P5002": 0.9466666666666667,
+        "P5003": 0.9621212121212122,
+        "P5004": 0.9803921568627451,
+        "P5005": 0.9863945578231292,
+        "P5006": 0.9671052631578947,
+        "P5007": 0.9905660377358491,
+        "P5008": 0.9930555555555556,
+        "P5009": 0.9658119658119658
+       },
+       "scene_mean": 0.9744537462276712,
+       "scene_ci95": [
+        0.965706178142954,
+        0.9828585467017598
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.588144726712856,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.5462184873949579,
+        "P5001": 0.5846153846153846,
+        "P5002": 0.5933333333333334,
+        "P5003": 0.6212121212121212,
+        "P5004": 0.696078431372549,
+        "P5005": 0.6326530612244898,
+        "P5006": 0.618421052631579,
+        "P5007": 0.5,
+        "P5008": 0.5347222222222222,
+        "P5009": 0.5470085470085471
+       },
+       "scene_mean": 0.5874262641015184,
+       "scene_ci95": [
+        0.555090299791552,
+        0.6219286241395099
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.7020785219399538,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.7478991596638656,
+        "P5001": 0.6846153846153846,
+        "P5002": 0.6466666666666666,
+        "P5003": 0.6818181818181818,
+        "P5004": 0.696078431372549,
+        "P5005": 0.7619047619047619,
+        "P5006": 0.6907894736842105,
+        "P5007": 0.7169811320754716,
+        "P5008": 0.7291666666666666,
+        "P5009": 0.6666666666666666
+       },
+       "scene_mean": 0.7022586525134425,
+       "scene_ci95": [
+        0.6817484027742805,
+        0.7239789854880744
+       ]
+      }
+     }
+    },
+    "contrasts": {
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.4534257120862202,
+       "better": 601,
+       "worse": 12,
+       "sign_p": 3.1659658429714215e-160,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.4247189632027069,
+        0.4821161188005635
+       ],
+       "scene_mean": 0.4559627273302221,
+       "scene_ci95": [
+        0.43022182639129036,
+        0.4823163105924957
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.46218487394957974,
+        "P5001": 0.4538461538461539,
+        "P5002": 0.38,
+        "P5003": 0.48484848484848486,
+        "P5004": 0.4117647058823529,
+        "P5005": 0.44897959183673464,
+        "P5006": 0.4342105263157894,
+        "P5007": 0.5094339622641509,
+        "P5008": 0.4444444444444444,
+        "P5009": 0.5299145299145299
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.3856812933025404,
+       "better": 512,
+       "worse": 11,
+       "sign_p": 1.343133815828147e-135,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.3575800573477354,
+        0.41368349410601013
+       ],
+       "scene_mean": 0.38702748212615273,
+       "scene_ci95": [
+        0.35037973514764753,
+        0.42385504513979344
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.4369747899159664,
+        "P5001": 0.3846153846153846,
+        "P5002": 0.3533333333333333,
+        "P5003": 0.34090909090909094,
+        "P5004": 0.28431372549019607,
+        "P5005": 0.3537414965986394,
+        "P5006": 0.3486842105263157,
+        "P5007": 0.49056603773584906,
+        "P5008": 0.45833333333333337,
+        "P5009": 0.41880341880341876
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.27174749807544263,
+       "better": 369,
+       "worse": 16,
+       "sign_p": 2.1535569094822097e-88,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.24284191375492511,
+        0.30048209858886343
+       ],
+       "scene_mean": 0.2721950937142287,
+       "scene_ci95": [
+        0.2565321806184783,
+        0.2854785584220934
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.23529411764705876,
+        "P5001": 0.2846153846153846,
+        "P5002": 0.30000000000000004,
+        "P5003": 0.2803030303030304,
+        "P5004": 0.28431372549019607,
+        "P5005": 0.22448979591836737,
+        "P5006": 0.2763157894736842,
+        "P5007": 0.2735849056603774,
+        "P5008": 0.26388888888888895,
+        "P5009": 0.2991452991452992
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.27713625866050806,
+       "better": 377,
+       "worse": 17,
+       "sign_p": 1.366024808973699e-89,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.25019728554405185,
+        0.3036143150856113
+       ],
+       "scene_mean": 0.28213421755440227,
+       "scene_ci95": [
+        0.25419484617120064,
+        0.3152365232498418
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.2857142857142857,
+        "P5001": 0.24615384615384617,
+        "P5002": 0.22666666666666668,
+        "P5003": 0.23484848484848486,
+        "P5004": 0.3529411764705882,
+        "P5005": 0.25850340136054417,
+        "P5006": 0.2828947368421052,
+        "P5007": 0.39622641509433965,
+        "P5008": 0.26388888888888895,
+        "P5009": 0.27350427350427353
+       }
+      }
+     }
+    }
+   },
+   "4": {
+    "status": "done",
+    "platform": {
+     "P5000": "CUDA",
+     "P5001": "CUDA",
+     "P5002": "CUDA",
+     "P5003": "CUDA",
+     "P5004": "CUDA",
+     "P5005": "MPS",
+     "P5006": "CUDA",
+     "P5007": "CUDA",
+     "P5008": "CUDA",
+     "P5009": "CUDA"
+    },
+    "files": {
+     "LoRA, walk": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5000-256px-max64.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5001-256px-max64.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5002-256px-max64.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5003-256px-max64.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5004-256px-max64.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5005-256px-max64-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5006-256px-max64.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5007-256px-max64.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5008-256px-max64.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5009-256px-max64.jsonl"
+     },
+     "LoRA, no walk": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5000-256px-nowalk.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5001-256px-nowalk.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5002-256px-nowalk.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5003-256px-nowalk.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5004-256px-nowalk.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5005-256px-nowalk-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5006-256px-nowalk.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5007-256px-nowalk.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5008-256px-nowalk.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5009-256px-nowalk.jsonl"
+     },
+     "LoRA, shuffled": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5000-256px-max64-shuffled.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5001-256px-max64-shuffled.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5002-256px-max64-shuffled.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5003-256px-max64-shuffled.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5004-256px-max64-shuffled.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5005-256px-max64-shuffled-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5006-256px-max64-shuffled.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5007-256px-max64-shuffled.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5008-256px-max64-shuffled.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomP5009-256px-max64-shuffled.jsonl"
+     }
+    },
+    "accuracy": {
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.9722863741339491,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.9915966386554622,
+        "P5001": 0.9692307692307692,
+        "P5002": 0.96,
+        "P5003": 0.9848484848484849,
+        "P5004": 0.9607843137254902,
+        "P5005": 0.9659863945578231,
+        "P5006": 0.9671052631578947,
+        "P5007": 0.9905660377358491,
+        "P5008": 0.9930555555555556,
+        "P5009": 0.9401709401709402
+       },
+       "scene_mean": 0.9723344397638269,
+       "scene_ci95": [
+        0.9620848998414235,
+        0.9820961117565373
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.6020015396458814,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.6050420168067226,
+        "P5001": 0.5384615384615384,
+        "P5002": 0.5933333333333334,
+        "P5003": 0.6363636363636364,
+        "P5004": 0.6666666666666666,
+        "P5005": 0.5918367346938775,
+        "P5006": 0.6513157894736842,
+        "P5007": 0.5849056603773585,
+        "P5008": 0.6041666666666666,
+        "P5009": 0.5470085470085471
+       },
+       "scene_mean": 0.6019100589852031,
+       "scene_ci95": [
+        0.5779363333933015,
+        0.6261263694043437
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6497305619707467,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.6134453781512605,
+        "P5001": 0.6384615384615384,
+        "P5002": 0.64,
+        "P5003": 0.6363636363636364,
+        "P5004": 0.6764705882352942,
+        "P5005": 0.6462585034013606,
+        "P5006": 0.6710526315789473,
+        "P5007": 0.6886792452830188,
+        "P5008": 0.7152777777777778,
+        "P5009": 0.5641025641025641
+       },
+       "scene_mean": 0.6490111863355398,
+       "scene_ci95": [
+        0.6231807933233409,
+        0.6729685274828385
+       ]
+      }
+     }
+    },
+    "contrasts": {
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.4518860662047729,
+       "better": 603,
+       "worse": 16,
+       "sign_p": 1.724360664699468e-155,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.4230488558808457,
+        0.4807988352322996
+       ],
+       "scene_mean": 0.45384342086637786,
+       "scene_ci95": [
+        0.4282587504772489,
+        0.4794338911831333
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.47058823529411764,
+        "P5001": 0.4538461538461539,
+        "P5002": 0.3933333333333333,
+        "P5003": 0.5075757575757576,
+        "P5004": 0.3921568627450981,
+        "P5005": 0.4285714285714285,
+        "P5006": 0.4342105263157894,
+        "P5007": 0.5094339622641509,
+        "P5008": 0.4444444444444444,
+        "P5009": 0.5042735042735043
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.3702848344880677,
+       "better": 491,
+       "worse": 10,
+       "sign_p": 7.820924654928651e-131,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.34429962414972703,
+        0.3967899009756808
+       ],
+       "scene_mean": 0.3704243807786237,
+       "scene_ci95": [
+        0.34498152641936075,
+        0.3933264228615593
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.38655462184873957,
+        "P5001": 0.4307692307692308,
+        "P5002": 0.3666666666666666,
+        "P5003": 0.3484848484848485,
+        "P5004": 0.2941176470588236,
+        "P5005": 0.37414965986394555,
+        "P5006": 0.3157894736842105,
+        "P5007": 0.4056603773584906,
+        "P5008": 0.38888888888888895,
+        "P5009": 0.3931623931623931
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.3225558121632024,
+       "better": 439,
+       "worse": 20,
+       "sign_p": 6.548906652092516e-104,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.29281723756906075,
+        0.35275596669297454
+       ],
+       "scene_mean": 0.3233232534282871,
+       "scene_ci95": [
+        0.3030887603573499,
+        0.3452801991338754
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.37815126050420167,
+        "P5001": 0.3307692307692308,
+        "P5002": 0.31999999999999995,
+        "P5003": 0.3484848484848485,
+        "P5004": 0.28431372549019607,
+        "P5005": 0.3197278911564625,
+        "P5006": 0.29605263157894735,
+        "P5007": 0.30188679245283023,
+        "P5008": 0.2777777777777778,
+        "P5009": 0.37606837606837606
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.2755966127790608,
+       "better": 373,
+       "worse": 15,
+       "sign_p": 1.306389999439591e-90,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.24885827267196708,
+        0.30216955380004257
+       ],
+       "scene_mean": 0.28001491109055804,
+       "scene_ci95": [
+        0.25414938219675065,
+        0.3119366584639147
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.2941176470588236,
+        "P5001": 0.24615384615384617,
+        "P5002": 0.24,
+        "P5003": 0.25757575757575757,
+        "P5004": 0.33333333333333337,
+        "P5005": 0.23809523809523803,
+        "P5006": 0.2828947368421052,
+        "P5007": 0.39622641509433965,
+        "P5008": 0.26388888888888895,
+        "P5009": 0.24786324786324787
+       }
+      }
+     }
+    }
+   },
+   "5": {
+    "status": "done",
+    "platform": {
+     "P5000": "CUDA",
+     "P5001": "CUDA",
+     "P5002": "CUDA",
+     "P5003": "CUDA",
+     "P5004": "CUDA",
+     "P5005": "MPS",
+     "P5006": "CUDA",
+     "P5007": "CUDA",
+     "P5008": "CUDA",
+     "P5009": "CUDA"
+    },
+    "files": {
+     "LoRA, walk": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5000-256px-max64.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5001-256px-max64.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5002-256px-max64.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5003-256px-max64.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5004-256px-max64.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5005-256px-max64-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5006-256px-max64.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5007-256px-max64.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5008-256px-max64.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5009-256px-max64.jsonl"
+     },
+     "LoRA, no walk": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5000-256px-nowalk.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5001-256px-nowalk.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5002-256px-nowalk.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5003-256px-nowalk.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5004-256px-nowalk.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5005-256px-nowalk-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5006-256px-nowalk.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5007-256px-nowalk.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5008-256px-nowalk.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5009-256px-nowalk.jsonl"
+     },
+     "LoRA, shuffled": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5000-256px-max64-shuffled.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5001-256px-max64-shuffled.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5002-256px-max64-shuffled.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5003-256px-max64-shuffled.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5004-256px-max64-shuffled.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5005-256px-max64-shuffled-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5006-256px-max64-shuffled.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5007-256px-max64-shuffled.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5008-256px-max64-shuffled.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomP5009-256px-max64-shuffled.jsonl"
+     }
+    },
+    "accuracy": {
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.9738260200153964,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.9831932773109243,
+        "P5001": 0.9615384615384616,
+        "P5002": 0.9866666666666667,
+        "P5003": 0.9848484848484849,
+        "P5004": 0.9607843137254902,
+        "P5005": 0.9727891156462585,
+        "P5006": 0.9802631578947368,
+        "P5007": 0.9811320754716981,
+        "P5008": 0.9861111111111112,
+        "P5009": 0.9316239316239316
+       },
+       "scene_mean": 0.9728950595837764,
+       "scene_ci95": [
+        0.9614961601964277,
+        0.9818068786721453
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5250192455735181,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.48739495798319327,
+        "P5001": 0.5307692307692308,
+        "P5002": 0.4666666666666667,
+        "P5003": 0.5303030303030303,
+        "P5004": 0.5882352941176471,
+        "P5005": 0.564625850340136,
+        "P5006": 0.5131578947368421,
+        "P5007": 0.5849056603773585,
+        "P5008": 0.4722222222222222,
+        "P5009": 0.5470085470085471
+       },
+       "scene_mean": 0.5285289354524874,
+       "scene_ci95": [
+        0.5028462368547069,
+        0.5534907325212292
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.5434949961508853,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.5378151260504201,
+        "P5001": 0.5230769230769231,
+        "P5002": 0.5266666666666666,
+        "P5003": 0.5454545454545454,
+        "P5004": 0.5980392156862745,
+        "P5005": 0.54421768707483,
+        "P5006": 0.5526315789473685,
+        "P5007": 0.5566037735849056,
+        "P5008": 0.5833333333333334,
+        "P5009": 0.4700854700854701
+       },
+       "scene_mean": 0.5437924319960736,
+       "scene_ci95": [
+        0.5223802401287735,
+        0.56373989259866
+       ]
+      }
+     }
+    },
+    "contrasts": {
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.4534257120862202,
+       "better": 605,
+       "worse": 16,
+       "sign_p": 4.5417187084252636e-156,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.42377670774193976,
+        0.483360009979584
+       ],
+       "scene_mean": 0.4544040406863273,
+       "scene_ci95": [
+        0.4330749955530611,
+        0.47620773848123465
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.46218487394957974,
+        "P5001": 0.44615384615384623,
+        "P5002": 0.42000000000000004,
+        "P5003": 0.5075757575757576,
+        "P5004": 0.3921568627450981,
+        "P5005": 0.4353741496598639,
+        "P5006": 0.4473684210526315,
+        "P5007": 0.5,
+        "P5008": 0.4375,
+        "P5009": 0.49572649572649574
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.44880677444187833,
+       "better": 594,
+       "worse": 11,
+       "sign_p": 1.3944862316236958e-159,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.41908363304952045,
+        0.4785604900459418
+       ],
+       "scene_mean": 0.444366124131289,
+       "scene_ci95": [
+        0.4133555644761915,
+        0.4761736951259393
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.49579831932773105,
+        "P5001": 0.4307692307692308,
+        "P5002": 0.52,
+        "P5003": 0.4545454545454546,
+        "P5004": 0.37254901960784315,
+        "P5005": 0.40816326530612246,
+        "P5006": 0.4671052631578947,
+        "P5007": 0.39622641509433965,
+        "P5008": 0.513888888888889,
+        "P5009": 0.3846153846153846
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.43033102386451116,
+       "better": 578,
+       "worse": 19,
+       "sign_p": 1.3592603599515322e-144,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.3996703449886787,
+        0.4610739217882075
+       ],
+       "scene_mean": 0.4291026275877027,
+       "scene_ci95": [
+        0.4105797857236843,
+        0.4443876529427891
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.4453781512605042,
+        "P5001": 0.43846153846153846,
+        "P5002": 0.4600000000000001,
+        "P5003": 0.43939393939393945,
+        "P5004": 0.36274509803921573,
+        "P5005": 0.4285714285714285,
+        "P5006": 0.42763157894736836,
+        "P5007": 0.42452830188679247,
+        "P5008": 0.4027777777777778,
+        "P5009": 0.46153846153846156
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.27713625866050806,
+       "better": 375,
+       "worse": 15,
+       "sign_p": 3.532061584726517e-91,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.2507961151551916,
+        0.30286833300756977
+       ],
+       "scene_mean": 0.2805755309105075,
+       "scene_ci95": [
+        0.2557232491558149,
+        0.31060000753382355
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.2857142857142857,
+        "P5001": 0.2384615384615385,
+        "P5002": 0.2666666666666667,
+        "P5003": 0.25757575757575757,
+        "P5004": 0.33333333333333337,
+        "P5005": 0.2448979591836734,
+        "P5006": 0.29605263157894735,
+        "P5007": 0.3867924528301887,
+        "P5008": 0.25694444444444453,
+        "P5009": 0.23931623931623935
+       }
+      }
+     }
+    }
+   },
+   "6": {
+    "status": "done",
+    "platform": {
+     "P5000": "CUDA",
+     "P5001": "CUDA",
+     "P5002": "CUDA",
+     "P5003": "CUDA",
+     "P5004": "CUDA",
+     "P5005": "MPS",
+     "P5006": "CUDA",
+     "P5007": "CUDA",
+     "P5008": "CUDA",
+     "P5009": "CUDA"
+    },
+    "files": {
+     "LoRA, walk": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5000-256px-max64.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5001-256px-max64.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5002-256px-max64.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5003-256px-max64.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5004-256px-max64.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5005-256px-max64-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5006-256px-max64.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5007-256px-max64.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5008-256px-max64.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5009-256px-max64.jsonl"
+     },
+     "LoRA, no walk": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5000-256px-nowalk.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5001-256px-nowalk.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5002-256px-nowalk.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5003-256px-nowalk.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5004-256px-nowalk.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5005-256px-nowalk-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5006-256px-nowalk.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5007-256px-nowalk.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5008-256px-nowalk.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5009-256px-nowalk.jsonl"
+     },
+     "LoRA, shuffled": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5000-256px-max64-shuffled.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5001-256px-max64-shuffled.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5002-256px-max64-shuffled.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5003-256px-max64-shuffled.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5004-256px-max64-shuffled.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5005-256px-max64-shuffled-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5006-256px-max64-shuffled.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5007-256px-max64-shuffled.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5008-256px-max64-shuffled.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomP5009-256px-max64-shuffled.jsonl"
+     }
+    },
+    "accuracy": {
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.9630484988452656,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.9747899159663865,
+        "P5001": 0.9461538461538461,
+        "P5002": 0.94,
+        "P5003": 0.9696969696969697,
+        "P5004": 0.9607843137254902,
+        "P5005": 0.9795918367346939,
+        "P5006": 0.9736842105263158,
+        "P5007": 0.9716981132075472,
+        "P5008": 0.9791666666666666,
+        "P5009": 0.9316239316239316
+       },
+       "scene_mean": 0.9627189804301848,
+       "scene_ci95": [
+        0.9519312653573963,
+        0.9721676856093581
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.6204772902232486,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.5462184873949579,
+        "P5001": 0.6,
+        "P5002": 0.5933333333333334,
+        "P5003": 0.6515151515151515,
+        "P5004": 0.6470588235294118,
+        "P5005": 0.6870748299319728,
+        "P5006": 0.625,
+        "P5007": 0.5754716981132075,
+        "P5008": 0.6527777777777778,
+        "P5009": 0.6068376068376068
+       },
+       "scene_mean": 0.6185287708433418,
+       "scene_ci95": [
+        0.5933415402438849,
+        0.643312469743142
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.7405696689761355,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.7142857142857143,
+        "P5001": 0.7230769230769231,
+        "P5002": 0.72,
+        "P5003": 0.7348484848484849,
+        "P5004": 0.7058823529411765,
+        "P5005": 0.7959183673469388,
+        "P5006": 0.75,
+        "P5007": 0.7735849056603774,
+        "P5008": 0.7847222222222222,
+        "P5009": 0.6837606837606838
+       },
+       "scene_mean": 0.7386079654142521,
+       "scene_ci95": [
+        0.7175383530122917,
+        0.7607077207009821
+       ]
+      }
+     }
+    },
+    "contrasts": {
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.4426481909160893,
+       "better": 598,
+       "worse": 23,
+       "sign_p": 1.0662942727051055e-145,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.4127096494363194,
+        0.4729441933439493
+       ],
+       "scene_mean": 0.44422796153273564,
+       "scene_ci95": [
+        0.4199817031707788,
+        0.4676331540876131
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.45378151260504196,
+        "P5001": 0.4307692307692308,
+        "P5002": 0.3733333333333333,
+        "P5003": 0.49242424242424243,
+        "P5004": 0.3921568627450981,
+        "P5005": 0.44217687074829926,
+        "P5006": 0.4407894736842105,
+        "P5007": 0.49056603773584906,
+        "P5008": 0.43055555555555547,
+        "P5009": 0.49572649572649574
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.34257120862201695,
+       "better": 466,
+       "worse": 21,
+       "sign_p": 1.8161998686909623e-110,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.3152158659042572,
+        0.3707044198408477
+       ],
+       "scene_mean": 0.3441902095868429,
+       "scene_ci95": [
+        0.3225137185219537,
+        0.370143729797146
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.4285714285714286,
+        "P5001": 0.34615384615384615,
+        "P5002": 0.34666666666666657,
+        "P5003": 0.31818181818181823,
+        "P5004": 0.3137254901960784,
+        "P5005": 0.2925170068027211,
+        "P5006": 0.3486842105263158,
+        "P5007": 0.39622641509433965,
+        "P5008": 0.32638888888888884,
+        "P5009": 0.32478632478632485
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.22247882986913003,
+       "better": 315,
+       "worse": 26,
+       "sign_p": 3.223319483828329e-64,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.19354776531449747,
+        0.25056446263568444
+       ],
+       "scene_mean": 0.22411101501593267,
+       "scene_ci95": [
+        0.20859626596902098,
+        0.23932508763847476
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.26050420168067223,
+        "P5001": 0.22307692307692306,
+        "P5002": 0.21999999999999997,
+        "P5003": 0.23484848484848486,
+        "P5004": 0.2549019607843137,
+        "P5005": 0.18367346938775508,
+        "P5006": 0.22368421052631582,
+        "P5007": 0.19811320754716977,
+        "P5008": 0.19444444444444442,
+        "P5009": 0.24786324786324787
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.2663587374903772,
+       "better": 367,
+       "worse": 21,
+       "sign_p": 8.803272102734405e-83,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.2395670202413272,
+        0.29282182081506214
+       ],
+       "scene_mean": 0.2703994517569159,
+       "scene_ci95": [
+        0.24360881767625464,
+        0.3019331650488544
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.2773109243697479,
+        "P5001": 0.22307692307692306,
+        "P5002": 0.21999999999999997,
+        "P5003": 0.24242424242424243,
+        "P5004": 0.33333333333333337,
+        "P5005": 0.2517006802721088,
+        "P5006": 0.2894736842105263,
+        "P5007": 0.37735849056603776,
+        "P5008": 0.25,
+        "P5009": 0.23931623931623935
+       }
+      }
+     }
+    }
+   },
+   "7": {
+    "status": "done",
+    "platform": {
+     "P5000": "CUDA",
+     "P5001": "CUDA",
+     "P5002": "CUDA",
+     "P5003": "CUDA",
+     "P5004": "CUDA",
+     "P5005": "MPS",
+     "P5006": "CUDA",
+     "P5007": "CUDA",
+     "P5008": "CUDA",
+     "P5009": "CUDA"
+    },
+    "files": {
+     "LoRA, walk": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5000-256px-max64.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5001-256px-max64.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5002-256px-max64.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5003-256px-max64.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5004-256px-max64.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5005-256px-max64-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5006-256px-max64.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5007-256px-max64.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5008-256px-max64.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5009-256px-max64.jsonl"
+     },
+     "LoRA, no walk": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5000-256px-nowalk.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5001-256px-nowalk.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5002-256px-nowalk.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5003-256px-nowalk.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5004-256px-nowalk.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5005-256px-nowalk-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5006-256px-nowalk.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5007-256px-nowalk.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5008-256px-nowalk.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5009-256px-nowalk.jsonl"
+     },
+     "LoRA, shuffled": {
+      "P5000": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5000-256px-max64-shuffled.jsonl",
+      "P5001": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5001-256px-max64-shuffled.jsonl",
+      "P5002": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5002-256px-max64-shuffled.jsonl",
+      "P5003": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5003-256px-max64-shuffled.jsonl",
+      "P5004": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5004-256px-max64-shuffled.jsonl",
+      "P5005": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5005-256px-max64-shuffled-mps.jsonl",
+      "P5006": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5006-256px-max64-shuffled.jsonl",
+      "P5007": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5007-256px-max64-shuffled.jsonl",
+      "P5008": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5008-256px-max64-shuffled.jsonl",
+      "P5009": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomP5009-256px-max64-shuffled.jsonl"
+     }
+    },
+    "accuracy": {
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.9722863741339491,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.9747899159663865,
+        "P5001": 0.9615384615384616,
+        "P5002": 0.96,
+        "P5003": 0.9696969696969697,
+        "P5004": 0.9705882352941176,
+        "P5005": 0.9863945578231292,
+        "P5006": 0.9539473684210527,
+        "P5007": 0.9905660377358491,
+        "P5008": 1.0,
+        "P5009": 0.9572649572649573
+       },
+       "scene_mean": 0.9724786503740924,
+       "scene_ci95": [
+        0.9639087859910923,
+        0.9816963015579632
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.6374133949191686,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.6134453781512605,
+        "P5001": 0.6307692307692307,
+        "P5002": 0.6,
+        "P5003": 0.6515151515151515,
+        "P5004": 0.7156862745098039,
+        "P5005": 0.6598639455782312,
+        "P5006": 0.6513157894736842,
+        "P5007": 0.5754716981132075,
+        "P5008": 0.6736111111111112,
+        "P5009": 0.5982905982905983
+       },
+       "scene_mean": 0.6369969177512278,
+       "scene_ci95": [
+        0.6130917424907929,
+        0.662038102887595
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.8221709006928406,
+       "n": 1299,
+       "per_scene": {
+        "P5000": 0.7983193277310925,
+        "P5001": 0.8153846153846154,
+        "P5002": 0.8266666666666667,
+        "P5003": 0.8181818181818182,
+        "P5004": 0.8333333333333334,
+        "P5005": 0.8639455782312925,
+        "P5006": 0.8223684210526315,
+        "P5007": 0.8301886792452831,
+        "P5008": 0.8194444444444444,
+        "P5009": 0.7863247863247863
+       },
+       "scene_mean": 0.8214157670595965,
+       "scene_ci95": [
+        0.8094539067419202,
+        0.8340944170731536
+       ]
+      }
+     }
+    },
+    "contrasts": {
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.4518860662047729,
+       "better": 605,
+       "worse": 18,
+       "sign_p": 1.4427435948986355e-153,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.4225903167625725,
+        0.48176330562620184
+       ],
+       "scene_mean": 0.4539876314766433,
+       "scene_ci95": [
+        0.42933274225528756,
+        0.4796339843025587
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.45378151260504196,
+        "P5001": 0.44615384615384623,
+        "P5002": 0.3933333333333333,
+        "P5003": 0.49242424242424243,
+        "P5004": 0.4019607843137255,
+        "P5005": 0.44897959183673464,
+        "P5006": 0.42105263157894735,
+        "P5007": 0.5094339622641509,
+        "P5008": 0.45138888888888884,
+        "P5009": 0.5213675213675214
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.33487297921478054,
+       "better": 447,
+       "worse": 12,
+       "sign_p": 2.180043208965882e-115,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.30881166898735907,
+        0.361005331302361
+       ],
+       "scene_mean": 0.33548173262286446,
+       "scene_ci95": [
+        0.31017004935761566,
+        0.3599805237936847
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.361344537815126,
+        "P5001": 0.3307692307692308,
+        "P5002": 0.36,
+        "P5003": 0.31818181818181823,
+        "P5004": 0.2549019607843137,
+        "P5005": 0.326530612244898,
+        "P5006": 0.3026315789473685,
+        "P5007": 0.41509433962264153,
+        "P5008": 0.32638888888888884,
+        "P5009": 0.35897435897435903
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.15011547344110854,
+       "better": 209,
+       "worse": 14,
+       "sign_p": 9.038288334214226e-46,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.12765917271967603,
+        0.17244157027648396
+       ],
+       "scene_mean": 0.15106288331449597,
+       "scene_ci95": [
+        0.13933879783785752,
+        0.16316400304569206
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.17647058823529405,
+        "P5001": 0.1461538461538462,
+        "P5002": 0.1333333333333333,
+        "P5003": 0.1515151515151515,
+        "P5004": 0.13725490196078427,
+        "P5005": 0.12244897959183676,
+        "P5006": 0.13157894736842113,
+        "P5007": 0.160377358490566,
+        "P5008": 0.18055555555555558,
+        "P5009": 0.170940170940171
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.2755966127790608,
+       "better": 374,
+       "worse": 16,
+       "sign_p": 8.302168367855587e-90,
+       "n": 1299,
+       "walk_clustered_ci95": [
+        0.2486443563321952,
+        0.3025924663029525
+       ],
+       "scene_mean": 0.2801591217008235,
+       "scene_ci95": [
+        0.2543851208665284,
+        0.3122171981770397
+       ],
+       "scenes_up": 10,
+       "scenes_down": 0,
+       "scene_sign_p": 0.001953125,
+       "per_scene": {
+        "P5000": 0.2773109243697479,
+        "P5001": 0.2384615384615385,
+        "P5002": 0.24,
+        "P5003": 0.24242424242424243,
+        "P5004": 0.3431372549019608,
+        "P5005": 0.25850340136054417,
+        "P5006": 0.26973684210526316,
+        "P5007": 0.39622641509433965,
+        "P5008": 0.27083333333333337,
+        "P5009": 0.264957264957265
+       }
+      }
+     }
+    }
    }
   },
   "three_seeds": {
@@ -852,6 +2092,143 @@
      "mean": 0.11353728686069531,
      "min": -0.005532766087085428,
      "max": 0.23280421192349463
+    }
+   }
+  },
+  "four_epoch_runs": {
+   "novel": {
+    "LoRA, walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.9744537462276712,
+      0.9723344397638269,
+      0.9728950595837764,
+      0.9627189804301848,
+      0.9724786503740924
+     ],
+     "mean": 0.9709761752759103,
+     "min": 0.9627189804301848,
+     "max": 0.9744537462276712
+    },
+    "LoRA, no walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.5874262641015184,
+      0.6019100589852031,
+      0.5285289354524874,
+      0.6185287708433418,
+      0.6369969177512278
+     ],
+     "mean": 0.5946781894267558,
+     "min": 0.5285289354524874,
+     "max": 0.6369969177512278
+    },
+    "LoRA, shuffled": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.7022586525134425,
+      0.6490111863355398,
+      0.5437924319960736,
+      0.7386079654142521,
+      0.8214157670595965
+     ],
+     "mean": 0.6910172006637809,
+     "min": 0.5437924319960736,
+     "max": 0.8214157670595965
+    },
+    "LoRA walk vs base walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.4559627273302221,
+      0.45384342086637786,
+      0.4544040406863273,
+      0.44422796153273564,
+      0.4539876314766433
+     ],
+     "mean": 0.4524851563784612,
+     "min": 0.44422796153273564,
+     "max": 0.4559627273302221
+    },
+    "LoRA walk vs no walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.38702748212615273,
+      0.3704243807786237,
+      0.444366124131289,
+      0.3441902095868429,
+      0.33548173262286446
+     ],
+     "mean": 0.3762979858491545,
+     "min": 0.33548173262286446,
+     "max": 0.444366124131289
+    },
+    "LoRA walk vs shuffled": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.2721950937142287,
+      0.3233232534282871,
+      0.4291026275877027,
+      0.22411101501593267,
+      0.15106288331449597
+     ],
+     "mean": 0.27995897461212943,
+     "min": 0.15106288331449597,
+     "max": 0.4291026275877027
+    },
+    "LoRA walk vs Opus walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.28213421755440227,
+      0.28001491109055804,
+      0.2805755309105075,
+      0.2703994517569159,
+      0.2801591217008235
+     ],
+     "mean": 0.27865664660264144,
+     "min": 0.2703994517569159,
+     "max": 0.28213421755440227
     }
    }
   }
@@ -1394,6 +2771,901 @@
       }
      }
     }
+   },
+   "3": {
+    "status": "done",
+    "platform": {
+     "ReplicaApt0": "MPS",
+     "ReplicaApt1": "MPS",
+     "ReplicaApt2": "MPS"
+    },
+    "files": {
+     "LoRA, walk": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomReplicaApt0-256px-max64-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomReplicaApt1-256px-max64-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomReplicaApt2-256px-max64-mps.jsonl"
+     },
+     "LoRA, no walk": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomReplicaApt0-256px-nowalk-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomReplicaApt1-256px-nowalk-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomReplicaApt2-256px-nowalk-mps.jsonl"
+     },
+     "LoRA, shuffled": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomReplicaApt0-256px-max64-shuffled-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomReplicaApt1-256px-max64-shuffled-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomReplicaApt2-256px-max64-shuffled-mps.jsonl"
+     }
+    },
+    "accuracy": {
+     "all": {
+      "LoRA, walk": {
+       "pooled": 0.9085487077534792,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.9375,
+        "ReplicaApt1": 0.9107142857142857,
+        "ReplicaApt2": 0.8742138364779874
+       }
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5387673956262425,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.5284090909090909,
+        "ReplicaApt1": 0.47619047619047616,
+        "ReplicaApt2": 0.6163522012578616
+       }
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.5984095427435387,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.6306818181818182,
+        "ReplicaApt1": 0.5833333333333334,
+        "ReplicaApt2": 0.5786163522012578
+       }
+      }
+     },
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.8448275862068966,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.8571428571428571,
+        "ReplicaApt1": 0.8333333333333334,
+        "ReplicaApt2": 0.8
+       }
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5689655172413793,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.5238095238095238,
+        "ReplicaApt1": 0.8333333333333334,
+        "ReplicaApt2": 0.6
+       }
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.5689655172413793,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.5952380952380952,
+        "ReplicaApt1": 0.6666666666666666,
+        "ReplicaApt2": 0.4
+       }
+      }
+     }
+    },
+    "contrasts": {
+     "all": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.35785288270377735,
+       "better": 203,
+       "worse": 23,
+       "sign_p": 3.537546037416693e-37,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.2993849719664383,
+        0.4166666666666667
+       ]
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.36978131212723664,
+       "better": 204,
+       "worse": 18,
+       "sign_p": 4.2909750534339083e-41,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.3232292247629671,
+        0.4148296593186373
+       ]
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.31013916500994043,
+       "better": 173,
+       "worse": 17,
+       "sign_p": 1.0402256447835325e-33,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.26252322652968774,
+        0.35856573705179284
+       ]
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.06759443339960247,
+       "better": 61,
+       "worse": 27,
+       "sign_p": 0.0003740220149449215,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.02734375,
+        0.10843373493975904
+       ]
+      }
+     },
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.3275862068965517,
+       "better": 22,
+       "worse": 3,
+       "sign_p": 0.00015652179718017578,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.17647058823529413,
+        0.45764477401129916
+       ]
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.27586206896551724,
+       "better": 19,
+       "worse": 3,
+       "sign_p": 0.0008554458618164062,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.1276595744680851,
+        0.39344262295081966
+       ]
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.27586206896551724,
+       "better": 18,
+       "worse": 2,
+       "sign_p": 0.0004024505615234375,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.13558176820888687,
+        0.43038414205344583
+       ]
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": -0.051724137931034475,
+       "better": 3,
+       "worse": 6,
+       "sign_p": 0.5078125,
+       "n": 58,
+       "walk_clustered_ci95": [
+        -0.1521831245394252,
+        0.05172413793103448
+       ]
+      }
+     }
+    }
+   },
+   "4": {
+    "status": "done",
+    "platform": {
+     "ReplicaApt0": "MPS",
+     "ReplicaApt1": "MPS",
+     "ReplicaApt2": "MPS"
+    },
+    "files": {
+     "LoRA, walk": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomReplicaApt0-256px-max64-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomReplicaApt1-256px-max64-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomReplicaApt2-256px-max64-mps.jsonl"
+     },
+     "LoRA, no walk": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomReplicaApt0-256px-nowalk-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomReplicaApt1-256px-nowalk-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomReplicaApt2-256px-nowalk-mps.jsonl"
+     },
+     "LoRA, shuffled": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomReplicaApt0-256px-max64-shuffled-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomReplicaApt1-256px-max64-shuffled-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomReplicaApt2-256px-max64-shuffled-mps.jsonl"
+     }
+    },
+    "accuracy": {
+     "all": {
+      "LoRA, walk": {
+       "pooled": 0.9105367793240556,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.9375,
+        "ReplicaApt1": 0.9047619047619048,
+        "ReplicaApt2": 0.8867924528301887
+       }
+      },
+      "LoRA, no walk": {
+       "pooled": 0.4990059642147117,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.4943181818181818,
+        "ReplicaApt1": 0.44047619047619047,
+        "ReplicaApt2": 0.5660377358490566
+       }
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.5745526838966203,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.5738636363636364,
+        "ReplicaApt1": 0.5535714285714286,
+        "ReplicaApt2": 0.5974842767295597
+       }
+      }
+     },
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.8448275862068966,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.8571428571428571,
+        "ReplicaApt1": 0.8333333333333334,
+        "ReplicaApt2": 0.8
+       }
+      },
+      "LoRA, no walk": {
+       "pooled": 0.6206896551724138,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.5714285714285714,
+        "ReplicaApt1": 0.8333333333333334,
+        "ReplicaApt2": 0.7
+       }
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.5517241379310345,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.5952380952380952,
+        "ReplicaApt1": 0.5,
+        "ReplicaApt2": 0.4
+       }
+      }
+     }
+    },
+    "contrasts": {
+     "all": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.3598409542743538,
+       "better": 205,
+       "worse": 24,
+       "sign_p": 5.243792078681324e-37,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.3013965220244443,
+        0.4192904683397447
+       ]
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.4115308151093439,
+       "better": 225,
+       "worse": 18,
+       "sign_p": 1.0987791979798816e-46,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.363265306122449,
+        0.45809161016751704
+       ]
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.33598409542743535,
+       "better": 185,
+       "worse": 16,
+       "sign_p": 1.2505817192438335e-37,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.2859959592936247,
+        0.3858302251692222
+       ]
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.06958250497017893,
+       "better": 67,
+       "worse": 32,
+       "sign_p": 0.000562208248357049,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.0273972602739726,
+        0.1124272455560799
+       ]
+      }
+     },
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.3275862068965517,
+       "better": 23,
+       "worse": 4,
+       "sign_p": 0.000310748815536499,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.1836734693877551,
+        0.46
+       ]
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.22413793103448276,
+       "better": 19,
+       "worse": 6,
+       "sign_p": 0.01463329792022705,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.08,
+        0.3392857142857143
+       ]
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.2931034482758621,
+       "better": 20,
+       "worse": 3,
+       "sign_p": 0.00048828125,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.16362708719851576,
+        0.4339827727645608
+       ]
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": -0.051724137931034475,
+       "better": 3,
+       "worse": 6,
+       "sign_p": 0.5078125,
+       "n": 58,
+       "walk_clustered_ci95": [
+        -0.14285714285714285,
+        0.05454545454545454
+       ]
+      }
+     }
+    }
+   },
+   "5": {
+    "status": "done",
+    "platform": {
+     "ReplicaApt0": "MPS",
+     "ReplicaApt1": "MPS",
+     "ReplicaApt2": "MPS"
+    },
+    "files": {
+     "LoRA, walk": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomReplicaApt0-256px-max64-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomReplicaApt1-256px-max64-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomReplicaApt2-256px-max64-mps.jsonl"
+     },
+     "LoRA, no walk": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomReplicaApt0-256px-nowalk-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomReplicaApt1-256px-nowalk-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomReplicaApt2-256px-nowalk-mps.jsonl"
+     },
+     "LoRA, shuffled": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomReplicaApt0-256px-max64-shuffled-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomReplicaApt1-256px-max64-shuffled-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomReplicaApt2-256px-max64-shuffled-mps.jsonl"
+     }
+    },
+    "accuracy": {
+     "all": {
+      "LoRA, walk": {
+       "pooled": 0.9204771371769384,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.9431818181818182,
+        "ReplicaApt1": 0.9047619047619048,
+        "ReplicaApt2": 0.9119496855345912
+       }
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5208747514910537,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.5340909090909091,
+        "ReplicaApt1": 0.49404761904761907,
+        "ReplicaApt2": 0.5345911949685535
+       }
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.5566600397614314,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.5511363636363636,
+        "ReplicaApt1": 0.5238095238095238,
+        "ReplicaApt2": 0.5974842767295597
+       }
+      }
+     },
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.8793103448275862,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.9047619047619048,
+        "ReplicaApt1": 0.8333333333333334,
+        "ReplicaApt2": 0.8
+       }
+      },
+      "LoRA, no walk": {
+       "pooled": 0.603448275862069,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.5476190476190477,
+        "ReplicaApt1": 0.8333333333333334,
+        "ReplicaApt2": 0.7
+       }
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.5862068965517241,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.6190476190476191,
+        "ReplicaApt1": 0.8333333333333334,
+        "ReplicaApt2": 0.3
+       }
+      }
+     }
+    },
+    "contrasts": {
+     "all": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.36978131212723653,
+       "better": 205,
+       "worse": 19,
+       "sign_p": 1.3824216493177286e-40,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.3132499695752708,
+        0.4274032752820107
+       ]
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.3996023856858847,
+       "better": 218,
+       "worse": 17,
+       "sign_p": 1.2403179452231395e-45,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.35236220472440943,
+        0.444236111111111
+       ]
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.36381709741550694,
+       "better": 196,
+       "worse": 13,
+       "sign_p": 4.144227390817423e-43,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.3141747217842371,
+        0.4137948105155343
+       ]
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.07952286282306165,
+       "better": 66,
+       "worse": 26,
+       "sign_p": 3.670045923799411e-05,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.04085603112840467,
+        0.11801486770675401
+       ]
+      }
+     },
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.3620689655172413,
+       "better": 23,
+       "worse": 2,
+       "sign_p": 1.9431114196777344e-05,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.22448979591836735,
+        0.4807692307692308
+       ]
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.27586206896551724,
+       "better": 19,
+       "worse": 3,
+       "sign_p": 0.0008554458618164062,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.12280701754385964,
+        0.40323288058856804
+       ]
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.2931034482758621,
+       "better": 20,
+       "worse": 3,
+       "sign_p": 0.00048828125,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.14285714285714285,
+        0.44642857142857145
+       ]
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": -0.017241379310344862,
+       "better": 3,
+       "worse": 4,
+       "sign_p": 1.0,
+       "n": 58,
+       "walk_clustered_ci95": [
+        -0.1111111111111111,
+        0.07547169811320754
+       ]
+      }
+     }
+    }
+   },
+   "6": {
+    "status": "done",
+    "platform": {
+     "ReplicaApt0": "MPS",
+     "ReplicaApt1": "MPS",
+     "ReplicaApt2": "MPS"
+    },
+    "files": {
+     "LoRA, walk": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomReplicaApt0-256px-max64-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomReplicaApt1-256px-max64-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomReplicaApt2-256px-max64-mps.jsonl"
+     },
+     "LoRA, no walk": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomReplicaApt0-256px-nowalk-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomReplicaApt1-256px-nowalk-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomReplicaApt2-256px-nowalk-mps.jsonl"
+     },
+     "LoRA, shuffled": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomReplicaApt0-256px-max64-shuffled-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomReplicaApt1-256px-max64-shuffled-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomReplicaApt2-256px-max64-shuffled-mps.jsonl"
+     }
+    },
+    "accuracy": {
+     "all": {
+      "LoRA, walk": {
+       "pooled": 0.9224652087475149,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.9431818181818182,
+        "ReplicaApt1": 0.9285714285714286,
+        "ReplicaApt2": 0.8930817610062893
+       }
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5049701789264414,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.5056818181818182,
+        "ReplicaApt1": 0.4642857142857143,
+        "ReplicaApt2": 0.5471698113207547
+       }
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6421471172962226,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.6818181818181818,
+        "ReplicaApt1": 0.5833333333333334,
+        "ReplicaApt2": 0.660377358490566
+       }
+      }
+     },
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.8448275862068966,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.8333333333333334,
+        "ReplicaApt1": 0.8333333333333334,
+        "ReplicaApt2": 0.9
+       }
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5689655172413793,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.5476190476190477,
+        "ReplicaApt1": 0.8333333333333334,
+        "ReplicaApt2": 0.5
+       }
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6206896551724138,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.6904761904761905,
+        "ReplicaApt1": 0.5,
+        "ReplicaApt2": 0.4
+       }
+      }
+     }
+    },
+    "contrasts": {
+     "all": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.3717693836978131,
+       "better": 206,
+       "worse": 19,
+       "sign_p": 7.545976857078918e-41,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.3156898884317432,
+        0.42857142857142855
+       ]
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.41749502982107356,
+       "better": 223,
+       "worse": 13,
+       "sign_p": 1.5531692119854157e-50,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.36770428015564205,
+        0.4656188605108055
+       ]
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.2803180914512923,
+       "better": 158,
+       "worse": 17,
+       "sign_p": 7.969417397354084e-30,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.2324194089330808,
+        0.32938914027149324
+       ]
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.08151093439363821,
+       "better": 65,
+       "worse": 24,
+       "sign_p": 1.611384920056498e-05,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.04208206412825652,
+        0.12233306914999005
+       ]
+      }
+     },
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.3275862068965517,
+       "better": 22,
+       "worse": 3,
+       "sign_p": 0.00015652179718017578,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.1791044776119403,
+        0.45901639344262296
+       ]
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.27586206896551724,
+       "better": 18,
+       "worse": 2,
+       "sign_p": 0.0004024505615234375,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.13458333333333336,
+        0.40580842391304334
+       ]
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.22413793103448276,
+       "better": 16,
+       "worse": 3,
+       "sign_p": 0.004425048828125,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.09230769230769231,
+        0.3684210526315789
+       ]
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": -0.051724137931034475,
+       "better": 3,
+       "worse": 6,
+       "sign_p": 0.5078125,
+       "n": 58,
+       "walk_clustered_ci95": [
+        -0.16218974076116932,
+        0.061224489795918366
+       ]
+      }
+     }
+    }
+   },
+   "7": {
+    "status": "done",
+    "platform": {
+     "ReplicaApt0": "MPS",
+     "ReplicaApt1": "MPS",
+     "ReplicaApt2": "MPS"
+    },
+    "files": {
+     "LoRA, walk": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomReplicaApt0-256px-max64-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomReplicaApt1-256px-max64-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomReplicaApt2-256px-max64-mps.jsonl"
+     },
+     "LoRA, no walk": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomReplicaApt0-256px-nowalk-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomReplicaApt1-256px-nowalk-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomReplicaApt2-256px-nowalk-mps.jsonl"
+     },
+     "LoRA, shuffled": {
+      "ReplicaApt0": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomReplicaApt0-256px-max64-shuffled-mps.jsonl",
+      "ReplicaApt1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomReplicaApt1-256px-max64-shuffled-mps.jsonl",
+      "ReplicaApt2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomReplicaApt2-256px-max64-shuffled-mps.jsonl"
+     }
+    },
+    "accuracy": {
+     "all": {
+      "LoRA, walk": {
+       "pooled": 0.9105367793240556,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.9488636363636364,
+        "ReplicaApt1": 0.9047619047619048,
+        "ReplicaApt2": 0.8742138364779874
+       }
+      },
+      "LoRA, no walk": {
+       "pooled": 0.4850894632206759,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.4943181818181818,
+        "ReplicaApt1": 0.4583333333333333,
+        "ReplicaApt2": 0.5031446540880503
+       }
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6779324055666004,
+       "n": 503,
+       "per_scene": {
+        "ReplicaApt0": 0.7272727272727273,
+        "ReplicaApt1": 0.5892857142857143,
+        "ReplicaApt2": 0.7169811320754716
+       }
+      }
+     },
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.8620689655172413,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.8809523809523809,
+        "ReplicaApt1": 0.8333333333333334,
+        "ReplicaApt2": 0.8
+       }
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5517241379310345,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.5,
+        "ReplicaApt1": 0.8333333333333334,
+        "ReplicaApt2": 0.6
+       }
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6724137931034483,
+       "n": 58,
+       "per_scene": {
+        "ReplicaApt0": 0.7380952380952381,
+        "ReplicaApt1": 0.5,
+        "ReplicaApt2": 0.5
+       }
+      }
+     }
+    },
+    "contrasts": {
+     "all": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.3598409542743538,
+       "better": 206,
+       "worse": 25,
+       "sign_p": 1.3589563881569162e-36,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.30142426694194124,
+        0.41916320732767587
+       ]
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.4254473161033797,
+       "better": 227,
+       "worse": 13,
+       "sign_p": 1.2134005280147391e-51,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.3791099541808035,
+        0.4713136983865231
+       ]
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.23260437375745524,
+       "better": 135,
+       "worse": 18,
+       "sign_p": 2.3481035443382777e-23,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.1845223647711512,
+        0.2815568166279228
+       ]
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.06958250497017893,
+       "better": 64,
+       "worse": 29,
+       "sign_p": 0.00036579567696276875,
+       "n": 503,
+       "walk_clustered_ci95": [
+        0.029181462732801935,
+        0.11025650563293764
+       ]
+      }
+     },
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.34482758620689646,
+       "better": 24,
+       "worse": 4,
+       "sign_p": 0.00017999112606048584,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.19607843137254902,
+        0.4782608695652174
+       ]
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.31034482758620685,
+       "better": 19,
+       "worse": 1,
+       "sign_p": 4.00543212890625e-05,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.18518518518518517,
+        0.40350877192982454
+       ]
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.18965517241379304,
+       "better": 15,
+       "worse": 4,
+       "sign_p": 0.0192108154296875,
+       "n": 58,
+       "walk_clustered_ci95": [
+        0.06666666666666667,
+        0.3220475669764897
+       ]
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": -0.034482758620689724,
+       "better": 3,
+       "worse": 5,
+       "sign_p": 0.7265625,
+       "n": 58,
+       "walk_clustered_ci95": [
+        -0.12244897959183673,
+        0.06451612903225806
+       ]
+      }
+     }
+    }
    }
   },
   "three_seeds": {
@@ -1609,6 +3881,278 @@
      "mean": -0.13218390804597702,
      "min": -0.1724137931034483,
      "max": -0.10344827586206895
+    }
+   }
+  },
+  "four_epoch_runs": {
+   "all": {
+    "LoRA, walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.9085487077534792,
+      0.9105367793240556,
+      0.9204771371769384,
+      0.9224652087475149,
+      0.9105367793240556
+     ],
+     "mean": 0.9145129224652088,
+     "min": 0.9085487077534792,
+     "max": 0.9224652087475149
+    },
+    "LoRA, no walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.5387673956262425,
+      0.4990059642147117,
+      0.5208747514910537,
+      0.5049701789264414,
+      0.4850894632206759
+     ],
+     "mean": 0.509741550695825,
+     "min": 0.4850894632206759,
+     "max": 0.5387673956262425
+    },
+    "LoRA, shuffled": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.5984095427435387,
+      0.5745526838966203,
+      0.5566600397614314,
+      0.6421471172962226,
+      0.6779324055666004
+     ],
+     "mean": 0.6099403578528827,
+     "min": 0.5566600397614314,
+     "max": 0.6779324055666004
+    },
+    "LoRA walk vs base walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.35785288270377735,
+      0.3598409542743538,
+      0.36978131212723653,
+      0.3717693836978131,
+      0.3598409542743538
+     ],
+     "mean": 0.36381709741550694,
+     "min": 0.35785288270377735,
+     "max": 0.3717693836978131
+    },
+    "LoRA walk vs no walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.36978131212723664,
+      0.4115308151093439,
+      0.3996023856858847,
+      0.41749502982107356,
+      0.4254473161033797
+     ],
+     "mean": 0.40477137176938377,
+     "min": 0.36978131212723664,
+     "max": 0.4254473161033797
+    },
+    "LoRA walk vs shuffled": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.31013916500994043,
+      0.33598409542743535,
+      0.36381709741550694,
+      0.2803180914512923,
+      0.23260437375745524
+     ],
+     "mean": 0.304572564612326,
+     "min": 0.23260437375745524,
+     "max": 0.36381709741550694
+    },
+    "LoRA walk vs Opus walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.06759443339960247,
+      0.06958250497017893,
+      0.07952286282306165,
+      0.08151093439363821,
+      0.06958250497017893
+     ],
+     "mean": 0.07355864811133203,
+     "min": 0.06759443339960247,
+     "max": 0.08151093439363821
+    }
+   },
+   "novel": {
+    "LoRA, walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.8448275862068966,
+      0.8448275862068966,
+      0.8793103448275862,
+      0.8448275862068966,
+      0.8620689655172413
+     ],
+     "mean": 0.8551724137931034,
+     "min": 0.8448275862068966,
+     "max": 0.8793103448275862
+    },
+    "LoRA, no walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.5689655172413793,
+      0.6206896551724138,
+      0.603448275862069,
+      0.5689655172413793,
+      0.5517241379310345
+     ],
+     "mean": 0.5827586206896551,
+     "min": 0.5517241379310345,
+     "max": 0.6206896551724138
+    },
+    "LoRA, shuffled": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.5689655172413793,
+      0.5517241379310345,
+      0.5862068965517241,
+      0.6206896551724138,
+      0.6724137931034483
+     ],
+     "mean": 0.6,
+     "min": 0.5517241379310345,
+     "max": 0.6724137931034483
+    },
+    "LoRA walk vs base walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.3275862068965517,
+      0.3275862068965517,
+      0.3620689655172413,
+      0.3275862068965517,
+      0.34482758620689646
+     ],
+     "mean": 0.3379310344827585,
+     "min": 0.3275862068965517,
+     "max": 0.3620689655172413
+    },
+    "LoRA walk vs no walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.27586206896551724,
+      0.22413793103448276,
+      0.27586206896551724,
+      0.27586206896551724,
+      0.31034482758620685
+     ],
+     "mean": 0.27241379310344827,
+     "min": 0.22413793103448276,
+     "max": 0.31034482758620685
+    },
+    "LoRA walk vs shuffled": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.27586206896551724,
+      0.2931034482758621,
+      0.2931034482758621,
+      0.22413793103448276,
+      0.18965517241379304
+     ],
+     "mean": 0.25517241379310346,
+     "min": 0.18965517241379304,
+     "max": 0.2931034482758621
+    },
+    "LoRA walk vs Opus walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      -0.051724137931034475,
+      -0.051724137931034475,
+      -0.017241379310344862,
+      -0.051724137931034475,
+      -0.034482758620689724
+     ],
+     "mean": -0.0413793103448276,
+     "min": -0.051724137931034475,
+     "max": -0.017241379310344862
     }
    }
   }
@@ -2823,6 +5367,2021 @@
       }
      }
     }
+   },
+   "3": {
+    "status": "done",
+    "platform": {
+     "HSSD1": "CUDA",
+     "HSSD2": "MPS",
+     "HSSD3": "MPS",
+     "HSSD4": "CUDA",
+     "HSSD5": "CUDA",
+     "HSSD6": "CUDA",
+     "HSSD7": "CUDA",
+     "HSSD8": "CUDA"
+    },
+    "files": {
+     "LoRA, walk": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD1-256px-max64.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD2-256px-max64-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD3-256px-max64-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD4-256px-max64.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD5-256px-max64.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD6-256px-max64.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD7-256px-max64.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD8-256px-max64.jsonl"
+     },
+     "LoRA, no walk": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD1-256px-nowalk.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD2-256px-nowalk-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD3-256px-nowalk-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD4-256px-nowalk.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD5-256px-nowalk.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD6-256px-nowalk.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD7-256px-nowalk.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD8-256px-nowalk.jsonl"
+     },
+     "LoRA, shuffled": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD1-256px-max64-shuffled.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD2-256px-max64-shuffled-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD3-256px-max64-shuffled-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD4-256px-max64-shuffled.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD5-256px-max64-shuffled.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD6-256px-max64-shuffled.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD7-256px-max64-shuffled.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s3-roomHSSD8-256px-max64-shuffled.jsonl"
+     }
+    },
+    "accuracy": {
+     "all": {
+      "LoRA, walk": {
+       "pooled": 0.9379310344827586,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.9042553191489362,
+        "HSSD2": 0.9583333333333334,
+        "HSSD3": 0.9444444444444444,
+        "HSSD4": 0.9270833333333334,
+        "HSSD5": 0.9551282051282052,
+        "HSSD6": 0.9941176470588236,
+        "HSSD7": 0.8833333333333333,
+        "HSSD8": 0.9427083333333334
+       },
+       "scene_mean": 0.9386754936392179,
+       "scene_ci95": [
+        0.915897563761593,
+        0.9604685900653395
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5524137931034483,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.5159574468085106,
+        "HSSD2": 0.59375,
+        "HSSD3": 0.5444444444444444,
+        "HSSD4": 0.5572916666666666,
+        "HSSD5": 0.5705128205128205,
+        "HSSD6": 0.5823529411764706,
+        "HSSD7": 0.5555555555555556,
+        "HSSD8": 0.5052083333333334
+       },
+       "scene_mean": 0.5531341510622252,
+       "scene_ci95": [
+        0.5330221084231224,
+        0.5725012961915535
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6558620689655172,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.6223404255319149,
+        "HSSD2": 0.65625,
+        "HSSD3": 0.7,
+        "HSSD4": 0.609375,
+        "HSSD5": 0.6923076923076923,
+        "HSSD6": 0.6941176470588235,
+        "HSSD7": 0.6444444444444445,
+        "HSSD8": 0.640625
+       },
+       "scene_mean": 0.6574325261678594,
+       "scene_ci95": [
+        0.6353880393026005,
+        0.6798094598416289
+       ]
+      }
+     },
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.8825136612021858,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.8382352941176471,
+        "HSSD2": 0.9433962264150944,
+        "HSSD3": 0.8947368421052632,
+        "HSSD4": 0.7894736842105263,
+        "HSSD5": 0.9722222222222222,
+        "HSSD6": 1.0,
+        "HSSD7": 0.8181818181818182,
+        "HSSD8": 0.8421052631578947
+       },
+       "scene_mean": 0.8872939188013083,
+       "scene_ci95": [
+        0.8386310864058542,
+        0.9389347230741023
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5655737704918032,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.4852941176470588,
+        "HSSD2": 0.6415094339622641,
+        "HSSD3": 0.5789473684210527,
+        "HSSD4": 0.5,
+        "HSSD5": 0.4722222222222222,
+        "HSSD6": 0.675,
+        "HSSD7": 0.6181818181818182,
+        "HSSD8": 0.5526315789473685
+       },
+       "scene_mean": 0.5654733174227231,
+       "scene_ci95": [
+        0.5171181180636317,
+        0.6139775046893965
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6557377049180327,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.6029411764705882,
+        "HSSD2": 0.6415094339622641,
+        "HSSD3": 0.7631578947368421,
+        "HSSD4": 0.6052631578947368,
+        "HSSD5": 0.7222222222222222,
+        "HSSD6": 0.65,
+        "HSSD7": 0.6545454545454545,
+        "HSSD8": 0.6578947368421053
+       },
+       "scene_mean": 0.6621917595842767,
+       "scene_ci95": [
+        0.6295929496200394,
+        0.6997631588351239
+       ]
+      }
+     }
+    },
+    "contrasts": {
+     "all": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.3351724137931035,
+       "better": 527,
+       "worse": 41,
+       "sign_p": 1.2955040295072561e-108,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.3074792243767313,
+        0.3632596685082873
+       ],
+       "scene_mean": 0.3352791750906582,
+       "scene_ci95": [
+        0.2982334145981087,
+        0.3740910947712418
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.3191489361702128,
+        "HSSD2": 0.33854166666666674,
+        "HSSD3": 0.3277777777777777,
+        "HSSD4": 0.33854166666666674,
+        "HSSD5": 0.3076923076923077,
+        "HSSD6": 0.44705882352941173,
+        "HSSD7": 0.23888888888888882,
+        "HSSD8": 0.36458333333333337
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.3855172413793103,
+       "better": 597,
+       "worse": 38,
+       "sign_p": 2.963230493991229e-130,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.35980662983425415,
+        0.41237830319888735
+       ],
+       "scene_mean": 0.38554134257699263,
+       "scene_ci95": [
+        0.3634490054759288,
+        0.4064266766124924
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.38829787234042556,
+        "HSSD2": 0.36458333333333337,
+        "HSSD3": 0.4,
+        "HSSD4": 0.36979166666666674,
+        "HSSD5": 0.3846153846153847,
+        "HSSD6": 0.4117647058823529,
+        "HSSD7": 0.3277777777777777,
+        "HSSD8": 0.4375
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.28206896551724137,
+       "better": 442,
+       "worse": 33,
+       "sign_p": 1.7512937065204717e-92,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.2541208791208791,
+        0.31017881705639616
+       ],
+       "scene_mean": 0.28124296747135846,
+       "scene_ci95": [
+        0.2618886672576832,
+        0.29978298611111115
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.28191489361702127,
+        "HSSD2": 0.30208333333333337,
+        "HSSD3": 0.24444444444444446,
+        "HSSD4": 0.31770833333333337,
+        "HSSD5": 0.2628205128205129,
+        "HSSD6": 0.30000000000000004,
+        "HSSD7": 0.23888888888888882,
+        "HSSD8": 0.30208333333333337
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.06068965517241376,
+       "better": 160,
+       "worse": 72,
+       "sign_p": 7.458221444560338e-09,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.039202200825309494,
+        0.0823045267489712
+       ],
+       "scene_mean": 0.05966438667324542,
+       "scene_ci95": [
+        0.04023201828808447,
+        0.07676066437213186
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.08510638297872342,
+        "HSSD2": 0.08333333333333337,
+        "HSSD3": 0.04999999999999993,
+        "HSSD4": 0.06770833333333337,
+        "HSSD5": 0.019230769230769273,
+        "HSSD6": 0.08235294117647063,
+        "HSSD7": 0.016666666666666607,
+        "HSSD8": 0.07291666666666674
+       }
+      }
+     },
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.3278688524590164,
+       "better": 137,
+       "worse": 17,
+       "sign_p": 1.7287186860480657e-24,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.2645485986166087,
+        0.3918945945945945
+       ],
+       "scene_mean": 0.32518776762307344,
+       "scene_ci95": [
+        0.2509302308085824,
+        0.3991926611756917
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.47058823529411764,
+        "HSSD2": 0.30188679245283023,
+        "HSSD3": 0.2894736842105263,
+        "HSSD4": 0.26315789473684215,
+        "HSSD5": 0.33333333333333337,
+        "HSSD6": 0.5,
+        "HSSD7": 0.12727272727272732,
+        "HSSD8": 0.3157894736842105
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.31693989071038253,
+       "better": 133,
+       "worse": 17,
+       "sign_p": 1.7309935519822622e-23,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.26,
+        0.37466325057428757
+       ],
+       "scene_mean": 0.32182060137858515,
+       "scene_ci95": [
+        0.27309469741223197,
+        0.3810371517027864
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.35294117647058826,
+        "HSSD2": 0.30188679245283023,
+        "HSSD3": 0.3157894736842105,
+        "HSSD4": 0.2894736842105263,
+        "HSSD5": 0.5,
+        "HSSD6": 0.32499999999999996,
+        "HSSD7": 0.20000000000000007,
+        "HSSD8": 0.2894736842105262
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.22677595628415304,
+       "better": 99,
+       "worse": 16,
+       "sign_p": 8.564981783013103e-16,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.16666666666666666,
+        0.2857142857142857
+       ],
+       "scene_mean": 0.22510215921703158,
+       "scene_ci95": [
+        0.1805182240360259,
+        0.27360017311971285
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.23529411764705888,
+        "HSSD2": 0.30188679245283023,
+        "HSSD3": 0.13157894736842102,
+        "HSSD4": 0.1842105263157895,
+        "HSSD5": 0.25,
+        "HSSD6": 0.35,
+        "HSSD7": 0.1636363636363637,
+        "HSSD8": 0.18421052631578938
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.0491803278688524,
+       "better": 50,
+       "worse": 32,
+       "sign_p": 0.05980833833431617,
+       "n": 366,
+       "walk_clustered_ci95": [
+        -0.005814377245914977,
+        0.10510550982249095
+       ],
+       "scene_mean": 0.045340710687693575,
+       "scene_ci95": [
+        0.016648051706238204,
+        0.07662717926386949
+       ],
+       "scenes_up": 6,
+       "scenes_down": 1,
+       "scene_sign_p": 0.125,
+       "per_scene": {
+        "HSSD1": 0.13235294117647056,
+        "HSSD2": 0.037735849056603765,
+        "HSSD3": 0.02631578947368418,
+        "HSSD4": 0.0,
+        "HSSD5": 0.05555555555555558,
+        "HSSD6": 0.050000000000000044,
+        "HSSD7": -0.018181818181818077,
+        "HSSD8": 0.07894736842105254
+       }
+      }
+     }
+    }
+   },
+   "4": {
+    "status": "done",
+    "platform": {
+     "HSSD1": "CUDA",
+     "HSSD2": "MPS",
+     "HSSD3": "MPS",
+     "HSSD4": "CUDA",
+     "HSSD5": "CUDA",
+     "HSSD6": "CUDA",
+     "HSSD7": "CUDA",
+     "HSSD8": "CUDA"
+    },
+    "files": {
+     "LoRA, walk": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD1-256px-max64.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD2-256px-max64-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD3-256px-max64-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD4-256px-max64.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD5-256px-max64.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD6-256px-max64.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD7-256px-max64.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD8-256px-max64.jsonl"
+     },
+     "LoRA, no walk": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD1-256px-nowalk.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD2-256px-nowalk-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD3-256px-nowalk-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD4-256px-nowalk.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD5-256px-nowalk.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD6-256px-nowalk.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD7-256px-nowalk.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD8-256px-nowalk.jsonl"
+     },
+     "LoRA, shuffled": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD1-256px-max64-shuffled.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD2-256px-max64-shuffled-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD3-256px-max64-shuffled-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD4-256px-max64-shuffled.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD5-256px-max64-shuffled.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD6-256px-max64-shuffled.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD7-256px-max64-shuffled.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s4-roomHSSD8-256px-max64-shuffled.jsonl"
+     }
+    },
+    "accuracy": {
+     "all": {
+      "LoRA, walk": {
+       "pooled": 0.9482758620689655,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.925531914893617,
+        "HSSD2": 0.96875,
+        "HSSD3": 0.9333333333333333,
+        "HSSD4": 0.9583333333333334,
+        "HSSD5": 0.9743589743589743,
+        "HSSD6": 0.9705882352941176,
+        "HSSD7": 0.8888888888888888,
+        "HSSD8": 0.96875
+       },
+       "scene_mean": 0.948566835012783,
+       "scene_ci95": [
+        0.9279004354401335,
+        0.965954939668175
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5696551724137932,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.5585106382978723,
+        "HSSD2": 0.5989583333333334,
+        "HSSD3": 0.6,
+        "HSSD4": 0.5520833333333334,
+        "HSSD5": 0.6025641025641025,
+        "HSSD6": 0.5647058823529412,
+        "HSSD7": 0.5444444444444444,
+        "HSSD8": 0.5416666666666666
+       },
+       "scene_mean": 0.5703666751240867,
+       "scene_ci95": [
+        0.5542322325650118,
+        0.5879898582412711
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6172413793103448,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.5691489361702128,
+        "HSSD2": 0.6458333333333334,
+        "HSSD3": 0.6166666666666667,
+        "HSSD4": 0.59375,
+        "HSSD5": 0.6730769230769231,
+        "HSSD6": 0.6470588235294118,
+        "HSSD7": 0.6,
+        "HSSD8": 0.6041666666666666
+       },
+       "scene_mean": 0.6187126686804019,
+       "scene_ci95": [
+        0.5967128832916145,
+        0.641619532428356
+       ]
+      }
+     },
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.8907103825136612,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.8676470588235294,
+        "HSSD2": 0.9245283018867925,
+        "HSSD3": 0.8421052631578947,
+        "HSSD4": 0.8421052631578947,
+        "HSSD5": 1.0,
+        "HSSD6": 1.0,
+        "HSSD7": 0.8181818181818182,
+        "HSSD8": 0.868421052631579
+       },
+       "scene_mean": 0.8953735947299386,
+       "scene_ci95": [
+        0.8520792288207149,
+        0.9441844919786097
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5792349726775956,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.4852941176470588,
+        "HSSD2": 0.6792452830188679,
+        "HSSD3": 0.5789473684210527,
+        "HSSD4": 0.5526315789473685,
+        "HSSD5": 0.5833333333333334,
+        "HSSD6": 0.625,
+        "HSSD7": 0.5818181818181818,
+        "HSSD8": 0.5789473684210527
+       },
+       "scene_mean": 0.5831521539508645,
+       "scene_ci95": [
+        0.546653356318604,
+        0.6185506638191749
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6202185792349727,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.5882352941176471,
+        "HSSD2": 0.6415094339622641,
+        "HSSD3": 0.6578947368421053,
+        "HSSD4": 0.6052631578947368,
+        "HSSD5": 0.6388888888888888,
+        "HSSD6": 0.575,
+        "HSSD7": 0.5636363636363636,
+        "HSSD8": 0.7368421052631579
+       },
+       "scene_mean": 0.6259087475756455,
+       "scene_ci95": [
+        0.5924938942608957,
+        0.6642530067306631
+       ]
+      }
+     }
+    },
+    "contrasts": {
+     "all": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.3455172413793104,
+       "better": 535,
+       "worse": 34,
+       "sign_p": 6.459011341880979e-117,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.3170563961485557,
+        0.3741450068399453
+       ],
+       "scene_mean": 0.3451705164642234,
+       "scene_ci95": [
+        0.3092443743322649,
+        0.378094362745098
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.34042553191489355,
+        "HSSD2": 0.34895833333333337,
+        "HSSD3": 0.31666666666666665,
+        "HSSD4": 0.36979166666666674,
+        "HSSD5": 0.32692307692307687,
+        "HSSD6": 0.4235294117647058,
+        "HSSD7": 0.24444444444444435,
+        "HSSD8": 0.390625
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.37862068965517237,
+       "better": 575,
+       "worse": 26,
+       "sign_p": 6.4401446723547685e-136,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.35131396957123096,
+        0.40620689655172415
+       ],
+       "scene_mean": 0.3782001598886964,
+       "scene_ci95": [
+        0.3573138333390162,
+        0.39912950134065145
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.3670212765957447,
+        "HSSD2": 0.36979166666666663,
+        "HSSD3": 0.33333333333333337,
+        "HSSD4": 0.40625,
+        "HSSD5": 0.3717948717948718,
+        "HSSD6": 0.40588235294117647,
+        "HSSD7": 0.34444444444444444,
+        "HSSD8": 0.42708333333333337
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.3310344827586207,
+       "better": 515,
+       "worse": 35,
+       "sign_p": 1.5256585566126715e-110,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.3033006742282454,
+        0.3591165036947996
+       ],
+       "scene_mean": 0.3298541663323813,
+       "scene_ci95": [
+        0.31115392471090997,
+        0.34825367647058825
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.3563829787234042,
+        "HSSD2": 0.32291666666666663,
+        "HSSD3": 0.31666666666666665,
+        "HSSD4": 0.36458333333333337,
+        "HSSD5": 0.3012820512820512,
+        "HSSD6": 0.32352941176470584,
+        "HSSD7": 0.28888888888888886,
+        "HSSD8": 0.36458333333333337
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.07103448275862068,
+       "better": 160,
+       "worse": 57,
+       "sign_p": 1.6615835032022624e-12,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.04986149584487535,
+        0.09203296703296704
+       ],
+       "scene_mean": 0.06955572804681064,
+       "scene_ci95": [
+        0.04754868887424716,
+        0.09057431000990816
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.10638297872340419,
+        "HSSD2": 0.09375,
+        "HSSD3": 0.03888888888888886,
+        "HSSD4": 0.09895833333333337,
+        "HSSD5": 0.038461538461538436,
+        "HSSD6": 0.05882352941176472,
+        "HSSD7": 0.022222222222222143,
+        "HSSD8": 0.09895833333333337
+       }
+      }
+     },
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.33606557377049184,
+       "better": 136,
+       "worse": 13,
+       "sign_p": 5.171576232995757e-27,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.2740103320176457,
+        0.4
+       ],
+       "scene_mean": 0.33326744355170373,
+       "scene_ci95": [
+        0.2523268559477596,
+        0.4127530894847181
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.5,
+        "HSSD2": 0.28301886792452835,
+        "HSSD3": 0.23684210526315785,
+        "HSSD4": 0.3157894736842105,
+        "HSSD5": 0.36111111111111116,
+        "HSSD6": 0.5,
+        "HSSD7": 0.12727272727272732,
+        "HSSD8": 0.3421052631578948
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.3114754098360656,
+       "better": 124,
+       "worse": 10,
+       "sign_p": 3.6370082549903253e-26,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.2607449856733524,
+        0.3628819713155363
+       ],
+       "scene_mean": 0.3122214407790741,
+       "scene_ci95": [
+        0.26961271102284007,
+        0.35799994955100395
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.3823529411764706,
+        "HSSD2": 0.24528301886792458,
+        "HSSD3": 0.26315789473684204,
+        "HSSD4": 0.2894736842105262,
+        "HSSD5": 0.41666666666666663,
+        "HSSD6": 0.375,
+        "HSSD7": 0.23636363636363644,
+        "HSSD8": 0.2894736842105263
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.2704918032786885,
+       "better": 117,
+       "worse": 18,
+       "sign_p": 5.723995795100052e-19,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.20936320966582825,
+        0.33055555555555555
+       ],
+       "scene_mean": 0.26946484715429314,
+       "scene_ci95": [
+        0.21074893673577888,
+        0.3304679704929428
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.27941176470588236,
+        "HSSD2": 0.28301886792452835,
+        "HSSD3": 0.18421052631578938,
+        "HSSD4": 0.23684210526315785,
+        "HSSD5": 0.36111111111111116,
+        "HSSD6": 0.42500000000000004,
+        "HSSD7": 0.25454545454545463,
+        "HSSD8": 0.13157894736842113
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.05737704918032782,
+       "better": 47,
+       "worse": 26,
+       "sign_p": 0.018617751433194638,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.009172917654276235,
+        0.10632202095154954
+       ],
+       "scene_mean": 0.05342038661632388,
+       "scene_ci95": [
+        0.01439274510246455,
+        0.09479254620508491
+       ],
+       "scenes_up": 6,
+       "scenes_down": 2,
+       "scene_sign_p": 0.2890625,
+       "per_scene": {
+        "HSSD1": 0.16176470588235292,
+        "HSSD2": 0.018867924528301883,
+        "HSSD3": -0.026315789473684292,
+        "HSSD4": 0.05263157894736836,
+        "HSSD5": 0.08333333333333337,
+        "HSSD6": 0.050000000000000044,
+        "HSSD7": -0.018181818181818077,
+        "HSSD8": 0.10526315789473684
+       }
+      }
+     }
+    }
+   },
+   "5": {
+    "status": "done",
+    "platform": {
+     "HSSD1": "CUDA",
+     "HSSD2": "MPS",
+     "HSSD3": "MPS",
+     "HSSD4": "CUDA",
+     "HSSD5": "CUDA",
+     "HSSD6": "CUDA",
+     "HSSD7": "CUDA",
+     "HSSD8": "CUDA"
+    },
+    "files": {
+     "LoRA, walk": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD1-256px-max64.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD2-256px-max64-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD3-256px-max64-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD4-256px-max64.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD5-256px-max64.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD6-256px-max64.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD7-256px-max64.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD8-256px-max64.jsonl"
+     },
+     "LoRA, no walk": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD1-256px-nowalk.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD2-256px-nowalk-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD3-256px-nowalk-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD4-256px-nowalk.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD5-256px-nowalk.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD6-256px-nowalk.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD7-256px-nowalk.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD8-256px-nowalk.jsonl"
+     },
+     "LoRA, shuffled": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD1-256px-max64-shuffled.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD2-256px-max64-shuffled-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD3-256px-max64-shuffled-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD4-256px-max64-shuffled.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD5-256px-max64-shuffled.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD6-256px-max64-shuffled.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD7-256px-max64-shuffled.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s5-roomHSSD8-256px-max64-shuffled.jsonl"
+     }
+    },
+    "accuracy": {
+     "all": {
+      "LoRA, walk": {
+       "pooled": 0.9434482758620689,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.9202127659574468,
+        "HSSD2": 0.9791666666666666,
+        "HSSD3": 0.9333333333333333,
+        "HSSD4": 0.9427083333333334,
+        "HSSD5": 0.9615384615384616,
+        "HSSD6": 0.9705882352941176,
+        "HSSD7": 0.8944444444444445,
+        "HSSD8": 0.9479166666666666
+       },
+       "scene_mean": 0.9437386134043089,
+       "scene_ci95": [
+        0.9251456727927805,
+        0.9607070029193141
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5275862068965518,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.5585106382978723,
+        "HSSD2": 0.4895833333333333,
+        "HSSD3": 0.4888888888888889,
+        "HSSD4": 0.5364583333333334,
+        "HSSD5": 0.5512820512820513,
+        "HSSD6": 0.5529411764705883,
+        "HSSD7": 0.55,
+        "HSSD8": 0.5
+       },
+       "scene_mean": 0.5284580527007585,
+       "scene_ci95": [
+        0.5086363379571687,
+        0.5466129536921152
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.5406896551724137,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.5,
+        "HSSD2": 0.5416666666666666,
+        "HSSD3": 0.55,
+        "HSSD4": 0.5677083333333334,
+        "HSSD5": 0.5961538461538461,
+        "HSSD6": 0.5705882352941176,
+        "HSSD7": 0.5111111111111111,
+        "HSSD8": 0.5
+       },
+       "scene_mean": 0.5421535240698843,
+       "scene_ci95": [
+        0.5190972222222222,
+        0.5652886088329562
+       ]
+      }
+     },
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.9016393442622951,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.8529411764705882,
+        "HSSD2": 0.9622641509433962,
+        "HSSD3": 0.868421052631579,
+        "HSSD4": 0.8157894736842105,
+        "HSSD5": 0.9722222222222222,
+        "HSSD6": 1.0,
+        "HSSD7": 0.8727272727272727,
+        "HSSD8": 0.8947368421052632
+       },
+       "scene_mean": 0.9048877738480665,
+       "scene_ci95": [
+        0.8629703038512054,
+        0.9474373827650888
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5382513661202186,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.5147058823529411,
+        "HSSD2": 0.5849056603773585,
+        "HSSD3": 0.5526315789473685,
+        "HSSD4": 0.47368421052631576,
+        "HSSD5": 0.4444444444444444,
+        "HSSD6": 0.6,
+        "HSSD7": 0.6,
+        "HSSD8": 0.5
+       },
+       "scene_mean": 0.5337964720810535,
+       "scene_ci95": [
+        0.49388419137929906,
+        0.5709171826625387
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.5136612021857924,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.45588235294117646,
+        "HSSD2": 0.5471698113207547,
+        "HSSD3": 0.6842105263157895,
+        "HSSD4": 0.5789473684210527,
+        "HSSD5": 0.5555555555555556,
+        "HSSD6": 0.375,
+        "HSSD7": 0.45454545454545453,
+        "HSSD8": 0.5263157894736842
+       },
+       "scene_mean": 0.5222033573216834,
+       "scene_ci95": [
+        0.4621215993393837,
+        0.5828167474145627
+       ]
+      }
+     }
+    },
+    "contrasts": {
+     "all": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.3406896551724138,
+       "better": 533,
+       "worse": 39,
+       "sign_p": 6.279438860771024e-112,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.31181299603174606,
+        0.36983471074380164
+       ],
+       "scene_mean": 0.3403422948557492,
+       "scene_ci95": [
+        0.3070306927880604,
+        0.37235871512066365
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.3351063829787234,
+        "HSSD2": 0.359375,
+        "HSSD3": 0.31666666666666665,
+        "HSSD4": 0.35416666666666674,
+        "HSSD5": 0.3141025641025641,
+        "HSSD6": 0.4235294117647058,
+        "HSSD7": 0.25,
+        "HSSD8": 0.36979166666666663
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.41586206896551714,
+       "better": 633,
+       "worse": 30,
+       "sign_p": 4.695011591638483e-148,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.38873431634064415,
+        0.4428974148731958
+       ],
+       "scene_mean": 0.41528056070355035,
+       "scene_ci95": [
+        0.384571846034172,
+        0.4446895424836601
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.36170212765957455,
+        "HSSD2": 0.4895833333333333,
+        "HSSD3": 0.4444444444444445,
+        "HSSD4": 0.40625,
+        "HSSD5": 0.41025641025641024,
+        "HSSD6": 0.41764705882352937,
+        "HSSD7": 0.34444444444444444,
+        "HSSD8": 0.44791666666666663
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.4027586206896552,
+       "better": 630,
+       "worse": 46,
+       "sign_p": 3.9279663397856457e-132,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.3726027397260274,
+        0.4318181818181818
+       ],
+       "scene_mean": 0.4015850893344245,
+       "scene_ci95": [
+        0.3825921474358974,
+        0.4214601340868794
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.42021276595744683,
+        "HSSD2": 0.4375,
+        "HSSD3": 0.3833333333333333,
+        "HSSD4": 0.375,
+        "HSSD5": 0.3653846153846154,
+        "HSSD6": 0.4,
+        "HSSD7": 0.3833333333333334,
+        "HSSD8": 0.44791666666666663
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.06620689655172407,
+       "better": 162,
+       "worse": 66,
+       "sign_p": 1.698779170562024e-10,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.0443197970904549,
+        0.08839779005524862
+       ],
+       "scene_mean": 0.06472750643833639,
+       "scene_ci95": [
+        0.04398377109257164,
+        0.08455336015722775
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.10106382978723405,
+        "HSSD2": 0.10416666666666663,
+        "HSSD3": 0.03888888888888886,
+        "HSSD4": 0.08333333333333337,
+        "HSSD5": 0.02564102564102566,
+        "HSSD6": 0.05882352941176472,
+        "HSSD7": 0.02777777777777779,
+        "HSSD8": 0.078125
+       }
+      }
+     },
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.34699453551912574,
+       "better": 139,
+       "worse": 12,
+       "sign_p": 1.4342798784369124e-28,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.2852775054847594,
+        0.4097434126960683
+       ],
+       "scene_mean": 0.3427816226698317,
+       "scene_ci95": [
+        0.2743221690590112,
+        0.4123932716085441
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.48529411764705876,
+        "HSSD2": 0.3207547169811321,
+        "HSSD3": 0.26315789473684215,
+        "HSSD4": 0.2894736842105263,
+        "HSSD5": 0.33333333333333337,
+        "HSSD6": 0.5,
+        "HSSD7": 0.18181818181818177,
+        "HSSD8": 0.368421052631579
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.36338797814207646,
+       "better": 146,
+       "worse": 13,
+       "sign_p": 1.2082554638692603e-29,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.30110422978672846,
+        0.4262734584450402
+       ],
+       "scene_mean": 0.371091301767013,
+       "scene_ci95": [
+        0.32661443674359697,
+        0.4255237844889694
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.3382352941176471,
+        "HSSD2": 0.37735849056603776,
+        "HSSD3": 0.3157894736842105,
+        "HSSD4": 0.34210526315789475,
+        "HSSD5": 0.5277777777777778,
+        "HSSD6": 0.4,
+        "HSSD7": 0.2727272727272727,
+        "HSSD8": 0.39473684210526316
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.3879781420765027,
+       "better": 161,
+       "worse": 19,
+       "sign_p": 3.2134006834732364e-29,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.3273809523809524,
+        0.44827820464767615
+       ],
+       "scene_mean": 0.3826844165263831,
+       "scene_ci95": [
+        0.29872052080401534,
+        0.46628294051156166
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.39705882352941174,
+        "HSSD2": 0.41509433962264153,
+        "HSSD3": 0.1842105263157895,
+        "HSSD4": 0.23684210526315785,
+        "HSSD5": 0.41666666666666663,
+        "HSSD6": 0.625,
+        "HSSD7": 0.41818181818181815,
+        "HSSD8": 0.368421052631579
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.06830601092896171,
+       "better": 51,
+       "worse": 26,
+       "sign_p": 0.005870707889737202,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.016989262794141848,
+        0.12138877686666365
+       ],
+       "scene_mean": 0.06293456573445182,
+       "scene_ci95": [
+        0.03251797190167934,
+        0.09713306818845617
+       ],
+       "scenes_up": 7,
+       "scenes_down": 0,
+       "scene_sign_p": 0.015625,
+       "per_scene": {
+        "HSSD1": 0.1470588235294117,
+        "HSSD2": 0.05660377358490565,
+        "HSSD3": 0.0,
+        "HSSD4": 0.02631578947368418,
+        "HSSD5": 0.05555555555555558,
+        "HSSD6": 0.050000000000000044,
+        "HSSD7": 0.036363636363636376,
+        "HSSD8": 0.13157894736842102
+       }
+      }
+     }
+    }
+   },
+   "6": {
+    "status": "done",
+    "platform": {
+     "HSSD1": "CUDA",
+     "HSSD2": "MPS",
+     "HSSD3": "MPS",
+     "HSSD4": "CUDA",
+     "HSSD5": "CUDA",
+     "HSSD6": "CUDA",
+     "HSSD7": "CUDA",
+     "HSSD8": "CUDA"
+    },
+    "files": {
+     "LoRA, walk": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD1-256px-max64.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD2-256px-max64-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD3-256px-max64-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD4-256px-max64.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD5-256px-max64.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD6-256px-max64.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD7-256px-max64.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD8-256px-max64.jsonl"
+     },
+     "LoRA, no walk": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD1-256px-nowalk.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD2-256px-nowalk-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD3-256px-nowalk-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD4-256px-nowalk.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD5-256px-nowalk.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD6-256px-nowalk.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD7-256px-nowalk.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD8-256px-nowalk.jsonl"
+     },
+     "LoRA, shuffled": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD1-256px-max64-shuffled.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD2-256px-max64-shuffled-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD3-256px-max64-shuffled-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD4-256px-max64-shuffled.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD5-256px-max64-shuffled.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD6-256px-max64-shuffled.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD7-256px-max64-shuffled.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s6-roomHSSD8-256px-max64-shuffled.jsonl"
+     }
+    },
+    "accuracy": {
+     "all": {
+      "LoRA, walk": {
+       "pooled": 0.9434482758620689,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.9202127659574468,
+        "HSSD2": 0.9635416666666666,
+        "HSSD3": 0.9277777777777778,
+        "HSSD4": 0.9635416666666666,
+        "HSSD5": 0.967948717948718,
+        "HSSD6": 0.9764705882352941,
+        "HSSD7": 0.8833333333333333,
+        "HSSD8": 0.9479166666666666
+       },
+       "scene_mean": 0.9438428979065713,
+       "scene_ci95": [
+        0.9223748014553783,
+        0.9628542923579688
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5558620689655173,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.5957446808510638,
+        "HSSD2": 0.5364583333333334,
+        "HSSD3": 0.5833333333333334,
+        "HSSD4": 0.5260416666666666,
+        "HSSD5": 0.6153846153846154,
+        "HSSD6": 0.5235294117647059,
+        "HSSD7": 0.5555555555555556,
+        "HSSD8": 0.5208333333333334
+       },
+       "scene_mean": 0.5571101162778259,
+       "scene_ci95": [
+        0.5348406007183459,
+        0.5819623454264412
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.7020689655172414,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.6542553191489362,
+        "HSSD2": 0.7552083333333334,
+        "HSSD3": 0.7333333333333333,
+        "HSSD4": 0.65625,
+        "HSSD5": 0.7628205128205128,
+        "HSSD6": 0.7176470588235294,
+        "HSSD7": 0.6722222222222223,
+        "HSSD8": 0.6770833333333334
+       },
+       "scene_mean": 0.7036025141269001,
+       "scene_ci95": [
+        0.6754808528021139,
+        0.7330739822013093
+       ]
+      }
+     },
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.8825136612021858,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.8382352941176471,
+        "HSSD2": 0.9245283018867925,
+        "HSSD3": 0.8421052631578947,
+        "HSSD4": 0.868421052631579,
+        "HSSD5": 0.9722222222222222,
+        "HSSD6": 1.0,
+        "HSSD7": 0.8,
+        "HSSD8": 0.868421052631579
+       },
+       "scene_mean": 0.8892416483309644,
+       "scene_ci95": [
+        0.8457430340557275,
+        0.9361670106639146
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5601092896174863,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.5294117647058824,
+        "HSSD2": 0.5660377358490566,
+        "HSSD3": 0.631578947368421,
+        "HSSD4": 0.5263157894736842,
+        "HSSD5": 0.5277777777777778,
+        "HSSD6": 0.575,
+        "HSSD7": 0.5818181818181818,
+        "HSSD8": 0.5526315789473685
+       },
+       "scene_mean": 0.5613214719925466,
+       "scene_ci95": [
+        0.5401193975707629,
+        0.5854684179604179
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.6612021857923497,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.5588235294117647,
+        "HSSD2": 0.7547169811320755,
+        "HSSD3": 0.7368421052631579,
+        "HSSD4": 0.6842105263157895,
+        "HSSD5": 0.8055555555555556,
+        "HSSD6": 0.6,
+        "HSSD7": 0.6181818181818182,
+        "HSSD8": 0.6052631578947368
+       },
+       "scene_mean": 0.6704492092193622,
+       "scene_ci95": [
+        0.615737850771722,
+        0.7288256102484628
+       ]
+      }
+     }
+    },
+    "contrasts": {
+     "all": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.3406896551724138,
+       "better": 534,
+       "worse": 40,
+       "sign_p": 2.4217908097400314e-111,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.3120713305898491,
+        0.36893203883495146
+       ],
+       "scene_mean": 0.3404465793580116,
+       "scene_ci95": [
+        0.3035235809919985,
+        0.3756995506535947
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.3351063829787234,
+        "HSSD2": 0.34375,
+        "HSSD3": 0.3111111111111111,
+        "HSSD4": 0.375,
+        "HSSD5": 0.3205128205128205,
+        "HSSD6": 0.42941176470588227,
+        "HSSD7": 0.23888888888888882,
+        "HSSD8": 0.36979166666666663
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.38758620689655165,
+       "better": 593,
+       "worse": 31,
+       "sign_p": 7.730513185181065e-136,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.35913480431817657,
+        0.41655076495132126
+       ],
+       "scene_mean": 0.3867327816287453,
+       "scene_ci95": [
+        0.35180929558215135,
+        0.4218124489379084
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.32446808510638303,
+        "HSSD2": 0.42708333333333326,
+        "HSSD3": 0.34444444444444444,
+        "HSSD4": 0.4375,
+        "HSSD5": 0.35256410256410253,
+        "HSSD6": 0.4529411764705882,
+        "HSSD7": 0.3277777777777777,
+        "HSSD8": 0.42708333333333326
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.2413793103448275,
+       "better": 384,
+       "worse": 34,
+       "sign_p": 3.641243932713586e-76,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.21586206896551724,
+        0.26694446682512185
+       ],
+       "scene_mean": 0.24024038377967116,
+       "scene_ci95": [
+        0.21408263317260892,
+        0.2675133530294278
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.26595744680851063,
+        "HSSD2": 0.20833333333333326,
+        "HSSD3": 0.19444444444444453,
+        "HSSD4": 0.30729166666666663,
+        "HSSD5": 0.20512820512820518,
+        "HSSD6": 0.2588235294117647,
+        "HSSD7": 0.21111111111111103,
+        "HSSD8": 0.27083333333333326
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.06620689655172407,
+       "better": 158,
+       "worse": 62,
+       "sign_p": 7.553515572862416e-11,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.04419889502762431,
+        0.08795013850415513
+       ],
+       "scene_mean": 0.06483179094059881,
+       "scene_ci95": [
+        0.0422115193445934,
+        0.08580110310414057
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.10106382978723405,
+        "HSSD2": 0.08854166666666663,
+        "HSSD3": 0.033333333333333326,
+        "HSSD4": 0.10416666666666663,
+        "HSSD5": 0.03205128205128205,
+        "HSSD6": 0.06470588235294117,
+        "HSSD7": 0.016666666666666607,
+        "HSSD8": 0.078125
+       }
+      }
+     },
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.3278688524590164,
+       "better": 137,
+       "worse": 17,
+       "sign_p": 1.7287186860480657e-24,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.2641,
+        0.39200113636363637
+       ],
+       "scene_mean": 0.3271354971527295,
+       "scene_ci95": [
+        0.2456667631393083,
+        0.40412090854216565
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.47058823529411764,
+        "HSSD2": 0.28301886792452835,
+        "HSSD3": 0.23684210526315785,
+        "HSSD4": 0.3421052631578948,
+        "HSSD5": 0.33333333333333337,
+        "HSSD6": 0.5,
+        "HSSD7": 0.10909090909090913,
+        "HSSD8": 0.3421052631578948
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.3224043715846995,
+       "better": 134,
+       "worse": 16,
+       "sign_p": 2.1755247260990872e-24,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.259996062992126,
+        0.38571534548537517
+       ],
+       "scene_mean": 0.3279201763384178,
+       "scene_ci95": [
+        0.2733309329955464,
+        0.3820627572972555
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.3088235294117647,
+        "HSSD2": 0.3584905660377359,
+        "HSSD3": 0.21052631578947367,
+        "HSSD4": 0.3421052631578948,
+        "HSSD5": 0.4444444444444444,
+        "HSSD6": 0.42500000000000004,
+        "HSSD7": 0.21818181818181825,
+        "HSSD8": 0.3157894736842105
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.2213114754098361,
+       "better": 99,
+       "worse": 18,
+       "sign_p": 9.723859231682608e-15,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.16567908653846156,
+        0.2758644243452044
+       ],
+       "scene_mean": 0.218792439111602,
+       "scene_ci95": [
+        0.1641633565044687,
+        0.28176966199836434
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.27941176470588236,
+        "HSSD2": 0.16981132075471694,
+        "HSSD3": 0.10526315789473684,
+        "HSSD4": 0.1842105263157895,
+        "HSSD5": 0.16666666666666663,
+        "HSSD6": 0.4,
+        "HSSD7": 0.18181818181818188,
+        "HSSD8": 0.26315789473684215
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.0491803278688524,
+       "better": 46,
+       "worse": 28,
+       "sign_p": 0.04739297550405179,
+       "n": 366,
+       "walk_clustered_ci95": [
+        -0.0028013171560759133,
+        0.10054878299200518
+       ],
+       "scene_mean": 0.047288440217349625,
+       "scene_ci95": [
+        0.009057055159339189,
+        0.08492705694718078
+       ],
+       "scenes_up": 6,
+       "scenes_down": 2,
+       "scene_sign_p": 0.2890625,
+       "per_scene": {
+        "HSSD1": 0.13235294117647056,
+        "HSSD2": 0.018867924528301883,
+        "HSSD3": -0.026315789473684292,
+        "HSSD4": 0.07894736842105265,
+        "HSSD5": 0.05555555555555558,
+        "HSSD6": 0.050000000000000044,
+        "HSSD7": -0.036363636363636265,
+        "HSSD8": 0.10526315789473684
+       }
+      }
+     }
+    }
+   },
+   "7": {
+    "status": "done",
+    "platform": {
+     "HSSD1": "CUDA",
+     "HSSD2": "MPS",
+     "HSSD3": "MPS",
+     "HSSD4": "CUDA",
+     "HSSD5": "CUDA",
+     "HSSD6": "CUDA",
+     "HSSD7": "CUDA",
+     "HSSD8": "CUDA"
+    },
+    "files": {
+     "LoRA, walk": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD1-256px-max64.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD2-256px-max64-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD3-256px-max64-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD4-256px-max64.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD5-256px-max64.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD6-256px-max64.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD7-256px-max64.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD8-256px-max64.jsonl"
+     },
+     "LoRA, no walk": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD1-256px-nowalk.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD2-256px-nowalk-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD3-256px-nowalk-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD4-256px-nowalk.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD5-256px-nowalk.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD6-256px-nowalk.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD7-256px-nowalk.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD8-256px-nowalk.jsonl"
+     },
+     "LoRA, shuffled": {
+      "HSSD1": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD1-256px-max64-shuffled.jsonl",
+      "HSSD2": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD2-256px-max64-shuffled-mps.jsonl",
+      "HSSD3": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD3-256px-max64-shuffled-mps.jsonl",
+      "HSSD4": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD4-256px-max64-shuffled.jsonl",
+      "HSSD5": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD5-256px-max64-shuffled.jsonl",
+      "HSSD6": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD6-256px-max64-shuffled.jsonl",
+      "HSSD7": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD7-256px-max64-shuffled.jsonl",
+      "HSSD8": "results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s7-roomHSSD8-256px-max64-shuffled.jsonl"
+     }
+    },
+    "accuracy": {
+     "all": {
+      "LoRA, walk": {
+       "pooled": 0.9496551724137932,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.9361702127659575,
+        "HSSD2": 0.96875,
+        "HSSD3": 0.95,
+        "HSSD4": 0.9583333333333334,
+        "HSSD5": 0.9615384615384616,
+        "HSSD6": 0.9882352941176471,
+        "HSSD7": 0.9055555555555556,
+        "HSSD8": 0.9322916666666666
+       },
+       "scene_mean": 0.9501093154972027,
+       "scene_ci95": [
+        0.9332892148714539,
+        0.9659030167918232
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.573103448275862,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.5797872340425532,
+        "HSSD2": 0.5833333333333334,
+        "HSSD3": 0.6166666666666667,
+        "HSSD4": 0.59375,
+        "HSSD5": 0.5769230769230769,
+        "HSSD6": 0.5529411764705883,
+        "HSSD7": 0.5166666666666667,
+        "HSSD8": 0.5625
+       },
+       "scene_mean": 0.5728210192628607,
+       "scene_ci95": [
+        0.5526913650075416,
+        0.5908394607843137
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.7710344827586207,
+       "n": 1450,
+       "per_scene": {
+        "HSSD1": 0.7606382978723404,
+        "HSSD2": 0.8072916666666666,
+        "HSSD3": 0.8277777777777777,
+        "HSSD4": 0.6875,
+        "HSSD5": 0.8141025641025641,
+        "HSSD6": 0.8,
+        "HSSD7": 0.7611111111111111,
+        "HSSD8": 0.7239583333333334
+       },
+       "scene_mean": 0.7727974688579742,
+       "scene_ci95": [
+        0.7400119801611657,
+        0.8025106837606837
+       ]
+      }
+     },
+     "novel": {
+      "LoRA, walk": {
+       "pooled": 0.8989071038251366,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.8676470588235294,
+        "HSSD2": 0.8867924528301887,
+        "HSSD3": 0.8947368421052632,
+        "HSSD4": 0.868421052631579,
+        "HSSD5": 0.9722222222222222,
+        "HSSD6": 1.0,
+        "HSSD7": 0.8727272727272727,
+        "HSSD8": 0.868421052631579
+       },
+       "scene_mean": 0.9038709942464542,
+       "scene_ci95": [
+        0.8737668871376302,
+        0.9401444788441692
+       ]
+      },
+      "LoRA, no walk": {
+       "pooled": 0.5737704918032787,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.5588235294117647,
+        "HSSD2": 0.5849056603773585,
+        "HSSD3": 0.631578947368421,
+        "HSSD4": 0.631578947368421,
+        "HSSD5": 0.4722222222222222,
+        "HSSD6": 0.575,
+        "HSSD7": 0.5636363636363636,
+        "HSSD8": 0.5789473684210527
+       },
+       "scene_mean": 0.5745866298507004,
+       "scene_ci95": [
+        0.5394851237416515,
+        0.6040940687911889
+       ]
+      },
+      "LoRA, shuffled": {
+       "pooled": 0.7349726775956285,
+       "n": 366,
+       "per_scene": {
+        "HSSD1": 0.6617647058823529,
+        "HSSD2": 0.7735849056603774,
+        "HSSD3": 0.8157894736842105,
+        "HSSD4": 0.6842105263157895,
+        "HSSD5": 0.8333333333333334,
+        "HSSD6": 0.75,
+        "HSSD7": 0.6909090909090909,
+        "HSSD8": 0.7368421052631579
+       },
+       "scene_mean": 0.7433042676310391,
+       "scene_ci95": [
+        0.7040048462566845,
+        0.7850354337817098
+       ]
+      }
+     }
+    },
+    "contrasts": {
+     "all": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.346896551724138,
+       "better": 538,
+       "worse": 35,
+       "sign_p": 7.958185065769928e-117,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.318118948824343,
+        0.3755130664594298
+       ],
+       "scene_mean": 0.34671299694864305,
+       "scene_ci95": [
+        0.31457538977257227,
+        0.38048524698340874
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.35106382978723405,
+        "HSSD2": 0.34895833333333337,
+        "HSSD3": 0.33333333333333326,
+        "HSSD4": 0.36979166666666674,
+        "HSSD5": 0.3141025641025641,
+        "HSSD6": 0.4411764705882353,
+        "HSSD7": 0.26111111111111107,
+        "HSSD8": 0.35416666666666663
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.37655172413793114,
+       "better": 582,
+       "worse": 36,
+       "sign_p": 5.568162813141175e-128,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.3473756906077348,
+        0.40525587828492393
+       ],
+       "scene_mean": 0.37728829623434207,
+       "scene_ci95": [
+        0.359374076536643,
+        0.39729311997234795
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.3563829787234043,
+        "HSSD2": 0.38541666666666663,
+        "HSSD3": 0.33333333333333326,
+        "HSSD4": 0.36458333333333337,
+        "HSSD5": 0.3846153846153847,
+        "HSSD6": 0.43529411764705883,
+        "HSSD7": 0.38888888888888884,
+        "HSSD8": 0.36979166666666663
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.17862068965517242,
+       "better": 291,
+       "worse": 32,
+       "sign_p": 2.0096856624952207e-53,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.15521978021978022,
+        0.2026098901098901
+       ],
+       "scene_mean": 0.17731184663922855,
+       "scene_ci95": [
+        0.15001512223479138,
+        0.20992764894419308
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.17553191489361708,
+        "HSSD2": 0.16145833333333337,
+        "HSSD3": 0.12222222222222223,
+        "HSSD4": 0.27083333333333337,
+        "HSSD5": 0.14743589743589747,
+        "HSSD6": 0.18823529411764706,
+        "HSSD7": 0.1444444444444445,
+        "HSSD8": 0.20833333333333326
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.07241379310344831,
+       "better": 162,
+       "worse": 57,
+       "sign_p": 7.554853454263793e-13,
+       "n": 1450,
+       "walk_clustered_ci95": [
+        0.05138841324200913,
+        0.09353507565337002
+       ],
+       "scene_mean": 0.07109820853123028,
+       "scene_ci95": [
+        0.05051101370035194,
+        0.09112470231887082
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.11702127659574468,
+        "HSSD2": 0.09375,
+        "HSSD3": 0.05555555555555547,
+        "HSSD4": 0.09895833333333337,
+        "HSSD5": 0.02564102564102566,
+        "HSSD6": 0.07647058823529418,
+        "HSSD7": 0.03888888888888886,
+        "HSSD8": 0.0625
+       }
+      }
+     },
+     "novel": {
+      "LoRA walk vs base walk": {
+       "pooled_difference": 0.34426229508196726,
+       "better": 141,
+       "worse": 15,
+       "sign_p": 7.361303006079907e-27,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.2845517004465819,
+        0.40583750463477936
+       ],
+       "scene_mean": 0.3417648430682194,
+       "scene_ci95": [
+        0.2712489843820529,
+        0.4144736842105263
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.5,
+        "HSSD2": 0.24528301886792458,
+        "HSSD3": 0.2894736842105263,
+        "HSSD4": 0.3421052631578948,
+        "HSSD5": 0.33333333333333337,
+        "HSSD6": 0.5,
+        "HSSD7": 0.18181818181818177,
+        "HSSD8": 0.3421052631578948
+       }
+      },
+      "LoRA walk vs no walk": {
+       "pooled_difference": 0.32513661202185795,
+       "better": 134,
+       "worse": 15,
+       "sign_p": 4.602915028104199e-25,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.26922804532577904,
+        0.381100508691551
+       ],
+       "scene_mean": 0.3292843643957538,
+       "scene_ci95": [
+        0.2786115175058017,
+        0.3920568885448916
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.3088235294117647,
+        "HSSD2": 0.30188679245283023,
+        "HSSD3": 0.26315789473684215,
+        "HSSD4": 0.23684210526315796,
+        "HSSD5": 0.5,
+        "HSSD6": 0.42500000000000004,
+        "HSSD7": 0.3090909090909091,
+        "HSSD8": 0.2894736842105263
+       }
+      },
+      "LoRA walk vs shuffled": {
+       "pooled_difference": 0.16393442622950816,
+       "better": 74,
+       "worse": 14,
+       "sign_p": 5.0891941127085865e-11,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.11678638502197525,
+        0.2117671984047856
+       ],
+       "scene_mean": 0.1605667266154152,
+       "scene_ci95": [
+        0.12621705667649682,
+        0.19645189407953
+       ],
+       "scenes_up": 8,
+       "scenes_down": 0,
+       "scene_sign_p": 0.0078125,
+       "per_scene": {
+        "HSSD1": 0.20588235294117652,
+        "HSSD2": 0.1132075471698113,
+        "HSSD3": 0.07894736842105265,
+        "HSSD4": 0.1842105263157895,
+        "HSSD5": 0.13888888888888884,
+        "HSSD6": 0.25,
+        "HSSD7": 0.18181818181818177,
+        "HSSD8": 0.13157894736842113
+       }
+      },
+      "LoRA walk vs Opus walk": {
+       "pooled_difference": 0.06557377049180324,
+       "better": 51,
+       "worse": 27,
+       "sign_p": 0.008771714457060136,
+       "n": 366,
+       "walk_clustered_ci95": [
+        0.016216216216216217,
+        0.11559139784946236
+       ],
+       "scene_mean": 0.06191778613283959,
+       "scene_ci95": [
+        0.0286967239425035,
+        0.09850410161770164
+       ],
+       "scenes_up": 7,
+       "scenes_down": 1,
+       "scene_sign_p": 0.0703125,
+       "per_scene": {
+        "HSSD1": 0.16176470588235292,
+        "HSSD2": -0.018867924528301883,
+        "HSSD3": 0.02631578947368418,
+        "HSSD4": 0.07894736842105265,
+        "HSSD5": 0.05555555555555558,
+        "HSSD6": 0.050000000000000044,
+        "HSSD7": 0.036363636363636376,
+        "HSSD8": 0.10526315789473684
+       }
+      }
+     }
+    }
    }
   },
   "three_seeds": {
@@ -3038,6 +7597,278 @@
      "mean": -0.0612656474248492,
      "min": -0.17932819380498133,
      "max": 0.02185060894298438
+    }
+   }
+  },
+  "four_epoch_runs": {
+   "all": {
+    "LoRA, walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.9386754936392179,
+      0.948566835012783,
+      0.9437386134043089,
+      0.9438428979065713,
+      0.9501093154972027
+     ],
+     "mean": 0.9449866310920167,
+     "min": 0.9386754936392179,
+     "max": 0.9501093154972027
+    },
+    "LoRA, no walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.5531341510622252,
+      0.5703666751240867,
+      0.5284580527007585,
+      0.5571101162778259,
+      0.5728210192628607
+     ],
+     "mean": 0.5563780028855513,
+     "min": 0.5284580527007585,
+     "max": 0.5728210192628607
+    },
+    "LoRA, shuffled": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.6574325261678594,
+      0.6187126686804019,
+      0.5421535240698843,
+      0.7036025141269001,
+      0.7727974688579742
+     ],
+     "mean": 0.6589397403806039,
+     "min": 0.5421535240698843,
+     "max": 0.7727974688579742
+    },
+    "LoRA walk vs base walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.3352791750906582,
+      0.3451705164642234,
+      0.3403422948557492,
+      0.3404465793580116,
+      0.34671299694864305
+     ],
+     "mean": 0.3415903125434571,
+     "min": 0.3352791750906582,
+     "max": 0.34671299694864305
+    },
+    "LoRA walk vs no walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.38554134257699263,
+      0.3782001598886964,
+      0.41528056070355035,
+      0.3867327816287453,
+      0.37728829623434207
+     ],
+     "mean": 0.38860862820646536,
+     "min": 0.37728829623434207,
+     "max": 0.41528056070355035
+    },
+    "LoRA walk vs shuffled": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.28124296747135846,
+      0.3298541663323813,
+      0.4015850893344245,
+      0.24024038377967116,
+      0.17731184663922855
+     ],
+     "mean": 0.28604689071141276,
+     "min": 0.17731184663922855,
+     "max": 0.4015850893344245
+    },
+    "LoRA walk vs Opus walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.05966438667324542,
+      0.06955572804681064,
+      0.06472750643833639,
+      0.06483179094059881,
+      0.07109820853123028
+     ],
+     "mean": 0.06597552412604431,
+     "min": 0.05966438667324542,
+     "max": 0.07109820853123028
+    }
+   },
+   "novel": {
+    "LoRA, walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.8872939188013083,
+      0.8953735947299386,
+      0.9048877738480665,
+      0.8892416483309644,
+      0.9038709942464542
+     ],
+     "mean": 0.8961335859913465,
+     "min": 0.8872939188013083,
+     "max": 0.9048877738480665
+    },
+    "LoRA, no walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.5654733174227231,
+      0.5831521539508645,
+      0.5337964720810535,
+      0.5613214719925466,
+      0.5745866298507004
+     ],
+     "mean": 0.5636660090595778,
+     "min": 0.5337964720810535,
+     "max": 0.5831521539508645
+    },
+    "LoRA, shuffled": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.6621917595842767,
+      0.6259087475756455,
+      0.5222033573216834,
+      0.6704492092193622,
+      0.7433042676310391
+     ],
+     "mean": 0.6448114682664015,
+     "min": 0.5222033573216834,
+     "max": 0.7433042676310391
+    },
+    "LoRA walk vs base walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.32518776762307344,
+      0.33326744355170373,
+      0.3427816226698317,
+      0.3271354971527295,
+      0.3417648430682194
+     ],
+     "mean": 0.33402743481311153,
+     "min": 0.32518776762307344,
+     "max": 0.3427816226698317
+    },
+    "LoRA walk vs no walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.32182060137858515,
+      0.3122214407790741,
+      0.371091301767013,
+      0.3279201763384178,
+      0.3292843643957538
+     ],
+     "mean": 0.33246757693176876,
+     "min": 0.3122214407790741,
+     "max": 0.371091301767013
+    },
+    "LoRA walk vs shuffled": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.22510215921703158,
+      0.26946484715429314,
+      0.3826844165263831,
+      0.218792439111602,
+      0.1605667266154152
+     ],
+     "mean": 0.251322117724945,
+     "min": 0.1605667266154152,
+     "max": 0.3826844165263831
+    },
+    "LoRA walk vs Opus walk": {
+     "seeds": [
+      3,
+      4,
+      5,
+      6,
+      7
+     ],
+     "values": [
+      0.045340710687693575,
+      0.05342038661632388,
+      0.06293456573445182,
+      0.047288440217349625,
+      0.06191778613283959
+     ],
+     "mean": 0.0541803778777317,
+     "min": 0.045340710687693575,
+     "max": 0.06293456573445182
     }
    }
   }

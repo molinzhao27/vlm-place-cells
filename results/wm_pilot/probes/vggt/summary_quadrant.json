@@ -1,0 +1,62 @@
+{
+ "_about": {
+  "split": "*_quadrant keys use four 90-degree facing sectors centred on E, N, W, S (heading_matrix) and compare only opposite sectors (N vs S, E vs W); the other keys are recomputed here (on CPU) as in summary.json, with heading invariance and decoding on 180-degree halves",
+  "stability": "place_inv_quadrant_over_stab_median divides by the same split-half stability as summary.json: even vs odd walks, all headings",
+  "decoding": "decode_cross_quadrant / decode_within_quadrant: ridge trained on one sector (even walks), tested on the opposite / same sector (odd walks), mean over the 4 sectors",
+  "chance": "decode_cross_heading_chance / decode_cross_quadrant_chance: median error of predicting the training half's / sector's mean position on the opposite one; decode_chance as in summary.json"
+ },
+ "vggt-single-probes256": {
+  "L19": {
+   "n_neurons": 4096,
+   "n_poles_active": 4163,
+   "frac_place": 0.44775402545928955,
+   "frac_grid": 0.00024021138960961252,
+   "frac_hd": 0.9990391731262207,
+   "grid_threshold": 0.07543978840112686,
+   "place_stability_median": 0.975895345211029,
+   "place_heading_inv_median": 0.5712034106254578,
+   "place_inv_over_stab_median": 0.5883463025093079,
+   "all_stable_heading_inv_median": 0.39349234104156494,
+   "frac_place_heading_invariant": 0.2402113825082779,
+   "max_gridness": 0.19711124897003174,
+   "place_heading_inv_quadrant_median": 0.16267548501491547,
+   "place_inv_quadrant_over_stab_median": 0.16806776821613312,
+   "all_stable_heading_inv_quadrant_median": -0.06589226424694061,
+   "frac_place_heading_invariant_quadrant": 0.16430458426475525,
+   "decode_all": 0.1442544162273407,
+   "decode_within_heading": 0.13284958340227604,
+   "decode_cross_heading": 1.2741335034370422,
+   "decode_chance": 3.6754837036132812,
+   "decode_cross_heading_chance": 3.6734055280685425,
+   "decode_within_quadrant": 0.11557638458907604,
+   "decode_cross_quadrant": 4.189320385456085,
+   "decode_cross_quadrant_chance": 3.6781829595565796
+  },
+  "L21": {
+   "n_neurons": 4096,
+   "n_poles_active": 4158,
+   "frac_place": 0.8299663066864014,
+   "frac_grid": 0.0002405002451268956,
+   "frac_hd": 0.9995189905166626,
+   "grid_threshold": 0.19919414818286896,
+   "place_stability_median": 0.9481751322746277,
+   "place_heading_inv_median": 0.570708155632019,
+   "place_inv_over_stab_median": 0.6094447374343872,
+   "all_stable_heading_inv_median": 0.533711314201355,
+   "frac_place_heading_invariant": 0.48051947355270386,
+   "max_gridness": 0.7027209401130676,
+   "place_heading_inv_quadrant_median": 0.3036906123161316,
+   "place_inv_quadrant_over_stab_median": 0.32832059264183044,
+   "all_stable_heading_inv_quadrant_median": 0.2449338734149933,
+   "frac_place_heading_invariant_quadrant": 0.27368927001953125,
+   "decode_all": 0.12898346781730652,
+   "decode_within_heading": 0.10987728461623192,
+   "decode_cross_heading": 1.524529680609703,
+   "decode_chance": 3.6754837036132812,
+   "decode_cross_heading_chance": 3.6734055280685425,
+   "decode_within_quadrant": 0.09857845865190029,
+   "decode_cross_quadrant": 7.081758916378021,
+   "decode_cross_quadrant_chance": 3.6781829595565796
+  }
+ }
+}

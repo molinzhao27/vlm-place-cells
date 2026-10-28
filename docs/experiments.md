@@ -4787,12 +4787,19 @@ claim that fits all of this: single views are coded by what they show in every m
 population also carries the walk's recent views, which carry position across headings in every model, trained or not.
 Choosing the wording is left to the supervisor and the user.
 
-**Still running or queued (PDT).**
-- vast1:62 (`e25_gain`, the P4 add-on, started 13:11, expected to end about 18:00): experiment 21's gain index and its
-  amendment-1 axis shares (`share_min6`) on the conditions vast1:58 did not cover, saved per tag to
-  `/workspace/MechInterp/exp25/results/heading_stat_validation_addon.json` on vast-1. Merge with
-  `.venv-mac/bin/python scripts/population_assay.py merge-gain --from <fetched file>` (adds only tags and layers not
-  yet in `results/heading_stat_validation.json`).
+**The P4 add-on (done 16:54 PDT).** vast1:62 (`e25_gain`, 13:11-16:54 PDT, rc 0) scored experiment 21's gain index
+and its amendment-1 axis shares on every condition vast1:58 did not cover. That is 27 tags and 173 layers, run with the
+same `heading_stat_validation.py` as vast1:58 (md5 `6591e604...`; its scoring code is identical to the Mac's current
+file) and the committed `analyze.py`. Every layer reproduces `frac_place` and the mean-of-two fraction in
+`summary_quadrant.json` exactly. All 173 layers were merged into `results/heading_stat_validation.json` under
+`real_units` (`population_assay.py merge-gain`). No existing entry changed; the only other addition is the note
+`runtime_s.exp25_addon_merge`. Each layer's `axis` entry holds `share_min6` (the all-six-pairs share), `share_both` and `share_mean2`.
+Best-layer all-six-pairs shares: single frames 0-1% (pixels 0, DINOv2 0.9%, Qwen3-VL-2B 0.1%, SenseNova 0, Qwen3.8-27B
+0.02%, 32B 0.01%, VGGT alone 0.4%); walks Qwen3.8-27B 16%, Qwen3-VL-32B 29%, SenseNova 5.8%, VGGT-walk at block 15 16%
+(blocks 19 and 21 are in vast1:58's `axis_check`); Qwen3-VL-2B shuffled 4.0%; 8-step moving averages 83-88%; the
+moving-average sweep for pixels 24% / 71% / 99% / 100% and for Qwen3-VL-2B 11% / 52% / 95% / 98% at 2 / 4 / 16 / 32 steps.
+
+**Queued (PDT).**
 - vast3:336 (`e25_e4`, CPU, after vast3:305, projected Sat 18:12 to about Sun 01:00): the four-epoch runs and run 0's
   re-record (`qwen8b-ft-rerun`), walk, single, single+ema8 and probes, into
   `/workspace/MechInterp/exp25/results/population_assay_e4.json` on vast-3. Then fetch that file (check its md5) and

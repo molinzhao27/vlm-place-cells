@@ -4565,7 +4565,7 @@ directory, `/workspace/MechInterp/exp25`, which holds copies of the committed `a
 the result JSON comes back. The four-epoch part runs on vast-3 as a CPU job after vast3:305. Outputs:
 `results/population_assay.json` (top-level `summary` with the paper's values) and this entry's results section.
 
-## Experiment 26 (pre-registered 2026-10-28 10:15 PDT, before any walk-relative readout was fit): is the new view's position coded in the walk's own coordinates?
+## Experiment 26 (pre-registered 2026-10-28 10:10 PDT, before any walk-relative readout was fit): is the new view's position coded in the walk's own coordinates?
 
 **Why.** Experiment 14a read the residual stream of the base Qwen3-VL-8B and of run 0 (the original two-epoch
 LoRA) while each did the two-choice task, and found no cross-room code for the new view's position: the best R^2
@@ -4675,6 +4675,124 @@ cell with both splits, both readouts and all 13 targets takes about 3 s). Code: 
 top-level `summary`. Its keys are `summary.models.<model>.<target>.best_r2`, `best_r2_at`, `best_median_m` (or
 `_deg`), `chance_median_m` (or `_deg`), `shuf_r2_at_best`, `margin_at_best` and `verdict`, together with
 `summary.verdict_first_xy`, `verdict_last_xy` and `verdict_first_heading`.
+
+## Experiment 27 (pre-registered 2026-10-28 10:11 PDT, before any new patch was run): is VGGT's causal subspace about position, or about where the camera token varies?
+
+**Why.** In experiments 4 and 8, writing a donor frame's component in the 10-d position subspace (position PCA
+10) into a target frame moves VGGT's predicted camera 0.85 of the way to the donor at global block 21, and 0.40
+at block 19 (`vggt_patch.py`; experiment 23 reproduced both on the RTX 4070). Experiment 13c's controls (exact
+complement 0.00, random erasure without effect, fixed alignment identical, heading-matched donors 0.80) and
+experiment 14d's cross-room transfer (0.87) all use the same subspace. The interpretability and vision
+reviewers of round R2a (`writeup/paper/kit/paperscorer/rounds/R2a/`) object that position PCA 10 holds about
+93% of the target-donor difference (median share 0.926 at block 19 and 0.935 at block 21). Writing it is then
+close to writing the whole token, which transfers 0.41 and 0.87. Any 10-d subspace holding that much of the
+difference might move the camera as far, in which case the result does not show that position in particular
+lives there. They ask for three things: (a) ordinary token PCA, at matched rank and at matched share of the
+difference; (b) the remaining distance to the donor and the error perpendicular to the target-donor line, not
+only the fraction moved; and (c) position fits on heading-balanced frames, because position-bin means need not
+remove heading. The user approved this on 2026-10-28 as P11.
+
+**Setup (unchanged from `vggt_patch.py` and experiment 23).** VGGT-1B runs in single mode (the 8 anchors of
+room A plus one walk frame). The intervention point is the residual stream at the walk frame's camera token,
+right after global block g (g = 19 and 21). The frames come from the same `default_rng(0)` draw: 2,048 fit frames
+from even walks, 128 targets from odd walks, and for each target one donor more than 3 m away. A condition
+writes the donor's component in a subspace Q into the target's run, h_t + QQᵀ(h_d − h_t). The camera head's
+prediction is read in room coordinates through each run's own similarity fit on the anchors. The runs use the
+RTX 4070 through gq, at batch 2 with bf16 autocast, as before.
+
+**Subspaces, at each block.** All are fit without the frame pair being patched, except the oracle.
+- *Position PCA k* (the existing subspace): the top k principal directions of the mean residual per 1 m position
+  bin (bins with at least 5 frames) over the 2,048 fit frames. k = 10, plus k = 2, 4 and 20 as a short sweep.
+- *Ordinary PCA k*: the top k principal directions of the same 2,048 residuals (centered), fit with no labels.
+  k = 2, 4, 10 and 20.
+- *Random 10*: the existing control (QR of a Gaussian matrix, CUDA generator seeded with g).
+- *Difference PCA*: the top principal directions (uncentered) of the target-donor difference vectors
+  h_d − h_t themselves. No position coordinate enters the fit. The pairs are the test pairs, chosen by the
+  distance rule, as for every condition. The fit is cross-fitted: the 128 pairs are split into 8 folds of 16
+  (seed 1), and each pair is patched with the subspace fit on the other 112 pairs' differences.
+- *Oracle difference PCA 10* (descriptive): the same fit on all 128 pairs, including the pair being patched.
+  No 10-d subspace holds more of these differences, so it bounds what share alone can buy.
+- *Share matching.* For ordinary PCA and for difference PCA, k_match is the smallest k from 1 to 30 whose median
+  share of the 128 test differences reaches position PCA 10's median share at that block. If none does, k_match
+  is 30, and the report says so. The *difference-matched control* is difference PCA at k_d = max(10, k_match).
+  It has 10 dimensions unless 10 hold less of the difference than position PCA 10 does, so it holds at least as
+  much of the difference, in at least as many dimensions. Ordinary PCA at k_match is also run when that k is not
+  already in the sweep.
+- *Position PCA 10, heading-balanced*: all 6,144 even-walk frames are recorded (the 2,048 fit frames are among
+  them). In each 1 m bin, the same number of frames is drawn from each 90° sector of true heading (seed 2). The
+  sectors start at 0, as in experiment 13c, and the number drawn is the smallest sector's count. Bins with fewer
+  than 2 frames in any sector are dropped. Position PCA 10 is then fit on the bin means of this balanced set. To
+  separate balance from the larger number of frames, position PCA 10 is also fit on all 6,144 even frames without
+  balancing.
+- *Full token*: the ceiling, as before.
+
+For each subspace the report gives three numbers: its median share of the test differences, the fraction of the
+fit frames' variance it holds, and its overlap with position PCA 10 (the mean squared cosine of the principal
+angles).
+
+**Measures, per pair.** Let p_t and p_d be the clean target's and donor's predicted (x, y), p the patched
+prediction, m = p − p_t, and gap = p_d − p_t.
+- *Transfer*, m·gap / |gap|², as before: 0 means no effect, 1 means the target is placed where the donor was.
+- *Remaining distance to the donor*, |p − p_d|, in meters. The clean distance has a median of 5.3 m.
+- *Perpendicular error*, |m − transfer · gap|, in meters: how far the patched prediction lies off the line
+  through p_t and p_d.
+- *Distance moved* |m| and *error to the true position*, in meters, as before.
+- *Heading change*: the absolute difference between the patched and the clean predicted heading, in degrees.
+- *Heading gap closed*, on pairs whose clean predicted headings differ by at least 30°:
+  1 − |θ − θ_d| / |θ_t − θ_d|, with angles wrapped. 1 means the patched heading is the donor's, and 0 means it
+  is no closer.
+
+The summaries are the mean transfer, the mean heading gap closed, and the medians of the meter and degree
+measures. The 95% intervals are percentile bootstrap intervals over the 128 pairs (10,000 resamples, seed 0).
+Differences between conditions are paired, computed on the same resampled pairs.
+
+**Reproduction check.** Before any comparison is read, position PCA 10 must reproduce the stored 4070 run on these
+pairs. Its median share must lie within 0.02 of 0.926 (block 19) and 0.935 (block 21), and its transfer within
+0.05 of 0.400 and 0.854. The 2,048 recorded fit residuals are also compared with experiment 23's recording
+(median relative difference, descriptive). If the check fails, nothing is reported until the cause is found.
+
+**Decision rule.** The rule is applied at each block separately. Block 21, the source of the paper's 0.85, is
+primary. T is the mean transfer, D_ord = T(position PCA 10) − T(ordinary PCA 10), and
+D_diff = T(position PCA 10) − T(difference-matched control), each with its paired 95% interval. The 0.2 margin is
+the same at both blocks (at block 19 it is half of position PCA 10's transfer).
+- *Position-specific*: D_ord ≥ 0.2 and D_diff ≥ 0.2, and both intervals lie above 0.
+- *Not the token's main variance, but not specific to position*: D_ord ≥ 0.2 with its interval above 0, while
+  D_diff < 0.2 or its interval reaches 0.
+- *Generic*: D_ord < 0.2, or its interval reaches 0. The token's ten directions of largest variance then move the
+  camera to within 0.2 of what the position subspace does.
+
+**What each outcome would mean for the paper.**
+- *Position-specific*: the directions that position picks out move the camera more than generic directions holding
+  as much of the difference. The "93%" objection is answered, and the paper keeps "a 10-d position subspace",
+  together with whatever the heading measures add.
+- *Not the token's main variance*: the camera moves with whatever subspace holds most of the difference between the
+  two frames' camera tokens. Position labels are one way to find that subspace, but the differences themselves find
+  it as well. The paper narrows the claim to "the 10-d subspace that holds most of the difference between two
+  frames' camera tokens moves the predicted camera; position bins find it."
+- *Generic*: the camera token's main variation is the pose code, and position labels are not needed to find it.
+  The paper narrows the claim to "a 10-d subspace carrying most of the frame-to-frame variance moves pose," and says
+  so plainly.
+
+In every case the meters and the perpendicular error show whether a subspace moves the prediction along the line to
+the donor or scatters it, and the heading measures show whether the subspace carries heading as well.
+
+**Heading-balanced fits** (secondary, read beside the rule). The heading-balanced position PCA 10 is compared with
+position PCA 10 fit on the same 6,144 frames without balancing, using paired differences with intervals.
+- If its transfer is within 0.1 of the unbalanced fit's, heading that leaks into the position-bin means is not what
+  makes the subspace move position.
+- If it closes at least 0.2 less of the heading gap (interval above 0), part of the subspace's heading content came
+  from that leak. Otherwise heading moves with position even after balancing, and the paper should call the
+  subspace a pose subspace rather than a position subspace.
+
+The balance itself is checked through the median length, per bin, of the mean heading vector (cos θ, sin θ), for the
+balanced and the unbalanced sets.
+
+**Code and files.** `scripts/vggt_subspace_controls.py` has two parts:
+- `run` (the 4070 through gq, about 3.5 h): recording, the reproduction check and every patch. Per-pair predictions
+  and residuals go to `data/subspace_controls/` (on `/mnt/bigd` on the PC).
+- `analyze`: bootstrap intervals, the rule, and `results/vggt_subspace_controls.json` with a top-level `summary`.
+
+A smoke run (a few pairs and frames) checks the code path first. Cost: none.
 
 ## Prior work this builds on
 

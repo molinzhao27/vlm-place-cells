@@ -4007,6 +4007,26 @@ RNN rows), `axis_check.real[<tag>][<layer or mode>].axis` (the three shares, pla
 `axis_check.synthetic["rho=0.5"].window` (synthetic shares). Script `scripts/heading_stat_validation.py
 --axis-check`.
 
+**Status, the four-epoch runs (2026-10-28 13:16 PDT).** The user chose share (2) as the paper's lead
+measure, so the same scoring is queued for experiment 22's recordings. Job vast3:344 is a CPU job at
+priority 150, with `OMP_NUM_THREADS=6` and no pinning. It runs `--after 305`, experiment 22's unit
+recording, and is projected to start about Sat 18:17 PDT and take about 6 h, so it should finish around
+Sun 00:15 PDT. It scores the walk, single and single + 8-frame-average conditions of the four-epoch runs 3-7
+and of run 0's vast-3 re-record (`qwen8b-ft-rerun-*`), all 7 layers each, from the same
+`data/acts/<model>-<mode>/` files that `e4_internals_units.sh` writes and `analyze.py --quadrant` scores.
+Its `frac_place` and mean-of-two fraction are checked against experiment 22's
+`results/e4_internals/summary_quadrant.json`.
+- *Output:* vast-3's `results/heading_axis_check_e4.json`, under `axis_check.real_e4[<tag>][<layer>].axis`.
+  It was seeded with this run's `axis_check.synthetic` and `real_reference`, so every layer also gets
+  `synthetic_a_min6_in_bin`.
+- *Fetch on the Mac:* `.venv-mac/bin/python scripts/heading_stat_validation.py --fetch-e4`. It copies only
+  that file (md5 checked) and adds `axis_check.real_e4`, `real_e4_about` and `real_e4_parity_run0` to
+  `results/heading_stat_validation.json`, leaving every existing key unchanged. The parity table compares
+  the vast-3 re-record of run 0 with this run's vast-1 run 0, layer by layer.
+- *Dependency:* `e4_internals_units.sh` exits non-zero if any of its steps fails, and gq then does not
+  start vast3:344. In that case, submit the same command without `--after`; a missing recording is
+  recorded as an error and skipped.
+
 ## Experiment 22 (pre-registered 2026-10-28 00:30 PDT, before any four-epoch run was recorded): the unit and task-readout analyses on the four-epoch runs
 
 **Why.** The paper's behavioral headline is the mean of the five four-epoch runs (experiment 9c, runs 3-7),
@@ -4998,6 +5018,157 @@ balanced and the unbalanced sets.
 - `analyze`: bootstrap intervals, the rule, and `results/vggt_subspace_controls.json` with a top-level `summary`.
 
 A smoke run (a few pairs and frames) checks the code path first. Cost: none.
+
+### Exp 27 results (2026-10-28 13:56 PDT)
+
+**Runs.** gq pc:618 was the smoke run (384 fit frames and 8 pairs, 10:14-10:31 PDT). gq pc:621 was the registered
+run (10:45-13:55 PDT). Both ran on the RTX 4070 at batch 2. The analysis ran at the end of the job, and again on
+the Mac from the copied per-pair file (md5 checked), with identical output.
+
+**The reproduction check passed exactly.**
+- Position PCA 10 holds a median 0.926 of the target-donor difference at block 19 and 0.935 at block 21. These
+  are torch's lower-middle medians, which is how the reference was computed; numpy's medians are 0.927 and 0.935.
+- It transfers 0.400 and 0.854, matching the stored values to every printed digit.
+- The 2,048 recorded fit residuals are bit-identical to experiment 23's.
+- The clean target error is 0.43 m. The clean target and donor predictions lie a median 5.32 m apart, with
+  headings 91° apart; 104 of the 128 pairs differ in heading by at least 30°.
+
+**The rule's verdict is "generic" at both blocks.** The camera token's ten directions of largest variance, fit with
+no labels, move the predicted camera as far as position PCA 10 does. So does the difference-matched control. The
+table gives the mean transfer with 95% intervals over the 128 pairs, and the median share of the target-donor
+difference.
+
+| subspace (10-d unless noted) | block 21 transfer | block 19 transfer | share, block 21 / 19 |
+|---|---|---|---|
+| position PCA 10 | 0.85 [0.82, 0.89] | 0.40 [0.36, 0.44] | 0.935 / 0.927 |
+| ordinary PCA 10 (no labels) | 0.86 [0.82, 0.89] | 0.41 [0.37, 0.45] | 0.944 / 0.941 |
+| difference PCA 10, cross-fitted (the difference-matched control) | 0.86 [0.83, 0.90] | 0.41 [0.37, 0.45] | 0.947 / 0.935 |
+| oracle difference PCA 10 (in-sample) | 0.87 [0.83, 0.90] | 0.41 [0.37, 0.45] | 0.956 / 0.951 |
+| full token (1,024-d) | 0.87 [0.84, 0.90] | 0.41 [0.37, 0.45] | 1 / 1 |
+| random 10 | 0.00 [-0.00, 0.00] | 0.00 [0.00, 0.00] | 0.011 / 0.008 |
+
+The paired differences are nowhere near the 0.2 margin:
+- Position PCA 10 minus ordinary PCA 10: −0.003 [−0.010, +0.004] at block 21 and −0.006 [−0.016, +0.002] at block
+  19.
+- Position PCA 10 minus the difference-matched control: −0.010 [−0.020, −0.002] and −0.008 [−0.018, +0.000]. At
+  block 21 the control moves the camera slightly further.
+
+Share matching needed no extra dimensions. Nine ordinary or difference directions already hold as much of the
+difference as position PCA 10 (k_match = 9 for both kinds, at both blocks). The difference-matched control is
+therefore the 10-d one, and ordinary PCA 9 transfers 0.86 and 0.40. The cross-fitted difference subspaces barely
+depend on the fold: their mean overlap with each other is 0.98 at block 21 and 0.95 at block 19.
+
+**Why: position PCA 10 is nearly the token's own top-variance subspace.**
+- At block 21 it holds 93.8% of the fit frames' variance. Ordinary PCA 10, which holds the most variance any 10-d
+  subspace can, holds 95.1%. At block 19 the figures are 92.3% and 94.1%.
+- Its overlap with ordinary PCA 10 is 0.85 at both blocks (the mean squared cosine of their principal angles). The
+  token's top two variance directions lie almost entirely inside it (overlap 0.99).
+- So at this point the walk frame's camera token varies in about ten dimensions, and those dimensions are the pose
+  code. Fitting to position bins finds the same subspace that PCA without labels finds.
+
+**Meters, and the error off the line.** Each subspace that holds most of the difference moves the prediction along
+the target-donor line rather than off it. Medians over pairs, with 95% intervals:
+
+| | block 21: left to the donor (m) | block 21: off the line (m) | block 19: left to the donor (m) | block 19: off the line (m) |
+|---|---|---|---|---|
+| position PCA 10 | 0.85 [0.77, 0.98] | 0.46 [0.36, 0.54] | 3.44 [3.00, 3.70] | 0.93 [0.80, 1.08] |
+| ordinary PCA 10 | 0.89 [0.79, 1.04] | 0.44 [0.29, 0.55] | 3.34 [3.02, 3.65] | 0.94 [0.82, 1.12] |
+| difference-matched control | 0.91 [0.74, 1.04] | 0.43 [0.35, 0.52] | 3.37 [2.98, 3.67] | 0.91 [0.79, 1.16] |
+| full token | 0.79 [0.72, 0.99] | 0.37 [0.26, 0.51] | 3.27 [3.03, 3.67] | 0.89 [0.73, 1.06] |
+| random 10 | 5.34 [4.83, 5.72] | 0.04 [0.03, 0.05] | 5.32 [4.85, 5.69] | 0.02 [0.01, 0.02] |
+
+At block 21, writing position PCA 10 takes the prediction from 5.32 m away to 0.85 m from the donor's predicted
+position, with half a meter of error off the line. That is 7 cm further than the full token leaves it
+(0.07 [0.04, 0.13] m, paired), and the error off the line does not differ (+0.02 [−0.01, +0.06] m). At block 19 the
+prediction moves 40% of the way and stops 3.4 m short. Its 0.9 m of error off the line is the full token's too, so it
+comes from writing at this block, not from the choice of subspace.
+
+**Heading moves with position.** Every 10-d subspace that moves position turns the predicted heading as much as the
+full token does:
+- At block 21, position PCA 10 turns the walk frame's predicted heading by a median 77° [63, 87]. It closes 0.86
+  [0.83, 0.89] of the heading gap to the donor (on the 104 pairs whose clean headings differ by at least 30°).
+  Ordinary PCA 10 closes 0.87, and the full token 0.88.
+- At block 19 the turn is 25° and 0.33 of the gap is closed, about as much as the 0.40 of the position gap.
+
+So the subspace carries pose, position and heading together, as experiment 13c's heading-matched donors suggested.
+
+**The rank sweep (descriptive).** Below ten dimensions, the labels change what moves more than how far it moves.
+
+| | share | transfer (position) | heading gap closed | heading change |
+|---|---|---|---|---|
+| block 21, position PCA 2 | 0.22 | 0.18 [0.15, 0.22] | 0.05 [0.01, 0.09] | 8° |
+| block 21, ordinary PCA 2 | 0.56 | 0.28 [0.20, 0.36] | 0.78 [0.73, 0.82] | 71° |
+| block 21, position PCA 4 | 0.63 | 0.44 [0.36, 0.51] | 0.68 [0.62, 0.73] | 56° |
+| block 21, ordinary PCA 4 | 0.78 | 0.66 [0.62, 0.69] | 0.82 [0.78, 0.86] | 74° |
+| block 21, position / ordinary PCA 20 | 0.97 / 0.98 | 0.86 / 0.87 | 0.87 / 0.88 | 78° / 78° |
+| block 19, position PCA 2 | 0.28 | 0.18 [0.15, 0.20] | −0.00 [−0.02, 0.01] | 2° |
+| block 19, ordinary PCA 2 | 0.44 | 0.03 [−0.01, 0.07] | 0.27 [0.22, 0.32] | 21° |
+| block 19, position PCA 4 | 0.63 | 0.19 [0.15, 0.22] | 0.10 [0.06, 0.13] | 10° |
+| block 19, ordinary PCA 4 | 0.75 | 0.25 [0.20, 0.29] | 0.28 [0.23, 0.33] | 22° |
+
+- The token's top two variance directions are mostly heading. At block 21 they close 0.78 of the heading gap but
+  only 0.28 of the position gap; at block 19 they move position not at all (0.03).
+- Position PCA 2 is nearly a pure position piece. It moves position 0.18 of the way at both blocks while turning
+  the heading by 2-8° and closing at most 0.05 of the heading gap.
+- From about nine dimensions on, every kind of subspace holds about 94% of the difference and does what the full
+  token does. Twenty dimensions add nothing (0.86-0.87 at block 21, 0.40-0.41 at block 19).
+
+**Heading-balanced fits (secondary).** The balancing worked as intended. In each of 94 bins, equal numbers of
+frames were drawn from each 90° sector: 3,952 of the 6,144 even-walk frames, 988 per sector. The median length of
+the mean heading vector per bin fell from 0.24 (the standard 2,048 fit frames) and 0.18 (all 6,144) to 0.08. It
+does not reach 0 because headings within a 90° sector are not uniform.
+
+| position PCA 10 fit on | block 21 transfer | block 21 heading gap closed | block 21 share | block 19 transfer | block 19 heading gap closed | block 19 share |
+|---|---|---|---|---|---|---|
+| the 2,048 fit frames (standard) | 0.85 [0.82, 0.89] | 0.86 [0.83, 0.89] | 0.935 | 0.40 [0.36, 0.44] | 0.33 [0.28, 0.38] | 0.927 |
+| all 6,144 even-walk frames | 0.86 [0.83, 0.89] | 0.86 [0.82, 0.89] | 0.933 | 0.40 [0.36, 0.44] | 0.33 [0.29, 0.38] | 0.919 |
+| heading-balanced frames | 0.81 [0.78, 0.85] | 0.82 [0.79, 0.85] | 0.883 | 0.31 [0.28, 0.35] | 0.30 [0.26, 0.34] | 0.865 |
+
+- *Transfer.* Balanced minus unbalanced, on the same frames: −0.045 [−0.063, −0.028] at block 21 and
+  −0.086 [−0.106, −0.067] at block 19. Both point estimates are within the registered 0.1, though at block 19 the
+  interval reaches 0.106. So heading that leaks into the position-bin means is not what makes the subspace move
+  position.
+- *Heading.* The balanced fit closes 0.035 [0.019, 0.050] less of the heading gap at block 21 and
+  0.036 [0.022, 0.051] less at block 19, far below the 0.2 that the registration set for a leak. It still turns the
+  heading by 73° at block 21 (against 78°) and by 20° at block 19 (against 24°). Heading moves with position even
+  after balancing, so by the registered reading the subspace is a pose subspace.
+- *What balancing does lose is share.* The balanced subspace holds about 5 points less of the target-donor
+  difference (0.883 against 0.933, and 0.865 against 0.919), and it overlaps the unbalanced fit 0.86-0.87. Its
+  transfer falls in step with that share, as every other subspace's does here.
+- *The extra frames alone change nothing.* The standard fit minus the all-frames fit gives −0.003 [−0.014, +0.004] at
+  block 21 and −0.000 [−0.006, +0.007] at block 19.
+
+**What it means for the paper.** By the registered rule, the claim narrows. The camera token at the walk frame
+varies in about ten dimensions, which hold 95% of its variance at block 21. Writing a donor frame's component in
+that subspace moves VGGT's predicted camera 0.85-0.87 of the way to the donor at block 21 and 0.40-0.41 at block 19,
+along the line between them, and turns its heading as well. It does not matter whether the subspace is found from
+position bins, by plain PCA or from the frame differences themselves.
+
+The reviewers' "93%" objection is correct: position PCA 10 behaves like the whole token because it holds nearly all
+of the token's variation. Three things survive:
+- the pose code that VGGT's camera head uses is low-dimensional. Ten of 1,024 dimensions carry everything the full
+  token carries, a random 10-d subspace carries nothing, and the exact complement carries nothing either
+  (experiment 13c);
+- it is a code for pose, position and heading together, not for position alone;
+- only at low rank do position labels pick out directions that move position without heading (position PCA 2:
+  0.18 of the position gap against 0.05 of the heading gap at block 21).
+
+A sentence the paper could use: "Writing a donor frame's camera token into a target, restricted to any 10-d
+subspace that holds most of the token's frame-to-frame variation (position-bin PCA, plain PCA, or PCA of the
+target-donor differences), moves VGGT's predicted camera 85-87% of the way to the donor at block 21, along the line
+between them, and turns its heading with it; a random 10-d subspace moves nothing. The subspace is VGGT's
+low-dimensional pose code, which position labels are not needed to find."
+
+**Files.**
+- `scripts/vggt_subspace_controls.py`.
+- `results/vggt_subspace_controls.json`. Its `summary` holds `verdict` (block 21) and `verdict_block19`;
+  `reproduction`; `clean`; `heading_balance_check`; and `block21` / `block19`. Each block entry has its verdict, the
+  two paired differences with their intervals, `k_match_*`, the `difference_matched_key`, `heading_balanced`, and
+  `conditions`, one entry per subspace with dims, share, variance fraction, overlap and every measure with its
+  interval. Per-pair differences against position PCA 10 for every subspace are under `blocks.<g>.position_pca10_minus`.
+- Gitignored: `data/subspace_controls/` (`raw.npz`, `raw.json` and the smoke run). The PC also keeps `resid.npz`,
+  the residuals of all 6,144 even-walk frames and the 256 test frames at blocks 19 and 21, in
+  `/mnt/bigd/mechinterp/subspace_controls`.
 
 ## Experiment 28 (pre-registered 2026-10-28 10:12 PDT, before any matcher was trained or scored): a learned sequence matcher on the same trials
 

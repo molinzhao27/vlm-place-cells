@@ -4727,6 +4727,78 @@ while this one z-scores them over all frames (it also searches a wider range of 
 conclusion about the stored cross-sector decoding numbers unchanged: they are not diagnostic. Which of the two
 differences matters was not tested.
 
+### Exp 25 results (2026-10-28 15:09 PDT): the model conditions
+
+Jobs: vast1:60 (11:22-13:10 PDT; the main conditions and the probes), stopped by me at 13:10 so that experiment 21's
+gain index could run per tag (it saves only at the end of a call), then vast1:61 (13:11-15:08 PDT, the rest; layers
+already done were kept, not rerun). Both ran the validated assay file (md5 `fe4f86a3...`), and the results file was
+fetched with matching md5s. Every condition of `results/summary_quadrant.json` is in `results/population_assay.json`.
+In what follows HG is quoted at each condition's best layer, with its 95% interval over walks, then the
+unseen-heading and seen-heading errors (chance 3.74 m for walk frames, 3.67 m for probes).
+
+**Verdict under the registered rule: positive.** The fine-tuned run 0 with the walk in context (`qwen8b-ft-walk`)
+has HG 0.74 [0.72, 0.76] at layer 3 (1.47 m against 0.66 m). HG is 0.59 at layer 8, 0.38-0.45 at layers 13-23, 0.57 at
+layer 29 and 0.68 at layer 35, so it is at least partial at every layer. At layer 3 the strict unit statistic counts
+4.6% of its place units as invariant (14.2% at layer 35, its best), and a synthetic population with the same HG has
+about 44% invariant place units. This is the case the reviewers raised: a heading-general position code is carried by
+the population, not by single units. By the rule, the paper can no longer say "not places" for these walk frames at
+the population level, and its account of the mechanism has to say where this code comes from. The four-epoch runs
+are called when experiment 22's recordings exist (vast3:336).
+
+**Where the code comes from (the registered descriptions).**
+- *It is in the base model too.* Base Qwen3-VL-8B with the walk has HG 0.73 at layer 3, the same as the fine-tuned
+  run (0.74). Every Qwen-family model with a walk in context is positive at an early layer: Qwen3-VL-2B 0.70 (L2), SenseNova 8B 0.73
+  (L3), Qwen3.8-27B 0.87 (L5), Qwen3-VL-32B 0.80 (L5). Fine-tuning changes the late layers. At layers 18-29 the base
+  model is at 0.07-0.29 and the fine-tuned one at 0.43-0.57, and at layer 35 they are at 0.58 and 0.68.
+- *A moving average of single frames does better.* Single frames are negative in every model (fine-tuned 8B -0.25,
+  base 8B -0.28, Qwen3-VL-2B -0.36, SenseNova -0.16, Qwen3.8-27B -0.21, 32B -0.21, DINOv2 -0.11, random DINOv2 -0.02,
+  random-weight Qwen3-VL-2B 0.07). Smoothed by the 8-step moving average, the same frames give HG 0.98 in every Qwen-family
+  model (0.37-0.46 m against 0.30-0.39 m) and 0.94 for pixels. The moving average reaches the walk's HG in all six models
+  (the registered comparison), by 0.11-0.28. HG grows with the average's length: 2 steps 0.56 (pixels) and 0.82
+  (Qwen3-VL-2B), 4 steps 0.83 and 0.94, 16 steps 0.98 and 1.00, 32 steps 1.00 and 1.01.
+- *It needs the walk's order.* Qwen3-VL-2B with the shuffled walk is negative at every layer (best -0.12), against
+  0.70 with the ordered walk.
+- So the code on walk frames behaves like a memory of the recent views. A frame's representation also carries the
+  frames just before it, and those were taken near the same place from other headings. That makes it readable on a
+  heading the readout never saw. The same thing explained the walk's invariant units in 13e, and it holds here at the
+  population level too: a base model never trained on the task has it, a plain average of recent single-frame
+  features has more of it, and shuffling the walk removes it.
+- *VGGT.* VGGT-single (each frame with 8 anchors) is positive at block 19 (0.57; 1.67 m against 0.13 m), and so is
+  VGGT-walk (0.70 at block 19; 1.22 m against 0.16 m). Both are well below the RNN (0.98), and their seen-heading
+  readouts are far more precise than their unseen-heading ones.
+- *Population-vector index.* Near zero for the 8B walk conditions (base -0.02, fine-tuned 0.00 at layer 3; SenseNova
+  0.13), 0.40-0.50 for the other Qwen walks, 0.29-0.38 for VGGT, 0.52-0.89 for the moving averages and 0.84-0.94 for
+  the RNNs. In the 8B models the heading-general information sits in directions that carry little of the population's
+  variance. A readout finds it, but the population's geometry is dominated by the view.
+
+**Teleport probes (secondary).** A probe is a frame from a random place and heading, shown after the walk. Its own
+trajectory is not in the context, so a memory of recent views cannot place it; only relating the view to the walk can,
+which is what the task asks. Every probe condition is negative: the fine-tuned run 0 after the walk 0.22 [0.17, 0.28]
+(layer 35; 3.22 m against 1.63 m), after the shuffled walk 0.20, with no walk 0.06; base 8B after the walk -0.00 and with
+no walk -0.04. Fine-tuning raises the late layers (layer 35: base -0.27, fine-tuned 0.22), but the ordered and shuffled
+walks give the same value, so the walk's order is not what does it.
+
+**Reading.** By the registered rule the verdict is positive: the fine-tuned model's walk frames carry a heading-invariant
+population code that its units do not show, and the paper's unit-level claim cannot be extended to the population
+level for those frames. The registered descriptions say what that code is. It is as strong in the base model, weaker
+than an 8-step moving average of single-frame features, and gone when the walk is shuffled. For a novel view, the case
+the task is about, no model carries a heading-general code (all probe conditions negative). A version of the paper's
+claim that fits all of this: single views are coded by what they show in every model, and with the walk in context the
+population also carries the walk's recent views, which carry position across headings in every model, trained or not.
+Choosing the wording is left to the supervisor and the user.
+
+**Still running or queued (PDT).**
+- vast1:62 (`e25_gain`, the P4 add-on, started 13:11, expected to end about 18:00): experiment 21's gain index and its
+  amendment-1 axis shares (`share_min6`) on the conditions vast1:58 did not cover, saved per tag to
+  `/workspace/MechInterp/exp25/results/heading_stat_validation_addon.json` on vast-1. Merge with
+  `.venv-mac/bin/python scripts/population_assay.py merge-gain --from <fetched file>` (adds only tags and layers not
+  yet in `results/heading_stat_validation.json`).
+- vast3:336 (`e25_e4`, CPU, after vast3:305, projected Sat 18:12 to about Sun 01:00): the four-epoch runs and run 0's
+  re-record (`qwen8b-ft-rerun`), walk, single, single+ema8 and probes, into
+  `/workspace/MechInterp/exp25/results/population_assay_e4.json` on vast-3. Then fetch that file (check its md5) and
+  run `.venv-mac/bin/python scripts/population_assay.py merge --from <fetched file>`, which recomputes the verdict over
+  all six runs and the rerun's parity.
+
 ## Experiment 26 (pre-registered 2026-10-28 10:10 PDT, before any walk-relative readout was fit): is the new view's position coded in the walk's own coordinates?
 
 **Why.** Experiment 14a read the residual stream of the base Qwen3-VL-8B and of run 0 (the original two-epoch

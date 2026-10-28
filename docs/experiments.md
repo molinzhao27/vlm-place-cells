@@ -3846,7 +3846,7 @@ more than twofold.
   qwen8b-ft-e4-s3-walk qwen8b-ft-e4-s4-walk qwen8b-ft-e4-s5-walk qwen8b-ft-e4-s6-walk qwen8b-ft-e4-s7-walk`.
   Add the `-single` and `-single+ema8` tags if wanted.
 
-### Exp 21 amendment 1 (registered 2026-10-28 09:50 PDT, before any axis-check score was computed): the two axes compared with each other
+### Exp 21 amendment 1 (registered 2026-10-28 09:49 PDT, before any axis-check score was computed): the two axes compared with each other
 
 **Why.** A reviewer major that recurs across reruns: the strict score averages corr(N, S) and
 corr(E, W), and the two axes are never compared with each other. A unit whose field sits in one place
@@ -4927,6 +4927,178 @@ features, at about 1-2 min per run, against 10-30 min per run on the Mac's CPU, 
 scoring and the analysis run on the Mac's CPU. Code: `scripts/learned_matcher.py`. Features, checkpoints and logs
 go to `data/learned_matcher/` (not in git). Results go to `results/learned_matcher.json`, with a top-level
 `summary` in fractions. Cost: none.
+
+## Experiment 29 (pre-registered 2026-10-28 10:26 PDT, before any model saw a swapped walk): does the fine-tuned model's decision use where the walk's frames were taken, or what they show?
+
+**Why.** The paper's account of the fine-tuned model ("recognizing views, not places") rests on units and linear
+readouts: few strictly heading-invariant units (experiments 13e, 13f and 21) and no room-general position code at
+the decision site (experiment 14a). All three GPT-6 Astra reviewers of the conference version
+(`writeup/paper/kit/paperscorer/rounds/R2a/packet.md` and earlier rounds) ask for a causal test of whether the
+decision uses a place-like representation or view similarity plus the walk's structure. This is proposal P13,
+approved by the user on 2026-10-28, for the ICML version. Experiment 15 showed where to intervene: hiding the 8 shown
+walk frames around the near option from attention costs 9.5 points (8.6 more than 8 random frames), while hiding the
+8 frames that look most like the new view costs no more than random ones. So the decision reads the walk around the
+near option. This experiment asks what it reads there: where those frames were taken, or what they show.
+
+**Design: swap the frames around the near option.** In each trial, the 8 frames of experiment 15's near set (the 4
+shown frames before and the 4 after the near option, never an option frame) are re-rendered and swapped into the
+prompt. Two factors are crossed:
+- *place*: each frame stays at its own position ("here"), or all 8 positions move together by one translation that
+  puts every one of them at least 3 m from the new view ("there"; 3 m is the trials' own threshold for a far option);
+- *view*: every frame faces the new view's target point, the point on a wall or pillar at the center of the new view
+  ("toward"), or faces directly away from it ("away").
+That gives four swap conditions: here-toward, here-away, there-toward and there-away. Toward frames show what the new
+view shows. Away frames show the other side of the room, and they look more like the near option, which by the
+trials' construction faces more than 90 degrees away from the new view. Everything else in the prompt stays as it was:
+the same 61-63 labels in the same order, both option frames, the new view and the question. Every prompt's token
+count is checked against experiment 10's run of the same trial.
+
+What each account predicts:
+- If the decision uses where the walk was (a place-like representation of the frames around the near option,
+  however it is computed), frames at the right places help whatever they show. Here-away is then about as good as
+  here-toward, and both beat there-away, while there-toward is no better than there-away.
+- If the decision links the new view to the near option through frames that look like the new view and sit next to
+  the option in the walk (view similarity plus walk structure), frames that show what the new view shows help wherever
+  they were taken. There-toward then recovers most of what the frames contribute, and here-away is no better than
+  there-away.
+- There-away carries neither, so it is the floor, and the unchanged prompt (clean) is the ceiling. Here-toward
+  carries both and serves as a reference.
+
+Why this intervention rather than the other candidates:
+- It acts on the frames that experiment 15 showed the decision reads, and it changes their place and their view
+  independently, which neither probes nor unit statistics can do.
+- Interchange patching of the residual stream at layers 18-20 would mostly transplant the answer: experiment 14a found
+  that the readout there is mostly the answer itself (R^2 of what is left after the answer, 0.03-0.06). Pairs of
+  existing trials that differ in place but not in appearance also do not exist.
+- Steering along the d_a - d_b readout direction would show whether the model uses that direction, not whether its
+  input is a place or a view.
+The swap intervenes on the model's input at a chosen place in the walk, not on its internal states, and the paper
+should describe it that way.
+
+Choices fixed now:
+- *Target point*: where the new view's central ray, horizontal at camera height, first meets a wall or a pillar.
+- *Toward*: the heading from the frame's position to the target point. *Away*: that heading plus 180 degrees.
+- *Translation*: lengths 3.0-9.0 m in steps of 0.25 m, with 32 directions tried in an order seeded by the trial. The
+  first (shortest) one is used for which every moved position is walkable (`room.valid` with the room's pillars), at
+  least 3 m from the new view's position and at least 1 m from the target point, and at least 6 of the 8 moved
+  positions see the target point with no pillar in the way. (The original positions see it 94% of the time.)
+- *Renders*: `room.Room`, the renderer of the stored frames, at 256 px. Re-rendered at their original poses, the near
+  and random sets must match the stored frames byte for byte; a build test on P5000 found every frame identical.
+
+**Trials.** Experiment 10's novel trials in the held-out procedural rooms, with its exact 64-frame prompts. P5005 is
+left out. Its two `binary_blobs` textures were drawn without a seed (experiment 15's reproducibility note), and in a
+build test every P5005 trial had a swap frame that shows one of them: such a frame comes out differently with two
+different blob draws, so it cannot match the room the model saw. Trials with no valid translation are left out of
+every condition. A geometry check before this registration found 3 of the 1,152 trials in the other nine rooms. That
+leaves about 1,149 trials, 102-152 per room. The build (`--build`) records the exact set.
+
+**Controls.**
+- *Clean reproduction.* Every run first answers the unchanged prompts. It must give experiment 10's answer on at least
+  99% of the included trials (run 0 against its MPS answers, runs 5 and 7 against their CUDA answers), or the job
+  stops before any swap.
+- *Random-frames control (random-away).* Experiment 15's random set (8 shown frames drawn at random, never the
+  options) is re-rendered at its own places, facing away from the target point. This is the here-away change applied
+  to frames that the decision does not depend on. If it costs more than half of the swap gap (defined below), the
+  swaps disrupt the model wherever they are, and the result is inconclusive.
+- *Removal reference (near-cut).* For runs 5 and 7, experiment 15's attention cut of the near set; run 0 already has
+  it from experiment 15, with the same trials and device. It shows whether misleading frames (there-away) cost more
+  than missing ones. Descriptive.
+- *Stimulus check (the positive control).* No network whose place use is known takes this task's input. The
+  path-integrating RNN of experiment 13f gets displacements and sees no images, and VGGT's position estimates do not
+  depend on which frames neighbor an option. So the check uses two agents whose strategy is known. They see the same
+  trials and conditions, and the same decision rule is applied to them. Both look only at the 8 frames around each
+  option (experiment 15's near and far sets) as the condition presents them.
+  - The place agent picks the option whose 8 frames have a mean position nearer the new view's true position.
+  - The view agent picks the option whose 8 frames include the one most similar to the new view (DINOv2-base cosine,
+    as in experiment 13d).
+  The stimuli pass if the rule calls the place agent "place" and the view agent "view plus walk". The place agent's
+  verdict follows from the construction. The view agent is the real test: it checks, with an independent vision
+  model, that toward frames taken 3 m or more away still look like the new view and that away frames do not. If
+  either agent fails, the model jobs are cancelled before they start, and the design is amended.
+- *Manipulation checks* (reported, no threshold). For each condition: the mean and the best DINOv2 cosine of the 8
+  frames with the new view and with the near option's frame; the share of frames that show a poster or pillar the new
+  view shows (`dissimilar_trials.landmarks`); and the translation lengths.
+
+**Models and platform.** Run 0 (the original two-epoch LoRA, `data/ft/qwen8b-proc`) and the four-epoch runs 5 and 7
+(`data/ft/qwen8b-proc-e4-s5` and `-s7`), the most and the least shuffle-sensitive runs (ordered minus shuffled walk
++42.9 and +15.1 points; experiment 22). Each run is tested on the device where its experiment-10 answers were made:
+run 0 on the Mac (MPS, also experiment 15's device), runs 5 and 7 on vast-3 (CUDA). The settings are experiment 15's:
+bf16, the adapter merged, greedy decoding with at most 16 new tokens, answers parsed as `two_choice.py` parses them,
+and `frame_cut.py`'s attention hooks installed in every condition (with nothing cut they change nothing, as
+experiment 15 checked). Each job renders the swap frames as it goes, in a few CPU processes, and stops if any frame's
+MD5 differs from the build's.
+
+**Analysis** (`scripts/vlm_intervention_analysis.py` -> `results/vlm_intervention.json`, with a top-level `summary`).
+As in experiments 13a and 15: for each run, novel-trial accuracy per room in each condition (unparsed answers count as
+wrong), means over the nine rooms with 95% bootstrap CIs over rooms (10,000 resamples), paired differences with
+bootstrap CIs, room-level sign tests, and pooled trial-level sign tests. With A(c) the mean accuracy in condition c:
+- swap gap G = A(clean) - A(there-away): what the near set's frames contribute beyond frames that carry neither their
+  place nor the new view;
+- place effect = A(here-away) - A(there-away), and R_place = place effect / G;
+- view effect = A(there-toward) - A(there-away), and R_view = view effect / G;
+- conflict = A(here-away) - A(there-toward): the place without the view against the view without the place;
+- both effect = A(here-toward) - A(there-away), and R_both = both effect / G;
+- random cost = A(clean) - A(random-away).
+
+**Decision rule, set now (for each run).**
+- The test is valid only if G is at least 5 points with its CI above 0, and the random cost is at most G/2.
+  Otherwise the run is *inconclusive*: either the decision does not depend on what these frames show, or the swaps
+  disrupt the model wherever they are.
+- *Uses place*: R_place at least 0.5 with the place effect's CI above 0, R_view below 0.5, and the conflict's CI
+  above 0.
+- *Uses view plus walk structure*: R_view at least 0.5 with the view effect's CI above 0, R_place below 0.5, and the
+  conflict's CI below 0.
+- *Both*: R_place and R_view both at least 0.5, each effect's CI above 0 (either cue suffices).
+- Otherwise *inconclusive*, labeled *conjunction* if R_both is at least 0.5 with its CI above 0 (only frames that are
+  at the right place and also show the new view help), and *not separated* if not.
+- The fine-tuned model's verdict is the one runs 0, 5 and 7 share. If they differ, it is *mixed*, and each run's
+  verdict is reported.
+- The same rule is applied, as a sensitivity analysis, to the trials where the near and far sets share no frame
+  (experiment 15's 1,028, less exclusions).
+
+**What each outcome means for the paper.**
+- *View plus walk*: this is the first causal evidence inside the fine-tuned model for the paper's account. Frames that
+  show what the new view shows carry the decision even when they were taken 3 m or more away, and frames at the right
+  places carry little when they show something else. The paper can say that the decision links the new view to an
+  option through views that resemble it next to the option in the walk, not through where those frames were taken,
+  and it can keep "recognizing views, not places" for the decision as well as for the units.
+- *Place*: the decision uses where the walk's frames were taken even when they share nothing with the new view. That
+  contradicts the view account of the decision. The paper must then restrict "not places" to the units and readouts,
+  say that the decision uses place information carried by the walk that units and linear probes at the image tokens
+  do not show, and narrow the title claim.
+- *Both*: the model can use either cue. The paper says that the decision uses place information as well as view
+  similarity, and narrows the title in the same way.
+- *Inconclusive*: the paper keeps its unit- and readout-level claims, reports that this intervention could not
+  separate the two accounts, and gives the reason (no gap, disruption wherever the swap is, conjunction, or not
+  separated). A conjunction would mean that the model needs nearby frames that also look like the new view. That fits
+  view matching with a high bar for similarity, but it does not rule out place use.
+- *Mixed*: reported run by run; a claim about the four-epoch recipe is made only where runs 5 and 7 agree.
+
+**Caveats stated now.**
+- Same-place frames that face away from the target look more like the near option than moved frames do, so at the
+  away level the place factor also changes how much the frames resemble the option. The manipulation check reports
+  this. A "place" verdict therefore means that the decision links the new view to the near option without any
+  neighboring frame that shows what the new view shows, provided those frames were taken near the option. A place
+  representation would do this; plain view matching would not.
+- Toward frames face more than 90 degrees away from the near option, so in the toward conditions the walk turns
+  sharply at the option, and in the away conditions it turns gently. This works against the view account (it lowers
+  there-toward), so it cannot produce a false "view plus walk" verdict.
+- Here-toward frames are near copies of the new view. They are a reference, not a primary condition.
+
+**Cost and time.** No API cost. Estimates from existing logs:
+- Build and stimulus check: CPU on the Mac through gq, about 25 and 40 minutes.
+- Run 0 on the Mac: six conditions (clean, the four swaps and random-away) for about 1,149 trials at 5.2 s each
+  (experiment 15 took 4.9-5.6 s per trial with the same prompts and hooks), so about 10 h.
+- Runs 5 and 7 on vast-3: seven conditions (with near-cut) at about 0.65 s per trial (experiment 9c's tests there took
+  0.63 s), so about 1.5 h each, plus loading and a render check.
+
+**Files.** `spatialcells/vlm_intervention.py` (new); `scripts/run_vlm_intervention.sh` (vast-3) and
+`scripts/mac/run_vlm_intervention.sh`; `scripts/vlm_intervention_analysis.py`. Data go to `results/vlm_intervention/`:
+`specs.json` (every swap frame's pose and MD5), `stimulus_check.json`, and one JSONL per run and condition.
+`frame_cut.py`, `task_record.py` and `two_choice.py` are imported and not changed.
+
+**Status.** Registered at 10:26 PDT. The stimulus build is queued on the Mac as a CPU job (gq mac:138). The stimulus
+check and the model jobs follow once this registration is committed.
 
 ## Prior work this builds on
 

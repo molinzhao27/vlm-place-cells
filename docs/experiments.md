@@ -5376,6 +5376,117 @@ scoring and the analysis run on the Mac's CPU. Code: `scripts/learned_matcher.py
 go to `data/learned_matcher/` (not in git). Results go to `results/learned_matcher.json`, with a top-level
 `summary` in fractions. Cost: none.
 
+### Exp 28 results (2026-10-28 15:30 PDT)
+
+**Runs.** The training-room features ran on the Mac's CPU as gq mac:137, from 11:21 PDT. The CPU was oversubscribed
+(load average up to 44), so a second job, mac:142, took the 50-room chunks from the end. The two jobs ran the same
+code and skipped each other's finished chunks, and both finished at 14:26. Before any training, the registered
+check passed exactly: P5000's 256 frames and 16 views gave a maximum difference of 0.0 from experiment 20's cache,
+for both DINOv2 and pixels. Training ran on the RTX 4070:
+- the ordered grid, pc:627, and the order-free grid, pc:628;
+- seeds 1-4 of each chosen configuration, pc:629 and pc:630;
+- the pixel runs, pc:631.
+
+Each run took 30-130 s. A first submission, pc:622-626, failed before training anything, because the features were
+not on the PC yet. The test scenes were then scored on the Mac, with only the ten chosen checkpoints plus the five
+pixel runs. Most runs come close to fitting the 9,083 training trials exactly: the final training loss is
+between 5e-5 and 0.22. Validation accuracy peaks between epochs 4 and 51.
+
+**Validation and the chosen configurations.** All 32 grid runs score 73.6-78.7% on the 512 validation trials.
+- *Ordered:* 4 layers, width 256, dropout 0.3, learning rate 3e-4 (3.56 M parameters). Seed 0 scores 78.5%,
+  and the five seeds 76.0-78.5%, with a mean of 77.0% (76.7% on novel trials).
+- *Order-free:* 2 layers, width 256, dropout 0.1, learning rate 1e-3 (1.98 M parameters). Seed 0 scores 78.7%,
+  and the five seeds 76.4-78.7%, with a mean of 77.6% (76.9% on novel trials).
+
+The order-free variant has the higher mean validation accuracy, so by the registered rule it is the matcher for
+the decision rule; the registration had expected the ordered one. For comparison, the four-epoch LoRA runs end
+at 95-98% on their own held-out validation question. The pixel variant (the ordered configuration, five seeds)
+scores 82.0-83.2% (mean 82.5%).
+
+**Test results.** Novel trials, means over scenes with 95% bootstrap CIs over scenes (rooms A and B: over trials).
+"Matcher" is the order-free variant chosen by the rule; the pixel column is descriptive only.
+
+| scenes (novel trials) | matcher | ordered matcher | pixel matcher | four-epoch LoRA | Opus | best exp. 20 rule | LoRA minus matcher |
+|---|---|---|---|---|---|---|---|
+| held-out rooms P5000-P5009 (1,299) | 73.3% [70.2, 76.0] | 72.3% [69.1, 75.1] | 80.0% [78.6, 81.3] | 97.1% [96.3, 97.9] | 69.2% [66.3, 71.7] | 67.7% [63.4, 71.6] | +23.8 [21.0, 26.8] |
+| room A (102) | 71.2% | 70.8% | 87.8% | 98.4% | 74.5% | 66.7% | +27.3 [20.2, 34.7] |
+| room B (106) | 77.7% | 75.1% | 84.7% | 97.9% | 64.2% | 69.8% | +20.2 [14.3, 26.4] |
+| photoreal, Apt0-2 + HSSD1-8 (424) | 47.8% [43.7, 51.9] | 52.4% [47.4, 57.9] | 49.1% [46.4, 51.6] | 88.1% [85.0, 91.7] | 84.5% [80.2, 88.7] | 74.9% [70.1, 80.8] | +40.3 [37.0, 43.3] |
+| apartments (58) | 44.0% | 48.0% | 44.9% | 84.0% | 85.4% | 82.2% | +40.0 [33.3, 46.7] |
+| houses (366) | 49.3% | 54.0% | 50.7% | 89.6% | 84.2% | 72.1% | +40.4 [36.6, 43.8] |
+| experiment 19 houses HSSD9-26 (947) | 52.2% [49.1, 55.5] | 52.2% | 50.3% | 89.4% (HSSD9 only) | 80.5% (HSSD9-13) | 71.8% | +32.5 (HSSD9 only) |
+
+The held-out rooms one by one (novel accuracy, %):
+
+| room | matcher | ordered | pixels | LoRA | LoRA minus matcher | Opus | best rule |
+|---|---|---|---|---|---|---|---|
+| P5000 | 68.9 | 67.7 | 78.7 | 98.2 | +29.2 | 69.7 | 57.1 |
+| P5001 | 76.3 | 71.7 | 81.7 | 96.2 | +19.8 | 72.3 | 71.5 |
+| P5002 | 76.5 | 76.4 | 81.3 | 95.9 | +19.3 | 72.0 | 76.7 |
+| P5003 | 72.7 | 70.0 | 79.7 | 97.4 | +24.7 | 72.7 | 57.6 |
+| P5004 | 80.6 | 79.2 | 83.5 | 96.7 | +16.1 | 62.7 | 71.6 |
+| P5005 | 74.3 | 76.9 | 79.5 | 97.8 | +23.5 | 72.8 | 62.6 |
+| P5006 | 76.6 | 75.7 | 82.5 | 96.8 | +20.3 | 68.4 | 73.0 |
+| P5007 | 72.6 | 70.8 | 78.9 | 98.5 | +25.8 | 59.4 | 70.8 |
+| P5008 | 71.2 | 72.6 | 75.4 | 99.0 | +27.8 | 72.9 | 63.2 |
+| P5009 | 62.7 | 61.7 | 78.5 | 94.5 | +31.8 | 69.2 | 72.6 |
+
+Familiar trials in the held-out rooms, pooled: matcher 72.8%, LoRA 98.0%, Opus 79.2%, best rule 71.0%. So the
+matcher does no better on familiar trials than on novel ones.
+
+**Verdict: learned matching falls short.** D, the LoRA minus the matcher on the held-out rooms' novel trials, is
++23.8 points [21.0, 26.8], above the 15-point threshold. The LoRA leads in all ten rooms, by 16.1-31.8 points. The
+other variant gives the same answer: the LoRA minus the ordered matcher is +24.8 [21.9, 27.8].
+
+Following the registered meaning, the LoRA does more than learned matching of this class: one frozen global
+DINOv2 feature per view and a small transformer, trained on the same 9,083 trials. This does not show that the
+LoRA has a place code. It also does not exclude matchers with richer features, more training data or larger
+models, and the pixel variant below shows that the feature matters.
+
+**What else the matcher shows** (descriptive):
+- *It beats the hand-built rules and matches Opus in the held-out rooms.* The matcher minus the best experiment-20
+  rule is +5.6 [1.1, 9.6], and the matcher minus Opus +4.0 [-0.0, 8.5]. So training on walks does buy a little
+  over the 149 hand-built rules, and this is the strongest pure-matching baseline so far. It still sits 24 points
+  below the LoRA.
+- *Its accuracy does not depend on whether retrieval works.* On the held-out rooms' novel trials where the best
+  experiment-20 rule is right, the matcher scores 73.2%, and where the rule is wrong 73.6% (879 and 420 trials).
+  The LoRA scores 97.7% and 95.8% on the same trials, and Opus 72.9% and 62.9%.
+- *The matcher gains nothing from frame order, and the LoRA depends on it.* In the held-out rooms, the ordered
+  matcher minus the order-free one is -1.0 [-2.2, 0.2]. Giving the ordered matcher permuted frame numbers changes
+  11% of the individual seeds' answers but not its accuracy (-0.0 [-0.8, 0.6]). So the position input is used,
+  but it carries no net information the matcher learned to exploit. The four-epoch LoRA runs lose 28.0 points
+  [27.0, 29.1] with the shuffled walk (97.1% to 69.1%), and 27.6 and 32.3 in rooms A and B. The training trials
+  balance the cheap frame-order cue, so a matcher of this class learns no use of order from them; the LoRA,
+  trained on the same trials, does.
+- *It does not transfer to photoreal scenes.* Trained on the procedural rooms, as the LoRA was, the matcher is
+  at chance in the photoreal scenes: 47.8%, against 88.1% for the LoRA, 84.5% for Opus and 74.9% for the best
+  hand-built rule. The ordered matcher scores 52.4%, the pixel one 49.1%, and the matcher 52.2% in experiment
+  19's houses. What these matchers learn is tied to the procedural rooms' images. The LoRA, trained on the same
+  rooms, transfers.
+- *The pixel variant comes closer.* With experiment 20's 32 x 32 pixel features, the same ordered configuration
+  scores 80.0% [78.6, 81.3] in the held-out rooms, so the LoRA minus pixels is +17.1 [15.3, 19.1]. In rooms A and
+  B it scores 87.8% and 84.7%, leaving +10.6 [5.9, 15.7] and +13.2 [8.3, 18.7]. In the photoreal scenes it is at
+  chance (49.1%). In the flat-shaded procedural rooms, the pixel layout keeps geometry that DINOv2's single CLS
+  summary discards. So a matcher with richer image features gets closer to the LoRA in those rooms, though still
+  15-17 points short in the held-out rooms, and it does not transfer. This variant was optional and is not part
+  of the verdict.
+
+**Deviations and notes.**
+- The order-free variant became the matcher by the registered rule, against the expectation stated in the
+  registration.
+- The feature extraction was split over two gq jobs on the Mac's CPU, as described above. Both used the
+  registered code and passed the check.
+- The pixel variant floors each dimension's SD at one grey level instead of 1e-6. With 1e-6, a pixel block that
+  is constant over a prompt's frames would give the new view an unbounded z-score. The registration said only
+  "treated the same way".
+- Two descriptive differences were added to the JSON beyond the registered ones: the LoRA minus the ordered
+  matcher, and the LoRA minus the pixel matcher.
+- In experiment 19's houses, only HSSD9 has four-epoch LoRA answers so far, so the LoRA comparison there rests on
+  one house.
+
+Files: `scripts/learned_matcher.py`, `results/learned_matcher.json` (values in `summary`, as fractions);
+features, checkpoints, logs and per-trial test scores are in `data/learned_matcher/` (not in git).
+
 ## Experiment 29 (pre-registered 2026-10-28 10:26 PDT, before any model saw a swapped walk): does the fine-tuned model's decision use where the walk's frames were taken, or what they show?
 
 **Why.** The paper's account of the fine-tuned model ("recognizing views, not places") rests on units and linear

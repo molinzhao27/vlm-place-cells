@@ -4794,6 +4794,140 @@ balanced and the unbalanced sets.
 
 A smoke run (a few pairs and frames) checks the code path first. Cost: none.
 
+## Experiment 28 (pre-registered 2026-10-28 10:12 PDT, before any matcher was trained or scored): a learned sequence matcher on the same trials
+
+**Why.** Experiment 20 scored 149 hand-built retrieval rules on the trials the models answered. The best of them
+reaches 67.7% on the held-out rooms' novel trials and comes within 13.2 points of the four-epoch LoRA runs in the
+photoreal scenes. None of those rules was trained on walks. The best rule is a logistic regression over rule
+outputs, which learns how to weigh fixed cues but not which cues to compute. All three GPT-6 Astra reviewers of
+round R2a (`writeup/paper/kit/paperscorer/rounds/R2a/packet.md`; a major point for the vision reviewer) note
+that a *learned* local sequence matcher is therefore not excluded. The user approved this baseline on 2026-10-28
+as P14. This experiment trains small models on the LoRA's own training trials. The models see only frozen image
+features of the frames and the frames' numbers, and they are tested on the same held-out trials as the LoRA.
+Either outcome is useful. If such a matcher comes close to the LoRA, the task can be solved by learned
+view-sequence matching, and the LoRA's accuracy alone is not evidence of a place code. If it falls well short,
+the LoRA does more than matching of this class.
+
+**What is already known**, so that only the new parts count as tests:
+- Held-out rooms P5000-P5009, novel trials, mean over rooms (experiment 20): four-epoch LoRA runs 3-7 97.1%
+  [96.3, 97.9], Opus 69.2% [66.3, 71.7], best retrieval rule (combined logistic regression) 67.7% [63.4, 71.6].
+  Photoreal scenes (Replica apartments 0-2 and HSSD houses 1-8): LoRA 88.1%, Opus 84.5%, best rule (window
+  maximum, DINOv2 CLS, all 256 frames, k 32) 74.9%.
+- With the walk shuffled (real frame numbers kept, presentation order random), the four-epoch runs fall to
+  54-82% (experiment 9c).
+- Nothing about any learned matcher has been computed, and no image feature of any training room has been
+  computed. Before writing this, the only things looked at were the data layout (array shapes, trial counts,
+  walk lengths, file names), the speed of DINOv2 on the Mac's CPU, and the speed of training steps on random
+  tensors.
+
+**Training data and split.** Exactly the LoRA's: `data/hf_release/training/proc/` (md5-matched to vast-3's
+`data/proc`), with its `trials.json`. As in `finetune.py`, the rooms are sorted and the last 64 held out. That
+gives 1,136 training rooms (rooms 0-1135; 9,083 trials, 3,776 of them novel) and 64 validation rooms (rooms
+1136-1199; 512 trials, 214 novel). A training trial shows the room's 64 frames (frame numbers 1, 5, ..., 256)
+with their real frame numbers, the new view, and the two options. The target is the near option, which is the
+answer the LoRA was trained to give. No other trials, rooms or views are used: in particular, no further trials
+are made from the rooms' unused views.
+
+**Features.** The CLS token of DINOv2-base, frozen, computed exactly as in experiment 20 (frames resized to 224
+px, bicubic with antialiasing, ImageNet normalization, CPU, float32).
+- *Training rooms:* computed by `scripts/learned_matcher.py features` for each room's 64 frames and the views its
+  trials use.
+- *Test scenes:* experiment 20's cache `data/retrieval_feats/<scene>.npz` (`frame_cls`, `probe_cls`), unchanged.
+- *Check, before any training:* the new code recomputes P5000's first 256 walk frames and the views of its first
+  16 trials, and the result must match the cache to within 1e-3 (maximum absolute difference).
+- *Normalization:* within each prompt, each feature dimension is z-scored over the prompt's walk frames, and the
+  new view is transformed with the same mean and SD. Experiment 20 z-scored over a scene's walk frames; here
+  only the frames the prompt shows are used.
+- *Pixel variant* (optional, descriptive only): experiment 20's 32 x 32 RGB block averages, treated the same way.
+
+**What a test prompt shows.** Exactly what the LoRA's prompt shows: `two_choice.present` with `--max-images 64`,
+ordered, which gives 61 evenly spaced frames plus both options (61-63 frames), each with its real frame number.
+
+**The matcher (the architecture family, fixed now).** A pre-LayerNorm transformer encoder with one token per
+shown walk frame and one token for the new view.
+- *Walk-frame token:* a linear map of the frame's feature, plus a linear map of the cosine similarity between
+  the frame's and the new view's z-scored features, plus an option marker, plus a position embedding. The
+  option marker is a learned vector added to the two option frames; it is the same vector for both, so the
+  options are treated symmetrically. The position embedding is used in the ordered variant only: a linear map
+  of sines and cosines of the frame number at 16 periods, spaced geometrically from 16 to 1,024 frames.
+- *New-view token:* a linear map of its feature plus a learned type vector.
+- *Encoder:* L layers of width d, with d/32 heads, a 4d feed-forward layer, GELU, dropout p, and a final
+  LayerNorm.
+- *Readout:* a linear score from each option token's final state, a softmax over the two options, and
+  cross-entropy against the near option. The higher score is the answer; an exact tie scores 0.5.
+- *Order-free variant:* the same model with no position input. A transformer has no other source of position,
+  so this variant sees the walk frames as an unordered set. The option markers and the new view stay.
+- *Training (fixed):* AdamW with weight decay 0.05, batches of 64 trials, 60 epochs, a 2-epoch linear warm-up,
+  cosine decay to zero, and gradient clipping at 1.0. Two augmentations are used. Each walk frame other than the
+  options is dropped with probability 0.1, because test prompts show 61-63 frames and training prompts 64. In
+  the ordered variant, each frame number is jittered by up to 2 frames (uniform). Training frames sit 4-5 frames
+  apart, while test prompts use other frame numbers and put the options 1-3 frames from their neighbours. In
+  training, the z-scoring uses the room's 64 frames before any are dropped.
+
+**Hyperparameter protocol (validation rooms only).**
+- *Grid:* for each variant separately, layers {2, 4} x width {128, 256} x dropout {0.1, 0.3} x learning rate
+  {3e-4, 1e-3}, which makes 16 configurations, each trained with seed 0.
+- *Checkpoints:* accuracy on all 512 validation trials is computed after every epoch, and each run keeps the
+  checkpoint from its best validation epoch (the earliest, on ties).
+- *Choice:* for each variant, the configuration with the highest validation accuracy is chosen (ties go to fewer
+  parameters, then the lower learning rate). It is then trained again with seeds 1-4, and each of those runs
+  keeps its own best validation epoch.
+- *Test access:* only these five checkpoints per variant are ever run on a test scene, and no test-scene
+  number enters any choice.
+- *Per-trial score:* the share of the five seeds that answered correctly, the same way the LoRA four-epoch mean
+  is computed over runs 3-7.
+- *The matcher for the decision rule:* the variant whose five chosen runs have the higher mean validation
+  accuracy (expected to be the ordered one).
+
+**Test sets.**
+- Primary: the held-out rooms P5000-P5009, novel trials (1,299), at room level.
+- Rooms A (102 novel) and B (106 novel).
+- Secondary, as transfer: the photoreal scenes Apt0-2 and HSSD1-8 (424 novel), also split into apartments and
+  houses.
+- Descriptive only: experiment 19's scenes (HSSD9-26; ReplicaFRL0, 1, 3, 4 and 5), whose features are cached,
+  set beside whichever models have answered them.
+Familiar and all-trial accuracies are reported for context.
+
+**Comparisons.** These come per trial from `results/retrieval_baselines.json` (`trials`), with trial ids checked
+against each scene's manifest:
+- the four-epoch LoRA mean (runs 3-7, 64-frame walk);
+- Opus 5.5 (256-frame walk, low effort);
+- the best experiment-20 rule of the scene's group: the combined logistic regression for the procedural rooms
+  and rooms A and B, and the window maximum (DINOv2 CLS, all 256 frames, k 32) for the photoreal scenes.
+
+For each, the analysis reports novel accuracy per scene and the mean over scenes with a 95% bootstrap CI over
+scenes (10,000 resamples, seed 0, as in experiment 20). It also reports the per-scene differences (LoRA minus
+matcher, matcher minus Opus, matcher minus best rule), as a mean over scenes with a CI.
+
+**Order effect (descriptive).** The ordered matcher minus the order-free one, per room, as a mean over rooms with
+a CI, beside the four-epoch LoRA runs' ordered walk minus shuffled walk on the same trials (the `-shuffled`
+files). The LoRA's shuffled walk keeps the real frame numbers but scrambles the order in which frames are
+presented. The matcher's only order information is the frame number, so the ordered matcher is also tested with
+the frame numbers permuted at random among the shown frames (seeded per trial). Each frame keeps its image and
+option marker. This is the matcher's counterpart of the LoRA's shuffled walk.
+
+**Decision rule** (held-out rooms, novel trials). D is the mean over the ten rooms of the per-room difference,
+four-epoch LoRA mean minus the matcher, on identical trials (point estimate; the CI is reported).
+- *D at most 5 points: learned matching suffices.* On these rooms, a small model that sees one frozen DINOv2
+  summary per view and the frame numbers, trained on the same 9,083 trials, reaches the LoRA's accuracy. The
+  task can then be solved by learned view-sequence matching, so the LoRA's behavior alone is not evidence of a
+  place code. The paper says so and rests any place-code claim on the unit analyses.
+- *D at least 15 points: learned matching falls short.* The LoRA does more than learned matching of this class
+  (one frozen global feature per view, a small transformer, the same training trials). This does not show that
+  the LoRA has a place code. It also does not exclude matchers with richer features (patch tokens), more
+  training data, or larger models.
+- *D between 5 and 15 points: partial.* Learned matching gets part of the way. The paper reports the gap with its
+  CI, and both readings above stay open.
+The photoreal transfer and the order effect are reported without thresholds. Experiment 20's verdict is
+unchanged by this experiment.
+
+**Compute and outputs.** DINOv2 features run on the Mac's CPU through gq (`--on mac --cpu`, about 1-1.5 h). The
+grid and seed runs train on the RTX 4070 through gq's `pc` queue: training needs only torch and the cached
+features, at about 1-2 min per run, against 10-30 min per run on the Mac's CPU, which is the fallback. Test
+scoring and the analysis run on the Mac's CPU. Code: `scripts/learned_matcher.py`. Features, checkpoints and logs
+go to `data/learned_matcher/` (not in git). Results go to `results/learned_matcher.json`, with a top-level
+`summary` in fractions. Cost: none.
+
 ## Prior work this builds on
 
 - Luo, Mok & Love 2024, *The inevitability and superfluousness of cell types in

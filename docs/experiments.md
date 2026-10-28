@@ -4565,6 +4565,59 @@ directory, `/workspace/MechInterp/exp25`, which holds copies of the committed `a
 the result JSON comes back. The four-epoch part runs on vast-3 as a CPU job after vast3:305. Outputs:
 `results/population_assay.json` (top-level `summary` with the paper's values) and this entry's results section.
 
+### Exp 25 validation (2026-10-28 11:22 PDT): the assay passes every registered control
+
+Two jobs, both with the registered design unchanged: gq mac:135 (synthetic populations, Mac CPU, 1 h 12 min, rc 0)
+and vast1:59 (RNNs and real negative controls, vast-1 CPU, 32 min, rc 0). The assay code is the same file in both
+places (md5 `fe4f86a3...`; later edits to the script touch only the summary and merge functions). Every part of the
+validation rule holds, so the primary assay is **validated**. The model conditions were submitted only after this
+(vast1:60 at 11:22 PDT).
+
+**Positive controls.** Both anchored RNNs keep almost all of their position information on a heading the readout never
+saw. `base` has HG 0.98 [0.97, 0.98], with an unseen-heading error of 0.29 m against 0.20 m for seen headings (chance
+3.74 m); `s093` has HG 0.98 [0.97, 0.98], 0.25 m against 0.16 m. The free-running modes, outside the rule, agree: `base`
+0.99 (0.30 m against 0.26 m) and `s093` 0.94 (1.44 m against 1.28 m; its free-running code drifts, but what it has
+carries across headings). The population-vector index is 0.84 (`base`) and 0.94 (`s093`).
+
+**Negative controls.** All four are negative at every layer. Their readouts locate a frame precisely when its heading
+was in training (0.3-1.2 m), and on an unseen heading they do worse than predicting the mean (4.4-5.0 m against 3.74
+m), so they send the view to the wrong, roughly mirrored, place. Best layers: pixels HG -0.41 (seen 0.97 m, unseen 4.87
+m); VGGT alone -0.21 (block 12); Qwen3-VL-2B single frames -0.36 (L6); Qwen3-VL-8B single frames -0.28 (L3). The
+population-vector index is -0.07 to -0.22 for all of them. Synthetic view-dependent populations give -0.54 to -0.86.
+
+**Synthetic mixtures** (HG at invariant share p = 0, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5 and 1):
+
+| noise | HG |
+|---|---|
+| k = 1 | -0.06, 0.06, 0.11, 0.23, 0.44, 0.61, 0.88, 1.00 |
+| k = 3 | -0.18, -0.14, -0.08, 0.05, 0.23, 0.46, 0.80, 1.00 |
+| k = 5 | -0.29, -0.17, -0.18, -0.08, 0.16, 0.37, 0.75, 1.00 |
+
+The rotated populations give the same values to within 0.01. HG rises with p at every noise level (the one step down,
+-0.01 at k = 5, is within the tolerance), p = 0 is negative and p >= 0.5 is positive. At k = 3, the real units'
+reliability, an HG of 0.25 corresponds to an invariant share of about 11% and an HG of 0.5 to about 24% (interpolated);
+shares of 5% or less give HG of 0.05 or less. So the assay grades how much of a population's position information is
+heading-general; it does not detect a few hundred invariant units hidden among many heading-dependent ones.
+
+**The unit test on the same populations** (k = 3, strictly invariant share of place units, for p as above): plain
+0, 3.1, 6.1, 14, 26, 43, 76 and 100%; rotated 0, 0, 0, 0, 0.6, 5.4, 55 and 99.6%. At p = 0.2 the rotated population reads
+5% at the unit level and the plain one 43%, while both have HG 0.46. When the code is spread over mixed units, the unit
+statistic misses it and the population assay does not. This is the case the reviewers raised.
+
+**Boundary case** (outside the rule). Populations of 180-degree conjunctive units alone give HG 0.67, 0.49 and 0.43 at
+k = 1, 3 and 5, and 0.75, 0.59 and 0.50 with p = 0.1. Units that each keep their field over half the compass make a
+population whose position information largely carries across headings, and the assay reads it as partial to positive.
+
+**Secondary variants.** Without the gap (training on the 270 degrees outside the test sector), the rule fails: every
+negative control reaches partial or positive at some layer (VGGT alone 0.70, Qwen3-VL-8B single 0.58, Qwen3-VL-2B
+single 0.50, pixels 0.34), because test frames near a sector edge share half their view with training frames. The
+gap is what makes the test valid. The strict split (training on the opposite sector only) passes the rule with this
+readout: the anchored `base` RNN gets HG 0.96 and 0.37 m, where experiment 13f's decoder gave 7.57 m. So the split is
+not what failed the RNN in 13f; the readout is. 13f's decoder z-scored units over the training sector's frames only,
+while this one z-scores them over all frames (it also searches a wider range of penalties). That leaves 13f's
+conclusion about the stored cross-sector decoding numbers unchanged: they are not diagnostic. Which of the two
+differences matters was not tested.
+
 ## Experiment 26 (pre-registered 2026-10-28 10:10 PDT, before any walk-relative readout was fit): is the new view's position coded in the walk's own coordinates?
 
 **Why.** Experiment 14a read the residual stream of the base Qwen3-VL-8B and of run 0 (the original two-epoch
@@ -4675,6 +4728,69 @@ cell with both splits, both readouts and all 13 targets takes about 3 s). Code: 
 top-level `summary`. Its keys are `summary.models.<model>.<target>.best_r2`, `best_r2_at`, `best_median_m` (or
 `_deg`), `chance_median_m` (or `_deg`), `shuf_r2_at_best`, `margin_at_best` and `verdict`, together with
 `summary.verdict_first_xy`, `verdict_last_xy` and `verdict_first_heading`.
+
+*Result (2026-10-28; gq mac:136, 10:10-12:07 PDT; `results/frame_relative_probe.json`).* The run took 1 h 57 min,
+about 24 s per cell rather than the 3 s estimated above, which counted one target instead of all 13. Recomputing room
+coordinates reproduces experiment 14a in all 288 cells of each model (largest R^2 difference 0.0), so the pipeline is
+14a's. Best cross-room R^2 over the 288 cells of each model, with the lowest median error anywhere and its chance:
+
+| target | base 8B | run 0 | chance (median) | walk-shuffled control, best R^2 |
+|---|---|---|---|---|
+| room (x, y), experiment 14a | 0.022, 3.38 m | 0.026, 3.38 m | 3.50 m | (none) |
+| `first_xy` (primary) | 0.088, 3.71 m | 0.092, 3.64 m | 4.01 m | -0.009 / -0.010 |
+| `last_xy` | 0.105, 3.43 m | 0.019, 3.54 m | 3.65 m | -0.014 / -0.017 |
+| `first_heading` | 0.216, 46 deg | 0.157, 51 deg | 89 deg | -0.006 / -0.005 |
+
+- *Primary: no first-frame-relative position code (`first_xy` absent in both models).* The best cells are ridge
+  readouts: the last token at layer 19 in the base model, and the image-end token at layer 35 in run 0. No cell in
+  either model passes 0.10, and the MLP's best is below zero (-0.07 and -0.02). Fine-tuning added nothing: run 0's
+  best is the base model's within 0.004.
+- *Secondary, `last_xy`:* absent in run 0 (best 0.019). In the base model it is *weak* by the rule, but only
+  just: one cell (the image-end token, layer 16, ridge) reaches 0.105, and the next best is 0.078 (layer 17).
+- *Secondary, `first_heading`:* *weak* in both models. The new view's heading relative to frame 1 reads out from the
+  mean of its visual tokens. It appears around layer 15 and holds at R^2 0.20-0.22 over layers 19-25 in the base
+  model, and at 0.15-0.16 over layers 20-23 in run 0. It passes 0.10 in 61 of the base model's cells and 22 of
+  run 0's, all of them ridge readouts. In the base model they spread over all four sites (best at the image-end
+  token 0.19, the question 0.14, the last token 0.14). In run 0 they sit mostly at the image sites (the last token
+  reaches 0.11, the question 0.09). No cell reaches 0.30. The best median angle errors are 46 and 51 degrees,
+  against 89 for chance. The signal is tied to the walk the model saw: the shuffled control stays at or below 0 in
+  every cell, and the margins at the best cells are 0.23 and 0.17. It is there before fine-tuning and weaker after it.
+
+**What it means.** By the registered reading, the reviewers' alternative is ruled out for these recordings. Under the
+task prompt, neither the base model nor run 0 holds a room-general code for the new view's position in the walk's own
+first-frame coordinates (VGGT's convention), just as neither holds one in room coordinates. The best R^2 is 0.09 in
+the walk's frame and 0.03 in the room's. The only walk-relative information that reads out is weak: the new view's
+heading relative to the walk's start (R^2 0.22 in the base model and 0.16 in run 0), present before any training on
+the task, and in the base model only, a single cell for the position relative to the walk's last frame (0.105). The
+limits are those stated in the registration. The readouts are cross-room ridge and a small MLP, and the
+four-epoch runs are covered only when the command above runs on experiment 22's recordings. The table above gives
+the numbers for both frames side by side.
+
+*Exploratory (2026-10-28, not registered; `--exploratory`, stored under `exploratory` and `summary.exploratory`).*
+- *Which axis carries the signal.* At each target's best ridge cell, R^2 per column:
+
+  | model | `first_xy` forward / left | `last_xy` forward / left | `first_heading` cos / sin |
+  |---|---|---|---|
+  | base 8B | 0.22 / -0.05 | 0.24 / -0.03 | 0.34 / 0.09 |
+  | run 0 | 0.22 / -0.04 | 0.13 / -0.09 | 0.27 / 0.04 |
+
+  Everything that reads out lies on the front-back axis. The stream tells whether the new view faces the same way as
+  frame 1, and whether it lies ahead of or behind frame 1 (or frame 256), but not which side it is on. A median error
+  of about 46 degrees is what knowing only that front-back half gives. If the relative heading is uniform and a
+  readout predicts either 0 or 180 degrees, its errors are uniform from 0 to 90 degrees, with a median of 45. A
+  coordinate code would carry the left-right axis as well. A mirror-symmetric signal like this one is what comparing
+  the new view with the walk's first image would give: a view that faces the same way as frame 1 and stands in front
+  of it sees much of what frame 1 saw. Because of this split, the registered two-column `first_xy` R^2 (0.09) averages
+  a front-back component of 0.22 with a left-right component of nothing.
+- *An appearance baseline does not reproduce it.* DINOv2-base CLS cosine similarity between the new view and frame 1,
+  and between the new view and frame 256, fed to the same cross-room ridge and MLP, gives R^2 0.03 for `first_xy`,
+  0.00 for `last_xy` and 0.02 for `first_heading` (shuffled: at most 0). So if the signal is a view comparison, it is
+  made in the model's own features rather than in DINOv2's global similarity, and this analysis does not identify
+  the mechanism.
+
+*Four-epoch runs:* not yet run. Experiment 22's recordings are projected for Sat about 17:07-19:22 PDT (vast3:306). On
+the Mac the probe took about 1 h per model, so six models need more than the 4 h in the command above. Submit it
+with `--est 7h` once the script is copied to vast-3.
 
 ## Experiment 27 (pre-registered 2026-10-28 10:11 PDT, before any new patch was run): is VGGT's causal subspace about position, or about where the camera token varies?
 
@@ -5097,8 +5213,44 @@ bootstrap CIs, room-level sign tests, and pooled trial-level sign tests. With A(
 `specs.json` (every swap frame's pose and MD5), `stimulus_check.json`, and one JSONL per run and condition.
 `frame_cut.py`, `task_record.py` and `two_choice.py` are imported and not changed.
 
-**Status.** Registered at 10:26 PDT. The stimulus build is queued on the Mac as a CPU job (gq mac:138). The stimulus
-check and the model jobs follow once this registration is committed.
+**Status.** Registered at 10:26 PDT (committed and pushed as 1ecfd03). The stimulus build is queued on the Mac as a
+CPU job (gq mac:138).
+
+*Note (2026-10-28 10:40 PDT, before any model saw a swapped walk; implementation, no design change).* Checks so far:
+- In a build test on P5000 and P5005, every frame of the near and random sets re-rendered byte-identically at its
+  original pose (P5000: all 119 trials; P5005: its blob-free frames). Every P5005 trial had a swap frame that shows a
+  blob texture, as the registration expected.
+- vast-3 renders 30 arbitrary poses in three of the rooms byte-identically to the Mac (gq vast3:333), so the swap
+  frames can be rendered there; each model job also re-renders one trial per room and checks the MD5s before it starts.
+- Dry runs of 6 there-toward and 3 near-cut prompts on P5000 matched experiment 10's token counts, and the swapped
+  labels were the near set's; the prep job below repeats this on 20 there-toward prompts after the full build and
+  writes a preview PNG to `results/vlm_intervention/`.
+- The analysis was run on synthetic run files built from the two agents' answers on 30 P5000 trials (`--test`): the
+  place agent came out "place", the view agent "view plus walk", and the place agent with its here-away answers
+  replaced by its there-away ones came out "inconclusive: conjunction". On those 30 trials the there-toward frames'
+  best DINOv2 cosine with the new view (0.83) was at least the original near set's (0.80), and 93% of them showed a
+  landmark the new view shows (here-away 1%, there-away 13%). Those test outputs were deleted; the full stimulus
+  check replaces them.
+- The model loop was run end to end on 4 P5000 trials with a stand-in for the model (CPU): clean ran first and its
+  check passed, then here-away with every frame rendered in the worker processes and checked by MD5, then near-cut
+  with the near set's token spans; every prompt matched experiment 10's token count.
+
+The stimulus check gates the model jobs. `scripts/mac/vlm_intervention_prep.sh` (gq mac:139, CPU, after the build)
+runs the stimulus check, then `scripts/vlm_intervention_analysis.py --check-stimulus` (which exits 1 unless the two
+agents get their expected verdicts on every included trial), then copies the code, `specs.json`,
+`stimulus_check.json` and experiment 15's DINOv2 file into the vast-3 container and checks them by MD5. If the check
+fails, the job fails, the Mac model job never starts, and the vast-3 jobs stop at their own copy of the same gate.
+
+Model jobs, queued 2026-10-28 10:37 PDT at priority 150 behind every existing job (projected PDT times at
+submission):
+- gq vast3:334 `e29_s5` (run 5, about 1 h 45 min): Sat about 19:47-21:32;
+- gq vast3:335 `e29_s7` (run 7, about 1 h 45 min): Sat about 21:32-23:17;
+- gq mac:140 `e29_s0` (run 0, about 10 h 30 min, after mac:139): Sat about 19:57 to Sun about 06:30.
+On a rented RTX 5090 or H100 started now, all three runs would take about 5 h of GPU time plus 1-2 h of setup (the
+nine rooms' walks, about 9 GB, and the model weights), so results in about 7 h; run 0 would then run on CUDA rather
+than on the device of its experiment-10 answers. Nothing is rented. Analysis once the jobs finish:
+`.venv-claude/bin/python scripts/vlm_intervention_analysis.py --fetch` -> `results/vlm_intervention.json`. `--fetch`
+copies only runs 5 and 7's JSONL files from vast-3, never its whole `results/`.
 
 ## Prior work this builds on
 

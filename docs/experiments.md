@@ -4409,7 +4409,161 @@ from the Mac, and Opus answered through the API.
   verdict is restated once all five finish. No run is dropped or repeated because of its result. A job that
   crashes is restarted, and it resumes where it stopped.
 
-**Status.** Registered; jobs not yet submitted.
+**Status.** Registered (committed and pushed as efbf81d, 09:52 PDT). Jobs queued 2026-10-28 09:52 PDT through
+gq on the Mac at priority 150, behind experiment 19's Mac jobs (none can start before about Thu 21:40 PDT),
+one per run: mac:130 (run 5), mac:131 (run 7),
+mac:132 (run 3), mac:133 (run 4) and mac:134 (run 6), each with an estimate of 9 h 15 min. Projected starts
+at submission: Thu 21:42, Fri 06:57, Fri 16:12, Sat 01:27 and Sat 10:42 PDT, so the last should end about
+Sat 20:00 PDT. When they finish: `.venv-claude/bin/python scripts/lora256_analysis.py`.
+
+## Experiment 25 (pre-registered 2026-10-28 10:10 PDT, before the assay was run on any recorded network or real control): a population-level test of a heading-invariant place code
+
+**Why.** All three GPT-6 Astra reviewers of round R1 (`writeup/paper/kit/paperscorer/rounds/R1/packet.md`) rate
+this as the main remaining major issue: a low share of strictly invariant units is not evidence against a
+heading-invariant code spread over the population. They ask for a population-level assay validated on
+heading-mixed positive controls. The paper has none. Strict cross-sector decoding (experiment 13e: a ridge
+trained on one 90-degree heading sector and tested on the opposite one) is not valid, because the base RNN,
+whose place units are 99% invariant, fails it with mirrored errors (7.57 m, about twice chance; experiment 13f).
+A readout trained on a single heading never sees heading vary, so it is free to lean on units that also carry
+heading, and on the opposite sector those units take values it never saw. This is proposal P9, approved by the
+user on 2026-10-28. Results go into the second arXiv version and the conference version.
+
+**Question.** When a linear readout of position is trained on some headings, how much of what it can do for
+headings it saw survives on a heading it never saw? And does such an assay, once it has passed controls whose
+answer is known, find a heading-invariant code in the vision-language models that the unit test misses?
+
+**Done before this registration.** The code (`scripts/population_assay.py`) and a pilot on synthetic populations
+only, with a seed (1000) that the registered run does not use, to choose between designs. No RNN, pixel or model
+activation has been through the assay. The pilot at noise k = 3 (2,000 units), as HG (defined below) against the
+share p of invariant place units: p = 0, 0.1, 0.2, 0.3, 0.5 and 1 gave -0.15, 0.20, 0.45, 0.60, 0.80 and 1.00, the
+same to 0.01 for the rotated populations; view-dependent units alone gave -0.72; 180-degree conjunctive units alone
+gave 0.50. The pilot settled three choices. (1) A 45-degree gap between training and test headings: without it
+(training on the 270 degrees outside the test sector), the population with no invariant units scored 0.16-0.22,
+because test frames near a sector edge share half their view with training frames. (2) Units are z-scored over all
+frames, not over the training frames (no positions are used), so that a unit nearly silent on the training headings
+is not blown up on the test heading. (3) A penalty grid in half-decade steps. The paper's strict split (training on
+the opposite sector only) scored 0.33 at p = 0.2, against 0.45 with the gap.
+
+**Primary assay: heading-held-out decoding.**
+- *Data.* Room A's 48 walks of 256 frames (`data/walks/meta.npz`; the RNN's 255 steps, as in experiment 13f). The
+  units are each condition's recorded units at each layer, the same activations experiment 13e scored, signed as in
+  its decoding. Each unit is z-scored with its own mean and SD over all frames (no positions used), and constant
+  units are dropped.
+- *Readouts.* For each test sector s (E, N, W or S, `analyze.sectors`) and each fold (training walks even and test
+  walks odd, then the reverse), two readouts are trained on the training walks and tested on the test walks' frames
+  that face s:
+  - the *unseen-heading* readout, trained on frames whose heading is at least 90 degrees from s's center (the
+    opposite half of the compass). The nearest training heading is 45 degrees outside s's edge, and a test frame
+    at s's center is 90 degrees from any training frame, so it shares no view with them (90-degree field of view);
+  - the *seen-heading* readout, trained on frames within 90 degrees of s's center (the half of the compass centered
+    on s: the same arc width and about the same number of frames, but including the test heading).
+- *Fit.* Ridge regression of (x, y) with an unpenalized intercept, solved exactly in kernel form. The penalty runs
+  from 1 to 1e8 per 1,000 training frames in half-decade steps. It is chosen by fitting on half of the training walks
+  (walk mod 4) and taking the median error on the other half, both inside the training arc; then the readout is
+  refit on all training-arc frames. The test heading never touches the fit or the penalty.
+- *Measure.* Every frame is tested exactly once (by its fold and its own sector). err_unseen and err_seen are the
+  median Euclidean errors over all frames; chance_unseen and chance_seen are the median errors of predicting each
+  readout's mean training position. The measure is
+  HG = (chance_unseen - err_unseen) / (chance_seen - err_seen),
+  the share of the position information a readout has for seen headings that survives a heading it never saw.
+  HG = 1 means fully heading-general, 0 means chance on the unseen heading, and below 0 means worse than chance
+  (for example mirrored). Its 95% interval comes from 1,000 bootstrap resamples of the 48 walks.
+- *Call, per layer.* "No position code" if the seen-heading readout beats chance by less than 0.5 m. Otherwise
+  *positive* if HG >= 0.5, *partial* if 0.25 <= HG < 0.5, *negative* if HG < 0.25. A condition's call is the call at
+  its best layer: the highest HG among its layers with a position code. Every condition, control or not, gets this
+  same maximum over its layers.
+
+**Secondary measures (reported, not used for any verdict).**
+- *No gap*: the unseen-heading readout trained on the 270 degrees outside s, the seen-heading readout on the 270
+  degrees centered on s.
+- *Strict*: trained on the opposite sector only, against the same sector (experiment 13e's split, with this readout).
+- *Population-vector correlation* (candidate a). Rate maps of the z-scored units are made per sector, once from the
+  even walks and once from the odd walks. Each sector's population vectors are centered across bins, which removes
+  any heading-wide offset. r_cross is the correlation over units between the vectors of the same bin for opposite
+  sectors (even against odd walks), averaged over bins both visit and the four ordered pairs; r_within is the same for
+  one sector, even against odd walks. The index is r_cross / r_within, with a null from 200 permutations of the bins.
+- Not run: the representational-similarity candidate (c), because partialling out view similarity needs a model of
+  views (pixels or DINOv2) that is itself one of the codes being compared, and the gap removes shared views by
+  construction; and an MLP readout, for time. Every decoding claim in the paper is linear.
+
+**Controls (run first, as their own job).**
+- *Positive: the path-integrating RNNs* of experiment 13f, `base` (sub-steps 1) and `s093` (sub-steps 3), anchored
+  (the regime they were trained in). Their free-running modes are reported beside them, outside the rule.
+- *Positive and graded: synthetic heading-mixed populations* (seed 2400). Each has 2,000 units read out along room
+  A's walks, built with experiment 21's generator functions in `scripts/heading_stat_validation.py` (`place_fields`,
+  `view_unit`, `wall_point`, `ar1_noise`), called unchanged. A share p = 0, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5 or 1 of
+  the units are heading-invariant place units (experiment 21's kind a). The rest are split evenly into conjunctive
+  place-by-heading units with 60- and 90-degree windows (kind c), view-dependent units (kind d, wall points and
+  pillars alternating) and head-direction units (von Mises tuning, concentration 1-6, no place field), which stand for
+  the heading signal the RNN carries. Each unit gets a constant offset (0-10% of its peak) and AR(1) noise (rho 0.5) at
+  k = 1, 3 and 5 times its SD; at k = 3 invariant units have about the real units' median split-half stability
+  (0.86). Every population also comes in a rotated version: the z-scored units times a random orthogonal matrix, so
+  every unit is a mixture. The population code is unchanged, but for 0 < p < 1 no unit is a pure place unit. The
+  paper's unit statistic (`analyze_layer`, quadrant) is run on every k = 3 population, plain and rotated, to show what
+  the unit test says about the same populations.
+- *Negative.* Pixels; single frames with no context in VGGT (`vggt-alone`, experiment 13e's "VGGT alone"), in
+  Qwen3-VL-2B (`qwen-single`) and in Qwen3-VL-8B (`qwen8b-single`), all layers; and synthetic populations of
+  view-dependent units only (2,000 units; k = 1, 3, 5; plain and rotated). VGGT-single is not a negative control:
+  each of its frames is seen with 8 anchor frames, and VGGT then estimates the camera's pose in the anchors' frame
+  (experiment 14e), so it is a test condition.
+- *Boundary cases* (reported, outside the rule): 180-degree conjunctive units alone, and with p = 0.1. In the pilot
+  they scored about 0.5. A unit that fires over half the compass keeps its field over much of the heading range, so a
+  population of them does carry position information across headings.
+
+**Validation rule.** The assay is validated only if all of these hold:
+1. both anchored RNNs are called positive;
+2. every negative control is negative (HG < 0.25) or has no position code, at every layer, and every views-only
+   synthetic population is negative;
+3. for each noise level and both versions (plain and rotated) of the synthetic mixtures, HG never falls by more
+   than 0.05 from one p to the next (monotone), p = 0 is negative, and every p >= 0.5 is positive.
+
+If any part fails, the assay is not validated. It is then reported with the failure, no model result is read as
+evidence either way, and the paper's claim stays at the unit level. The two secondary decoding variants go through
+the same rule and are reported (the strict one is expected to fail on the base RNN, as in 13f). If the primary fails
+and a secondary passes, that is reported as exploratory and not substituted. The model conditions are submitted
+only after the controls job has finished and the rule has been applied.
+
+**Model conditions (after validation).** Every condition in `results/summary_quadrant.json` other than the negative
+controls, all layers, in this order: the fine-tuned run 0's walk, single and single+ema8 (`qwen8b-ft-*`); base 8B
+walk and single+ema8; VGGT-single; VGGT-walk; Qwen3-VL-2B walk, shuffled, single+ema8 and random weights; pixels
+with the 8-step moving average; DINOv2 and random DINOv2; SenseNova 8B, Qwen3.8-27B and Qwen3-VL-32B (walk, single,
+single+ema8); then the moving-average sweeps (2, 4, 16, 32 steps) for Qwen3-VL-2B and pixels. Secondary: the
+teleport probes (64 per walk, `probes_meta.npz`) of the fine-tuned run 0 (after the walk, after the shuffled walk,
+alone) and of base 8B (after the walk, alone), without the population-vector measure, since the probes are too
+sparse for maps per sector. Then experiment 22's four-epoch recordings on vast-3, once job vast3:305 has made them:
+`qwen8b-ft-rerun-*` and `qwen8b-ft-e4-s3` to `-s7`, each walk, single and single+ema8, and their probes.
+
+**Decision rule (applied only if the assay is validated).** The primary question is the fine-tuned model with the
+walk in context: run 0 (`qwen8b-ft-walk`) and, once recorded, the five four-epoch runs, each called on its own.
+- *Negative* in every run: a linear readout finds no heading-general position code in the population, so the
+  position information there is heading-specific (view-like). The paper can extend "few strictly invariant units" to
+  "no heading-invariant population code that a linear readout finds".
+- *Partial* in any run: part of the position information carries across headings, less than half of what a readout
+  has for seen headings. The paper gives HG with its interval and the invariant share of a synthetic population with
+  the same HG (k = 3, plain; by interpolation), and keeps the unit-level claim with that number beside it.
+- *Positive* in any run: a heading-invariant population code exists although few units are invariant. The paper then
+  cannot say "not places" at the population level, says that the code is not carried by single units, and revises
+  its account of the mechanism.
+
+Described for every model, with no threshold: whether the moving average reaches the walk's population HG
+(single+ema8 at least the walk's HG minus 0.05), as the unit test found in every model; base against fine-tuned;
+VGGT-single and VGGT-walk against the RNN; the population-vector index beside HG; and what the unit statistic said
+about the same condition. Parity of the vast-3 rerun of run 0: HG within 0.05 of vast-1's original at every layer of
+walk and single. If parity fails, the four-epoch runs are compared with the rerun, as in experiment 22.
+
+**Add-on (experiment 21's gain index, approved under P4).** Experiment 21's amendment 1 already records the gain
+index on vast-1 for the RNNs, VGGT-single blocks 19 and 21, VGGT-walk block 19, run 0's walk, single and
+single+ema8, base 8B walk and single, Qwen3-VL-2B walk, pixels and pixels+ema8. The add-on covers the rest of
+`summary_quadrant.json` (all layers), with `heading_stat_validation.py --skip-synthetic --real <tags>` unchanged,
+written to its own file and merged into `results/heading_stat_validation.json` under `real_units` for tags that are
+not there yet. It runs in the same vast-1 CPU job, after the model conditions.
+
+**Where it runs.** CPU only, no cost. The synthetic populations run on the Mac through gq. The RNN, pixels and the
+model conditions run on vast-1 (`gq --on vast1 --cpu`, pinned with `taskset -c 8-15,24-31`) from a separate
+directory, `/workspace/MechInterp/exp25`, which holds copies of the committed `analyze.py`, `room.py` and
+`grid_rnn.py`, both scripts and the reference JSON files (md5s recorded), with `data/` linked to the project's; only
+the result JSON comes back. The four-epoch part runs on vast-3 as a CPU job after vast3:305. Outputs:
+`results/population_assay.json` (top-level `summary` with the paper's values) and this entry's results section.
 
 ## Prior work this builds on
 

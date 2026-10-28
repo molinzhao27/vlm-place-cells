@@ -5252,6 +5252,161 @@ than on the device of its experiment-10 answers. Nothing is rented. Analysis onc
 `.venv-claude/bin/python scripts/vlm_intervention_analysis.py --fetch` -> `results/vlm_intervention.json`. `--fetch`
 copies only runs 5 and 7's JSONL files from vast-3, never its whole `results/`.
 
+## Experiment 31 (pre-registered 2026-10-28 12:51 PDT, before any four-epoch run saw a reordered walk or a cut): walk-order controls and attention cuts on four-epoch runs 5 and 7
+
+**Why.** The paper now reports the four-epoch recipe (experiment 9c, runs 3-7) as its fine-tuned model; the two-epoch
+runs move to one paragraph and an appendix table. Two analyses of how the fine-tuned model uses the walk exist only for
+run 0, because experiment 9c's registration kept them there: experiment 13a (the walk shown reversed, window-shuffled
+or renumbered) and experiment 15 (8 walk frames hidden from attention). This experiment repeats both, as registered for
+run 0, on four-epoch runs 5 and 7. These are the two runs that experiment 29's intervention uses on vast-3, so the
+account of which frames the decision reads and the causal test rest on the same models. They are also the most and the
+least order-dependent four-epoch runs: in the held-out rooms the ordered walk beats the shuffled one by 42.9 and 15.1
+points (run 0: 41.2). "Reordered walk" in the title means 13a's three presentations and the relabeled shuffle below;
+the four-epoch runs have so far seen only the ordered walk, experiment 9c's shuffled walk and no walk.
+
+**What is repeated, and what changes.** Only the adapter and the device differ from run 0's analyses.
+- *31a, walk order (experiment 13a).* `two_choice.py --max-images 64` (experiment 10's 64-frame setting) with
+  `--reverse-walk`, `--window-shuffle 8` and `--renumber`, on all 192 trials of each held-out room P5000-P5009, as for
+  run 0; analyzed on the 1,299 novel trials. The block order and the renumbered labels are drawn from seeds taken from
+  the walk, not the model (`present()`), so every prompt is the one run 0 saw.
+- *31b, attention cuts (experiment 15).* `frame_cut.py` on the 1,299 novel trials: clean, then experiment 15's check,
+  then the near, look-alike, random and far sets cut in all 36 decoder layers, then the near and look-alike sets cut in
+  layers 1-18 or 19-36 only, on P5000-P5002 (399 trials). The sets are built from the same DINOv2 file
+  (`data/frame_cut/dino_lookalike.json`) and the same seeds (the random set from the SHA-256 of room and trial id), so
+  each set is the one cut in run 0. The layer windows keep run 0's split at 18/19, although experiment 22 may place the
+  four-epoch runs' decision layer elsewhere; as for run 0 they are secondary and not tested formally.
+- *31c, added (coordinator, 2026-10-28): the shuffled walk relabeled.* `--shuffle-walk --relabel`, on the same 192
+  trials per room. In `present()`, `--shuffle-walk` puts the shown frames in an order drawn from `random.Random(walk)`,
+  with or without `--relabel`, so the frames appear in exactly the order of experiment 9c's shuffled runs. Without
+  `--relabel` (experiment 9c) each frame keeps its real frame number, so a model could re-sort the walk by its labels;
+  with `--relabel` the frames are numbered 1, 2, ... as shown and the options are named by those numbers. Only the labels
+  differ between the two runs.
+- *References from experiment 9c, not rerun:* the ordered walk (O), the shuffled walk with real labels (S) and no walk
+  (NW). Runs 5 and 7 made these answers on vast-3 (CUDA), except in P5005, which was answered on the Mac (MPS). So that
+  every contrast compares answers from one device, each job reruns P5005's ordered and shuffled walks on CUDA, from the
+  Mac's P5005 frames, which are byte-identical in the vast-3 container. The analysis uses those reruns and reports their
+  agreement with the MPS answers. No walk enters no criterion and stays the experiment-9c record.
+- *Models and device:* `data/ft/qwen8b-proc-e4-s5` and `data/ft/qwen8b-proc-e4-s7` on vast-3 (RTX 5090, CUDA, bf16,
+  adapter merged, greedy decoding), the device of their experiment-9c answers. Run 0's analyses ran on the Mac (MPS).
+  `two_choice.py` and `frame_cut.py` are run unchanged.
+
+**Checks before any new presentation or cut.**
+- *Parity:* each job first reruns the ordered walk in P5000 (192 trials) and stops unless at least 98% of its answers
+  equal the stored experiment-9c answers.
+- *Experiment 15's check:* the clean run must reproduce the stored answers (CUDA in nine rooms, MPS in P5005) on at
+  least 99% of the 1,299 trials, or no cut is run.
+- *Before submission (no model):* the walks, trial lists, adapters and experiment-9c answer files on vast-3 have the
+  Mac's MD5s; a dry run rebuilds every novel trial's four sets and compares them with the sets stored in run 0's
+  experiment-15 files.
+
+**Measures.** As for run 0 (`scripts/exp13_analysis.py`, `scripts/frame_cut_analysis.py`): novel-trial accuracy per
+room in each condition (unparsed answers count as wrong), means over the ten rooms, 95% bootstrap CIs over rooms
+(10,000 resamples, seed 0), paired per-room differences, room-level and pooled trial-level sign tests. Ratios are
+bootstrapped as ratios of resampled means. Every measure is also computed on the log-odds scale, from each room's
+empirical logit, log((k + 0.5)/(n - k + 0.5)) for k correct answers of n.
+
+**How the ceiling is handled.** Runs 5 and 7 answer 97% of these trials correctly with the ordered walk, against run 0's
+92.5%. A reordering or a cut can lower accuracy freely, so the direction of every contrast can be tested as for run 0.
+But the same loss of evidence moves accuracy fewer points near the ceiling: one unit of log-odds takes 97% to 92%, and
+92.5% to 82%. So (a) directions are tested in points, as registered for run 0; (b) every margin that stands for "no
+effect", and the comparison of look-alikes with near neighbors, is set on the log-odds scale; (c) 31a's criteria are
+shares of each run's own order effect, computed on both scales. A criterion whose verdict (from points) differs on the
+log-odds scale is marked *scale-dependent*. Run 0's values quoted below were computed from its stored files before this
+registration, to check that the rule classifies run 0 itself as "replicates" on both scales (it does). Two log-odds
+margins are defined as a quarter of run 0's effect; every other threshold comes from the claim it tests.
+
+**Decision rule, set now (for each run).** Each criterion compares a 95% CI with a threshold: *replicates* if the CI
+lies wholly on run 0's side, *differs* if it lies wholly on the other side, *inconclusive* if it contains the threshold.
+
+*31a (experiment 13a's pattern).* O ordered, R the shuffled and relabeled walk (31c), W window-shuffled, V reversed,
+N renumbered; order effect D = O - R.
+- Why R and not S as the floor: W and V are numbered 1, 2, ... in the order shown, as R is, so R is the floor matched
+  to them. A model that re-sorts S by its real frame numbers raises S and shrinks D. Run 0's analysis used S; for run 0
+  the two floors coincide in practice, since its S (51.3%) was below its no-walk accuracy (55.9%), and in room A its
+  shuffled walk scored 50.0% both with and without relabeling (102 novel trials, experiment 9). Every R-based value is
+  reported next to the S-based one (run 0's definition).
+- Gate: D at least 10 points, with its CI above 0. Otherwise 31a is inconclusive for that run: with a smaller order
+  effect, the shares below have denominators only a few times their own uncertainty.
+- C1, no label arithmetic: O - N below 3 points (log-odds: 0.4, which is 3 points at run 0's 92.5%). The renumbered
+  labels keep time order but no longer count steps, so a model that read distances off label differences should lose a
+  large part of its order effect. 3 points is about twice run 0's CI half-width for this contrast and at most a fifth
+  of either run's order effect. Run 0: +0.6 [-0.8, +1.9].
+- C2, mostly local: the share of the order effect that window shuffling keeps, (W - R)/D, above 0.5 (more than half of
+  what order provides lies within blocks of 8 shown frames). Run 0 (with S): 0.74 [0.69, 0.79]; log-odds 0.60 [0.54, 0.65].
+- C3, direction of travel: the share that reversal removes, (O - V)/D, above 0.25. A symmetric "look-alike frame, then
+  its time-neighbors" strategy predicts about 0; a quarter is a clear departure from that and well below run 0's value,
+  so a weaker but real dependence on direction still counts. Run 0 (with S): 0.60 [0.53, 0.67]; log-odds 0.72 [0.65, 0.78].
+- C4, the ordering R < V < W < O: V - R, W - V and O - W each above 0 (differs if any of the three CIs lies below 0).
+  Run 0 (with S): +16.5, +14.1 and +10.6 points, each CI above 0.
+- 31a verdict: replicates if C1-C4 all replicate; differs if any differs; otherwise inconclusive, naming the criteria.
+
+*31b (experiment 15's pattern).* The excess log-odds cost of cutting set X, beyond cutting 8 random frames, is
+e_X = logit(random) - logit(X), per room.
+- Gate: experiment 15's clean check (above).
+- F1, the walk around the near option is read: near - random (points) below 0. Differs if that CI lies above 0, or if
+  e_near's CI lies within +-0.20 (a quarter of run 0's 0.81; the near cut then costs about what a random cut costs).
+  Run 0: -8.6 [-10.0, -7.3]; e_near 0.81 [0.66, 0.94].
+- F2, near neighbors matter more than far ones: near - far (points) below 0. Differs if that CI lies above 0, or if
+  (e_near - e_far)'s CI lies within +-0.14 (a quarter of run 0's 0.56). Run 0: -6.1 [-8.2, -3.8].
+- F1 and F2 can both replicate in direction and fall inside their margin when the effect is real but small; they then
+  count as replicates, labeled *weaker* (under a quarter of run 0's effect on the log-odds scale).
+- F3, look-alikes are not what is read: e_lookalike - 0.5 e_near below 0 (look-alikes cost less than half of what the
+  near neighbors cost beyond random); differs if its CI lies above 0. Run 0: -0.28 [-0.49, -0.11]. Run 0's own wording,
+  look-alike - random in points with a CI containing 0 (-1.2 [-2.7, +0.2]), is reported next to it.
+- 31b verdict: replicates if F1-F3 all replicate; differs if any differs; otherwise inconclusive.
+
+*31c (labels in the shuffled walk).* Label effect L = S - R in points, against no walk NW:
+- *the labels carry the shuffled walk's accuracy*: L's CI above 0, and R - NW's CI not above 0 (relabeling takes the
+  shuffled walk down to the no-walk level or below);
+- *the labels carry part of it*: L's CI above 0 and R - NW's CI above 0;
+- *the labels carry none of it*: L's CI within +-3 points (a few points, as C1);
+- *relabeling helps*: L's CI below 0 (not expected; reported as found);
+- otherwise inconclusive.
+The reference is no walk rather than 50% because the fine-tuned runs answer above chance from the two options alone
+(run 5: 52.9%, run 7: 63.7%), from the appearance cue of experiment 13d; R against 50% is reported too. This is a new
+test, not part of run 0's pattern, so it has its own verdict per run. The two runs bracket the four-epoch range of
+shuffled accuracy in the held-out rooms (run 5: 54.4%, near its no walk; run 7: 82.1%), so run 7 is the informative
+one; with run 5, "none" or "inconclusive" is the likely reading.
+
+*Recipe level:* for 31a and 31b, the verdict that runs 5 and 7 share; if they differ, *mixed*, with each run's verdict.
+
+*Reported, not part of any verdict:* every condition and contrast in the layout of run 0's tables; paired per-room
+differences from run 0 on both scales (for example the local share minus run 0's 0.74); experiment 15's repeats on the
+trials without overlap (503 and 1,028); the layer windows; each cut minus clean; first-listed and parse rates; P5005's
+CUDA-MPS agreement; the agreement of 31b's near cut with experiment 29's near-cut condition on the trials both cover.
+
+**What each outcome means for the paper.**
+- *31a and 31b replicate:* the paper describes the four-epoch recipe's use of the walk with run 0's statements
+  (renumbering costs nothing; most of the order effect is local; the direction of travel matters; the decision reads the
+  walk around the near option, not the frames that look like the new view), with runs 5 and 7's numbers in the main
+  text and run 0's in the appendix. For these two runs this also confirms the premise of experiment 29's swap: the near
+  set is what the decision reads.
+- *31a differs:* the paper names the criterion that changes with the longer schedule (for example, a local share below
+  0.5 would mean that the four-epoch runs use order over stretches longer than 8 frames) and keeps run 0's statements as
+  statements about run 0.
+- *31b differs:* which frames the decision reads is stated for run 0 only, and experiment 29's runs 5 and 7 are read
+  with that in mind (if the near set is not special for them, their swap gap may be small, and experiment 29's own
+  validity gate decides).
+- *31c:* if the labels carry run 7's shuffled accuracy, the ordered-minus-shuffled contrast with real frame numbers
+  understates how much the four-epoch runs depend on order, and the paper says that the experiment-9c shuffle leaves
+  order recoverable from the labels; the relabeled shuffle is then the matched "no order" control. If the labels carry
+  none of it, run 7 does well with an unordered set of frames, and its smaller order effect is a property of the run.
+- *Inconclusive or mixed:* reported run by run with the reason (a gate, a threshold inside the CI, a scale-dependent
+  share), and no statement about the recipe.
+
+**Cost and time.** No API cost. On vast-3, per run: the parity rerun about 3 min; 31a and 31c, 40 runs of 192 trials
+plus P5005's two reruns at about 0.64 s per trial (experiment 9c's tests there), about 95 min; 31b's five primary
+conditions on 1,299 trials and four windows on 399, at about 0.65 s per trial (experiment 29's estimate with the same
+hooks), about 90 min. About 3 h 30 min per run, 7 h for both, at priority 150 after the vast-3 jobs already queued for
+experiment 29.
+
+**Files.** `scripts/run_exp31.sh` (the vast-3 job); `scripts/exp31_analysis.py` -> `results/exp31_summary.json`, with
+a top-level `summary`; its `--test` reproduces run 0's experiment-13a and experiment-15 numbers from run 0's files, and
+`--fetch` copies only this experiment's answer files from vast-3. Outputs:
+`results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s{5,7}-roomP50xx-256px-max64-{reversed,window8,renumbered,shuffled-relabel}.jsonl`;
+`results/two_choice/exp31/` (the parity rerun and P5005's CUDA reruns, kept out of `two_choice --score`);
+`results/frame_cut/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s{5,7}-<condition>[-layersLO-HI].jsonl`.
+
 ## Prior work this builds on
 
 - Luo, Mok & Love 2024, *The inevitability and superfluousness of cell types in

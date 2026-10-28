@@ -3846,6 +3846,78 @@ more than twofold.
   qwen8b-ft-e4-s3-walk qwen8b-ft-e4-s4-walk qwen8b-ft-e4-s5-walk qwen8b-ft-e4-s6-walk qwen8b-ft-e4-s7-walk`.
   Add the `-single` and `-single+ema8` tags if wanted.
 
+### Exp 21 amendment 1 (registered 2026-10-28 09:50 PDT, before any axis-check score was computed): the two axes compared with each other
+
+**Why.** A reviewer major that recurs across reruns: the strict score averages corr(N, S) and
+corr(E, W), and the two axes are never compared with each other. A unit whose field sits in one place
+when it faces north or south, and in another place when it faces east or west, can therefore pass.
+The user approved this check on 2026-10-28 ("Run it").
+
+**Measures.** Place units are selected exactly as before, by `analyze_layer`, unchanged. For each place
+unit, the four sector maps (E, N, W and S: `analyze.sectors` and `analyze.rate_maps`) are correlated in
+all six pairs with `analyze.map_corr`, each pair over the bins both of its sectors visit (at least 3
+frames each). The pairs are the two opposite ones the paper uses (N-S and E-W) and the four adjacent
+ones (N-E, N-W, S-E and S-W). Three shares of place units are reported side by side:
+- the *mean of two* (the paper's measure): (N-S + E-W) / 2 > 0.5;
+- *(1) both opposite pairs*: N-S > 0.5 and E-W > 0.5;
+- *(2) all six pairs*: the smallest of the six correlations > 0.5, meaning the field stays put in all
+  four facing sectors.
+
+By construction, every unit that passes (2) passes (1), and every unit that passes (1) passes the mean of
+two, so the shares can only fall. The N-S and E-W correlations are the ones `analyze_layer`'s
+quadrant block computes, and the script stops unless they reproduce its fraction exactly. Adjacent
+sectors share part of the view (with a 90-degree field of view, frames on either side of a sector edge
+see nearly the same thing), so on their own the adjacent pairs are a weaker test of heading than the
+opposite pairs. Their job here is to tie the two axes together.
+
+**Synthetic units first.** These are the main run's units (kinds a-d, same seeds, so the same units)
+plus a new kind (e), *axis-split place units*. Such a unit has one field (f1) on the north-south axis
+and another (f2, with an independent center drawn from the walk positions) on the east-west axis. It
+comes in two variants of 100 units each:
+- hard: f1 while the heading is in the N or S sector (|sin theta| > |cos theta|) and f2 in E or W;
+- smooth: sin^2(theta) f1 + cos^2(theta) f2.
+
+Noise, noise levels, rho (0.5 primary, 0 and 0.9 for sensitivity), the primary stability window
+(0.809-0.909) and the stability bins are as in the main run. For each kind the report gives the three
+shares in the window and by bin. Expected by construction:
+- (e) passes the mean of two and (1), because each axis on its own sees one consistent field, and only
+  (2) catches it.
+- (1) catches units that pass on one axis and fail the other, such as 180-degree conjunctive units
+  centered on a cardinal direction (N-S near 0, E-W near 1).
+- (2) takes a minimum over six noisy correlations, each from about a quarter of the frames, so invariant
+  units (a) will pass it less often at low reliability. The synthetic run measures how much, and that
+  is the reference for reading any drop in real units.
+
+**Real conditions** (room A, `data/walks`; their activations are on vast-1):
+- the path-integrating RNNs `base` and `s093` (experiment 13f), each anchored and free;
+- VGGT-single blocks 19 and 21, and VGGT-walk block 19;
+- the fine-tuned run 0's walk, single and single+ema8 conditions (`qwen8b-ft-*`, all 7 layers);
+- base Qwen3-VL-8B's walk and single conditions (all 7 layers);
+- Qwen3-VL-2B's walk condition (`qwen-walk`, all 7 layers, since the paper cites it);
+- pixels and pixels+ema8.
+
+Each condition's `frac_place` and mean-of-two fraction are checked against `summary_quadrant.json` or
+`grid_rnn_quadrant.json`, and any difference is reported. The same pass records the gain index for
+these conditions (the main run's descriptive measure). It runs as one gq CPU job on vast-1
+(`--on vast1 --cpu`, pinned with `taskset -c 8-15,24-31`), after the synthetic part. Only the script is
+copied there (checked by md5), and only the output JSON comes back. vast-1's `analyze.py` is the earlier
+version that produced `summary_quadrant.json`; it bins positions inline, and the script uses that same
+expression there.
+
+**Decision rule.** The axis issue is closed if each of the four RNN conditions keeps at least 95% of its
+place units under (2); they are at 98-100% under the mean of two. If an RNN condition falls below 95%,
+its share under (2) is compared with the synthetic invariant units' pass rate under (2) in the
+stability bin of that condition's median place stability (rho = 0.5):
+- *Within 5 points of the reference:* the drop is a matter of reliability. The issue is closed with that
+  caveat, and the paper quotes (2) beside the reference.
+- *More than 5 points below:* the RNN has place units whose field moves between the axes. The strict
+  test's positive control is then weaker than the paper says, and the report says so plainly.
+
+The VLM conditions can only fall under (1) and (2). The report gives each condition's three shares side
+by side. The paper's statements that VLMs have few strictly invariant units hold whatever the outcome;
+what the rule decides is whether the RNN still shows the test can be passed. Results merge into
+`results/heading_stat_validation.json` under the key `axis_check`.
+
 ## Experiment 22 (pre-registered 2026-10-28 00:30 PDT, before any four-epoch run was recorded): the unit and task-readout analyses on the four-epoch runs
 
 **Why.** The paper's behavioral headline is the mean of the five four-epoch runs (experiment 9c, runs 3-7),

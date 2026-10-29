@@ -1433,6 +1433,36 @@ room A's novel trials is at least 85%, and no run is below 80% there. Otherwise 
 reported as the recipe not transferring, or transferring partly, with the numbers. All runs are
 reported either way, and nothing is selected after the tests.
 
+*Amendment 2 (2026-10-29 14:19 PDT, after runs 3-5 trained, before runs 6 and 7 started): the
+experiment stops at three runs, seeds 3, 4 and 5.* This is the user's decision. Every one of the three
+runs ended training below the rule's 85% held-out threshold. On the 64 held-out training-style rooms at
+update 568 they scored:
+- run 3: 49/64 (77%);
+- run 4: 52/64 (81%);
+- run 5: 35/64 (55%). Its loss never fell below 0.15; the last logged value was 0.173, about the
+  coin-flip level of 0.17.
+
+The rule's first condition needs every run at 85% or more. It has therefore failed, whatever runs 6
+and 7 would have done, so the recipe cannot be called "transferring to Gemma 4". Stopping frees vast-3
+for other experiments: about 23 h of training and scene tests by the queue's estimates, plus about
+7 h of experiment 19 scene tests. Runs 6 and 7 never trained, and no result of theirs
+exists:
+- their training and scene jobs (gq vast3:301-304) were cancelled before they started;
+- so were their experiment 19 scene jobs (vast3:325, 326, 331, 332);
+- `data/ft/gemma12b-proc-e4-s6` and `-s7` do not exist.
+
+When the user decided, the following results existed. They are reported in full whatever they show,
+as registered:
+- the training logs of runs 3-5;
+- the tests of base Gemma and runs 3-4 (rooms A and B and this experiment's scenes);
+- run 5's rooms A and B (its scene tests, vast3:300, were finishing).
+
+The verdict is reported over runs 3-5. The registration's own three-run fallback (see "Number of runs
+and time") is used: every run at least 85% held-out, the three-run mean on room A's novel trials at
+least 85%, and no run below 80% there. The other analyses use runs 3-5 as registered, with their mean
+and range, and Qwen's five four-epoch runs beside them. Base Gemma and runs 3-5 are still tested on
+experiment 19's scenes (vast3:321-324 and 327-330).
+
 ## Experiment 10 (pre-registered 2026-10-22, run 2026-10-23): many held-out rooms
 
 **Deviation found after the results below (2026-10-23, by an external review of the preprint).**
@@ -4800,7 +4830,7 @@ Best-layer all-six-pairs shares: single frames 0-1% (pixels 0, DINOv2 0.9%, Qwen
 moving-average sweep for pixels 24% / 71% / 99% / 100% and for Qwen3-VL-2B 11% / 52% / 95% / 98% at 2 / 4 / 16 / 32 steps.
 
 **Queued (PDT).**
-- vast3:336 (`e25_e4`, CPU, after vast3:305, projected Sat 18:12 to about Sun 01:00): the four-epoch runs and run 0's
+- vast3:336 (`e25_e4`, CPU, after vast3:305, projected at 16:57 PDT to run Sat 19:02 to about Sun 02:00): the four-epoch runs and run 0's
   re-record (`qwen8b-ft-rerun`), walk, single, single+ema8 and probes, into
   `/workspace/MechInterp/exp25/results/population_assay_e4.json` on vast-3. Then fetch that file (check its md5) and
   run `.venv-mac/bin/python scripts/population_assay.py merge --from <fetched file>`, which recomputes the verdict over

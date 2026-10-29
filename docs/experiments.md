@@ -1463,6 +1463,109 @@ least 85%, and no run below 80% there. The other analyses use runs 3-5 as regist
 and range, and Qwen's five four-epoch runs beside them. Base Gemma and runs 3-5 are still tested on
 experiment 19's scenes (vast3:321-324 and 327-330).
 
+### Exp 18 results (2026-10-29 15:10 PDT)
+
+The three runs trained without a crash or restart (gq vast3:294, 297 and 299). The tests ran on vast-3:
+- each run's scenes: vast3:295, 298 and 300;
+- base Gemma: vast3:296.
+
+Every test file is complete, 69 per model (rooms A and B and 21 scenes, three conditions each), 276 in
+all, all on CUDA (amendment 1). Summaries:
+- `results/two_choice/ft_seeds_gemma.json`: `e4-s<k>`, `base/<cond>`, `runs4ep/<cond>`, `training`,
+  `decision_rule_18`;
+- `results/gemma_scenes_summary.json`: per experiment `seeds`, `four_epoch_runs`, `base` and
+  `qwen_four_epoch_runs`.
+
+Accuracies there are fractions.
+
+**The decision rule is not met, on any of its three criteria: the recipe does not transfer reliably to
+Gemma 4.**
+
+| run | loss < 0.15 at update | held-out end | room A novel | room B novel |
+|---|---|---|---|---|
+| e4-s3 | 485 | 76.6% (49/64) | 79.4% (81/102) | 68.9% (73/106) |
+| e4-s4 | 160 | 81.3% (52/64) | 89.2% (91/102) | 91.5% (97/106) |
+| e4-s5 | never | 54.7% (35/64) | 50.0% (51/102) | 43.4% (46/106) |
+| base Gemma | | 45.3% (update 0) | 53.9% (55/102) | 42.5% (45/106) |
+
+- No run ends at 85% held-out (54.7-81.3%).
+- The three-run room A novel mean is 72.9%, against a required 85%.
+- Two runs are below 80% there (run 3 79.4%, run 5 50.0%).
+
+**Training.** Gemma leaves the coin-flip plateau (loss about 0.17) late or not at all, and ends far from
+Qwen's final loss:
+- Run 3 stays on it until about update 440 and is still improving at update 568 (held-out 66% at 450, 75%
+  at 525, 77% at the end).
+- Run 4 first falls below 0.15 at update 160. It goes back to the plateau at updates 200-225 and 250-270,
+  and leaves it for good at about update 275. Its held-out accuracy reaches 80% at update 350 and stays
+  at 78-84% from then on.
+- Run 5 never leaves the plateau.
+
+Final loss: 0.122, 0.056 and 0.173, against 0.001-0.003 for Qwen's four-epoch runs.
+
+**Rooms A and B, novel trials** (walk / no walk / shuffled; ordered walk better/worse than each, by
+trial):
+
+| run | room A | walk vs no walk | walk vs shuffled | room B | walk vs no walk | walk vs shuffled |
+|---|---|---|---|---|---|---|
+| e4-s3 | 79.4 / 52.9 / 62.7 | 32/5 | 22/5 | 68.9 / 49.1 / 57.5 | 27/6 | 26/14 |
+| e4-s4 | 89.2 / 58.8 / 65.7 | 34/3 | 27/3 | 91.5 / 61.3 / 61.3 | 35/3 | 34/2 |
+| e4-s5 | 50.0 / 52.0 / 50.0 | 15/17 | 3/3 | 43.4 / 52.8 / 46.2 | 9/19 | 0/3 |
+| base | 53.9 / 53.9 / 53.9 | | | 42.5 / 53.8 / 53.8 | | |
+
+Base Gemma's three equal room A scores are a coincidence: its no-walk and shuffled answers agree on 85
+of 192 trials. In its no-walk tests it picks the second-listed option on 82% of trials.
+
+**The scenes, side by side** (primary measures; the three Gemma runs, base Gemma, the mean of Qwen's
+five four-epoch runs and Opus 5.5 with the walk):
+
+| scene and measure | Gemma runs 3 / 4 / 5 (mean) | base Gemma | Qwen 4 epochs (mean) | Opus |
+|---|---|---|---|---|
+| held-out procedural rooms, novel, room mean | 70.5 / 88.6 / 48.4 (69.2) | 51.9 | 97.1 | 69.2 |
+| apartments, all lure-free trials, pooled | 61.8 / 76.9 / 52.3 (63.7) | 58.1 | 91.5 | 84.1 |
+| apartments, novel trials only (58), pooled | 74.1 / 67.2 / 34.5 (58.6) | 51.7 | 85.5 | 89.7 |
+| houses, all trials, house mean | 66.3 / 83.7 / 49.4 (66.4) | 57.6 | 94.5 | 87.9 |
+| houses, novel trials, house mean | 63.8 / 79.5 / 42.0 (61.8) | 53.3 | 89.6 | 84.2 |
+
+Without the walk the runs score 45-60% (means 49.4-52.8%), and with the shuffled walk 33-63% (means
+47.7-57.4%).
+
+**Each run, by scene** (differences in points; room or house mean, or pooled for the apartments):
+- *Run 4* learned the task.
+  - Held-out rooms, 10/10 rooms each: it beats base by +36.6, no walk by +28.8, the shuffled walk by
+    +26.0, and Opus by +19.3.
+  - Houses, all trials, 8/8 houses each: it beats base (+26.1), no walk (+28.5) and shuffled (+24.6).
+  - Apartments, all trials: it beats base (+18.9), no walk (+25.8) and shuffled (+20.5), all p ≤ 1e-10.
+  - It trails Opus in the photoreal scenes: apartments -7.2 (p 0.003), houses -4.3 (behind in 7 of 8
+    houses, p 0.0014), and the apartments' novel trials -22.4 (2 trials better, 15 worse).
+- *Run 3* learned part of it.
+  - Held-out rooms: it beats base (+18.5) and no walk (+21.5) in 10/10 rooms, and shuffled by +8.7 in
+    9/10. It ties Opus (+1.2, ahead in 7 rooms and behind in 3, p 0.52).
+  - Houses, all trials: it beats base (+8.7, 8/8), no walk (+17.2, 8/8) and shuffled (+8.1, 7/8), and is
+    21.6 points behind Opus (behind in 8/8).
+  - Apartments, all trials: it beats no walk (+10.1, p 0.0004) but not base (+3.8, p 0.16) or shuffled
+    (+2.0, p 0.50), and is 22.3 behind Opus.
+- *Run 5* learned nothing usable. It is at chance in every scene (48.4, 52.3 and 49.4%) and below base
+  Gemma in the held-out rooms (-3.5, lower in 7/10 rooms, p 0.08) and the houses (-8.2, lower in 8/8,
+  p 1e-5). The walk's order makes no difference to it: in the held-out rooms its ordered and shuffled
+  answers differ on only 54 of 1,299 trials (32 of them right with the ordered walk, 22 with the
+  shuffled one).
+
+**Reading.**
+- Gemma-4-12B can learn the walk-dependent skill: the ordered walk beats no walk and the shuffled walk
+  in runs 3 and 4. But under Qwen's four-epoch recipe it learns slowly and unreliably. One run of three
+  gets most of the way, one gets part of the way, and one does not start.
+- Every Gemma run is below every Qwen four-epoch run on every measure. Its best run (run 4) is below
+  Qwen's lowest by 7.7 points in the held-out rooms and by 9-17 points in the photoreal scenes. Only in
+  the held-out procedural rooms is any Gemma run ahead of Opus.
+- What differs between the families is not separated here. The 12B has no vision encoder, so the
+  LoRA'd language model does all the visual processing that a frozen vision transformer does for Qwen.
+  The schedule was also set on Qwen, and all three Gemma runs end with a loss well above Qwen's. The
+  comparison is descriptive, as registered; the runs are not paired across families.
+- A longer schedule for Gemma would be a new experiment and has not been run.
+- Experiment 19's scenes for base Gemma and runs 3-5 are still running (vast3:321-324, 327-330, to about
+  Fri 12:20 PDT) and are reported under experiment 19.
+
 ## Experiment 10 (pre-registered 2026-10-22, run 2026-10-23): many held-out rooms
 
 **Deviation found after the results below (2026-10-23, by an external review of the preprint).**
@@ -3414,6 +3517,28 @@ anyway, for Gemma. The Mac-vast-3 parity check runs on the first vast-3 scene.
   and every file's SHA-256 matched.
 - Opus's key-1 queue is therefore ReplicaFRL0, 1, 3, 4, 5. Its parity scene on vast-3 is HSSD20 (walks
   0-3, 24 trials).
+
+*Opus coverage (2026-10-28 01:45 PDT).* Both Opus queues stopped under the budget rule above:
+- Key 2 did HSSD9-13 and stopped at HSSD14, which needed 1.25 x $7.87 with $3.64 left.
+- Key 1 did ReplicaFRL0, 1, 3 and 4 and stopped at ReplicaFRL5, which needed 1.25 x $4.10 with $2.68 left.
+
+Every finished file covers all of its scene's trials. Experiment 19's Opus spend is $48.52 ($33.00 on key 2,
+$15.51 on key 1). So Opus answers 5 of the 18 new houses and 4 of the 5 FRL apartments, and every contrast with
+Opus uses only those scenes. Checking coverage showed Opus's accuracies; no Qwen or Gemma answer had been
+looked at.
+
+*Amendment 3 (2026-10-29 14:30 PDT, before any Gemma answer in these scenes existed; no Qwen answer here has been
+looked at).*
+- **Gemma runs 3-5 only.** Experiment 18 stops at three Gemma runs, seeds 3-5 (its amendment 2, the user's
+  decision, based on those runs' training results). Runs 6 and 7 do not exist, and their experiment 19 jobs were
+  cancelled before they started (gq vast3:325, 326, 331, 332). The Gemma recipe here is therefore runs 3-5, and
+  its mean and range are over those three runs, reported beside Qwen's five four-epoch runs and never pooled with
+  them. Base Gemma and runs 3-5 run on all 23 scenes (vast3:321-324, 327-330). `scripts/exp19_analysis.py` names
+  that recipe "Gemma four-epoch runs 3-5".
+- **Platforms.** vast-3 freed up on Thu 14:20 PDT, about 20 h earlier than amendment 2 expected. No scene moves. By
+  then the Mac had finished HSSD9-15 and was running HSSD16. It finishes HSSD18 about Fri 01:00, three hours
+  after vast-3's Qwen queue (vast3:308-320). The experiment's end is set by the Gemma jobs (about Fri 12:20), and
+  moving HSSD18 to vast-3 would push those back by its ~45 min there.
 
 ## Experiment 20 (pre-registered 2026-10-28 00:30 PDT, before any new baseline was scored): retrieval baselines on the same trials
 

@@ -4680,6 +4680,35 @@ mac:132 (run 3), mac:133 (run 4) and mac:134 (run 6), each with an estimate of 9
 at submission: Thu 21:42, Fri 06:57, Fri 16:12, Sat 01:27 and Sat 10:42 PDT, so the last should end about
 Sat 20:00 PDT. When they finish: `.venv-claude/bin/python scripts/lora256_analysis.py`.
 
+**Amendment 1 (2026-10-30 00:08 PDT, before any run started; no four-epoch run has seen a 256-frame walk in these
+rooms).** The runs move from the Mac to vast-3 (RTX 5090, CUDA). The Mac's queue was paused for most of
+2026-10-29, which pushed the five Mac jobs to about Sun 16:00 PDT and experiment 29's run 0 (also on the Mac)
+behind them, while vast-3 is free after experiment 30 and runs Qwen several times faster than MPS. The condition,
+trials, prompt, decoding, analysis units, primary contrast and decision rule do not change. What changes:
+- *Platform.* Every 256-frame answer comes from vast-3 (`scripts/run_lora256_cuda.sh`, calling the same
+  `scripts/lora256_run.py`) and goes to `results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s<k>-roomP50xx-256px.jsonl`
+  (two_choice's tag for CUDA). The inputs on vast-3 are byte-identical to the Mac's, checked on 2026-10-30 by md5:
+  the ten trial lists, every walk file in P5000-P5009 (P5005 is the Mac's original, copied for experiment 18), and
+  the five adapters.
+- *The 256-minus-64 contrast is now made on one device.* The four-epoch runs' 64-frame answers came from vast-3 in
+  nine rooms. Each job first reruns the 64-frame walk on CUDA for P5005's novel trials (147 per run; tag
+  `-256px-max64-parity-cuda`), the one room whose 64-frame answers came from the Mac, and the secondary contrast uses
+  that rerun in P5005. The same contrast against experiment 9c's own files (MPS in P5005) is reported as a supplement
+  (`lora256_minus_64_9c_files_mean`).
+- *Parity.* The Mac's parity subset (P5000 and P5001 on MPS) is dropped. Parity is now the share of P5005's novel
+  trials on which the CUDA rerun gives the same answer as the Mac's 64-frame run, pooled over runs (735 trials). It
+  no longer decides how the secondary contrast is made; it is reported against the same 98% mark, as a check on
+  experiment 9c's mixed-device numbers.
+- *Jobs.* gq on vast-3 at priority 150, behind experiment 30, in the same order: vast3:346 (run 5), 347 (run 7),
+  348 (run 3), 349 (run 4) and 350 (run 6). Runs 7, 3, 4 and 6 start only after run 5 succeeds, so a failure such as running out of memory stops the chain once. If the
+  256-frame prompt (18,582 tokens; 25 GiB peak on the Mac) does not fit the 5090's 32 GB, the runs go back to the Mac
+  unchanged and a second amendment records it. The Mac jobs mac:130-134 were cancelled before any of them started.
+  The CUDA time per run is not yet measured; the 2 h estimate is a guess, to be replaced by run 5's.
+- *Analysis.* `scripts/lora256_analysis.py` reads the CUDA files. Its `--test` mode still reproduces experiment 9c
+  (recipe mean 97.1%, leads over Opus +27.0 to +28.2 points per run, 256 minus 64 exactly 0, parity 100%).
+  `lora256_minus_64_9c_files_mean` replaces `lora256_minus_64_within_mps_mean`.
+- The stopping rule and its time are unchanged.
+
 ## Experiment 25 (pre-registered 2026-10-28 10:08 PDT, before the assay was run on any recorded network or real control): a population-level test of a heading-invariant place code
 
 **Why.** All three GPT-6 Astra reviewers of round R1 (`writeup/paper/kit/paperscorer/rounds/R1/packet.md`) rate

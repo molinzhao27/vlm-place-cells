@@ -5726,7 +5726,8 @@ scores 82.0-83.2% (mean 82.5%).
 | photoreal, Apt0-2 + HSSD1-8 (424) | 47.8% [43.7, 51.9] | 52.4% [47.4, 57.9] | 49.1% [46.4, 51.6] | 88.1% [85.0, 91.7] | 84.5% [80.2, 88.7] | 74.9% [70.1, 80.8] | +40.3 [37.0, 43.3] |
 | apartments (58) | 44.0% | 48.0% | 44.9% | 84.0% | 85.4% | 82.2% | +40.0 [33.3, 46.7] |
 | houses (366) | 49.3% | 54.0% | 50.7% | 89.6% | 84.2% | 72.1% | +40.4 [36.6, 43.8] |
-| experiment 19 houses HSSD9-26 (947) | 52.2% [49.1, 55.5] | 52.2% | 50.3% | 89.4% (HSSD9 only) | 80.5% (HSSD9-13) | 71.8% | +32.5 (HSSD9 only) |
+| experiment 19 houses HSSD9-26 (947; HSSD19 has none) | 52.2% [49.1, 55.5] | 52.2% | 50.3% | 90.7% [88.1, 92.9] | 80.5% (HSSD9-13) | 71.8% | +38.5 [33.8, 42.5] |
+| experiment 19 FRL apartments (10) | 64.7% | 64.7% | 36.7% | 100% | 100% (FRL0, 1, 3, 4) | 100% | +35.3 [18.0, 56.0] |
 
 The held-out rooms one by one (novel accuracy, %):
 
@@ -5793,8 +5794,10 @@ models, and the pixel variant below shows that the feature matters.
   "treated the same way".
 - Two descriptive differences were added to the JSON beyond the registered ones: the LoRA minus the ordered
   matcher, and the LoRA minus the pixel matcher.
-- In experiment 19's houses, only HSSD9 has four-epoch LoRA answers so far, so the LoRA comparison there rests on
-  one house.
+- Experiment 19's rows were refreshed on 2026-10-30 (gq mac:150, `analyze` only, no model): the first pass had
+  four-epoch LoRA answers for HSSD9 alone. With every house the LoRA leads the matcher by +38.5 [33.8, 42.5] in the
+  new houses (all 17 with novel trials), close to the old houses' +40.4. The FRL apartments have 10 novel trials,
+  too few to read. Nothing outside these two groups changed (0 of the other values in the JSON).
 
 Files: `scripts/learned_matcher.py`, `results/learned_matcher.json` (values in `summary`, as fractions);
 features, checkpoints, logs and per-trial test scores are in `data/learned_matcher/` (not in git).

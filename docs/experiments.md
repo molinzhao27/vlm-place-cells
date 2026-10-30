@@ -3540,6 +3540,98 @@ looked at).*
   after vast-3's Qwen queue (vast3:308-320). The experiment's end is set by the Gemma jobs (about Fri 12:20), and
   moving HSSD18 to vast-3 would push those back by its ~45 min there.
 
+*Platforms, final (2026-10-30 09:10 PDT).* No scene moved.
+- The user paused the Mac on Thu 16:34 PDT. HSSD17's job (gq mac:116) was cancelled 3 min in, after 41 base-model
+  trials. When the Mac resumed (Thu 23:57), mac:147 ran HSSD17 with the same settings, kept those 41 trials and
+  answered the rest. HSSD18 (mac:117) ran Fri 04:27-08:56.
+- An interim run of the analysis (Thu 21:50 PDT, every scene except HSSD17-18, before any Gemma answer) was
+  looked at. No scene, model, rule or platform changed after it: the scenes stayed on the Mac because the user
+  resumed it.
+- So the Mac (MPS, files tagged `-mps`) answered HSSD9-18, and vast-3 (CUDA) answered HSSD19-26 and the five FRL
+  apartments. Gemma ran everywhere on vast-3.
+
+### Exp 19 results (2026-10-30 09:10 PDT)
+
+Every run is complete and checked against its scene's trial manifest:
+- Qwen: 9 models x 3 conditions x 23 scenes = 621 files (Mac 270, vast-3 351);
+- Gemma (base and runs 3-5): 276 files, vast3:321-324 and 327-330;
+- Opus: the 9 scenes the budget rule allowed (HSSD9-13; ReplicaFRL0, 1, 3, 4).
+
+The files from vast-3 were copied to the Mac with an MD5 match on every file. The summary is
+`results/exp19_summary.json` (`groups/<group>/accuracy|contrasts|recipes`, `criteria`, `opus_scenes`, `platform`;
+accuracies and differences are fractions). The pooled groups cover 34 scenes rather than the registration's 29,
+because amendment 1 added six houses and ReplicaFRL2 was skipped.
+
+**Mac vs vast-3.** On walks 0-3 of HSSD20 the Mac gave the same answer as vast-3 on 71 of 72 trials: base model
+with the walk 23/24 (trial w01p0177: the Mac answered 7, vast-3 87), run 0 with the walk 24/24, run 0 with no walk
+24/24 (experiment 16: 72/72). So the split by machine counts.
+
+**All three registered criteria are met.**
+1. *LoRA transfers.*
+   - New houses: all 15 checks pass (five four-epoch runs x base, no walk, shuffled; the scene CI is above zero
+     in each, and all 18 houses go the same way). The smallest margins: vs the base model +32.0 points
+     [29.6, 34.3] (run 7); vs no walk +34.7 [32.2, 37.2] (run 7); vs the shuffled walk +16.5 [14.7, 18.5] (run 7).
+   - FRL apartments: all 15 checks pass the pooled sign test. The smallest margin is run 7 against its shuffled walk,
+     +11.3 (49 better / 4 worse, p 7e-11).
+   - Runs 0-2, reported the same way, also pass every check in both groups. The weakest is run 2 against the base
+     model in FRL, +5.3 (52/31, p 0.028).
+2. *Opus walk gain.* On the nine new Opus scenes, Opus is 27.1 points better with the walk than without (380/63,
+   p 3e-56; 9/0 scenes). That is +25.2 in the five houses and +32.8 in the four FRL apartments; on novel trials it
+   is +12.3 (65/29, p 0.0003).
+3. *LoRA against Opus* (same trials, Opus scenes only; four-epoch runs as a range):
+   - New houses (HSSD9-13: 870 trials, 284 novel; Opus 85.1% all, 75.4% novel): LoRA leads on all trials by +7.6 to +9.6
+     points as the scene mean (the registered unit; pooled +7.8 to +9.9, each p <= 2e-8; 5/0 houses). On novel trials it
+     leads by +10.5 to +11.2 (scene mean; pooled +14.1 to +17.3).
+   - FRL apartments (299 trials, 9 novel): a tie at the ceiling, -0.3 to +0.7 (p >= 0.75). Opus gets 98.0%, LoRA
+     98.2-99.0%.
+   - All houses pooled (HSSD1-13 with Opus): +7.3 to +8.0 on all trials as the scene mean (pooled +7.4 to +8.1;
+     13/0 houses). On novel trials: +7.1 to +7.9 as the scene mean (pooled +9.4 to +10.9).
+   - All apartments pooled (Apt0-2 and FRL0, 1, 3, 4): +4.2 to +5.2 on all trials (p <= 0.0011). As scene means this
+     is +2.6 to +3.6, with CIs that include zero except for run 5. With the four layouts as the unit (descriptive)
+     it is +5.0 to +6.1.
+   - Novel apartment trials, old and new pooled (67 with Opus): Opus 91.0% against LoRA 86.8-89.7%, a difference of
+     -1.5 to -4.5 (p 0.51-1). The ten new novel trials are all right for both, so this is experiment 12's
+     result (1.7-5.2 points, not significant) with nine more trials.
+
+**Accuracy** (all trials; walk / no walk / shuffled; the scene mean is beside each pooled value):
+
+| model | new houses (3,067) | FRL apartments (399) | all 34 photoreal scenes (5,419) |
+|---|---|---|---|
+| four-epoch runs 3-7, walk | 93.1-94.5% (mean 94.0; scene mean 93.7) | 98.2-99.0 (98.7) | 93.8-94.6 (94.2; 94.4) |
+| four-epoch runs, no walk | 52.7-58.7 | 55.6-62.4 | |
+| four-epoch runs, shuffled | 53.8-76.4 | 54.4-87.0 | |
+| two-epoch runs 0 / 1 / 2, walk | 92.6 / 88.0 / 73.0 (84.5) | 97.0 / 95.0 / 82.2 | |
+| base Qwen, walk / no walk / shuffled | 60.7 / 52.5 / 59.8 | 76.9 / 56.4 / 69.4 | 61.3 / 52.2 / 59.8 |
+| Opus, walk / no walk (Opus scenes) | 85.1 / 59.9 (5 houses) | 98.0 / 65.2 (4) | 87.4 / 60.5 (20) |
+| Gemma runs 3 / 4 / 5, walk | 66.5 / 84.8 / 47.7 (66.4) | 69.4 / 88.5 / 48.9 | 66.3 mean (48.7-84.0) |
+| base Gemma, walk / no walk | 57.7 / 49.4 | 63.9 / 53.4 | 58.1 / 49.7 |
+
+- *Novel trials in the new houses* (947): four-epoch runs 90.2-92.5% (91.6), base 57.4%.
+- *The new houses match the old ones.* Four-epoch runs: new 93.7% (scene mean) against 94.5% in HSSD1-8
+  (experiment 9c). Two-epoch mean: 84.5% against 84.3%.
+- *Order.* Every four-epoch run is better with the ordered walk than with the shuffled one in every new house.
+  Shuffled accuracy again varies from run to run.
+- *The base model gains from the walk here* (new houses +8.2 points, 660/408, p 1e-14; FRL +20.6). It does about
+  as well with the walk shuffled (59.8% and 69.4%), so its gain does not need the order.
+
+**Gemma** (experiment 18's runs; no criterion of its own here):
+- The pattern of experiment 18 repeats in the new scenes. Run 4 learned the task, run 3 partly, run 5 not at all.
+- Every Gemma run is below every Qwen four-epoch run in every group.
+- In the new houses, run 4 beats base Gemma, its no-walk condition and its shuffled walk (scene CIs above zero,
+  18/0 or 17/1 houses). It ties Opus on all trials (+0.6, p 0.77) and is ahead on novel trials (+7.4, p 0.03).
+- Run 3 beats all three by smaller margins (+7.8 to +17.9).
+- Run 5 is below base Gemma (-9.9) and equal to its own no-walk and shuffled conditions.
+
+**Scope and caveats.**
+- The FRL apartments are one floor plan near the ceiling. Base Qwen gets 76.9% with the walk and Opus 98.0%. Their
+  views are mostly holed (71-78% of frames), and they have 10 novel trials. So they test little beyond "the
+  recipe works in another Replica layout".
+- Opus answered 5 of the 18 new houses. Its comparison with LoRA in houses rests on HSSD1-13.
+- In houses and apartments the walk may still help partly by grouping views into rooms (experiments 12 and 16).
+- Experiment 20's retrieval rule has not been applied to these scenes. Now that every four-epoch run has answered
+  HSSD9-26, `scripts/retrieval_baselines.py analyze` can apply it to `exp19_houses` as that experiment's registered
+  replication. That is experiment 20's step, not run here.
+
 ## Experiment 20 (pre-registered 2026-10-28 00:30 PDT, before any new baseline was scored): retrieval baselines on the same trials
 
 **Why.** All three reviewers of the conference version (R0 packet, issue 1; triage proposal P1, approved by
@@ -3772,6 +3864,35 @@ trials). The four-epoch runs have so far answered only HSSD9 (LoRA 89.4% against
 novel trials). Opus has answered HSSD9-13 (80.5% against the rule's 73.6%, novel) and FRL0, 1, 3 and 4. When
 the four-epoch runs are complete, `analyze` applies the rule to `exp19_houses` as the registered replication;
 the FRL apartments cannot meet the 30-trial bins.
+
+*Replication in experiment 19's new houses (2026-10-30 09:17 PDT; gq mac:149, `analyze` rerun once every
+four-epoch run had answered HSSD9-26; `summary/exp19_houses`).* Before reading it: every value outside
+experiment 19's scenes and groups is identical to the 2026-10-28 08:23 file, so the verdict above is unchanged
+(procedural holds, photoreal fails). The rule is the photoreal group's b* (window maximum, DINOv2 CLS, all 256
+frames, k 32), as registered. **Result: 1 holds, 2 fails, the same outcome as the old houses alone.**
+- Overall (18 houses, 947 novel trials, scene means): four-epoch mean 90.7% [88.1, 92.9] against the rule's
+  71.8% [69.0, 74.6], a lead of +18.9 points [14.4, 23.0], so 1 holds.
+- Where retrieval does best, four of five bins clear 15 points and one does not:
+  - heading gap 150-180 degrees (277 trials): rule 72.7%, LoRA 91.8%, +19.1;
+  - novelty margin 1.5-2 m (192): 75.5% vs 92.1%, +16.6;
+  - low visual overlap (237): 73.2% vs 90.0%, +16.8;
+  - options in different rooms, new view in the near option's room (473): 77.5% vs 93.6%, +16.1;
+  - distance margin 4 m or more (314): 83.4% vs 95.2%, +11.7 [8.8, 14.1]. This fails.
+- In the old houses (HSSD1-8, descriptive, inside the photoreal group) the overall lead was +17.5 [13.1, 22.0]
+  and only the rooms bin cleared 15; their distance-margin bin gave +11.6. So the new houses replicate the
+  houses' pattern: the model leads the best rule clearly overall, but where the far option is 4 m or more away,
+  retrieval gets 83% and the model's lead is about 12 points.
+- Opus (HSSD9-13 only): 80.5% [71.3, 88.2], +7.0 [3.5, 9.4] over the rule on the same houses.
+- The FRL apartments' 10 novel trials are all right for the rule, the model and Opus, so they say nothing here.
+  All 23 new scenes together: +14.6 [9.9, 19.2] (descriptive).
+- Not registered: against the best rule that sees only the 64 shown frames (window maximum, DINOv2 CLS, k 32;
+  71.9%), the lead is +18.8 and every bin clears 15 (distance margin +15.5). Of the novel trials the rule gets
+  right the model gets 93.6% (618 trials), and of those it gets wrong 88.7% (231).
+
+What this means for the paper: nothing changes. The photoreal claim already stops at "does not separate
+localization from retrieval", and the new houses fit it. They add that in houses the model's overall lead over
+retrieval is above 15 points in both house sets, while the distance-margin bin, where the far option is at least
+4 m away, stays near 12 in both.
 
 ## Experiment 21 (pre-registered 2026-10-28 00:20 PDT, before any synthetic unit was scored): what the heading-invariance statistic does on units whose answer is known
 

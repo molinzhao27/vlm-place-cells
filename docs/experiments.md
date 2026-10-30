@@ -5111,6 +5111,54 @@ moving-average sweep for pixels 24% / 71% / 99% / 100% and for Qwen3-VL-2B 11% /
   run `.venv-mac/bin/python scripts/population_assay.py merge --from <fetched file>`, which recomputes the verdict over
   all six runs and the rerun's parity.
 
+### Exp 25 four-epoch results (2026-10-30 12:40 PDT)
+
+Job vast3:336 (09:51-12:34 PDT, rc 0, 2 h 43 m). The results file was fetched with matching md5s (`8ae3d5bc...`) and
+merged with `population_assay.py merge`. Parity holds: the vast-3 rerun of run 0 is within 0.015 of vast-1's original at
+every layer of walk and within 0.011 of single, against the registered 0.05.
+
+**Verdict under the registered rule: positive in all five four-epoch runs**, so positive over all six runs. The
+new-view result below is a secondary condition, outside the rule, and it does not repeat run 0's.
+
+HG at each condition's best layer (chance 3.74 m for walk frames, 3.67 m for probes):
+
+| condition | base 8B | run 0 | runs 3 / 4 / 5 / 6 / 7 | four-epoch mean |
+|---|---|---|---|---|
+| walk | 0.73 (L3) | 0.74 (L3) | 0.81 / 0.82 / 0.85 / 0.77 / 0.81 (L35) | 0.81 |
+| single | -0.28 | -0.25 | -0.05 / -0.12 / -0.03 / -0.03 / -0.13 | -0.07 |
+| single + 8-step moving average | 0.98 | 0.98 | 0.99 / 0.99 / 0.99 / 0.99 / 0.99 | 0.99 |
+| new view after the walk | -0.00 | 0.22 | 0.45 / 0.45 / 0.49 / 0.39 / 0.40 (L35) | 0.44 |
+| new view after the shuffled walk | not recorded | 0.20 | 0.39 / 0.40 / 0.38 / 0.36 / 0.36 (L35) | 0.38 |
+| new view, no walk | -0.04 | 0.06 | 0.30 / 0.23 / 0.29 / 0.28 / 0.20 (L35) | 0.26 |
+
+- *Walk frames.* All five runs are positive at layer 35 (intervals over walks within 0.75-0.87; 1.40-1.68 m on unseen
+  headings against 0.96-1.18 m on seen ones). A synthetic population with the same HG has 47-63% invariant place units.
+  Layer 3 is the same as in the base model and run 0 (0.70-0.74). Training changes the late layers: at layer 35 the base
+  model has 0.58, run 0 has 0.68 and the four-epoch runs 0.77-0.85. The population-vector index at that layer is 0.15-0.29
+  (permutation p 0.005), against 0.00 for run 0 at its best layer. The 8-step moving average still reaches the walk's HG
+  in every run (0.99 against 0.77-0.85), as the registration asked to describe. Four-epoch shuffled-walk frames were not
+  recorded, so this experiment cannot say whether the late-layer code needs the walk's order.
+- *New views: this differs from run 0.* Every new-view condition of run 0 and the base model is negative. After the walk,
+  all five four-epoch runs are partial: HG 0.39-0.49 at layer 35 (2.57-2.84 m on unseen headings, 1.38-1.58 m on seen).
+  A synthetic population with the same HG has 17-23% invariant place units. The sentence in the results above, "for a
+  novel view, the case the task is about, no model carries a heading-general code", does not hold for the four-epoch
+  runs. The base model is at -0.27 at the same layer, so the code comes from training.
+- *The walk adds little of it.* After the shuffled walk all five runs are also partial (0.36-0.40), and with no walk at all
+  three runs are partial and two negative (0.20-0.30). Ordered minus shuffled is 0.03-0.11 (mean 0.06), against the 28-point
+  behavioral cost of shuffling in the held-out rooms. Ordered minus no walk is 0.11-0.23 (mean 0.18). Most of this code
+  therefore does not depend on what the model needs for the task, which is the walk's order.
+- *Caveat on the thresholds.* The assay's thresholds were validated on walk frames. One frame alone gives a higher HG on the
+  probe sample than on the walk-frame sample in every model: base -0.04 against -0.28, run 0 0.06 against -0.25, four-epoch
+  runs 0.20-0.30 against -0.03 to -0.13. So "partial" means less on probes than on walk frames, and the comparison with the
+  base model and run 0 on the same sample is the safer reading. By that comparison the rise from training is clear.
+
+**Reading.** The registered verdict stands and is stronger for the four-epoch runs. On walk frames the population carries
+position across headings, more than in the untrained model at the late layers, and a plain moving average still does
+better. The new result is on new views: four-epoch training gives a partial heading-general code there, which run 0 did
+not have, and it mostly does not need the walk's order. This assay is within one room (room A), so it does not say whether
+the code carries between rooms; experiment 22's cross-room readout does. Choosing the wording is left to the supervisor and
+the user. Run 0's claim about new views should not be stated for the four-epoch model.
+
 ## Experiment 26 (pre-registered 2026-10-28 10:10 PDT, before any walk-relative readout was fit): is the new view's position coded in the walk's own coordinates?
 
 **Why.** Experiment 14a read the residual stream of the base Qwen3-VL-8B and of run 0 (the original two-epoch

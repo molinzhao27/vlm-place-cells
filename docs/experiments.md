@@ -6776,8 +6776,8 @@ Per run (%):
   `results/trajectory_shift_matcher.json`; the script's own route reproduces the stored scores on P5000's 119 novel trials
   exactly): control 74.5 [71.7, 77.4], long-step 73.8, low-turn 75.0, patrol 73.1, against 73.3 on experiment 10's trials. The
   model leads it by +22.0 [19.1, 24.8], +21.7, +21.2 and +24.3 points, in all nine rooms each time. On neighborhood trials the
-  matcher scores 76.9 on conflict and 73.6 on agreement (control), and 76.9 and 66.4 (patrol). The ordered variant is within
-  3 points of these everywhere.
+  matcher scores 76.9 on conflict and 73.6 on agreement (control), and 76.9 and 66.4 (patrol). The ordered variant differs by
+  at most 0.6 points on standard trials and 3.2 on neighborhood trials.
 
 **Limits.**
 - *A flat profile is not by itself a mark of geometry.* Experiment 28's matcher is as flat as the model across the three
@@ -6789,8 +6789,8 @@ Per run (%):
   matcher 76.9%, so some view information still points to the near option.
 - *The registered K is the smallest of the gaps.* The registered neighborhood trials give +1.1. Standard trials typed by the
   same rule give a gap of 7.3 points in control walks and 6.5, 2.9 and 1.9 in the shifts (94.4 against 98.2 pooled over all four
-  conditions). These are unbalanced for pixel similarity by type, are not the registered test and stay under the 10-point line,
-  but "no conflict cost" would overstate the result. "A small cost, at most a few points" is what the data support.
+  conditions). These trials are not balanced for pixel similarity within each type, are not the registered test and stay under
+  the 10-point line, but "no conflict cost" would overstate the result. "A small cost, at most a few points" fits the data.
 - *Every prompt keeps the ordered walk and its real frame numbers.* Order and labels are tested by experiment 31, not here.
   A comparison of frame gaps would not be affected by doubling the step length, because only the relative gap matters.
 - *Run 3 was run again after all runs' accuracies had been seen* (amendment 1). Without it the same verdicts hold in all three

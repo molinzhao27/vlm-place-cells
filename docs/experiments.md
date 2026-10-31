@@ -6684,13 +6684,13 @@ Jobs (projected PDT times at submission):
 
 ### Exp 30 amendment 1 (2026-10-31 06:28 PDT, after runs 3-7 finished): run 3 is run again
 
-Run 3's answer file (vast3:341, 03:59-05:11 PDT, this date) was damaged by a fault on the machine, so run 3 is run again
+Run 3's answer file (vast3:341, 02:37-03:59 PDT, this date) was damaged by a fault on the machine, so run 3 is run again
 in full. All five runs' accuracies had been seen when this was decided, so this is stated as a repair after the fact.
 
 - *What is wrong.* Only 1,630 of run 3's 6,383 replies are a bare option number, 4,527 contain "!" (token 0, what greedy
   decoding gives on non-finite logits), and 3,904 run past the 4 tokens of a normal reply, up to the 16-token cap. Runs 4-7
   answered all 6,383 trials with exactly 4 tokens and a bare option number. Run 3 scores 44-50% in every condition, from the
-  file's first trials on. Its experiment-9c answers in these rooms are 97.4%.
+  file's first trials on. On experiment 10's trials in the ten held-out rooms it scores 97.4% (experiment 9c).
 - *Why it is the machine.* Experiment 17's note describes the same token on the same machine (runs 2 and four-epoch seed
   3, 05:00-07:42 PDT on 2026-10-27), although every reply was "!" there and only some are here. The parity step of this
   same job, a separate process minutes earlier, matched 192 of 192. So the registered parity check does not catch this

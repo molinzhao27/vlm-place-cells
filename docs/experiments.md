@@ -6682,6 +6682,32 @@ Jobs (projected PDT times at submission):
   without flags -> `results/trajectory_shift.json`. `--fetch` copies only the five answer files and the five parity
   files, never vast-3's whole `results/`.
 
+### Exp 30 amendment 1 (2026-10-31 06:28 PDT, after runs 3-7 finished): run 3 is run again
+
+Run 3's answer file (vast3:341, 03:59-05:11 PDT, this date) was damaged by a fault on the machine, so run 3 is run again
+in full. All five runs' accuracies had been seen when this was decided, so this is stated as a repair after the fact.
+
+- *What is wrong.* Only 1,630 of run 3's 6,383 replies are a bare option number, 4,527 contain "!" (token 0, what greedy
+  decoding gives on non-finite logits), and 3,904 run past the 4 tokens of a normal reply, up to the 16-token cap. Runs 4-7
+  answered all 6,383 trials with exactly 4 tokens and a bare option number. Run 3 scores 44-50% in every condition, from the
+  file's first trials on. Its experiment-9c answers in these rooms are 97.4%.
+- *Why it is the machine.* Experiment 17's note describes the same token on the same machine (runs 2 and four-epoch seed
+  3, 05:00-07:42 PDT on 2026-10-27), although every reply was "!" there and only some are here. The parity step of this
+  same job, a separate process minutes earlier, matched 192 of 192. So the registered parity check does not catch this
+  fault: it tests the process before the one that answers the trials.
+- *How far it reaches.* A read-only sweep at 06:27 PDT of every Qwen LoRA answer file (1,293 files and 293,700 replies on
+  the Mac, 841 and 200,329 on vast-3) finds no other file with a reply that is not a bare number or that runs past 4
+  tokens. The earlier experiments' answers are therefore not affected.
+- *What changes.* vast-3 runs `scripts/run_trajectory_shift.sh` again for run 3, unchanged, next after the job in progress
+  (experiment 24's run 5), with a fresh parity step. The damaged file and its parity file are kept, moved to
+  `results/two_choice/failed_garbled/` on both machines (md5 of the answers 6cd52af06425e892676c2d8bf792bdd5).
+  `results/trajectory_shift.json` holds runs 4-7 as `interim` until the new file arrives. The verdicts stay the five-run
+  mean's, as registered.
+- *If the new file is damaged too.* The fault is then not a passing one and run 3 is not run a third time before it is
+  understood; the paper would report four runs and say why.
+- *Experiment 24.* The same check runs on each experiment-24 run's answer files as its job ends, and a damaged run is run
+  again in the same way.
+
 ## Experiment 31 (pre-registered 2026-10-28 12:51 PDT, before any four-epoch run saw a reordered walk or a cut): walk-order controls and attention cuts on four-epoch runs 5 and 7
 
 **Why.** The paper now reports the four-epoch recipe (experiment 9c, runs 3-7) as its fine-tuned model; the two-epoch

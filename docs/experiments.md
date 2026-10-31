@@ -5410,9 +5410,49 @@ the numbers for both frames side by side.
   made in the model's own features rather than in DINOv2's global similarity, and this analysis does not identify
   the mechanism.
 
-*Four-epoch runs:* not yet run. Experiment 22's recordings are projected for Sat about 17:07-19:22 PDT (vast3:306). On
-the Mac the probe took about 1 h per model, so six models need more than the 4 h in the command above. Submit it
-with `--est 7h` once the script is copied to vast-3.
+*Four-epoch results (2026-10-30, gq pc:644, 1 h 56 m; per-axis table pc:646).* The registered command was run on the
+PC instead of vast-3: gq pins CPU jobs on vast-3 to few threads, and experiment 22's readouts had already moved there
+for that reason (see that entry). Only the machine changed. The script, the 288 cells per model and target, and the
+rule are as registered. The recordings are experiment 22's on vast-3, copied to the PC by MD5. They include a CUDA
+recording of run 0 as a reference, which reproduces the Mac result here: `first_xy` 0.088 against 0.092, verdict
+*absent* on both devices. `results/e4_internals/frame_relative_probe.json`.
+
+| model | `world_xy` | `first_xy` (primary) | verdict | best median m (chance 4.01) | `last_xy` | `first_heading` |
+|---|---|---|---|---|---|---|
+| run 0 (CUDA) | 0.026 | 0.088 | absent | 3.63 | 0.019 | 0.158 |
+| run 3 | 0.031 | 0.168 | weak | 3.34 | 0.026 | 0.210 |
+| run 4 | 0.031 | 0.162 | weak | 3.37 | 0.042 | 0.209 |
+| run 5 | 0.022 | 0.108 | weak | 3.51 | 0.003 | 0.207 |
+| run 6 | 0.038 | 0.123 | weak | 3.45 | 0.005 | 0.175 |
+| run 7 | 0.029 | 0.172 | weak | 3.33 | 0.005 | 0.209 |
+
+- *Primary verdict: weak in all five four-epoch runs.* So the registered claim "no first-frame-relative position code"
+  does not extend to them. The registered reading applies: at most a weak walk-relative component (R^2 under 0.30). No
+  cell reaches 0.30. The signal is tied to the walk the model saw: at the best cells the walk-shuffled control is
+  -0.014 to -0.032, and the margins are 0.14 to 0.19, under the 0.20 that *present* would need even if a cell had reached
+  0.30. The best median errors stay near chance (3.33-3.51 m against 4.01 m).
+- *`last_xy` absent in every run* (at most 0.042). *`first_heading` weak in every run* (0.175-0.210, best median 45-50
+  degrees against 89), the same size as the base model's 0.22.
+- *Room coordinates stay absent:* `world_xy` at most 0.038, so the 14a result carries over to all five.
+
+*Exploratory, not registered: which axis carries the signal* (`--exploratory --columns-only`, the procedure above, on
+the same best ridge cells; R^2 per column).
+
+| model | `first_xy` forward / left | `first_heading` cos / sin |
+|---|---|---|
+| run 0 (CUDA) | 0.22 / -0.05 | 0.27 / 0.04 |
+| run 3 | 0.34 / -0.00 | 0.35 / 0.08 |
+| run 4 | 0.33 / -0.01 | 0.36 / 0.06 |
+| run 5 | 0.21 / 0.00 | 0.35 / 0.07 |
+| run 6 | 0.23 / 0.02 | 0.30 / 0.05 |
+| run 7 | 0.33 / 0.01 | 0.38 / 0.04 |
+
+As in the base model and run 0, everything lies on the front-back axis. The four-epoch runs read out whether the new
+view lies ahead of or behind frame 1, and whether it faces the same way, and more strongly than run 0 does in three of
+five runs. They carry nothing on which side it lies. A coordinate code would carry the left-right axis as well, so the
+weak verdict does not read as a weak position code. It reads as the same mirror-symmetric signal as before, which fits
+a comparison of the new view with the walk's first image, without this analysis identifying the mechanism. This split
+was chosen after run 0's result and is not part of any verdict.
 
 ## Experiment 27 (pre-registered 2026-10-28 10:11 PDT, before any new patch was run): is VGGT's causal subspace about position, or about where the camera token varies?
 
@@ -6772,6 +6812,94 @@ a top-level `summary`; its `--test` reproduces run 0's experiment-13a and experi
   - Because both jobs depend on vast3:335, they start only if experiment 29's run-7 job succeeds.
 - *Analysis once both jobs finish:* `.venv-claude/bin/python scripts/exp31_analysis.py --fetch` ->
   `results/exp31_summary.json`.
+
+**Results (2026-10-30; gq vast3:337-338, 3 h 34 m and 3 h 31 m; `results/exp31_summary.json`).** *Recipe verdicts: 31a
+replicates, 31b inconclusive (F3). 31c, by run: the labels carry run 7's shuffled accuracy; run 5 is inconclusive.*
+
+Every check passed. Parity in P5000: 192/192 (run 5) and 191/192 (run 7). The clean check: 1,299/1,299 in both. P5005,
+CUDA against MPS: ordered 192/192 and shuffled 190/192 in both runs. The near cut against experiment 29's near-cut
+condition: 1,149/1,149 in both. Parse rates are at least 99.4% in every condition.
+
+Novel trials, mean over the ten rooms (%):
+
+| condition | run 0 | run 5 | run 7 |
+|---|---|---|---|
+| ordered | 92.5 | 97.3 | 97.2 |
+| renumbered | 91.9 | 97.5 | 97.2 |
+| window-shuffled | 81.9 | 88.4 | 87.2 |
+| reversed | 67.8 | 75.9 | 78.8 |
+| shuffled, real frame numbers (S) | 51.3 | 54.4 | 82.2 |
+| shuffled, relabeled (R) | not run | 52.9 | 58.2 |
+| no walk | 55.9 | 52.9 | 63.7 |
+| cut: random | 91.6 | 97.4 | 97.2 |
+| cut: look-alike | 90.3 | 96.1 | 96.0 |
+| cut: far | 89.1 | 93.3 | 94.5 |
+| cut: near | 83.0 | 91.3 | 91.7 |
+
+*31a, walk order: replicates in both runs, with two criteria scale-dependent.* The gate passes: the order effect D = O -
+R is +44.4 [42.6, 46.4] and +39.0 [37.0, 40.7] points.
+
+| criterion | run 0 (with S) | run 5 | run 7 | verdict |
+|---|---|---|---|---|
+| C1, O - N, points | +0.6 [-0.8, +1.9] | -0.2 [-0.8, +0.4] | +0.0 [-0.7, +0.9] | replicates |
+| C1, log-odds (margin 0.4) | | -0.23 [-0.59, +0.08] | +0.08 [-0.27, +0.46] | run 7 scale-dependent |
+| C2, local share, points | 0.74 [0.69, 0.79] | 0.80 [0.76, 0.84] | 0.74 [0.68, 0.79] | replicates |
+| C2, log-odds (threshold 0.5) | 0.60 [0.54, 0.65] | 0.55 [0.49, 0.62] | 0.48 [0.39, 0.57] | both scale-dependent |
+| C3, reversal share, points | 0.60 [0.53, 0.67] | 0.48 [0.42, 0.54] | 0.47 [0.41, 0.54] | replicates |
+| C3, log-odds | 0.72 [0.65, 0.78] | 0.70 [0.64, 0.75] | 0.70 [0.63, 0.77] | replicates |
+| C4, V - R / W - V / O - W, points | +16.5 / +14.1 / +10.6 | +23.0 / +12.5 / +8.9 | +20.6 / +8.4 / +10.0 | replicates |
+
+So renumbering costs nothing and the direction of travel matters, on both scales in run 5 and with C1 unresolved on the
+log-odds scale in run 7. "Most of the order effect is local" holds in points. On the log-odds scale, which allows for
+the ceiling, the local share is about half, and both CIs contain 0.5.
+
+With run 0's floor S instead of R, run 5 gives the same verdict and run 7 gives *differs*: its D falls to +15.0 points,
+its local share to 0.33, its reversal share rises to 1.23, and reversed falls below S by 3.4 points. 31c explains why S
+is the wrong floor for run 7.
+
+*31b, attention cuts: inconclusive in both runs, because of F3.* F1 and F2 replicate.
+- F1, near - random: -6.0 [-7.7, -4.1] and -5.5 [-7.2, -4.1] points (run 0: -8.6). The excess log-odds cost e_near is 1.30
+  [0.88, 1.67] and 1.18 [0.82, 1.59], above run 0's 0.81 in both runs (by 0.49 [0.08, 0.87] and 0.38 [0.00, 0.78]), so the
+  smaller loss in points is the ceiling, not a weaker dependence.
+- F2, near - far: -2.0 [-3.7, -0.3] and -2.8 [-4.4, -1.2] points (run 0: -6.1); e_near - e_far 0.32 [0.07, 0.59] and 0.46
+  [0.20, 0.73].
+- F3, e_lookalike - 0.5 e_near: -0.18 [-0.40, +0.08] and -0.19 [-0.40, +0.03] (run 0: -0.28 [-0.49, -0.11]). Both CIs contain
+  0. Run 0's own wording, look-alike - random, gives -1.2 [-2.3, -0.2] and -1.3 [-2.6, -0.1] points, CIs just below 0 where
+  run 0's contained it.
+- Reported repeat, not part of the verdict: on the 503 trials whose look-alike set shares no frame with the near set,
+  look-alike - random is +0.1 [-0.9, +1.0] and -0.2 [-1.6, +1.1] points, while near - random stays at -5.6 [-7.7, -3.8] and
+  -4.6 [-6.7, -2.3]. So the look-alike cut's small cost on all trials sits on the trials where look-alikes are also
+  near neighbors. On trials without that overlap, look-alikes cost nothing measurable, as in run 0.
+- Layer windows (secondary, P5000-P5002, 399 trials, no formal test). Near cut minus clean, in layers 1-18 only: -3.0 and -3.8
+  points (run 0: -5.5). In layers 19-36 only: -0.2 [-0.8, +0.8] and -0.3 [-1.7, +0.8] (run 0: -3.1). In all layers: -4.7 and
+  -6.7. So in these two runs a cut after layer 18 costs nothing by itself, unlike run 0, yet the all-layer cut still costs
+  more than the cut in layers 1-18 alone. Three rooms is too few to carry a claim.
+
+*31c, labels in the shuffled walk.*
+- Run 7: *the labels carry the shuffled walk's accuracy.* S - R is +24.0 [21.7, 26.1] points (10 of 10 rooms) and R - no walk
+  is -5.5 [-8.7, -1.4]. Relabeling alone takes run 7 from 82.2% to 58.2%, below its own no-walk 63.7%. R is still +8.2 [6.6,
+  10.5] above 50%, which is what the no-walk cue would give.
+- Run 5: *inconclusive* by the rule. S - R is +1.5 [-0.4, +3.5], whose upper end passes the 3-point margin, and R - no walk is
+  +0.1 [-2.2, +2.9]. There was little accuracy to carry: S was already at the no-walk level.
+
+**What it means, by the registered readings.**
+- 31a replicates, so the paper describes the four-epoch recipe's use of the walk with run 0's statements: renumbering costs
+  nothing, order matters mostly locally, and the direction of travel matters. It must give the local share on both scales:
+  0.74-0.80 in points, about half on the log-odds scale.
+- 31b is inconclusive, so the registered sentence "not the frames that look like the new view" is not claimed for the
+  recipe. What holds in both runs: the near neighbors matter (F1), more than the far ones (F2), and the premise of
+  experiment 29's swap stands, since cutting the near set costs what experiment 29's near-cut condition cost, answer for
+  answer. The 503-trial repeat may be reported next to the verdict, labeled as such.
+- 31c: for run 7 the ordered-minus-shuffled contrast with real frame numbers understates order dependence, because
+  experiment 9c's shuffle leaves order recoverable from the labels. The relabeled shuffle is the matched "no order" control.
+  Against it, the two runs that experiment 9c set furthest apart (42.9 and 15.1 points) are close: 44.4 and 39.0. Most of
+  the four-epoch range in shuffled accuracy (54-82%) therefore need not be a difference in order dependence, though only
+  runs 5 and 7 were relabeled, so runs 3, 4 and 6 stay untested.
+- The same labels are present in every shuffled run of the other models. Opus's shuffled walks in the held-out rooms, the
+  apartments and the houses, and GPT-6 Astra's in room A, keep real frame numbers. Opus's only relabeled run is room A's
+  (75%, equal to its ordered walk; ordered minus relabeled -1.0 [-11.8, +10.6], experiment 9). So "a shuffled walk helps Opus
+  more" stands as measured, but "Opus does not need order" rests on room A alone.
+- Experiment 25's shuffled-walk condition is not affected: `extract.py`'s recording prompt has no frame numbers.
 
 ## Prior work this builds on
 

@@ -4911,6 +4911,52 @@ trials, prompt, decoding, analysis units, primary contrast and decision rule do 
   `lora256_minus_64_9c_files_mean` replaces `lora256_minus_64_within_mps_mean`.
 - The stopping rule and its time are unchanged.
 
+### Exp 24 results (2026-10-31 13:25 PDT; gq vast3:346-350; `results/lora_256frames.json`, `summary`)
+
+**Verdict: the lead survives a matched frame count, in the five-run mean and in each of the five runs.** With the 256-frame
+walk Opus saw, the four-epoch recipe gets 91.4% [90.3, 92.6] of the 1,299 novel trials against Opus's 69.2% [66.3, 71.7], a lead
+of +22.2 points [19.6, 25.2] with every room positive. The registered mark was 10 points. The longer walk does cost the model
+something: 256 minus 64 frames is -5.7 [-6.6, -4.7], accuracy falls in all ten rooms, and 0.80 of the 64-frame lead (+27.9)
+remains.
+
+*Checks.* Every run answered every novel trial in all ten rooms, and the answers match the manifests. The 55 files fetched
+from vast-3 match by MD5. All 6,495 replies are bare numbers of at most 4 tokens by `scripts/check_replies.py`, run on each job
+as it ended (experiment 30, amendment 1), so the vast-3 fault did not recur. Eight replies are a number that is neither option
+(run 3 five, run 6 two, run 5 one) and count as wrong, 0.12% in all. Parity, the CUDA rerun of P5005's 64-frame walk against the
+Mac's answers, is 734 of 735 (99.9%), above the 98% mark. Each run took 1 h 08-09 min, about 2.9 s per trial, and peaked at 22 GiB
+on the 5090's 32 GB, so no second amendment was needed.
+
+Per run, room means (%), differences in points; the 256-minus-64 row is the all-CUDA contrast:
+
+| | run 3 | run 4 | run 5 | run 6 | run 7 | five-run mean |
+|---|---|---|---|---|---|---|
+| 256 frames | 90.8 | 92.3 | 90.6 | 90.8 | 92.7 | 91.4 [90.3, 92.6] |
+| 64 frames | 97.4 | 97.2 | 97.3 | 96.3 | 97.2 | 97.1 [96.3, 97.9] |
+| lead over Opus at 256 | +21.5 | +23.1 | +21.3 | +21.6 | +23.5 | +22.2 [19.6, 25.2] |
+| trials right where Opus is wrong / wrong where Opus is right | 325 / 51 | 328 / 33 | 320 / 47 | 322 / 48 | 338 / 38 | |
+| 256 minus 64 | -6.7 | -4.9 | -6.7 | -5.5 | -4.5 | -5.7 [-6.6, -4.7] |
+| trials gained / lost at 256 | 14 / 101 | 12 / 75 | 6 / 93 | 13 / 85 | 13 / 71 | |
+
+Over rooms, the five-run accuracy runs from 88.8 to 94.3, the lead from +16.5 to +30.8, and the drop from -3.1 to -8.5. Against
+experiment 9c's own files (P5005 on MPS) the drop is the same, -5.7 [-6.6, -4.7].
+
+*Reading.* The paper can say that the fine-tuned model leads Opus with the same walk, giving 91.4 against 69.2, with 97.1 as the
+number in the model's own 64-frame format. The match covers frames, order, labels and question. It does not cover the image
+encoding (JPEG at quality 92 for Opus, the rendered frames for the LoRA) or training: the LoRA was trained on this task and
+Opus was not, and Opus ran at low effort. The drop is a finding about the trained model, which learned on walks of 64 frames and
+does not fully carry the skill to walks four times as long. It does not show that Opus was handicapped by the longer walk,
+since Opus did as well with 64 frames as with 256 in room A (experiments 5-6).
+
+*Also reported, unregistered, no thresholds* (`scripts/lora256_exploratory.py` -> `results/lora_256frames_exploratory.json`).
+- *Against the retrieval rules.* Experiment 20's best procedural rule (67.7%) had all 256 frames. The recipe at 256 frames leads
+  it by +23.8 [19.1, 28.8] points, in all ten rooms; at 64 frames the lead is +29.4.
+- *Lean.* At 256 frames the runs name the later of the two frames on 45.6-46.9% of trials, while the near option is the later
+  one on 50.9%. At 64 frames they name it on 49.5-50.3%. The extra errors therefore lean toward the earlier frame.
+- *Overlap.* At least three of the five runs miss 105 trials at 256 frames and 31 at 64, and all five miss 46 at 256. Opus is
+  wrong on 65.7% of those 105 trials against 30.3% overall, so the misses sit on trials that are hard for Opus too.
+- *Distance in walk time.* The drop shrinks as the two options lie further apart in the walk: -7.6 under 32 frames, -7.3 at
+  32-63, -5.1 at 64-127 and -3.3 at 128 or more.
+
 ## Experiment 25 (pre-registered 2026-10-28 10:08 PDT, before the assay was run on any recorded network or real control): a population-level test of a heading-invariant place code
 
 **Why.** All three GPT-6 Astra reviewers of round R1 (`writeup/paper/kit/paperscorer/rounds/R1/packet.md`) rate

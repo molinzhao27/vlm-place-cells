@@ -6708,6 +6708,102 @@ in full. All five runs' accuracies had been seen when this was decided, so this 
 - *Experiment 24.* The same check runs on each experiment-24 run's answer files as its job ends, and a damaged run is run
   again in the same way.
 
+### Exp 30 results (2026-10-31 08:55 PDT; gq vast3:339, 340, 342, 343, 356; `results/trajectory_shift.json`, `summary`)
+
+**Verdict: all three shifts survive, and geometric proximity wins the separation test, in the five-run mean and in each of
+the five runs.** By the registered reading, a local view-sequence association fitted to the training walks does not explain
+the accuracy, as tested here. This does not show a place code, and it does not exclude strategies that chain views across
+the whole walk.
+
+*Checks.* Each run answered all 6,383 trials (5,177 standard, 1,206 neighborhood), and the answers match the manifests. Run 3
+is amendment 1's rerun (vast3:356): all 6,383 replies are 4-token bare numbers by `scripts/check_replies.py`, and its fresh
+parity step matched 192 of 192, as did the other four runs. Three of run 3's replies are a number that is neither option and
+count as wrong (0.05%); runs 4-7 have none. The pixel window-maximum rule (64 shown frames, k = 16) scores 43.9% on control
+conflict trials and 72.5% on agreement trials (patrol, six rooms: 35.2 and 72.0), so the trials oppose pixel similarity as
+intended. Every walk rendered a second time for the DINOv2 features matched by MD5. Control rooms have 39-53 conflict trials.
+Three patrol rooms have fewer than 20 (P5006, P5007, P5009: 15-19), so the patrol verdict rests on the other six rooms.
+
+Part 1, standard novel trials, five-run mean over nine rooms (%), with differences in points:
+
+| walks | trials | LoRA | best rule b* | margin M | Δ vs control | verdict |
+|---|---|---|---|---|---|---|
+| control | 1,461 | 96.4 [95.6, 97.2] | 67.2 (combined) | +29.2 [26.1, 32.1] | | reference |
+| long-step | 1,087 | 95.5 [94.4, 96.5] | 67.8 (window maximum, DINOv2 patch mean, all 256, k 16) | +27.8 [25.0, 30.8] | -0.9 [-1.9, +0.0] | survives, 5 of 5 runs |
+| low-turn | 1,665 | 96.2 [95.8, 96.6] | 65.0 (combined) | +31.2 [29.2, 32.8] | -0.2 [-1.1, +0.6] | survives, 5 of 5 runs |
+| patrol | 964 | 97.5 [96.7, 98.2] | 67.5 (combined) | +29.9 [26.9, 33.1] | +1.0 [-0.1, +2.1] | survives, 5 of 5 runs |
+
+A(control) sits beside experiment 10's four-epoch mean in the same nine rooms, 97.0 [96.1, 97.9], so fresh walks of the
+training distribution cost 0.6 points, and M(control) is far above 15. The margin is positive in all nine rooms in every
+condition. Each shift moved its own property as designed: step 0.44 m against 0.22, median turn 3.6 degrees against 13.0, and
+86% of frames revisited after 64 or more steps against 30%.
+
+Part 2, neighborhood trials:
+
+| walks | conflict / agreement trials | A(conflict) | A(agreement) | K | halfway line | best rule on conflict | LoRA over it |
+|---|---|---|---|---|---|---|---|
+| control, nine rooms | 412 / 411 | 97.1 [95.5, 98.4] | 98.2 [96.8, 99.3] | +1.1 [-1.3, +3.3] | 74.1 | 65.0 (combined) | +32.0 [27.6, 37.7] |
+| patrol, six rooms | 194 / 189 | 98.6 [97.1, 99.9] | 99.1 [97.8, 100.0] | +0.5 [-0.3, +1.5] | 74.5 | 58.1 (look-alike then time, raw DINOv2 CLS, all 256, top 5) | +40.5 [32.0, 48.0] |
+
+On agreement trials the best rule reaches 87.8% (control) and 87.7% (patrol), and the model leads it by +10.3 [6.6, 14.3] and
++11.4 [7.0, 15.8] points.
+
+Per run (%):
+
+| | run 3 | run 4 | run 5 | run 6 | run 7 |
+|---|---|---|---|---|---|
+| control | 96.0 | 96.8 | 96.4 | 96.4 | 96.6 |
+| long-step | 95.3 | 96.0 | 95.8 | 95.7 | 95.0 |
+| low-turn | 96.4 | 95.8 | 96.3 | 96.4 | 96.1 |
+| patrol | 97.3 | 97.5 | 97.2 | 97.3 | 97.9 |
+| conflict, control walks | 97.2 | 96.3 | 96.6 | 97.7 | 97.5 |
+| agreement, control walks | 98.7 | 97.9 | 98.4 | 98.0 | 97.7 |
+| experiment 10, same nine rooms | 97.3 | 97.3 | 97.3 | 96.1 | 97.1 |
+
+*Also reported, no thresholds.*
+- *Experiment 10's novel trials typed by the same rule* (ten rooms, room means): conflict 96.9 [94.6, 98.9] (145 trials),
+  agreement 98.1 [96.4, 99.6] (133), neither 97.0 [96.0, 97.9] (1,021).
+- *Standard trials typed by the same rule* (pooled): control conflict 92.7 (167), agreement 100.0 (95), neither 96.7 (1,199);
+  long-step 92.7 (30), 99.2 (49), 95.4 (1,008); low-turn 94.3 (256), 97.2 (284), 96.4 (1,125); patrol 97.5 (111), 99.4 (62),
+  97.3 (791).
+- *Geometry* (experiment 20's bins, trials pooled, each condition's b*). Accuracy follows the distance margin: 93.8 / 89.0 /
+  91.0 / 95.8 at 2-3 m (control, long-step, low-turn, patrol), 96.6 / 94.9 / 95.2 / 97.9 at 3-4 m, and 98.5 / 98.7 / 99.4 / 99.5
+  at 4 m or more. Across heading gap, novelty margin and visual overlap every bin stays within 94.1-98.2. The smallest lead
+  over b* in any bin is +18.0 (patrol, 4 m or more, rule 81.5%), then +19.6 (long-step, lowest overlap tertile, rule 75.5%).
+- *Frame order on neighborhood trials* (pooled; near option nearer in frame number to the best look-alike, or the far one):
+  control conflict 98.0 (241) and 95.9 (171), agreement 98.6 (292) and 97.3 (119); patrol conflict 97.5 (103) and 98.7 (91),
+  agreement 98.7 (106) and 99.0 (83).
+- *Experiment 28's matcher* (order-free, its five chosen checkpoints, `scripts/trajectory_shift_matcher.py` ->
+  `results/trajectory_shift_matcher.json`; the script's own route reproduces the stored scores on P5000's 119 novel trials
+  exactly): control 74.5 [71.7, 77.4], long-step 73.8, low-turn 75.0, patrol 73.1, against 73.3 on experiment 10's trials. The
+  model leads it by +22.0 [19.1, 24.8], +21.7, +21.2 and +24.3 points, in all nine rooms each time. On neighborhood trials the
+  matcher scores 76.9 on conflict and 73.6 on agreement (control), and 76.9 and 66.4 (patrol). The ordered variant is within
+  3 points of these everywhere.
+
+**Limits.**
+- *A flat profile is not by itself a mark of geometry.* Experiment 28's matcher is as flat as the model across the three
+  shifts, and conflict trials cost it nothing. It does not use frame order (experiment 28), so it is not the local-sequence
+  strategy this test targets, and it shows that view-based accuracy can also ignore these shifts. What separates the model
+  from it here is the level, 21-24 points in every condition, not the shape.
+- *Conflict trials remove shared landmarks, not all shared appearance.* The rule asks that no frame around the near option
+  shows a poster or pillar the new view shows. The best fixed rule still scores 65.0% on control conflict trials, and the
+  matcher 76.9%, so some view information still points to the near option.
+- *The registered K is the smallest of the gaps.* The registered neighborhood trials give +1.1. Standard trials typed by the
+  same rule give a gap of 7.3 points in control walks and 6.5, 2.9 and 1.9 in the shifts (94.4 against 98.2 pooled over all four
+  conditions). These are unbalanced for pixel similarity by type, are not the registered test and stay under the 10-point line,
+  but "no conflict cost" would overstate the result. "A small cost, at most a few points" is what the data support.
+- *Every prompt keeps the ordered walk and its real frame numbers.* Order and labels are tested by experiment 31, not here.
+  A comparison of frame gaps would not be affected by doubling the step length, because only the relative gap matters.
+- *Run 3 was run again after all runs' accuracies had been seen* (amendment 1). Without it the same verdicts hold in all three
+  shifts and both separation tests: 95.6, 96.1 and 97.5% on the shifts and K +1.0 on runs 4-7.
+- *Procedural rooms only.* Exp 20's photoreal result is unchanged: there the model's lead over retrieval stays under 15 points.
+
+**What it means, by the registered reading.** The skill does not depend on the step length, turning or revisit structure of the
+training walks, and when local view association and geometric proximity disagree, the model follows proximity at close to its
+usual accuracy. The paper can say that a local view-sequence association fitted to the training walks does not explain the
+accuracy, as tested here, and that the lead over the 149 rules holds on all three kinds of shifted walk. No place-code claim
+follows from this, and the abstract does not change. `scripts/trajectory_shift_analysis.py` gained the descriptive items above
+after the verdicts were read; the verdict code did not change.
+
 ## Experiment 31 (pre-registered 2026-10-28 12:51 PDT, before any four-epoch run saw a reordered walk or a cut): walk-order controls and attention cuts on four-epoch runs 5 and 7
 
 **Why.** The paper now reports the four-epoch recipe (experiment 9c, runs 3-7) as its fine-tuned model; the two-epoch

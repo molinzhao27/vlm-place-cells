@@ -6364,6 +6364,59 @@ vast3:338 ends, about 23:05 PDT, so results about 00:30-01:00 Sat PDT, and every
 and `specs.json` are unchanged), `scripts/run_vlm_control.sh`, `scripts/vlm_control_analysis.py`; data in
 `results/vlm_intervention/specs_control.json`, `stimulus_control.json` and one JSONL per run and condition.
 
+### Exp 29 amendment 1 results (2026-10-31 00:15 PDT; gq vast3:353-355; `results/vlm_control.json`, `summary`)
+
+**Verdict: place confirmed, in both runs.** The harm from moved frames is not a penalty for a broken walk, and moving an
+option's neighbors to the new view pulls the decision toward that option. By the registered reading, the abstract's clause
+stands.
+
+*Checks.* The build kept 678 trials (the geometry count was 675), 62-93 per room in nine rooms. Left out: 66 with no
+valid block, 128 with no valid far-far move, 36 with no valid far-close move. The stimulus check passed before any
+model ran: the place agent came out "place confirmed" (P +81.3 points), the view agent's pull is -5.7 points (needs to be
+under 5), and the synthetic broken-walk agent came out "broken walk" (W +28.1, P +0.5). Each condition has all 678 answers
+in both runs, and every comparison below is on these 678 trials.
+
+Accuracy, mean over rooms (%), with the contrasts in points:
+
+| | run 5 | run 7 | view agent |
+|---|---|---|---|
+| clean | 97.2 | 96.9 | 58.1 |
+| there-away | 67.8 | 71.9 | 22.6 |
+| block-there | 97.2 | 97.1 | 58.1 |
+| far-far | 98.1 | 97.7 | 79.9 |
+| far-close | 87.9 | 86.6 | 85.7 |
+| G = clean - there-away | +29.3 [26.8, 31.9] | +25.0 [22.9, 27.7] | +35.5 |
+| W = clean - block-there | -0.1 [-1.0, +0.8] | -0.2 [-1.1, +0.6] | 0.0 |
+| F = clean - far-far | -0.9 [-2.0, +0.3] | -0.8 [-2.3, +0.7] | -21.8 |
+| P = far-far - far-close | +10.2 [7.8, 12.4] | +11.1 [9.7, 12.7] | -5.7 |
+
+- *Not a generic penalty.* W is at most G/4 and its CI is well under G/2 in both runs. The same jump of the walk that costs
+  25-29 points around the near option costs nothing away from both options (trials better/worse 5/5 and 4/6), and nothing at
+  the far option when the far set stays far.
+- *Directional.* P is at least 5 points with its CI above 0, in 9 of 9 rooms in both runs. The trial sign counts are 77 to 7
+  and 81 to 6. The two conditions make the same break and differ only in where the far set ends up. Every far-close error is
+  a choice of the far option (84 and 91 of 678 trials; no unparsed answers).
+- *The pull is not visual, by the registered check.* The view agent's pull has the opposite sign. The far-close frames
+  look less like the new view than the far-far frames do (DINOv2 cosine 0.61 against 0.63, best frame 0.70 against 0.72).
+  They look more like the far option's frame (0.69 against 0.64), which was reported with no threshold. If the model
+  were using continuity between an option and its neighbors, far-far would then cost more than far-close, and it does not.
+
+**Limits.**
+- *The pull is partial.* Far-close puts the far set within 1.5 m of the new view, so a pure place reader should fall toward
+  50%, and the place agent drops by 81 points. The models lose 10-11 and stay at 87-88%. So the neighbors' place moves the
+  decision but does not settle it. The near set and both option frames are still in place in this condition, and this
+  design cannot say what supplies the rest.
+- *Harm and help differ in size.* Moving the near set away costs 25-29 points on these trials, moving the far set close 10-11.
+  The registered rule does not compare them, and the two moves are not the same size, so this is a description.
+- *Which runs.* Runs 5 and 7 only. Run 0 was not tested, so the broken-walk question is closed for these two runs. Experiment
+  29's run 0 result keeps the limit stated in its entry.
+- *The swap acts on the input.* As registered, it does not show how the model computes the answer, and the moved frames face
+  away from what the new view shows, so "where they were taken" holds as far as the view agent's check holds.
+
+**What it means, by the registered reading.** The abstract's clause stands: "swapped walk frames show that the decision depends
+more on where they were taken than on what they show." The paper can state that moving an option's neighbors toward the new
+view pulls the decision toward that option. Exp 29's limit "a broken-walk penalty is not excluded" is lifted for runs 5 and 7.
+
 ## Experiment 30 (pre-registered 2026-10-28 12:53 PDT, before any shifted walk was rendered or any model saw one): the fine-tuned model on walks it was not trained on
 
 **Why.** The four-epoch LoRA runs (experiment 9c, runs 3-7) answer 96.3-97.4% of the novel two-choice trials in the

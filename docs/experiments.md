@@ -6058,6 +6058,99 @@ than on the device of its experiment-10 answers. Nothing is rented. Analysis onc
 `.venv-claude/bin/python scripts/vlm_intervention_analysis.py --fetch` -> `results/vlm_intervention.json`. `--fetch`
 copies only runs 5 and 7's JSONL files from vast-3, never its whole `results/`.
 
+### Exp 29 results (2026-10-30 18:27 PDT; `results/vlm_intervention.json`, `summary` key)
+
+All three runs finished: run 5 (gq vast3:334) and run 7 (vast3:335) on vast-3 by 16:01 PDT, run 0 (mac:144) on the Mac at
+18:27 PDT. Every run gave experiment 10's answer on 100% of the 1,149 included trials, above the 99% gate. The stimulus
+check passed before any model ran (gq mac:143): the place agent came out "place" and the view agent "view plus walk"
+(R_view 1.17, R_place -0.02).
+
+**Verdict under the registered rule: place, in all three runs**, so place for the fine-tuned model. The sensitivity
+analysis on the 908 trials whose near and far sets share no frame gives the same verdict in each run (R_place 0.59 /
+0.76 / 0.80, R_view 0.45 / 0.27 / 0.26).
+
+Novel-trial accuracy, mean over the nine rooms (percent, 95% CIs over rooms in the second table):
+
+| condition | run 0 | run 5 | run 7 |
+|---|---|---|---|
+| clean | 92.6 | 97.3 | 97.1 |
+| here-toward (right place, shows the new view) | 92.5 | 93.2 | 91.9 |
+| here-away (right place, faces away) | 80.1 | 90.1 | 91.4 |
+| there-toward (3 m+ away, shows the new view) | 75.0 | 73.4 | 75.4 |
+| there-away (neither) | 62.1 | 67.8 | 70.3 |
+| random-away (random frames turned, not moved) | 92.1 | 97.8 | 97.2 |
+| near-cut (near set hidden from attention) | 82.8 | 91.3 | 91.5 |
+
+| registered quantity | run 0 | run 5 | run 7 |
+|---|---|---|---|
+| swap gap G | 30.5 [29.0, 32.1] | 29.5 [27.4, 31.8] | 26.8 [24.7, 29.0] |
+| place effect | 18.0 [15.9, 20.2] | 22.4 [19.9, 25.1] | 21.1 [18.4, 24.0] |
+| view effect | 12.9 [11.0, 15.0] | 5.6 [2.7, 8.7] | 5.2 [2.4, 8.4] |
+| conflict (here-away minus there-toward) | 5.1 [2.6, 7.6] | 16.8 [15.5, 18.2] | 15.9 [13.5, 18.2] |
+| R_place | 0.59 | 0.76 | 0.79 |
+| R_view | 0.42 | 0.19 | 0.19 |
+| R_both | 1.00 | 0.86 | 0.81 |
+| random cost | 0.5 [-0.3, 1.3] | -0.6 [-1.6, 0.4] | -0.1 [-0.7, 0.6] |
+
+The test is valid in every run: G is far above 5 points, and the random cost is about zero, so turning frames the
+decision does not depend on changes nothing. The manipulation worked as designed. The best DINOv2 cosine of the 8
+frames with the new view is 0.82 for the original near set, 0.82 for there-toward and 0.71-0.73 for the two away
+conditions; 91-93% of toward frames show a poster or pillar the new view shows, against 2-11% of away frames and 28% of
+the originals. The median translation is 3.25 m (range 3.0-6.5 m). Frames that look like the new view but were taken
+3 m or more away recover 5-6 points in the four-epoch runs and 13 in run 0, so view similarity is a real but minor
+contributor, larger in the two-epoch run.
+
+**What the verdict does and does not show.** Three readings narrow it, the first two from data in hand.
+- *Most of the place effect is harm from frames in the wrong place, not help from frames in the right one.* The
+  registered near-cut reference shows this. Hiding the near set costs 5.6-9.7 points, while replacing it with there-away
+  frames costs 26.8-30.5, which is 20.8-23.6 points worse than hiding them (9/9 rooms, every run). Here-away is level
+  with hiding (-2.7, -1.2 and -0.1 points). So frames at the right place that face away add nothing over no frames at
+  all; what they do is avoid the error that moved frames cause. In the four-epoch runs no swap restores the full clean
+  accuracy, here-toward included (4.1 and 5.2 points below clean; run 0 -0.1).
+- *The registered caveat applies.* Here-away frames resemble the near option as much as the originals do (DINOv2 cosine
+  0.74 and 0.73) and there-away frames less (0.68), so at the away level the place factor also changes how well the
+  frames continue the option's view. Moved frames also jump 3 m or more from the walk on either side of them, and no
+  control here moves frames the decision does not depend on: random-away turns frames but leaves them in place. A
+  generic penalty for a broken walk is therefore not excluded by the registered conditions alone. The exploratory cut
+  below argues against it.
+- *The swap acts on the input.* It shows that the decision depends on where these frames were taken. It does not show
+  how the model computes that, and it does not show a stored map.
+
+*Exploratory (decided after the verdict, not registered; `scripts/vlm_intervention_exploratory.py` ->
+`results/vlm_intervention_exploratory.json`): the cost of moved frames is graded by where they went.* If the model
+treats the near option as sitting where its neighbors are, moving those neighbors farther from the new view should hurt
+more, at any given far-option distance, and it should hurt most once they are farther than the far option. A penalty
+for a broken walk would not depend on the direction of the move. The share of trials on which the model still chose the
+near option, by how much farther the moved frames are from the new view than the far option is (dm - df):
+
+| dm - df (m) | < -2 | -2 to -1 | -1 to 0 | 0 to 1 | > 1 |
+|---|---|---|---|---|---|
+| trials | 190 | 146 | 263 | 409 | 141 |
+| run 5, here-away | 99.5 | 97.9 | 91.6 | 85.3 | 80.9 |
+| run 5, there-away | 96.8 | 87.7 | 70.7 | 55.3 | 39.7 |
+| run 7, here-away | 100 | 98.6 | 95.1 | 85.1 | 83.0 |
+| run 7, there-away | 96.8 | 89.7 | 73.4 | 56.5 | 48.2 |
+| run 0, here-away | 95.8 | 93.8 | 82.9 | 70.9 | 67.4 |
+| run 0, there-away | 92.6 | 80.1 | 63.5 | 47.9 | 41.8 |
+
+So when the moved frames remain 2 m or more nearer than the far option, moving them costs about 3 points, and when they
+are more than 1 m farther, the model picks the far option more often than the near one. Part of that gradient is
+difficulty, since here-away falls too, so the fair test holds the far option's distance fixed (df and dm correlate
+0.04). In a logistic regression of choosing the near option on df, dm, the near option's distance and the frames'
+DINOv2 similarity to the new view and to the near option, dm's coefficient per standard deviation is -0.20 [-0.32, -0.07],
+-0.31 [-0.50, -0.14] and -0.19 [-0.35, -0.05] on there-away (runs 0, 5, 7; bootstrap over rooms), and it is about zero
+on here-away (-0.06, -0.04, -0.03; every CI includes 0), where the moved frames are never shown. Adding the translation
+length instead leaves -0.21, -0.33 and -0.20. Moved distance beats a fixed penalty, in all three runs and after view
+similarity is controlled. This cut was chosen after the verdict and is a description, not a registered test.
+
+**What it means for the paper, as registered.** The view account of the decision does not hold: the decision links the
+new view to the near option without any neighboring frame that shows what the new view shows, provided those frames
+were taken near the option, and frames that show the new view from elsewhere do little. The paper must restrict "not
+places" to the units and readouts, say that the decision uses place information carried by the walk that units and
+linear probes at the image tokens do not show, and narrow the title claim. The wording should also carry the limits
+above: the evidence is that frames from the wrong place mislead the decision in a graded way, and it comes from an
+intervention on the input.
+
 ## Experiment 30 (pre-registered 2026-10-28 12:53 PDT, before any shifted walk was rendered or any model saw one): the fine-tuned model on walks it was not trained on
 
 **Why.** The four-epoch LoRA runs (experiment 9c, runs 3-7) answer 96.3-97.4% of the novel two-choice trials in the

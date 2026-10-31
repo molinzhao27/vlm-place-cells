@@ -6176,6 +6176,98 @@ linear probes at the image tokens do not show, and narrow the title claim. The w
 above: the evidence is that frames from the wrong place mislead the decision in a graded way, and it comes from an
 intervention on the input.
 
+### Exp 29 amendment 1 (registered 2026-10-30 20:04 PDT, after experiment 29's results and before any control frame was rendered or shown to a model): is the harm of moved frames a penalty for a broken walk?
+
+**Why.** Experiment 29's verdict is "place", but moving the near set also makes the walk jump 3 m or more and back, and
+no registered condition moved frames the decision does not depend on (random-away turns frames in place). A generic
+penalty for a broken walk would give the same verdict. The exploratory cut in the results entry argues against it, but
+it was chosen after the verdict. This amendment tests it directly. The user approved it on 2026-10-30, and the abstract's
+clause about the swap depends on it.
+
+**Design.** Three new swap conditions, on the trials below, with everything else as in experiment 29: labels, order,
+both options, the new view and the question stay as they were, and the swapped frames are rendered by the same renderer.
+Every moved frame faces directly away from the new view's target point, as in there-away, so none of them shows what the
+new view shows.
+- *block-there*: a stretch of the walk away from both options, moved as the near set was. A center frame c is one of the
+  shown frames that is not an option. The block is the 4 shown frames before c and the 4 after it (never an option),
+  sharing no frame with the near or far sets, with every block frame at least 3 m from the new view. Among the eligible
+  centers, taken in an order seeded by the trial, the first with a valid translation is used. c itself stays in place,
+  as the near option does in there-away. The translation follows experiment 29's rule: lengths 3.0-9.0 m in steps of
+  0.25 m, 32 directions in a seeded order, the shortest for which every moved place is walkable, at least 3 m from the
+  new view and at least 1 m from the target point. The sight rule is dropped, because these frames face away from the
+  target.
+- *far-close*: the far set moved together so that its mean position lands within 1.5 m of the new view (offsets 0, 0.25,
+  ..., 1.5 m in 32 seeded directions, the first with every moved place walkable and at least 1 m from the target point).
+- *far-far*: the far set moved by a translation of the same length as that trial's far-close (within 0.5 m), in a
+  direction that keeps every moved place at least 3 m from the new view and at least 1 m from the target point. So
+  far-far and far-close make the same break in the walk and differ only in where the far set ends up.
+
+What each account predicts:
+- If the harm is a penalty for a broken walk, block-there costs about as much as there-away, and far-far and far-close
+  cost the same as each other.
+- If the decision uses where the frames around an option were taken, block-there costs little, far-far costs little,
+  and far-close costs more than far-far, because the far option now looks as if it sits at the new view's place.
+  Both options would then look close, so far-close should pull accuracy toward 50%, and it need not go below it.
+
+**Trials.** Experiment 29's included trials whose near and far sets share no frame (908), which also have a valid block
+and valid far-close and far-far translations. A geometry-only count (no render, no model) gives 675 trials. The build
+(`--build-control`) records the exact set. Clean and there-away come from experiment 29's files, restricted to these
+trials, so every comparison is on the same trials.
+
+**Models and platform.** Runs 5 and 7 (the most and least shuffle-sensitive four-epoch runs) on vast-3 (CUDA), with
+experiment 29's settings. Run 0 is not tested: it would take about 7 h on the Mac, and the paper's main text uses the
+four-epoch runs.
+
+**Stimulus check, before any model job.** The place agent (experiment 29's: the option whose 8 frames have the nearer
+mean position) and the view agent (the option whose 8 frames include the one most similar to the new view, DINOv2) see
+these conditions, and the rule below is applied to them.
+- The place agent must come out "place confirmed".
+- The view agent must show a pull P below 5 points. If far-close frames looked more like the new view than far-far
+  frames do, a pull could be visual, and the design would be amended before any model runs.
+- A synthetic broken-walk agent must come out "broken walk". It starts from run 5's clean answers and, in each condition
+  that moves a block, makes each answer wrong with one fixed probability equal to run 5's G on these trials.
+Reported with no threshold: the moved frames' distance to the new view, the translation lengths, and each condition's
+DINOv2 cosine with the new view and with the moved option's frame.
+
+**Analysis** (`scripts/vlm_control_analysis.py` -> `results/vlm_control.json`, with a top-level `summary`). As in
+experiment 29: for each run, accuracy per room (rooms with at least 20 trials), means over rooms with 95% bootstrap CIs
+over rooms (10,000 resamples), paired differences, and room and trial sign tests. On these trials:
+- G = A(clean) - A(there-away), the harm to be explained;
+- W = A(clean) - A(block-there), the cost of the same break away from both options;
+- F = A(clean) - A(far-far), the cost of breaking the walk at the far option;
+- P = A(far-far) - A(far-close), the pull: same break, moved to the new view.
+
+**Decision rule, set now (for each run).**
+- *Not a generic penalty*: W at most G/4 and the upper end of W's CI below G/2. *Generic penalty*: W at least G/2.
+  Otherwise *partial*.
+- *Directional*: P at least 5 points with its CI above 0.
+- *Place confirmed*: not a generic penalty, and directional. *Broken walk*: generic penalty, and not directional.
+  Otherwise *mixed*.
+- The verdict is the one runs 5 and 7 share. If they differ, it is mixed, and each run's verdict is reported.
+
+**What each outcome means for the paper.**
+- *Place confirmed*: the abstract's clause stands ("swapped walk frames show that the decision depends more on where they
+  were taken than on what they show"), and the paper can state that moving an option's neighbors toward the new view
+  pulls the decision toward that option.
+- *Broken walk*: the clause becomes "moving frames from the correct option hurts more than turning them, though moving
+  also breaks the walk." Experiment 29's registered verdict is still reported, with this reading attached.
+- *Mixed*: both numbers are reported, the user chooses the wording, and the default is the sentence above.
+
+**Limits stated now.** The swap still acts on the input and does not show how the model computes the answer. Far-close
+moves frames to the new view's place, but those frames face away from what the new view shows, so a pull is about where
+they were taken only as far as the view agent's check holds. The trials are a subset (no shared frames, room for the
+moves), so clean and there-away are recomputed on them.
+
+**Cost and time.** No API cost. The build and stimulus check run as a vast-3 CPU job through gq (about 40 min). The
+two model jobs run at the project's normal priority, so ahead of the queued priority-150 jobs: three conditions at about
+0.94 s per trial on 675 trials (experiment 29's rate with renders), about 35 min per run plus loading. They start when
+vast3:338 ends, about 23:05 PDT, so results about 00:30-01:00 Sat PDT, and everything queued behind them moves about
+1 h 20 min later.
+
+**Files.** `spatialcells/vlm_intervention.py` (new `--build-control`, `--control-stimulus`; experiment 29's conditions
+and `specs.json` are unchanged), `scripts/run_vlm_control.sh`, `scripts/vlm_control_analysis.py`; data in
+`results/vlm_intervention/specs_control.json`, `stimulus_control.json` and one JSONL per run and condition.
+
 ## Experiment 30 (pre-registered 2026-10-28 12:53 PDT, before any shifted walk was rendered or any model saw one): the fine-tuned model on walks it was not trained on
 
 **Why.** The four-epoch LoRA runs (experiment 9c, runs 3-7) answer 96.3-97.4% of the novel two-choice trials in the

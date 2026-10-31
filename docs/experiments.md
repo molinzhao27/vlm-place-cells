@@ -6877,8 +6877,8 @@ is the wrong floor for run 7.
 
 *31c, labels in the shuffled walk.*
 - Run 7: *the labels carry the shuffled walk's accuracy.* S - R is +24.0 [21.7, 26.1] points (10 of 10 rooms) and R - no walk
-  is -5.5 [-8.7, -1.4]. Relabeling alone takes run 7 from 82.2% to 58.2%, below its own no-walk 63.7%. R is still +8.2 [6.6,
-  10.5] above 50%, which is what the no-walk cue would give.
+  is -5.5 [-8.7, -1.4]. Relabeling alone takes run 7 from 82.2% to 58.2%, below its own no-walk 63.7%. R stays +8.2 [6.6,
+  10.5] above 50%, which the options' appearance cue (run 7's no-walk accuracy) could give without any walk.
 - Run 5: *inconclusive* by the rule. S - R is +1.5 [-0.4, +3.5], whose upper end passes the 3-point margin, and R - no walk is
   +0.1 [-2.2, +2.9]. There was little accuracy to carry: S was already at the no-walk level.
 

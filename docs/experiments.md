@@ -4303,6 +4303,31 @@ Its `frac_place` and mean-of-two fraction are checked against experiment 22's
   start vast3:344. In that case, submit the same command without `--after`; a missing recording is
   recorded as an error and skipped.
 
+**Four-epoch result (2026-10-30 18:55 PDT; gq vast3:344, 9 h 2 min; `axis_check.real_e4` in
+`results/heading_stat_validation.json`).** Run 0's vast-3 re-record matches vast-1's run 0 within 0.0037 on every
+share. Share of place units that pass each test, best layer, for runs 3 / 4 / 5 / 6 / 7 (walk in context, always
+layer 35, median place stability 0.62-0.67):
+
+| | run 0 re-record | runs 3 / 4 / 5 / 6 / 7 |
+|---|---|---|
+| all six sector pairs (the paper's strict test) | 6.1% | 16.7 / 13.3 / 15.8 / 8.0 / 16.1% |
+| mean of two opposite pairs (experiment 22's measure) | 14.3% | 30.2 / 28.4 / 30.1 / 18.2 / 31.4% |
+| noise-normalized map correlation, median | 0.39 | 0.61 / 0.61 / 0.58 / 0.44 / 0.63 |
+
+Layers 3-29 are at most 6.8% on the strict test and at most 0.38 on the normalized measure (0.07 at layer 3). Single
+frames are at most 0.3% (mean of two 1.3%). The 8-step moving average is 82-84% at its best layer (mean of two 90-91%).
+
+The longer recipe about doubles the last layer's strict share, and that share should not be read as the share of
+invariant units. The reliability note above applies at full strength here. In the 0.6-0.7 stability bin, a truly
+invariant unit passes the six-pair test 59% of the time (31% at rho = 0, 91% at rho = 0.9) and the mean of two 85%, and
+it passes less often in the 0.5-0.6 bin (21% and 49%). So a fully invariant population at layer 35 would read about 59%,
+not 100%. The noise-normalized measure, which this entry's note says to quote beside the shares, gives a typical place
+unit about 60% of the opposite-heading correlation that noise allows, against about 1 for synthetic invariant units,
+0.82-0.88 for the moving average, and 0.37-0.39 for the base model and run 0 at that layer. The population assay agrees
+(experiment 25: walk HG 0.77-0.85 at layer 35). The reading for the paper is partial heading invariance in the last
+layers. The earlier argument that the fine-tuned model's fractions are too low for an undercount to matter was made
+for run 0 and does not carry over to layer 35 of the four-epoch runs.
+
 ## Experiment 22 (pre-registered 2026-10-28 00:30 PDT, before any four-epoch run was recorded): the unit and task-readout analyses on the four-epoch runs
 
 **Why.** The paper's behavioral headline is the mean of the five four-epoch runs (experiment 9c, runs 3-7),

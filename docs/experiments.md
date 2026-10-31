@@ -4482,6 +4482,62 @@ tests (CPU only, no GPU queue touched):
 - the analysis script runs on run 0's stored scores, reproducing the paper's 14.2%, 0.7%, 90.0%, 3.63 m,
   decision layer 20 and best (x, y) R^2 0.03.
 
+### Exp 22 results (2026-10-30 20:39 PDT; `results/e4_internals_summary.json`, verdicts under `verdicts`)
+
+**Implementation note.** vast3:305 and 306 ran as planned. The readout did not: `task_probe.py` needed about 4 h per
+run on vast-3's CPU under gq's pinning, about 26 h in all, not the estimated 1 h 15 min. On the PC (8 threads, the same
+code by MD5, recordings copied with checksums) it took 7 minutes per run. So all six readouts and task-extras ran on the
+PC (gq pc:637-643), and vast3:307, 351 and 352 were cancelled. vast3:307 had finished run 0 and three of run 5's sites:
+those cells match the PC's exactly for the MLP and within 0.00002 for ridge (`task_probe_vast3_partial.json`).
+
+**Units: carries over partly, by the registered rule.**
+
+| | run 0 re-record | run 3 | run 4 | run 5 | run 6 | run 7 |
+|---|---|---|---|---|---|---|
+| W, walk in context, best layer (always 35) | 14.3% | 30.2% | 28.4% | 30.1% | 18.2% | 31.4% |
+| S, single frames, best layer | 0.8% | 0.6% | 0.6% | 1.3% | 1.1% | 0.8% |
+| 8-step moving average, best layer | 90.0% | 90.7% | 90.0% | 91.3% | 90.8% | 90.0% |
+| invariant share of all units, layers 23-35 | 1.4-3.0% | 2.6-6.6% | 2.5-4.5% | 2.2-7.1% | 1.7-4.0% | 1.9-5.6% |
+| strict probe decoding, best (chance about 3.6 m) | 3.60 m | 3.28 m | 3.33 m | 3.18 m | 3.42 m | 3.34 m |
+
+Four of the five runs exceed the 25% limit, so the claim does not carry over in full, and none is near 85%, so it does
+not fail. S stays within 6% in every run, and the moving average beats the walk in every run, so the moving-average
+account holds. W and shuffle sensitivity are not related in any simple way (Spearman -0.3 over five runs, descriptive).
+The registered reading applies: with more training, the late layers move toward VGGT-single's intermediate level, and
+the paper reports this as an effect of training and keeps the comparison with the moving average and the RNN. These
+shares sit at median stability 0.62-0.67, so experiment 21's undercount applies: see "Four-epoch result" under that
+experiment for the strict shares and the noise-normalized measure.
+
+**Task readout.**
+
+| | run 0 re-record | run 3 | run 4 | run 5 | run 6 | run 7 |
+|---|---|---|---|---|---|---|
+| behavior, this task's trials | 92.8% | 97.7% | 97.6% | 97.5% | 97.0% | 97.3% |
+| nearer option at the last token, ridge, best | 92.6% | 97.9% | 97.9% | 97.6% | 97.4% | 97.7% |
+| best cross-room (x, y) R^2, all sites, layers, readouts | 0.026 | 0.031 | 0.031 | 0.022 | 0.038 | 0.029 |
+| decision layer | 20 | 20 | 20 | 20 | 20 | 20 |
+| d_a - d_b, last token, ridge, maximum R^2 | 0.76 | 0.82 | 0.84 | 0.84 | 0.84 | 0.84 |
+| answer alone, R^2 | 0.69 | 0.82 | 0.81 | 0.81 | 0.80 | 0.81 |
+| residual after the answer, layers 20-30, highest | 0.07 | 0.03 | 0.06 | 0.06 | 0.102 | 0.08 |
+| within-room position, visual tokens (chance 3.53 m) | 1.53 m | 1.51 m | 1.53 m | 1.43 m | 1.44 m | 1.48 m |
+| within-room position, last token | 2.09 m | 1.90 m | 1.94 m | 2.01 m | 1.95 m | 2.04 m |
+
+- *Pipeline check:* passes in every run (within 3 points of behavior).
+- *No room-general position code: carries over.* Every run's best cross-room R^2 is at most 0.038, against the 0.10 limit.
+  So "within a room" stands in the abstract.
+- *Where the decision forms: carries over.* Layer 20 in every run.
+- *The readout is mostly the answer: does not hold by the registered rule, narrowly.* Run 6 reaches 0.102 at one layer,
+  against the limit of 0.10. The other four stay at or below 0.08. The paper should give the range (at most 0.10) and not
+  say that the rule was met in every run.
+- Within-room position and the heading-sector readouts stay as for run 0 (within-sector 2.07-2.16 m, cross-sector
+  4.31-4.50 m at the image sites; descriptions only).
+
+**Parity of run 0's re-recording.** Task: passes (nearer option within 0.9 points, d_a - d_b within 0.02, same decision
+layer). Units: the shares pass (within 0.4 points), but strict probe decoding differs by 0.104 m at one layer, against
+the limit of 0.10, so the units check fails narrowly. As registered, the four-epoch runs are compared with the vast-3
+re-record, and both sets of run-0 numbers are in the summary. The stored run-0 values do not change, and probe decoding
+errors are descriptions only, so the cause was not pursued further.
+
 ## Experiment 23 (pre-registered 2026-10-28 01:40 PDT, before any unit's weights were projected or any residual re-recorded): do VGGT's strictly invariant place units write into the causal position subspace?
 
 **Why.** The neuroscience reviewer of round R0f (issue W3,

@@ -7282,7 +7282,7 @@ head's two outputs at both blocks and the second-order part is not read. The roo
 papers give the numbers with no verdict. The decline from block 19 to 21 runs with the room-frame share of the token's variance (19.8% to
 9.9%, descriptive) and the strict invariant share (34% to 19%), over two blocks only.
 
-## Scoring correction for API models (2026-11-01 13:05 PST)
+## Scoring correction for API models (2026-11-01 13:03 PST)
 
 *Written before any stored result was changed. Corrected values follow in "Scoring correction: results".*
 

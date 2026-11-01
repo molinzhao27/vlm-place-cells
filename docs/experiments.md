@@ -1592,9 +1592,10 @@ room; means over the 10 rooms with 95% bootstrap CIs over rooms):
 | LoRA (seed 0) | **92.5%** [91.4, 93.6] | 55.9% [53.0, 58.7] | 51.3% [48.2, 54.3] |
 | Opus 5.5, low effort | 67.4% [64.6, 69.8] | 62.1% [59.2, 64.5] | (not run; amendment 1) |
 
-- **Primary question: Opus's walk gain holds across rooms, but it is small.** It is +5.3 points
-  [+3.1, +7.2], positive in 9 of 10 rooms (room-level sign test p = 0.02; pooled trials: 185
-  better, 138 worse). That is smaller than room A's +14 and larger than room B's ~0.
+- **Primary question: Opus's walk gain holds across rooms, but it is small.** On the full set it is
+  +6.4 points [+4.1, +8.2], positive in 9 of 10 rooms (room-level sign test p = 0.021; trials: 282
+  better, 200 worse). This first pass gave +5.3 [+3.1, +7.2] (185 better, 138 worse). That is smaller
+  than room A's +14 and larger than room B's ~0.
 - **The LoRA model:**
   - walk minus no walk: +36.6 points [+33.9, +39.6];
   - in order minus shuffled: +41.2 [+38.8, +43.8];
@@ -3323,8 +3324,8 @@ Secondary analyses (as registered):
    all five four-epoch runs at 98-99% in room A, this mostly separates the two recipes.
 
 *Exploratory, chosen after seeing the results (not registered).*
-- MindCube-Tiny. Every model scores at or below chance. The four-epoch mean (34.2) moves from below
-  chance to about chance.
+- MindCube-Tiny. Every model scores near chance (33.0): base 30.1, two-epoch runs 30.0-30.8, four-epoch
+  runs 30.5-37.7. The four-epoch mean (34.2) moves from below chance to about chance.
   - On the 87 yes/no "around" questions, where "Yes" is always correct, the four-epoch runs answer "Yes"
     62-69 times against the base model's 33. That accounts for most of their "around" gain. On the other
     "around" questions the four-epoch runs score 28.2-41.7 (base 30.7, chance 28.1).

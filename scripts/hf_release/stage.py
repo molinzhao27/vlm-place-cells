@@ -7,6 +7,7 @@ dataset/ frames/<room>/            the walk frames and probe images every model 
                                    procedural rooms only, plus trials.json
          two_choice_trials/<room>/ the two-choice trial lists (and their probe images, procedural rooms only)
          walks/roomP5005/          raw frames for the one held-out room the generator cannot re-render exactly
+         walks/shifted/            the images the shifted-walk prompts showed (rsync'd from vast-3 to data/hf_release/e30_payload)
          training/proc/            the 1,200 procedural training rooms (rsync'd from vast-3 to data/hf_release/training/proc)
          results/                  every per-trial answer file and summary
 Photoreal renders (Replica, HSSD) are left out: their dataset licenses do not allow redistribution, so
@@ -22,8 +23,9 @@ OUT = f"{ROOT}/data/hf_release"
 RUNS = {"run0": "qwen8b-proc", "run1": "qwen8b-proc-s1", "run2": "qwen8b-proc-s2", "run0-gpu-control": "qwen8b-proc-s0-5090",
         **{f"e4-run{k}": f"qwen8b-proc-e4-s{k}" for k in range(3, 8)}}
 PROCEDURAL = ["B"] + [f"P50{i:02d}" for i in range(10)]
-PHOTOREAL = [f"HSSD{i}" for i in range(1, 9)] + [f"ReplicaApt{i}" for i in range(3)]
-RESULTS = ["two_choice", "claude", "api", "std_bench", "behave", "frame_cut"]
+PHOTOREAL = [f"HSSD{i}" for i in range(1, 27)] + [f"ReplicaApt{i}" for i in range(3)] + [f"ReplicaFRL{i}" for i in (0, 1, 3, 4, 5)]
+RESULTS = ["two_choice", "claude", "api", "std_bench", "behave", "frame_cut", "vlm_intervention", "e4_internals"]
+SPOILED = ("/failed_nan/", "/failed_garbled/")   # runs a vast-3 GPU fault damaged (each rerun clean): not released
 
 
 def link(src, dst):
@@ -68,8 +70,14 @@ def main():
         counts[f"frames/room{r}"] = link_tree(f"{exp}/claude-room{r}", f"{ds}/frames/room{r}", trials_only)
         counts[f"two_choice_trials/room{r}"] = link_tree(f"{exp}/dissimilar-room{r}", f"{ds}/two_choice_trials/room{r}", trials_only)
     counts["walks/roomP5005"] = link_tree(f"{ROOT}/data/walks-roomP5005", f"{ds}/walks/roomP5005")
-    for r in RESULTS:   # std_bench/failed_nan holds the runs a vast-3 GPU fault spoiled (rerun clean): not released
-        counts[f"results/{r}"] = link_tree(f"{ROOT}/results/{r}", f"{ds}/results/{r}", lambda p: "/failed_nan/" not in p)
+    counts["two_choice_trials/roomE30"] = link_tree(f"{exp}/dissimilar-roomE30", f"{ds}/two_choice_trials/roomE30")
+    # shifted walks: the images their prompts showed (the 256-frame renders are 63 GB and re-render from seeds)
+    counts["walks/shifted"] = link_tree(f"{OUT}/e30_payload", f"{ds}/walks/shifted")   # rsync'd from vast-3
+    for d in sorted(glob.glob(f"{ROOT}/data/e30/P*")):
+        for f in ("poses.npz", "landmarks.json", "md5.json"):
+            link(f"{d}/{f}", f"{ds}/walks/shifted/{os.path.basename(d)}/{f}")
+    for r in RESULTS:
+        counts[f"results/{r}"] = link_tree(f"{ROOT}/results/{r}", f"{ds}/results/{r}", lambda p: not any(s in p for s in SPOILED))
     for p in glob.glob(f"{ROOT}/results/*.json"):
         link(p, f"{ds}/results/{os.path.basename(p)}")
     counts["results/*.json"] = len(glob.glob(f"{ROOT}/results/*.json"))

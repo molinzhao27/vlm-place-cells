@@ -7122,19 +7122,6 @@ is the wrong floor for run 7.
   more" stands as measured, but "Opus does not need order" rests on room A alone.
 - Experiment 25's shuffled-walk condition is not affected: `extract.py`'s recording prompt has no frame numbers.
 
-## Prior work this builds on
-
-- Luo, Mok & Love 2024, *The inevitability and superfluousness of cell types in
-  spatial cognition*: image networks (even untrained ones) have "place",
-  "border" and "head-direction" units on single frames.
-- Banino et al. 2018; Cueva & Wei 2018; Schaeffer, Khona & Fiete 2022: grid cells
-  in navigation-trained RNNs, and how much they depend on design choices.
-- Whittington, Warren & Behrens 2022: transformers with recurrent positional
-  encodings produce grid and place cells.
-- Gurnee & Tegmark 2024: linear space and time representations in Llama-2.
-- Park et al. 2025: in-context random walks on a grid reorganise LLM token
-  representations into the grid.
-
 ## Experiment 32 (pre-registered 2026-10-31 23:44 PDT, before any pair was patched): which parts of VGGT's ten pose directions does the camera depend on?
 
 **Why.** Experiment 27 found that the camera token's ten directions of largest variance, fit with no labels, carry the causal
@@ -7214,3 +7201,95 @@ moves translation and leaves heading nearly unmoved. Room frame is less needed t
 reported. The residual comparison above is reported. The smoke run (the first 8 pairs, `--smoke`) checks only that the code runs; any
 change after it is an amendment here. Code: `scripts/vggt_pair_patch.py` -> `data/pair_patch/raw.{npz,json}`,
 `results/vggt_pair_patch.json` (`summary`).
+
+### Exp 32 results (2026-11-01 01:15 PDT; gq pc:647 smoke, pc:648; `results/vggt_pair_patch.json`, `summary`)
+
+**Verdict: unclear for the headline, the room-frame family at block 21, so its numbers are reported with no verdict in the text.**
+In the label-free arm, leaving directions 5-6 out loses 19% [16, 22] of the transfer, and the pair reaches 17% [15, 20] alone,
+between the 10% and 25% marks. In the feature-fit arm the same family is needed (32% [28, 36] lost, 24% [20, 28] alone). The arms
+disagree, so the claim follows the weaker verdict. Around it the rule is decisive: heading and camera frame are needed at both blocks
+in both arms, the room-frame family is needed at block 19 in both arms (48% lost in each), and the second-order family is not read
+at either block.
+
+*Checks.* The ten reproduce experiment 27 at both blocks: 0.8567 (stored 0.8567) and 0.4061 (0.4061), inside the 0.01 mark, with
+the largest single-pair difference 0.003 and 0.007. The rerun clean residuals equal the stored ones exactly at both blocks. The code did
+not change after the smoke run (MD5 13eed268, file time before pc:647), so no amendment is needed. The run took 1 h 21 min on the
+4070. `raw.npz` matches by MD5 after the fetch, and the Mac's rerun of `analyze` equals the PC's JSON except for two correlations in their
+16th digit. The head's translation is the camera-frame position it was described as: correlation with the true forward and right
+components -0.993 in both.
+
+The rule, L = share of the transfer lost without the family, A = share it reaches alone (95% intervals over the 128 pairs):
+
+| family | arm | block 21 L | block 21 A | verdict | block 19 L | block 19 A | verdict |
+|---|---|---|---|---|---|---|---|
+| heading | label-free | 0.48 [0.39, 0.57] | 0.32 [0.24, 0.42] | needed | 0.26 [0.15, 0.36] | 0.07 [-0.03, 0.16] | needed |
+| | feature-fit | 0.47 [0.37, 0.56] | 0.33 [0.24, 0.42] | needed | 0.27 [0.15, 0.38] | 0.09 [-0.02, 0.19] | needed |
+| camera frame | label-free | 0.45 [0.36, 0.54] | 0.32 [0.24, 0.41] | needed | 0.47 [0.38, 0.56] | 0.28 [0.19, 0.36] | needed |
+| | feature-fit | 0.34 [0.25, 0.43] | 0.27 [0.19, 0.34] | needed | 0.46 [0.35, 0.56] | 0.29 [0.20, 0.38] | needed |
+| room frame | label-free | 0.19 [0.16, 0.22] | 0.17 [0.15, 0.20] | unclear | 0.48 [0.41, 0.55] | 0.41 [0.33, 0.50] | needed |
+| | feature-fit | 0.32 [0.28, 0.36] | 0.24 [0.20, 0.28] | needed | 0.48 [0.41, 0.57] | 0.42 [0.36, 0.50] | needed |
+| second order | label-free | 0.04 [0.01, 0.07] | 0.04 [0.02, 0.06] | not read | 0.06 [0.00, 0.10] | 0.06 [0.02, 0.10] | not read |
+
+Position transfer T, heading gap closed and translation transfer per condition (the feature-fit reference is `fit_all`):
+
+| condition | block 21 T | heading | translation | block 19 T | heading | translation |
+|---|---|---|---|---|---|---|
+| ten | 0.857 | 0.87 | 0.86 | 0.406 | 0.34 | 0.46 |
+| heading alone | 0.277 | 0.78 | 0.07 | 0.026 | 0.27 | 0.01 |
+| ten without heading | 0.445 | 0.04 | 0.67 | 0.300 | 0.03 | 0.38 |
+| camera frame alone | 0.276 | 0.01 | 0.57 | 0.112 | 0.00 | 0.25 |
+| ten without camera frame | 0.469 | 0.83 | 0.19 | 0.215 | 0.32 | 0.15 |
+| room frame alone | 0.149 | 0.01 | 0.04 | 0.165 | 0.03 | 0.08 |
+| ten without room frame | 0.694 | 0.85 | 0.78 | 0.212 | 0.27 | 0.33 |
+| second order alone | 0.034 | 0.00 | 0.04 | 0.025 | 0.00 | 0.04 |
+| ten without second order | 0.822 | 0.85 | 0.81 | 0.383 | 0.33 | 0.41 |
+| all six features | 0.827 | 0.85 | 0.82 | 0.398 | 0.33 | 0.44 |
+| fit heading alone | 0.272 | 0.77 | 0.09 | 0.035 | 0.30 | 0.01 |
+| all six without heading | 0.442 | 0.03 | 0.64 | 0.291 | 0.01 | 0.36 |
+| fit camera alone | 0.222 | 0.00 | 0.53 | 0.117 | 0.00 | 0.28 |
+| all six without camera | 0.544 | 0.83 | 0.23 | 0.216 | 0.31 | 0.10 |
+| fit room alone | 0.197 | 0.00 | 0.08 | 0.167 | 0.00 | 0.06 |
+| all six without room | 0.565 | 0.80 | 0.67 | 0.206 | 0.32 | 0.33 |
+
+*Reading, within the registered terms.*
+- Heading and camera frame split the head's two outputs. Heading alone closes 0.78 of the heading gap and moves translation 0.07;
+  camera frame alone moves translation 0.57 and closes 0.01 of the heading gap. Leaving heading out removes nearly all of the heading
+  output (0.04), and leaving camera frame out removes most of the translation output (0.19). Both expectations set before the run
+  hold, in both arms and, at the lower ceiling, at block 19.
+- At block 19 the room-frame code is read, by the registered reading. The third expectation, that room frame is less needed than the
+  other two, holds at block 21 (0.19 against 0.48, 0.45) and fails at block 19 (0.48 against 0.26, 0.47).
+- Block 21's room-frame numbers carry no verdict. They do not meet "not read", whose loss bar is 0.10.
+- The four second-order directions, 5% of the token's variance, are not read at either block.
+- Six features recover nearly all of the ten: all six transfer 0.827 (the ten 0.857) at block 21 and 0.398 (0.406) at block 19.
+
+*Unregistered, no thresholds.*
+- The two arms differ because the PCA pair is not the whole room code (`scripts/vggt_pair_patch_mix.py` ->
+  `results/vggt_pair_patch_mix.json`). At block 21, 71% of the fitted room directions' energy lies in PCA pair 5-6 and 25% in pair 3-4,
+  the camera-frame family; at block 19, 75% and 20%. So "ten without room frame" leaves about a quarter of the room code in place. This is
+  the mixing the registration foresaw. It explains the gap and does not change the rule's outcome.
+- Room frame alone moves the prediction along the position line (block 21: 0.81 m moved, 0.29 m off the line) with no turn (0.01 of the
+  heading gap, 2.9 degrees). Its translation transfer is smaller (0.04), but that is a different line: it runs between the two translations
+  in camera axes, so it is not expected to follow position when the two frames face different ways.
+- The parts do not add: alone they sum to 0.74 of 0.86 at block 21, and the losses sum to 1.16. Position comes from heading and translation
+  together (C = -R^T t), so L and A are not shares of a whole.
+
+Limits, as registered: one room, one anchor set, two blocks, and nothing about the fine-tuned VLM. The patch writes into the camera
+token only at one point, so "needed" means the head's output depends on that part there, not that the network builds its pose from it.
+
+**For the papers.** Experiment 27's claim stands and gets more specific: of the ten dimensions, the heading and camera-frame parts drive the
+head's two outputs at both blocks and the second-order part is not read. The room-frame part is read at block 19; at block 21 the
+papers give the numbers with no verdict. The decline from block 19 to 21 runs with the room-frame share of the token's variance (19.8% to
+9.9%, descriptive) and the strict invariant share (34% to 19%), over two blocks only.
+
+## Prior work this builds on
+
+- Luo, Mok & Love 2024, *The inevitability and superfluousness of cell types in
+  spatial cognition*: image networks (even untrained ones) have "place",
+  "border" and "head-direction" units on single frames.
+- Banino et al. 2018; Cueva & Wei 2018; Schaeffer, Khona & Fiete 2022: grid cells
+  in navigation-trained RNNs, and how much they depend on design choices.
+- Whittington, Warren & Behrens 2022: transformers with recurrent positional
+  encodings produce grid and place cells.
+- Gurnee & Tegmark 2024: linear space and time representations in Llama-2.
+- Park et al. 2025: in-context random walks on a grid reorganise LLM token
+  representations into the grid.

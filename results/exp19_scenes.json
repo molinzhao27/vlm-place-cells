@@ -1,0 +1,135 @@
+{
+ "about": "Experiment 19 (docs/experiments.md): the new photoreal scenes. Accepted scenes, with (lure-free trials, novel); skipped scenes with the reason. HSSD9-26 are experiment 16's draw continued (results/hssd_selection.json, positions 13-40); ReplicaFRL0-5 are Replica's frl_apartment_0-5 (one apartment, six furnishings), walk seeds 210-215.",
+ "accepted": [
+  "ReplicaFRL0",
+  "ReplicaFRL1",
+  "ReplicaFRL3",
+  "ReplicaFRL4",
+  "ReplicaFRL5",
+  "HSSD9",
+  "HSSD10",
+  "HSSD11",
+  "HSSD12",
+  "HSSD13",
+  "HSSD14",
+  "HSSD15",
+  "HSSD16",
+  "HSSD17",
+  "HSSD18",
+  "HSSD19",
+  "HSSD20",
+  "HSSD21",
+  "HSSD22",
+  "HSSD23",
+  "HSSD24",
+  "HSSD25",
+  "HSSD26"
+ ],
+ "trials": {
+  "ReplicaFRL0": [
+   70,
+   2
+  ],
+  "ReplicaFRL1": [
+   90,
+   3
+  ],
+  "ReplicaFRL3": [
+   71,
+   3
+  ],
+  "ReplicaFRL4": [
+   68,
+   1
+  ],
+  "ReplicaFRL5": [
+   100,
+   1
+  ],
+  "HSSD9": [
+   166,
+   53
+  ],
+  "HSSD10": [
+   192,
+   110
+  ],
+  "HSSD11": [
+   146,
+   13
+  ],
+  "HSSD12": [
+   174,
+   23
+  ],
+  "HSSD13": [
+   192,
+   85
+  ],
+  "HSSD14": [
+   192,
+   123
+  ],
+  "HSSD15": [
+   188,
+   69
+  ],
+  "HSSD16": [
+   156,
+   30
+  ],
+  "HSSD17": [
+   181,
+   59
+  ],
+  "HSSD18": [
+   181,
+   48
+  ],
+  "HSSD19": [
+   61,
+   0
+  ],
+  "HSSD20": [
+   192,
+   75
+  ],
+  "HSSD21": [
+   192,
+   28
+  ],
+  "HSSD22": [
+   186,
+   85
+  ],
+  "HSSD23": [
+   166,
+   15
+  ],
+  "HSSD24": [
+   160,
+   47
+  ],
+  "HSSD25": [
+   186,
+   33
+  ],
+  "HSSD26": [
+   156,
+   51
+  ]
+ },
+ "skipped": {
+  "ReplicaFRL2": "0 lure-free trials: the shipped navmesh's largest island is about 1.6 x 2.8 m and 97% of views have more than 5% holes",
+  "HSSD draw 18 (106366134_174226362)": "island: largest 405.4 m^2, not 40-250",
+  "HSSD draw 19 (102816600)": "trials: 16 lure-free, fewer than 60",
+  "HSSD draw 23 (108294537_176710050)": "island: largest 658.1 m^2, not 40-250",
+  "HSSD draw 27 (107734146_175999971)": "island: largest 2119.8 m^2, not 40-250",
+  "HSSD draw 28 (103997994_171031320)": "trials: 0 lure-free, fewer than 60",
+  "HSSD draw 29 (104348010_171512832)": "island: largest 262.9 m^2, not 40-250",
+  "HSSD draw 30 (102816066)": "trials: 0 lure-free, fewer than 60",
+  "HSSD draw 32 (104348037_171512898)": "island: largest 33.8 m^2, not 40-250",
+  "HSSD draw 37 (103997613_171030702)": "trials: 17 lure-free, fewer than 60",
+  "HSSD draw 38 (102816756)": "island: largest 262.4 m^2, not 40-250"
+ }
+}

@@ -1,0 +1,2307 @@
+{
+ "_about": "Two readouts that experiment 14a ran by hand (its \"exploratory\" notes) and the paper quotes,\n             written down here so that every run gets the same computation, run 0 included. From\n             task_record.py's recordings (data/acts_task/<model>/), with task_probe's split (five held-out\n             rooms -> the other five, both ways, averaged; the training rooms' last room validates lambda):\n  answer     Is the distance-difference readout (d_a - d_b) more than the model's answer? R^2 of predicting\n             d_a - d_b from the answer alone (the training rooms' mean for each answer), from the true nearer\n             option alone, and of a ridge readout (task_probe.ridge_fit) of the residual left after the\n             answer, per layer at the last and question tokens. Trials whose recorded answer is neither\n             option are left out (counted). The answer is experiment 10's on the same prompt (meta.json).\n  within     The new view's (x, y) inside each room: five folds of walks (walk index mod 5), ridge per fold\n             (lambda validated on the next fold), median error over the room's trials, mean over rooms;\n             chance predicts the training folds' mean. Per layer at the visual-token mean and the last token.",
+ "qwen8b+qwen8b-proc-cuda": {
+  "n_trials": 1920,
+  "n_answer_ok": 1919,
+  "device": "cuda",
+  "exp10_devices": [
+   "mps"
+  ],
+  "behaviour": {
+   "n": 1920,
+   "accuracy": 0.928125,
+   "accuracy_novel": 0.9253271747498075
+  },
+  "answer_only_r2": 0.6889994144439697,
+  "true_sign_r2": 0.874082088470459,
+  "within_room_chance_m": 3.533580684661865,
+  "img_mean": {
+   "L1": {
+    "within_room_m": 1.6475141167640686
+   },
+   "L2": {
+    "within_room_m": 1.533051347732544
+   },
+   "L3": {
+    "within_room_m": 1.5335546135902405
+   },
+   "L4": {
+    "within_room_m": 1.535034215450287
+   },
+   "L5": {
+    "within_room_m": 1.533875823020935
+   },
+   "L6": {
+    "within_room_m": 1.5469427227973938
+   },
+   "L7": {
+    "within_room_m": 1.5552398800849914
+   },
+   "L8": {
+    "within_room_m": 1.6041984915733338
+   },
+   "L9": {
+    "within_room_m": 1.5853451371192933
+   },
+   "L10": {
+    "within_room_m": 1.611734187602997
+   },
+   "L11": {
+    "within_room_m": 1.6831287741661072
+   },
+   "L12": {
+    "within_room_m": 1.749496865272522
+   },
+   "L13": {
+    "within_room_m": 1.7711920142173767
+   },
+   "L14": {
+    "within_room_m": 1.8667954087257386
+   },
+   "L15": {
+    "within_room_m": 1.852356493473053
+   },
+   "L16": {
+    "within_room_m": 1.9879907250404358
+   },
+   "L17": {
+    "within_room_m": 1.972435224056244
+   },
+   "L18": {
+    "within_room_m": 2.011760449409485
+   },
+   "L19": {
+    "within_room_m": 2.102035403251648
+   },
+   "L20": {
+    "within_room_m": 2.088185930252075
+   },
+   "L21": {
+    "within_room_m": 2.069419288635254
+   },
+   "L22": {
+    "within_room_m": 2.0649738788604735
+   },
+   "L23": {
+    "within_room_m": 2.069353175163269
+   },
+   "L24": {
+    "within_room_m": 1.9658345341682435
+   },
+   "L25": {
+    "within_room_m": 1.902187168598175
+   },
+   "L26": {
+    "within_room_m": 1.8687448143959045
+   },
+   "L27": {
+    "within_room_m": 1.8532681822776795
+   },
+   "L28": {
+    "within_room_m": 1.8641987919807435
+   },
+   "L29": {
+    "within_room_m": 1.8603336572647096
+   },
+   "L30": {
+    "within_room_m": 1.854420804977417
+   },
+   "L31": {
+    "within_room_m": 1.8654991149902345
+   },
+   "L32": {
+    "within_room_m": 1.8500772953033446
+   },
+   "L33": {
+    "within_room_m": 1.8506061911582947
+   },
+   "L34": {
+    "within_room_m": 1.8264286279678346
+   },
+   "L35": {
+    "within_room_m": 1.7872596502304077
+   },
+   "L36": {
+    "within_room_m": 1.8172472715377808
+   }
+  },
+  "last": {
+   "L1": {
+    "residual_ridge_r2": -0.029205799102783203,
+    "within_room_m": 3.019263172149658
+   },
+   "L2": {
+    "residual_ridge_r2": -0.03136873245239258,
+    "within_room_m": 2.935107707977295
+   },
+   "L3": {
+    "residual_ridge_r2": -0.013469994068145752,
+    "within_room_m": 3.0195727825164793
+   },
+   "L4": {
+    "residual_ridge_r2": -0.011531472206115723,
+    "within_room_m": 3.0235811710357665
+   },
+   "L5": {
+    "residual_ridge_r2": -0.015374183654785156,
+    "within_room_m": 2.9344125270843504
+   },
+   "L6": {
+    "residual_ridge_r2": -0.014942646026611328,
+    "within_room_m": 2.891864538192749
+   },
+   "L7": {
+    "residual_ridge_r2": -0.013566076755523682,
+    "within_room_m": 2.8767154455184936
+   },
+   "L8": {
+    "residual_ridge_r2": -0.013285279273986816,
+    "within_room_m": 2.9005844354629517
+   },
+   "L9": {
+    "residual_ridge_r2": -0.01568371057510376,
+    "within_room_m": 2.8394243717193604
+   },
+   "L10": {
+    "residual_ridge_r2": -0.016043007373809814,
+    "within_room_m": 2.8276461601257323
+   },
+   "L11": {
+    "residual_ridge_r2": -0.018517255783081055,
+    "within_room_m": 2.7506887674331666
+   },
+   "L12": {
+    "residual_ridge_r2": -0.018038630485534668,
+    "within_room_m": 2.814069890975952
+   },
+   "L13": {
+    "residual_ridge_r2": -0.019834041595458984,
+    "within_room_m": 2.750372385978699
+   },
+   "L14": {
+    "residual_ridge_r2": -0.019863605499267578,
+    "within_room_m": 2.7631327629089357
+   },
+   "L15": {
+    "residual_ridge_r2": -0.02404332160949707,
+    "within_room_m": 2.531923222541809
+   },
+   "L16": {
+    "residual_ridge_r2": -0.021655738353729248,
+    "within_room_m": 2.630869817733765
+   },
+   "L17": {
+    "residual_ridge_r2": -0.016487598419189453,
+    "within_room_m": 2.411730241775513
+   },
+   "L18": {
+    "residual_ridge_r2": -0.027162671089172363,
+    "within_room_m": 2.4204041719436646
+   },
+   "L19": {
+    "residual_ridge_r2": -0.020186543464660645,
+    "within_room_m": 2.3075128316879274
+   },
+   "L20": {
+    "residual_ridge_r2": 0.02881014347076416,
+    "within_room_m": 2.350950336456299
+   },
+   "L21": {
+    "residual_ridge_r2": 0.03905710577964783,
+    "within_room_m": 2.2152772665023805
+   },
+   "L22": {
+    "residual_ridge_r2": 0.060624539852142334,
+    "within_room_m": 2.1932626247406004
+   },
+   "L23": {
+    "residual_ridge_r2": 0.072366863489151,
+    "within_room_m": 2.0871517181396486
+   },
+   "L24": {
+    "residual_ridge_r2": 0.05550628900527954,
+    "within_room_m": 2.1127854585647583
+   },
+   "L25": {
+    "residual_ridge_r2": 0.0542583167552948,
+    "within_room_m": 2.307464265823364
+   },
+   "L26": {
+    "residual_ridge_r2": 0.06210985779762268,
+    "within_room_m": 2.2853396058082582
+   },
+   "L27": {
+    "residual_ridge_r2": 0.0655965805053711,
+    "within_room_m": 2.176755666732788
+   },
+   "L28": {
+    "residual_ridge_r2": 0.06359356641769409,
+    "within_room_m": 2.190578305721283
+   },
+   "L29": {
+    "residual_ridge_r2": 0.06493934988975525,
+    "within_room_m": 2.2830594182014465
+   },
+   "L30": {
+    "residual_ridge_r2": 0.04767799377441406,
+    "within_room_m": 2.4025490164756773
+   },
+   "L31": {
+    "residual_ridge_r2": 0.043966859579086304,
+    "within_room_m": 2.4807875037193297
+   },
+   "L32": {
+    "residual_ridge_r2": 0.046073079109191895,
+    "within_room_m": 2.501055121421814
+   },
+   "L33": {
+    "residual_ridge_r2": 0.0431688129901886,
+    "within_room_m": 2.520253086090088
+   },
+   "L34": {
+    "residual_ridge_r2": 0.03820770978927612,
+    "within_room_m": 2.5349581122398375
+   },
+   "L35": {
+    "residual_ridge_r2": 0.04695543646812439,
+    "within_room_m": 2.520588254928589
+   },
+   "L36": {
+    "residual_ridge_r2": 0.043099164962768555,
+    "within_room_m": 2.5343464493751524
+   }
+  },
+  "question": {
+   "L1": {
+    "residual_ridge_r2": -0.016627013683319092
+   },
+   "L2": {
+    "residual_ridge_r2": -0.02971172332763672
+   },
+   "L3": {
+    "residual_ridge_r2": -0.011243224143981934
+   },
+   "L4": {
+    "residual_ridge_r2": -0.008859038352966309
+   },
+   "L5": {
+    "residual_ridge_r2": -0.014268219470977783
+   },
+   "L6": {
+    "residual_ridge_r2": -0.0137559175491333
+   },
+   "L7": {
+    "residual_ridge_r2": -0.01345205307006836
+   },
+   "L8": {
+    "residual_ridge_r2": -0.011983215808868408
+   },
+   "L9": {
+    "residual_ridge_r2": -0.014059603214263916
+   },
+   "L10": {
+    "residual_ridge_r2": -0.013415396213531494
+   },
+   "L11": {
+    "residual_ridge_r2": -0.010157227516174316
+   },
+   "L12": {
+    "residual_ridge_r2": -0.00957423448562622
+   },
+   "L13": {
+    "residual_ridge_r2": -0.01033484935760498
+   },
+   "L14": {
+    "residual_ridge_r2": -0.01056748628616333
+   },
+   "L15": {
+    "residual_ridge_r2": -0.022162675857543945
+   },
+   "L16": {
+    "residual_ridge_r2": -0.020865321159362793
+   },
+   "L17": {
+    "residual_ridge_r2": -0.018849611282348633
+   },
+   "L18": {
+    "residual_ridge_r2": -0.016856670379638672
+   },
+   "L19": {
+    "residual_ridge_r2": -0.013967752456665039
+   },
+   "L20": {
+    "residual_ridge_r2": 0.01969817280769348
+   },
+   "L21": {
+    "residual_ridge_r2": 0.034066736698150635
+   },
+   "L22": {
+    "residual_ridge_r2": 0.061269521713256836
+   },
+   "L23": {
+    "residual_ridge_r2": 0.07012301683425903
+   },
+   "L24": {
+    "residual_ridge_r2": 0.06253498792648315
+   },
+   "L25": {
+    "residual_ridge_r2": 0.057360053062438965
+   },
+   "L26": {
+    "residual_ridge_r2": 0.06448125839233398
+   },
+   "L27": {
+    "residual_ridge_r2": 0.06519562005996704
+   },
+   "L28": {
+    "residual_ridge_r2": 0.06483510136604309
+   },
+   "L29": {
+    "residual_ridge_r2": 0.062230974435806274
+   },
+   "L30": {
+    "residual_ridge_r2": 0.05471158027648926
+   },
+   "L31": {
+    "residual_ridge_r2": 0.05234423279762268
+   },
+   "L32": {
+    "residual_ridge_r2": 0.05036741495132446
+   },
+   "L33": {
+    "residual_ridge_r2": 0.05049297213554382
+   },
+   "L34": {
+    "residual_ridge_r2": 0.048953235149383545
+   },
+   "L35": {
+    "residual_ridge_r2": 0.051712989807128906
+   },
+   "L36": {
+    "residual_ridge_r2": 0.05644497275352478
+   }
+  }
+ },
+ "qwen8b+qwen8b-proc-e4-s5": {
+  "n_trials": 1920,
+  "n_answer_ok": 1920,
+  "device": "cuda",
+  "exp10_devices": [
+   "cuda",
+   "mps"
+  ],
+  "behaviour": {
+   "n": 1920,
+   "accuracy": 0.975,
+   "accuracy_novel": 0.9738260200153964
+  },
+  "answer_only_r2": 0.8127736449241638,
+  "true_sign_r2": 0.8741454482078552,
+  "within_room_chance_m": 3.533580684661865,
+  "img_mean": {
+   "L1": {
+    "within_room_m": 1.6419297337532044
+   },
+   "L2": {
+    "within_room_m": 1.529452395439148
+   },
+   "L3": {
+    "within_room_m": 1.5305840849876404
+   },
+   "L4": {
+    "within_room_m": 1.5336859345436096
+   },
+   "L5": {
+    "within_room_m": 1.5365659475326539
+   },
+   "L6": {
+    "within_room_m": 1.5465065002441407
+   },
+   "L7": {
+    "within_room_m": 1.553638470172882
+   },
+   "L8": {
+    "within_room_m": 1.602506935596466
+   },
+   "L9": {
+    "within_room_m": 1.569001817703247
+   },
+   "L10": {
+    "within_room_m": 1.5826601386070251
+   },
+   "L11": {
+    "within_room_m": 1.638125967979431
+   },
+   "L12": {
+    "within_room_m": 1.7098360776901245
+   },
+   "L13": {
+    "within_room_m": 1.6828784465789794
+   },
+   "L14": {
+    "within_room_m": 1.7609817266464234
+   },
+   "L15": {
+    "within_room_m": 1.7698495984077454
+   },
+   "L16": {
+    "within_room_m": 1.8721086978912354
+   },
+   "L17": {
+    "within_room_m": 1.8611505627632141
+   },
+   "L18": {
+    "within_room_m": 1.8748470067977905
+   },
+   "L19": {
+    "within_room_m": 1.9085338711738586
+   },
+   "L20": {
+    "within_room_m": 1.8161776185035705
+   },
+   "L21": {
+    "within_room_m": 1.8679675340652466
+   },
+   "L22": {
+    "within_room_m": 1.9083109617233276
+   },
+   "L23": {
+    "within_room_m": 1.8324250817298888
+   },
+   "L24": {
+    "within_room_m": 1.729422390460968
+   },
+   "L25": {
+    "within_room_m": 1.6647705554962158
+   },
+   "L26": {
+    "within_room_m": 1.640027642250061
+   },
+   "L27": {
+    "within_room_m": 1.6122254133224487
+   },
+   "L28": {
+    "within_room_m": 1.6039561867713927
+   },
+   "L29": {
+    "within_room_m": 1.5909783124923706
+   },
+   "L30": {
+    "within_room_m": 1.5475764870643616
+   },
+   "L31": {
+    "within_room_m": 1.5407923460006714
+   },
+   "L32": {
+    "within_room_m": 1.4823238968849182
+   },
+   "L33": {
+    "within_room_m": 1.4639935493469238
+   },
+   "L34": {
+    "within_room_m": 1.4723185181617737
+   },
+   "L35": {
+    "within_room_m": 1.4309762358665465
+   },
+   "L36": {
+    "within_room_m": 1.4729937314987183
+   }
+  },
+  "last": {
+   "L1": {
+    "residual_ridge_r2": -0.015010476112365723,
+    "within_room_m": 2.9873689889907835
+   },
+   "L2": {
+    "residual_ridge_r2": -0.019387423992156982,
+    "within_room_m": 2.946544122695923
+   },
+   "L3": {
+    "residual_ridge_r2": -0.02068418264389038,
+    "within_room_m": 2.933345651626587
+   },
+   "L4": {
+    "residual_ridge_r2": -0.018537163734436035,
+    "within_room_m": 2.915228247642517
+   },
+   "L5": {
+    "residual_ridge_r2": -0.017025530338287354,
+    "within_room_m": 2.9397921323776246
+   },
+   "L6": {
+    "residual_ridge_r2": -0.018539845943450928,
+    "within_room_m": 2.8540043115615843
+   },
+   "L7": {
+    "residual_ridge_r2": -0.018487930297851562,
+    "within_room_m": 2.8401918411254883
+   },
+   "L8": {
+    "residual_ridge_r2": -0.019726336002349854,
+    "within_room_m": 2.8563701152801513
+   },
+   "L9": {
+    "residual_ridge_r2": -0.020759880542755127,
+    "within_room_m": 2.8022029638290404
+   },
+   "L10": {
+    "residual_ridge_r2": -0.019355356693267822,
+    "within_room_m": 2.8479553699493407
+   },
+   "L11": {
+    "residual_ridge_r2": -0.016966044902801514,
+    "within_room_m": 2.8101788997650146
+   },
+   "L12": {
+    "residual_ridge_r2": -0.012978732585906982,
+    "within_room_m": 2.8138408422470094
+   },
+   "L13": {
+    "residual_ridge_r2": -0.017067670822143555,
+    "within_room_m": 2.6237507104873656
+   },
+   "L14": {
+    "residual_ridge_r2": -0.01917499303817749,
+    "within_room_m": 2.4877634048461914
+   },
+   "L15": {
+    "residual_ridge_r2": -0.016605913639068604,
+    "within_room_m": 2.2715940713882445
+   },
+   "L16": {
+    "residual_ridge_r2": -0.015195846557617188,
+    "within_room_m": 2.338755893707275
+   },
+   "L17": {
+    "residual_ridge_r2": -0.011787831783294678,
+    "within_room_m": 2.256406044960022
+   },
+   "L18": {
+    "residual_ridge_r2": -0.006427645683288574,
+    "within_room_m": 2.2636159658432007
+   },
+   "L19": {
+    "residual_ridge_r2": -0.005637019872665405,
+    "within_room_m": 2.010930049419403
+   },
+   "L20": {
+    "residual_ridge_r2": 0.027306854724884033,
+    "within_room_m": 2.0767413854598997
+   },
+   "L21": {
+    "residual_ridge_r2": 0.030157655477523804,
+    "within_room_m": 2.0118280410766602
+   },
+   "L22": {
+    "residual_ridge_r2": 0.040388256311416626,
+    "within_room_m": 2.0109391808509827
+   },
+   "L23": {
+    "residual_ridge_r2": 0.046992748975753784,
+    "within_room_m": 2.009588825702667
+   },
+   "L24": {
+    "residual_ridge_r2": 0.012527674436569214,
+    "within_room_m": 2.04950270652771
+   },
+   "L25": {
+    "residual_ridge_r2": 0.051815181970596313,
+    "within_room_m": 2.1474326610565186
+   },
+   "L26": {
+    "residual_ridge_r2": 0.05137220025062561,
+    "within_room_m": 2.1024240136146544
+   },
+   "L27": {
+    "residual_ridge_r2": 0.04324337840080261,
+    "within_room_m": 2.0602123975753783
+   },
+   "L28": {
+    "residual_ridge_r2": 0.047607630491256714,
+    "within_room_m": 2.0511667370796203
+   },
+   "L29": {
+    "residual_ridge_r2": 0.05612003803253174,
+    "within_room_m": 2.095188927650452
+   },
+   "L30": {
+    "residual_ridge_r2": 0.05574807524681091,
+    "within_room_m": 2.238041543960571
+   },
+   "L31": {
+    "residual_ridge_r2": 0.03549209237098694,
+    "within_room_m": 2.2466551661491394
+   },
+   "L32": {
+    "residual_ridge_r2": 0.04191520810127258,
+    "within_room_m": 2.2370986461639406
+   },
+   "L33": {
+    "residual_ridge_r2": 0.03539830446243286,
+    "within_room_m": 2.2960674285888674
+   },
+   "L34": {
+    "residual_ridge_r2": 0.047642916440963745,
+    "within_room_m": 2.2783045291900637
+   },
+   "L35": {
+    "residual_ridge_r2": 0.041499435901641846,
+    "within_room_m": 2.1553915619850157
+   },
+   "L36": {
+    "residual_ridge_r2": 0.04003828763961792,
+    "within_room_m": 2.0992817997932436
+   }
+  },
+  "question": {
+   "L1": {
+    "residual_ridge_r2": -0.01146852970123291
+   },
+   "L2": {
+    "residual_ridge_r2": -0.03851670026779175
+   },
+   "L3": {
+    "residual_ridge_r2": -0.030638813972473145
+   },
+   "L4": {
+    "residual_ridge_r2": -0.043195247650146484
+   },
+   "L5": {
+    "residual_ridge_r2": -0.022697091102600098
+   },
+   "L6": {
+    "residual_ridge_r2": -0.01651972532272339
+   },
+   "L7": {
+    "residual_ridge_r2": -0.01370537281036377
+   },
+   "L8": {
+    "residual_ridge_r2": -0.04587441682815552
+   },
+   "L9": {
+    "residual_ridge_r2": -0.01207280158996582
+   },
+   "L10": {
+    "residual_ridge_r2": -0.011216044425964355
+   },
+   "L11": {
+    "residual_ridge_r2": -0.005685329437255859
+   },
+   "L12": {
+    "residual_ridge_r2": -0.004245936870574951
+   },
+   "L13": {
+    "residual_ridge_r2": -0.007462859153747559
+   },
+   "L14": {
+    "residual_ridge_r2": -0.009348869323730469
+   },
+   "L15": {
+    "residual_ridge_r2": -0.01753336191177368
+   },
+   "L16": {
+    "residual_ridge_r2": -0.01524960994720459
+   },
+   "L17": {
+    "residual_ridge_r2": -0.01005774736404419
+   },
+   "L18": {
+    "residual_ridge_r2": -0.026574671268463135
+   },
+   "L19": {
+    "residual_ridge_r2": -0.01753246784210205
+   },
+   "L20": {
+    "residual_ridge_r2": 0.022860944271087646
+   },
+   "L21": {
+    "residual_ridge_r2": 0.02852797508239746
+   },
+   "L22": {
+    "residual_ridge_r2": 0.04320541024208069
+   },
+   "L23": {
+    "residual_ridge_r2": 0.05173391103744507
+   },
+   "L24": {
+    "residual_ridge_r2": 0.018059104681015015
+   },
+   "L25": {
+    "residual_ridge_r2": 0.05466976761817932
+   },
+   "L26": {
+    "residual_ridge_r2": 0.07188087701797485
+   },
+   "L27": {
+    "residual_ridge_r2": 0.06908094882965088
+   },
+   "L28": {
+    "residual_ridge_r2": 0.0708758533000946
+   },
+   "L29": {
+    "residual_ridge_r2": 0.060288041830062866
+   },
+   "L30": {
+    "residual_ridge_r2": 0.07199770212173462
+   },
+   "L31": {
+    "residual_ridge_r2": 0.070556640625
+   },
+   "L32": {
+    "residual_ridge_r2": 0.07602095603942871
+   },
+   "L33": {
+    "residual_ridge_r2": 0.07138627767562866
+   },
+   "L34": {
+    "residual_ridge_r2": 0.06693175435066223
+   },
+   "L35": {
+    "residual_ridge_r2": 0.06833213567733765
+   },
+   "L36": {
+    "residual_ridge_r2": 0.07748913764953613
+   }
+  }
+ },
+ "qwen8b+qwen8b-proc-e4-s7": {
+  "n_trials": 1920,
+  "n_answer_ok": 1920,
+  "device": "cuda",
+  "exp10_devices": [
+   "cuda",
+   "mps"
+  ],
+  "behaviour": {
+   "n": 1920,
+   "accuracy": 0.9729166666666667,
+   "accuracy_novel": 0.9722863741339491
+  },
+  "answer_only_r2": 0.8087577223777771,
+  "true_sign_r2": 0.8741454482078552,
+  "within_room_chance_m": 3.533580684661865,
+  "img_mean": {
+   "L1": {
+    "within_room_m": 1.6467987298965454
+   },
+   "L2": {
+    "within_room_m": 1.5255806684494018
+   },
+   "L3": {
+    "within_room_m": 1.5331255078315735
+   },
+   "L4": {
+    "within_room_m": 1.5370991706848145
+   },
+   "L5": {
+    "within_room_m": 1.5321247220039367
+   },
+   "L6": {
+    "within_room_m": 1.5437105417251586
+   },
+   "L7": {
+    "within_room_m": 1.5449118733406066
+   },
+   "L8": {
+    "within_room_m": 1.5873726844787597
+   },
+   "L9": {
+    "within_room_m": 1.5933725476264953
+   },
+   "L10": {
+    "within_room_m": 1.6186784386634827
+   },
+   "L11": {
+    "within_room_m": 1.642159068584442
+   },
+   "L12": {
+    "within_room_m": 1.6788927912712097
+   },
+   "L13": {
+    "within_room_m": 1.6817850470542908
+   },
+   "L14": {
+    "within_room_m": 1.7717630743980408
+   },
+   "L15": {
+    "within_room_m": 1.8346529960632325
+   },
+   "L16": {
+    "within_room_m": 1.958001148700714
+   },
+   "L17": {
+    "within_room_m": 1.9372041940689086
+   },
+   "L18": {
+    "within_room_m": 1.9806546926498414
+   },
+   "L19": {
+    "within_room_m": 1.9806248784065246
+   },
+   "L20": {
+    "within_room_m": 1.9078974366188048
+   },
+   "L21": {
+    "within_room_m": 1.964526104927063
+   },
+   "L22": {
+    "within_room_m": 1.9823979616165162
+   },
+   "L23": {
+    "within_room_m": 1.9846516609191895
+   },
+   "L24": {
+    "within_room_m": 1.8043289184570312
+   },
+   "L25": {
+    "within_room_m": 1.6819212198257447
+   },
+   "L26": {
+    "within_room_m": 1.6751189589500428
+   },
+   "L27": {
+    "within_room_m": 1.6162720918655396
+   },
+   "L28": {
+    "within_room_m": 1.610719335079193
+   },
+   "L29": {
+    "within_room_m": 1.6226615905761719
+   },
+   "L30": {
+    "within_room_m": 1.5703475594520568
+   },
+   "L31": {
+    "within_room_m": 1.5896938562393188
+   },
+   "L32": {
+    "within_room_m": 1.540481197834015
+   },
+   "L33": {
+    "within_room_m": 1.493771767616272
+   },
+   "L34": {
+    "within_room_m": 1.4904613375663758
+   },
+   "L35": {
+    "within_room_m": 1.4796685457229615
+   },
+   "L36": {
+    "within_room_m": 1.5054728746414185
+   }
+  },
+  "last": {
+   "L1": {
+    "residual_ridge_r2": -0.01785874366760254,
+    "within_room_m": 3.0117936372756957
+   },
+   "L2": {
+    "residual_ridge_r2": -0.020184099674224854,
+    "within_room_m": 2.8919472217559816
+   },
+   "L3": {
+    "residual_ridge_r2": -0.023327767848968506,
+    "within_room_m": 2.9800397872924806
+   },
+   "L4": {
+    "residual_ridge_r2": -0.02182614803314209,
+    "within_room_m": 2.908676028251648
+   },
+   "L5": {
+    "residual_ridge_r2": -0.0228765606880188,
+    "within_room_m": 2.9207922220230103
+   },
+   "L6": {
+    "residual_ridge_r2": -0.021392762660980225,
+    "within_room_m": 2.906403684616089
+   },
+   "L7": {
+    "residual_ridge_r2": -0.019802987575531006,
+    "within_room_m": 2.8931591749191283
+   },
+   "L8": {
+    "residual_ridge_r2": -0.016272246837615967,
+    "within_room_m": 2.900790071487427
+   },
+   "L9": {
+    "residual_ridge_r2": -0.019546687602996826,
+    "within_room_m": 2.8539604902267457
+   },
+   "L10": {
+    "residual_ridge_r2": -0.023599088191986084,
+    "within_room_m": 2.8444628953933715
+   },
+   "L11": {
+    "residual_ridge_r2": -0.0644686222076416,
+    "within_room_m": 2.815512251853943
+   },
+   "L12": {
+    "residual_ridge_r2": -0.02764415740966797,
+    "within_room_m": 2.871934413909912
+   },
+   "L13": {
+    "residual_ridge_r2": -0.023914098739624023,
+    "within_room_m": 2.8117192029953
+   },
+   "L14": {
+    "residual_ridge_r2": -0.02080768346786499,
+    "within_room_m": 2.755833077430725
+   },
+   "L15": {
+    "residual_ridge_r2": -0.013040781021118164,
+    "within_room_m": 2.4251094818115235
+   },
+   "L16": {
+    "residual_ridge_r2": -0.014220893383026123,
+    "within_room_m": 2.5365082263946532
+   },
+   "L17": {
+    "residual_ridge_r2": -0.010012149810791016,
+    "within_room_m": 2.380820107460022
+   },
+   "L18": {
+    "residual_ridge_r2": -0.02068108320236206,
+    "within_room_m": 2.4355015993118285
+   },
+   "L19": {
+    "residual_ridge_r2": -0.008014917373657227,
+    "within_room_m": 2.2387852907180785
+   },
+   "L20": {
+    "residual_ridge_r2": 0.03321161866188049,
+    "within_room_m": 2.2455541014671327
+   },
+   "L21": {
+    "residual_ridge_r2": 0.017709165811538696,
+    "within_room_m": 2.1162256836891173
+   },
+   "L22": {
+    "residual_ridge_r2": 0.029421955347061157,
+    "within_room_m": 2.041713774204254
+   },
+   "L23": {
+    "residual_ridge_r2": 0.025731682777404785,
+    "within_room_m": 2.122827184200287
+   },
+   "L24": {
+    "residual_ridge_r2": 0.02431759238243103,
+    "within_room_m": 2.1791373610496523
+   },
+   "L25": {
+    "residual_ridge_r2": 0.06259354948997498,
+    "within_room_m": 2.327169859409332
+   },
+   "L26": {
+    "residual_ridge_r2": 0.07073089480400085,
+    "within_room_m": 2.289030075073242
+   },
+   "L27": {
+    "residual_ridge_r2": 0.050455689430236816,
+    "within_room_m": 2.2506528735160827
+   },
+   "L28": {
+    "residual_ridge_r2": 0.044952392578125,
+    "within_room_m": 2.2705333113670347
+   },
+   "L29": {
+    "residual_ridge_r2": 0.08047869801521301,
+    "within_room_m": 2.3345781922340394
+   },
+   "L30": {
+    "residual_ridge_r2": 0.03372284770011902,
+    "within_room_m": 2.4535921692848204
+   },
+   "L31": {
+    "residual_ridge_r2": 0.029796957969665527,
+    "within_room_m": 2.5194233894348144
+   },
+   "L32": {
+    "residual_ridge_r2": 0.030781209468841553,
+    "within_room_m": 2.5256134152412413
+   },
+   "L33": {
+    "residual_ridge_r2": 0.02659204602241516,
+    "within_room_m": 2.520586609840393
+   },
+   "L34": {
+    "residual_ridge_r2": 0.0480046272277832,
+    "within_room_m": 2.527291166782379
+   },
+   "L35": {
+    "residual_ridge_r2": 0.046252042055130005,
+    "within_room_m": 2.479969835281372
+   },
+   "L36": {
+    "residual_ridge_r2": 0.04774272441864014,
+    "within_room_m": 2.464617741107941
+   }
+  },
+  "question": {
+   "L1": {
+    "residual_ridge_r2": -0.008560717105865479
+   },
+   "L2": {
+    "residual_ridge_r2": -0.047187864780426025
+   },
+   "L3": {
+    "residual_ridge_r2": -0.022256135940551758
+   },
+   "L4": {
+    "residual_ridge_r2": -0.01693284511566162
+   },
+   "L5": {
+    "residual_ridge_r2": -0.015098631381988525
+   },
+   "L6": {
+    "residual_ridge_r2": -0.014949142932891846
+   },
+   "L7": {
+    "residual_ridge_r2": -0.011547982692718506
+   },
+   "L8": {
+    "residual_ridge_r2": -0.010557115077972412
+   },
+   "L9": {
+    "residual_ridge_r2": -0.0242539644241333
+   },
+   "L10": {
+    "residual_ridge_r2": -0.025480151176452637
+   },
+   "L11": {
+    "residual_ridge_r2": -0.029514431953430176
+   },
+   "L12": {
+    "residual_ridge_r2": -0.0289803147315979
+   },
+   "L13": {
+    "residual_ridge_r2": -0.007852494716644287
+   },
+   "L14": {
+    "residual_ridge_r2": -0.0065999627113342285
+   },
+   "L15": {
+    "residual_ridge_r2": -0.0073236823081970215
+   },
+   "L16": {
+    "residual_ridge_r2": -0.00865483283996582
+   },
+   "L17": {
+    "residual_ridge_r2": -0.025716543197631836
+   },
+   "L18": {
+    "residual_ridge_r2": -0.030222058296203613
+   },
+   "L19": {
+    "residual_ridge_r2": -0.02085202932357788
+   },
+   "L20": {
+    "residual_ridge_r2": 0.010461241006851196
+   },
+   "L21": {
+    "residual_ridge_r2": 0.013670384883880615
+   },
+   "L22": {
+    "residual_ridge_r2": 0.027917861938476562
+   },
+   "L23": {
+    "residual_ridge_r2": 0.018301010131835938
+   },
+   "L24": {
+    "residual_ridge_r2": 0.02976006269454956
+   },
+   "L25": {
+    "residual_ridge_r2": 0.07109981775283813
+   },
+   "L26": {
+    "residual_ridge_r2": 0.03706410527229309
+   },
+   "L27": {
+    "residual_ridge_r2": 0.04351091384887695
+   },
+   "L28": {
+    "residual_ridge_r2": 0.04374408721923828
+   },
+   "L29": {
+    "residual_ridge_r2": 0.07797735929489136
+   },
+   "L30": {
+    "residual_ridge_r2": 0.0765802264213562
+   },
+   "L31": {
+    "residual_ridge_r2": 0.06967848539352417
+   },
+   "L32": {
+    "residual_ridge_r2": 0.06855204701423645
+   },
+   "L33": {
+    "residual_ridge_r2": 0.06492692232131958
+   },
+   "L34": {
+    "residual_ridge_r2": 0.06298953294754028
+   },
+   "L35": {
+    "residual_ridge_r2": 0.08065342903137207
+   },
+   "L36": {
+    "residual_ridge_r2": 0.09000200033187866
+   }
+  }
+ },
+ "qwen8b+qwen8b-proc-e4-s3": {
+  "n_trials": 1920,
+  "n_answer_ok": 1919,
+  "device": "cuda",
+  "exp10_devices": [
+   "cuda",
+   "mps"
+  ],
+  "behaviour": {
+   "n": 1920,
+   "accuracy": 0.9765625,
+   "accuracy_novel": 0.9738260200153964
+  },
+  "answer_only_r2": 0.8191560208797455,
+  "true_sign_r2": 0.8741106986999512,
+  "within_room_chance_m": 3.533580684661865,
+  "img_mean": {
+   "L1": {
+    "within_room_m": 1.646940779685974
+   },
+   "L2": {
+    "within_room_m": 1.535469126701355
+   },
+   "L3": {
+    "within_room_m": 1.5321409463882447
+   },
+   "L4": {
+    "within_room_m": 1.5375210165977478
+   },
+   "L5": {
+    "within_room_m": 1.5308966040611267
+   },
+   "L6": {
+    "within_room_m": 1.5447433948516847
+   },
+   "L7": {
+    "within_room_m": 1.5409157156944275
+   },
+   "L8": {
+    "within_room_m": 1.603795087337494
+   },
+   "L9": {
+    "within_room_m": 1.5712310314178466
+   },
+   "L10": {
+    "within_room_m": 1.6070014238357544
+   },
+   "L11": {
+    "within_room_m": 1.6615476727485656
+   },
+   "L12": {
+    "within_room_m": 1.7209926128387452
+   },
+   "L13": {
+    "within_room_m": 1.7158301711082458
+   },
+   "L14": {
+    "within_room_m": 1.8198448061943053
+   },
+   "L15": {
+    "within_room_m": 1.8108360409736632
+   },
+   "L16": {
+    "within_room_m": 1.9150516390800476
+   },
+   "L17": {
+    "within_room_m": 1.8669785499572753
+   },
+   "L18": {
+    "within_room_m": 1.9197811841964723
+   },
+   "L19": {
+    "within_room_m": 1.938120424747467
+   },
+   "L20": {
+    "within_room_m": 1.8270858168601989
+   },
+   "L21": {
+    "within_room_m": 1.8331922888755798
+   },
+   "L22": {
+    "within_room_m": 1.8265831351280213
+   },
+   "L23": {
+    "within_room_m": 1.770178198814392
+   },
+   "L24": {
+    "within_room_m": 1.664007544517517
+   },
+   "L25": {
+    "within_room_m": 1.5521199345588683
+   },
+   "L26": {
+    "within_room_m": 1.5164617776870728
+   },
+   "L27": {
+    "within_room_m": 1.5157665610313416
+   },
+   "L28": {
+    "within_room_m": 1.5157631993293763
+   },
+   "L29": {
+    "within_room_m": 1.5206570863723754
+   },
+   "L30": {
+    "within_room_m": 1.5285285115242004
+   },
+   "L31": {
+    "within_room_m": 1.5571844816207885
+   },
+   "L32": {
+    "within_room_m": 1.531862485408783
+   },
+   "L33": {
+    "within_room_m": 1.5101513743400574
+   },
+   "L34": {
+    "within_room_m": 1.52080078125
+   },
+   "L35": {
+    "within_room_m": 1.5113231539726257
+   },
+   "L36": {
+    "within_room_m": 1.5447739839553833
+   }
+  },
+  "last": {
+   "L1": {
+    "residual_ridge_r2": -0.005733191967010498,
+    "within_room_m": 3.0216819524765013
+   },
+   "L2": {
+    "residual_ridge_r2": -0.014792025089263916,
+    "within_room_m": 2.937516379356384
+   },
+   "L3": {
+    "residual_ridge_r2": -0.018315434455871582,
+    "within_room_m": 2.956748867034912
+   },
+   "L4": {
+    "residual_ridge_r2": -0.018253624439239502,
+    "within_room_m": 2.863624334335327
+   },
+   "L5": {
+    "residual_ridge_r2": -0.020353615283966064,
+    "within_room_m": 2.9046161651611326
+   },
+   "L6": {
+    "residual_ridge_r2": -0.021681129932403564,
+    "within_room_m": 2.9077662944793703
+   },
+   "L7": {
+    "residual_ridge_r2": -0.02017766237258911,
+    "within_room_m": 2.8431401014328004
+   },
+   "L8": {
+    "residual_ridge_r2": -0.019156157970428467,
+    "within_room_m": 2.8719707489013673
+   },
+   "L9": {
+    "residual_ridge_r2": -0.016982555389404297,
+    "within_room_m": 2.857122611999512
+   },
+   "L10": {
+    "residual_ridge_r2": -0.01966691017150879,
+    "within_room_m": 2.8286152601242067
+   },
+   "L11": {
+    "residual_ridge_r2": -0.018743574619293213,
+    "within_room_m": 2.8262030363082884
+   },
+   "L12": {
+    "residual_ridge_r2": -0.02018672227859497,
+    "within_room_m": 2.790775942802429
+   },
+   "L13": {
+    "residual_ridge_r2": -0.019929707050323486,
+    "within_room_m": 2.6904728174209596
+   },
+   "L14": {
+    "residual_ridge_r2": -0.019785165786743164,
+    "within_room_m": 2.633726119995117
+   },
+   "L15": {
+    "residual_ridge_r2": -0.018869876861572266,
+    "within_room_m": 2.3441085815429688
+   },
+   "L16": {
+    "residual_ridge_r2": -0.01913982629776001,
+    "within_room_m": 2.339398241043091
+   },
+   "L17": {
+    "residual_ridge_r2": -0.023390650749206543,
+    "within_room_m": 2.2536011695861817
+   },
+   "L18": {
+    "residual_ridge_r2": -0.02085655927658081,
+    "within_room_m": 2.288294053077698
+   },
+   "L19": {
+    "residual_ridge_r2": -0.027051091194152832,
+    "within_room_m": 2.155151355266571
+   },
+   "L20": {
+    "residual_ridge_r2": 0.024530619382858276,
+    "within_room_m": 2.1718222975730894
+   },
+   "L21": {
+    "residual_ridge_r2": 0.0023918449878692627,
+    "within_room_m": 2.0397302985191343
+   },
+   "L22": {
+    "residual_ridge_r2": 0.009144783020019531,
+    "within_room_m": 1.9515297412872314
+   },
+   "L23": {
+    "residual_ridge_r2": 0.008945047855377197,
+    "within_room_m": 1.9013435125350953
+   },
+   "L24": {
+    "residual_ridge_r2": -0.006415963172912598,
+    "within_room_m": 1.9530739665031434
+   },
+   "L25": {
+    "residual_ridge_r2": 0.029677003622055054,
+    "within_room_m": 2.0687612295150757
+   },
+   "L26": {
+    "residual_ridge_r2": 0.02991083264350891,
+    "within_room_m": 2.02176411151886
+   },
+   "L27": {
+    "residual_ridge_r2": 0.027066528797149658,
+    "within_room_m": 1.956972873210907
+   },
+   "L28": {
+    "residual_ridge_r2": 0.028194576501846313,
+    "within_room_m": 1.9626057982444762
+   },
+   "L29": {
+    "residual_ridge_r2": 0.02696746587753296,
+    "within_room_m": 2.0401517152786255
+   },
+   "L30": {
+    "residual_ridge_r2": 0.01403781771659851,
+    "within_room_m": 2.131434381008148
+   },
+   "L31": {
+    "residual_ridge_r2": 0.013835310935974121,
+    "within_room_m": 2.153095781803131
+   },
+   "L32": {
+    "residual_ridge_r2": 0.016404271125793457,
+    "within_room_m": 2.147284197807312
+   },
+   "L33": {
+    "residual_ridge_r2": 0.012708723545074463,
+    "within_room_m": 2.1740182757377626
+   },
+   "L34": {
+    "residual_ridge_r2": 0.01327696442604065,
+    "within_room_m": 2.196848511695862
+   },
+   "L35": {
+    "residual_ridge_r2": 0.013449490070343018,
+    "within_room_m": 2.1361374974250795
+   },
+   "L36": {
+    "residual_ridge_r2": 0.007715374231338501,
+    "within_room_m": 2.123718297481537
+   }
+  },
+  "question": {
+   "L1": {
+    "residual_ridge_r2": -0.004754364490509033
+   },
+   "L2": {
+    "residual_ridge_r2": -0.01706695556640625
+   },
+   "L3": {
+    "residual_ridge_r2": -0.017000913619995117
+   },
+   "L4": {
+    "residual_ridge_r2": -0.018693983554840088
+   },
+   "L5": {
+    "residual_ridge_r2": -0.018691301345825195
+   },
+   "L6": {
+    "residual_ridge_r2": -0.019130289554595947
+   },
+   "L7": {
+    "residual_ridge_r2": -0.015772700309753418
+   },
+   "L8": {
+    "residual_ridge_r2": -0.04282349348068237
+   },
+   "L9": {
+    "residual_ridge_r2": -0.010785281658172607
+   },
+   "L10": {
+    "residual_ridge_r2": -0.012238264083862305
+   },
+   "L11": {
+    "residual_ridge_r2": -0.011411428451538086
+   },
+   "L12": {
+    "residual_ridge_r2": -0.011267662048339844
+   },
+   "L13": {
+    "residual_ridge_r2": -0.011043071746826172
+   },
+   "L14": {
+    "residual_ridge_r2": -0.011546790599822998
+   },
+   "L15": {
+    "residual_ridge_r2": -0.021825015544891357
+   },
+   "L16": {
+    "residual_ridge_r2": -0.02213442325592041
+   },
+   "L17": {
+    "residual_ridge_r2": -0.02307295799255371
+   },
+   "L18": {
+    "residual_ridge_r2": -0.023501276969909668
+   },
+   "L19": {
+    "residual_ridge_r2": -0.022831380367279053
+   },
+   "L20": {
+    "residual_ridge_r2": -0.011713624000549316
+   },
+   "L21": {
+    "residual_ridge_r2": -0.0006163418292999268
+   },
+   "L22": {
+    "residual_ridge_r2": -0.006165206432342529
+   },
+   "L23": {
+    "residual_ridge_r2": -0.010925889015197754
+   },
+   "L24": {
+    "residual_ridge_r2": -0.014708459377288818
+   },
+   "L25": {
+    "residual_ridge_r2": 0.007355034351348877
+   },
+   "L26": {
+    "residual_ridge_r2": 0.031950682401657104
+   },
+   "L27": {
+    "residual_ridge_r2": 0.03417900204658508
+   },
+   "L28": {
+    "residual_ridge_r2": 0.012713998556137085
+   },
+   "L29": {
+    "residual_ridge_r2": 0.02626219391822815
+   },
+   "L30": {
+    "residual_ridge_r2": 0.011272668838500977
+   },
+   "L31": {
+    "residual_ridge_r2": 0.011294543743133545
+   },
+   "L32": {
+    "residual_ridge_r2": 0.011344611644744873
+   },
+   "L33": {
+    "residual_ridge_r2": 0.008732259273529053
+   },
+   "L34": {
+    "residual_ridge_r2": 0.011279642581939697
+   },
+   "L35": {
+    "residual_ridge_r2": 0.009816408157348633
+   },
+   "L36": {
+    "residual_ridge_r2": 0.01245260238647461
+   }
+  }
+ },
+ "qwen8b+qwen8b-proc-e4-s4": {
+  "n_trials": 1920,
+  "n_answer_ok": 1920,
+  "device": "cuda",
+  "exp10_devices": [
+   "cuda",
+   "mps"
+  ],
+  "behaviour": {
+   "n": 1920,
+   "accuracy": 0.9755208333333333,
+   "accuracy_novel": 0.9722863741339491
+  },
+  "answer_only_r2": 0.8129225671291351,
+  "true_sign_r2": 0.8741454482078552,
+  "within_room_chance_m": 3.533580684661865,
+  "img_mean": {
+   "L1": {
+    "within_room_m": 1.6511454105377197
+   },
+   "L2": {
+    "within_room_m": 1.5346611857414245
+   },
+   "L3": {
+    "within_room_m": 1.5310132384300232
+   },
+   "L4": {
+    "within_room_m": 1.5349844574928284
+   },
+   "L5": {
+    "within_room_m": 1.5327044486999513
+   },
+   "L6": {
+    "within_room_m": 1.5514559030532837
+   },
+   "L7": {
+    "within_room_m": 1.5530653119087219
+   },
+   "L8": {
+    "within_room_m": 1.6010333180427552
+   },
+   "L9": {
+    "within_room_m": 1.5627191662788391
+   },
+   "L10": {
+    "within_room_m": 1.5986656069755554
+   },
+   "L11": {
+    "within_room_m": 1.6635802388191223
+   },
+   "L12": {
+    "within_room_m": 1.727208936214447
+   },
+   "L13": {
+    "within_room_m": 1.7058269023895263
+   },
+   "L14": {
+    "within_room_m": 1.7999919414520265
+   },
+   "L15": {
+    "within_room_m": 1.8002839922904967
+   },
+   "L16": {
+    "within_room_m": 1.883807897567749
+   },
+   "L17": {
+    "within_room_m": 1.8461319565773011
+   },
+   "L18": {
+    "within_room_m": 1.8716920614242554
+   },
+   "L19": {
+    "within_room_m": 1.90246924161911
+   },
+   "L20": {
+    "within_room_m": 1.7750896692276001
+   },
+   "L21": {
+    "within_room_m": 1.7784947037696839
+   },
+   "L22": {
+    "within_room_m": 1.8224467039108276
+   },
+   "L23": {
+    "within_room_m": 1.8317349672317504
+   },
+   "L24": {
+    "within_room_m": 1.6881237030029297
+   },
+   "L25": {
+    "within_room_m": 1.586646604537964
+   },
+   "L26": {
+    "within_room_m": 1.5748620629310608
+   },
+   "L27": {
+    "within_room_m": 1.5511024713516235
+   },
+   "L28": {
+    "within_room_m": 1.5652591943740846
+   },
+   "L29": {
+    "within_room_m": 1.5749377965927125
+   },
+   "L30": {
+    "within_room_m": 1.5708968043327332
+   },
+   "L31": {
+    "within_room_m": 1.579305922985077
+   },
+   "L32": {
+    "within_room_m": 1.565032172203064
+   },
+   "L33": {
+    "within_room_m": 1.5530177474021911
+   },
+   "L34": {
+    "within_room_m": 1.5347898840904235
+   },
+   "L35": {
+    "within_room_m": 1.5324443340301515
+   },
+   "L36": {
+    "within_room_m": 1.5874141097068786
+   }
+  },
+  "last": {
+   "L1": {
+    "residual_ridge_r2": -0.017653048038482666,
+    "within_room_m": 3.010320949554443
+   },
+   "L2": {
+    "residual_ridge_r2": -0.009311795234680176,
+    "within_room_m": 2.987308216094971
+   },
+   "L3": {
+    "residual_ridge_r2": -0.010309100151062012,
+    "within_room_m": 2.9859089851379395
+   },
+   "L4": {
+    "residual_ridge_r2": -0.011385977268218994,
+    "within_room_m": 2.921746301651001
+   },
+   "L5": {
+    "residual_ridge_r2": -0.014301419258117676,
+    "within_room_m": 2.8839671134948732
+   },
+   "L6": {
+    "residual_ridge_r2": -0.013441383838653564,
+    "within_room_m": 2.916534161567688
+   },
+   "L7": {
+    "residual_ridge_r2": -0.03351622819900513,
+    "within_room_m": 2.9056843519210815
+   },
+   "L8": {
+    "residual_ridge_r2": -0.008902549743652344,
+    "within_room_m": 2.8927963733673097
+   },
+   "L9": {
+    "residual_ridge_r2": -0.011709451675415039,
+    "within_room_m": 2.860031080245972
+   },
+   "L10": {
+    "residual_ridge_r2": -0.009618878364562988,
+    "within_room_m": 2.9248085260391234
+   },
+   "L11": {
+    "residual_ridge_r2": -0.05240100622177124,
+    "within_room_m": 2.860490608215332
+   },
+   "L12": {
+    "residual_ridge_r2": -0.028503358364105225,
+    "within_room_m": 2.8380771398544313
+   },
+   "L13": {
+    "residual_ridge_r2": -0.015107393264770508,
+    "within_room_m": 2.756682109832764
+   },
+   "L14": {
+    "residual_ridge_r2": -0.01417529582977295,
+    "within_room_m": 2.6890320062637327
+   },
+   "L15": {
+    "residual_ridge_r2": -0.045578837394714355,
+    "within_room_m": 2.4225265264511107
+   },
+   "L16": {
+    "residual_ridge_r2": -0.04592549800872803,
+    "within_room_m": 2.520225262641907
+   },
+   "L17": {
+    "residual_ridge_r2": -0.011824429035186768,
+    "within_room_m": 2.265914297103882
+   },
+   "L18": {
+    "residual_ridge_r2": -0.015273213386535645,
+    "within_room_m": 2.2564356088638307
+   },
+   "L19": {
+    "residual_ridge_r2": -0.008345097303390503,
+    "within_room_m": 2.14600123167038
+   },
+   "L20": {
+    "residual_ridge_r2": 0.026522278785705566,
+    "within_room_m": 2.158429217338562
+   },
+   "L21": {
+    "residual_ridge_r2": 0.020566940307617188,
+    "within_room_m": 2.026326870918274
+   },
+   "L22": {
+    "residual_ridge_r2": 0.027655482292175293,
+    "within_room_m": 1.936919665336609
+   },
+   "L23": {
+    "residual_ridge_r2": 0.02867010235786438,
+    "within_room_m": 1.986704981327057
+   },
+   "L24": {
+    "residual_ridge_r2": -0.015654325485229492,
+    "within_room_m": 2.0202304840087892
+   },
+   "L25": {
+    "residual_ridge_r2": 0.042620956897735596,
+    "within_room_m": 2.2002593994140627
+   },
+   "L26": {
+    "residual_ridge_r2": 0.06284603476524353,
+    "within_room_m": 2.109274184703827
+   },
+   "L27": {
+    "residual_ridge_r2": 0.054225534200668335,
+    "within_room_m": 2.0813096523284913
+   },
+   "L28": {
+    "residual_ridge_r2": 0.05486443638801575,
+    "within_room_m": 2.0658448338508606
+   },
+   "L29": {
+    "residual_ridge_r2": 0.05821231007575989,
+    "within_room_m": 2.178075337409973
+   },
+   "L30": {
+    "residual_ridge_r2": 0.05088642239570618,
+    "within_room_m": 2.259140408039093
+   },
+   "L31": {
+    "residual_ridge_r2": 0.045461565256118774,
+    "within_room_m": 2.294426918029785
+   },
+   "L32": {
+    "residual_ridge_r2": 0.05347782373428345,
+    "within_room_m": 2.311032164096832
+   },
+   "L33": {
+    "residual_ridge_r2": 0.04757457971572876,
+    "within_room_m": 2.345965838432312
+   },
+   "L34": {
+    "residual_ridge_r2": 0.04078510403633118,
+    "within_room_m": 2.3464010834693907
+   },
+   "L35": {
+    "residual_ridge_r2": 0.040273517370224,
+    "within_room_m": 2.275450086593628
+   },
+   "L36": {
+    "residual_ridge_r2": 0.044872820377349854,
+    "within_room_m": 2.287225329875946
+   }
+  },
+  "question": {
+   "L1": {
+    "residual_ridge_r2": -0.046215593814849854
+   },
+   "L2": {
+    "residual_ridge_r2": -0.05311465263366699
+   },
+   "L3": {
+    "residual_ridge_r2": -0.008446156978607178
+   },
+   "L4": {
+    "residual_ridge_r2": -0.0382533073425293
+   },
+   "L5": {
+    "residual_ridge_r2": -0.027980387210845947
+   },
+   "L6": {
+    "residual_ridge_r2": -0.025486111640930176
+   },
+   "L7": {
+    "residual_ridge_r2": -0.0060620903968811035
+   },
+   "L8": {
+    "residual_ridge_r2": -0.004563450813293457
+   },
+   "L9": {
+    "residual_ridge_r2": -0.003130197525024414
+   },
+   "L10": {
+    "residual_ridge_r2": -0.005921125411987305
+   },
+   "L11": {
+    "residual_ridge_r2": -0.0028895139694213867
+   },
+   "L12": {
+    "residual_ridge_r2": -0.0016761720180511475
+   },
+   "L13": {
+    "residual_ridge_r2": -0.005502581596374512
+   },
+   "L14": {
+    "residual_ridge_r2": -0.005926191806793213
+   },
+   "L15": {
+    "residual_ridge_r2": -0.010508239269256592
+   },
+   "L16": {
+    "residual_ridge_r2": -0.011204898357391357
+   },
+   "L17": {
+    "residual_ridge_r2": -0.0076438188552856445
+   },
+   "L18": {
+    "residual_ridge_r2": -0.018989920616149902
+   },
+   "L19": {
+    "residual_ridge_r2": -0.010265380144119263
+   },
+   "L20": {
+    "residual_ridge_r2": 0.02448400855064392
+   },
+   "L21": {
+    "residual_ridge_r2": 0.018689841032028198
+   },
+   "L22": {
+    "residual_ridge_r2": 0.03718841075897217
+   },
+   "L23": {
+    "residual_ridge_r2": 0.0447525680065155
+   },
+   "L24": {
+    "residual_ridge_r2": 0.03543946146965027
+   },
+   "L25": {
+    "residual_ridge_r2": 0.07714778184890747
+   },
+   "L26": {
+    "residual_ridge_r2": 0.07979509234428406
+   },
+   "L27": {
+    "residual_ridge_r2": 0.07426247000694275
+   },
+   "L28": {
+    "residual_ridge_r2": 0.08273142576217651
+   },
+   "L29": {
+    "residual_ridge_r2": 0.08014574646949768
+   },
+   "L30": {
+    "residual_ridge_r2": 0.0788673460483551
+   },
+   "L31": {
+    "residual_ridge_r2": 0.10313642024993896
+   },
+   "L32": {
+    "residual_ridge_r2": 0.1141243577003479
+   },
+   "L33": {
+    "residual_ridge_r2": 0.10998037457466125
+   },
+   "L34": {
+    "residual_ridge_r2": 0.10834035277366638
+   },
+   "L35": {
+    "residual_ridge_r2": 0.10765430331230164
+   },
+   "L36": {
+    "residual_ridge_r2": 0.11331251263618469
+   }
+  }
+ },
+ "qwen8b+qwen8b-proc-e4-s6": {
+  "n_trials": 1920,
+  "n_answer_ok": 1920,
+  "device": "cuda",
+  "exp10_devices": [
+   "cuda",
+   "mps"
+  ],
+  "behaviour": {
+   "n": 1920,
+   "accuracy": 0.9697916666666667,
+   "accuracy_novel": 0.9630484988452656
+  },
+  "answer_only_r2": 0.796673983335495,
+  "true_sign_r2": 0.8741454482078552,
+  "within_room_chance_m": 3.533580684661865,
+  "img_mean": {
+   "L1": {
+    "within_room_m": 1.6487384915351868
+   },
+   "L2": {
+    "within_room_m": 1.5335537433624267
+   },
+   "L3": {
+    "within_room_m": 1.5340652227401734
+   },
+   "L4": {
+    "within_room_m": 1.5365482807159423
+   },
+   "L5": {
+    "within_room_m": 1.531336283683777
+   },
+   "L6": {
+    "within_room_m": 1.5496933460235596
+   },
+   "L7": {
+    "within_room_m": 1.5460573196411134
+   },
+   "L8": {
+    "within_room_m": 1.5822423934936523
+   },
+   "L9": {
+    "within_room_m": 1.5515862345695495
+   },
+   "L10": {
+    "within_room_m": 1.592147958278656
+   },
+   "L11": {
+    "within_room_m": 1.6351911664009093
+   },
+   "L12": {
+    "within_room_m": 1.7081757187843323
+   },
+   "L13": {
+    "within_room_m": 1.7032736897468568
+   },
+   "L14": {
+    "within_room_m": 1.7522981882095336
+   },
+   "L15": {
+    "within_room_m": 1.7398453235626221
+   },
+   "L16": {
+    "within_room_m": 1.8117509245872498
+   },
+   "L17": {
+    "within_room_m": 1.7896692752838135
+   },
+   "L18": {
+    "within_room_m": 1.8074453711509704
+   },
+   "L19": {
+    "within_room_m": 1.8336411714553833
+   },
+   "L20": {
+    "within_room_m": 1.784308624267578
+   },
+   "L21": {
+    "within_room_m": 1.8049876809120178
+   },
+   "L22": {
+    "within_room_m": 1.786658477783203
+   },
+   "L23": {
+    "within_room_m": 1.7478254556655883
+   },
+   "L24": {
+    "within_room_m": 1.6501867651939393
+   },
+   "L25": {
+    "within_room_m": 1.5932803273200988
+   },
+   "L26": {
+    "within_room_m": 1.5729750156402589
+   },
+   "L27": {
+    "within_room_m": 1.521819818019867
+   },
+   "L28": {
+    "within_room_m": 1.52247611284256
+   },
+   "L29": {
+    "within_room_m": 1.513147270679474
+   },
+   "L30": {
+    "within_room_m": 1.4867430686950684
+   },
+   "L31": {
+    "within_room_m": 1.542829155921936
+   },
+   "L32": {
+    "within_room_m": 1.514074718952179
+   },
+   "L33": {
+    "within_room_m": 1.4792335152626037
+   },
+   "L34": {
+    "within_room_m": 1.460051918029785
+   },
+   "L35": {
+    "within_room_m": 1.442506766319275
+   },
+   "L36": {
+    "within_room_m": 1.504286789894104
+   }
+  },
+  "last": {
+   "L1": {
+    "residual_ridge_r2": -0.025613844394683838,
+    "within_room_m": 3.0245521783828737
+   },
+   "L2": {
+    "residual_ridge_r2": -0.007555484771728516,
+    "within_room_m": 2.9421889543533326
+   },
+   "L3": {
+    "residual_ridge_r2": -0.009799361228942871,
+    "within_room_m": 2.95597505569458
+   },
+   "L4": {
+    "residual_ridge_r2": -0.009579360485076904,
+    "within_room_m": 2.960223126411438
+   },
+   "L5": {
+    "residual_ridge_r2": -0.011053681373596191,
+    "within_room_m": 2.9005171060562134
+   },
+   "L6": {
+    "residual_ridge_r2": -0.01109534502029419,
+    "within_room_m": 2.869399333000183
+   },
+   "L7": {
+    "residual_ridge_r2": -0.010561347007751465,
+    "within_room_m": 2.862639284133911
+   },
+   "L8": {
+    "residual_ridge_r2": -0.009357690811157227,
+    "within_room_m": 2.9021132230758666
+   },
+   "L9": {
+    "residual_ridge_r2": -0.010001063346862793,
+    "within_room_m": 2.9243462562561033
+   },
+   "L10": {
+    "residual_ridge_r2": -0.010790705680847168,
+    "within_room_m": 2.8983645677566527
+   },
+   "L11": {
+    "residual_ridge_r2": -0.012289285659790039,
+    "within_room_m": 2.874341130256653
+   },
+   "L12": {
+    "residual_ridge_r2": -0.0324704647064209,
+    "within_room_m": 2.8392098426818846
+   },
+   "L13": {
+    "residual_ridge_r2": -0.012901127338409424,
+    "within_room_m": 2.7356692790985107
+   },
+   "L14": {
+    "residual_ridge_r2": -0.012605845928192139,
+    "within_room_m": 2.547258400917053
+   },
+   "L15": {
+    "residual_ridge_r2": -0.011376738548278809,
+    "within_room_m": 2.331351137161255
+   },
+   "L16": {
+    "residual_ridge_r2": -0.008624851703643799,
+    "within_room_m": 2.283152532577515
+   },
+   "L17": {
+    "residual_ridge_r2": -0.009944260120391846,
+    "within_room_m": 2.2237653732299805
+   },
+   "L18": {
+    "residual_ridge_r2": -0.010725259780883789,
+    "within_room_m": 2.262535071372986
+   },
+   "L19": {
+    "residual_ridge_r2": -0.0007750093936920166,
+    "within_room_m": 2.064097452163696
+   },
+   "L20": {
+    "residual_ridge_r2": 0.020442962646484375,
+    "within_room_m": 2.0984851479530335
+   },
+   "L21": {
+    "residual_ridge_r2": 0.01877415180206299,
+    "within_room_m": 1.946865439414978
+   },
+   "L22": {
+    "residual_ridge_r2": 0.02901521325111389,
+    "within_room_m": 1.9586313009262084
+   },
+   "L23": {
+    "residual_ridge_r2": 0.061931759119033813,
+    "within_room_m": 2.011700916290283
+   },
+   "L24": {
+    "residual_ridge_r2": 0.05080738663673401,
+    "within_room_m": 2.0211772561073302
+   },
+   "L25": {
+    "residual_ridge_r2": 0.09435960650444031,
+    "within_room_m": 2.242141342163086
+   },
+   "L26": {
+    "residual_ridge_r2": 0.10196959972381592,
+    "within_room_m": 2.1952806949615478
+   },
+   "L27": {
+    "residual_ridge_r2": 0.0944402813911438,
+    "within_room_m": 2.1120686650276186
+   },
+   "L28": {
+    "residual_ridge_r2": 0.09265059232711792,
+    "within_room_m": 2.0934714913368224
+   },
+   "L29": {
+    "residual_ridge_r2": 0.09153828024864197,
+    "within_room_m": 2.1344404339790346
+   },
+   "L30": {
+    "residual_ridge_r2": 0.08238041400909424,
+    "within_room_m": 2.187262213230133
+   },
+   "L31": {
+    "residual_ridge_r2": 0.07039591670036316,
+    "within_room_m": 2.2532554268836975
+   },
+   "L32": {
+    "residual_ridge_r2": 0.07006308436393738,
+    "within_room_m": 2.2642224550247194
+   },
+   "L33": {
+    "residual_ridge_r2": 0.07399410009384155,
+    "within_room_m": 2.311566722393036
+   },
+   "L34": {
+    "residual_ridge_r2": 0.07296139001846313,
+    "within_room_m": 2.3085224628448486
+   },
+   "L35": {
+    "residual_ridge_r2": 0.0681527853012085,
+    "within_room_m": 2.2103126525878904
+   },
+   "L36": {
+    "residual_ridge_r2": 0.072826087474823,
+    "within_room_m": 2.208394634723663
+   }
+  },
+  "question": {
+   "L1": {
+    "residual_ridge_r2": -0.006125092506408691
+   },
+   "L2": {
+    "residual_ridge_r2": -0.015314102172851562
+   },
+   "L3": {
+    "residual_ridge_r2": -0.005756080150604248
+   },
+   "L4": {
+    "residual_ridge_r2": -0.005566775798797607
+   },
+   "L5": {
+    "residual_ridge_r2": -0.02155393362045288
+   },
+   "L6": {
+    "residual_ridge_r2": -0.009324848651885986
+   },
+   "L7": {
+    "residual_ridge_r2": -0.03148728609085083
+   },
+   "L8": {
+    "residual_ridge_r2": -0.007092595100402832
+   },
+   "L9": {
+    "residual_ridge_r2": -0.006911814212799072
+   },
+   "L10": {
+    "residual_ridge_r2": -0.005813002586364746
+   },
+   "L11": {
+    "residual_ridge_r2": -0.027333319187164307
+   },
+   "L12": {
+    "residual_ridge_r2": -0.002216815948486328
+   },
+   "L13": {
+    "residual_ridge_r2": -0.006076693534851074
+   },
+   "L14": {
+    "residual_ridge_r2": -0.006243586540222168
+   },
+   "L15": {
+    "residual_ridge_r2": -0.015727996826171875
+   },
+   "L16": {
+    "residual_ridge_r2": -0.014872908592224121
+   },
+   "L17": {
+    "residual_ridge_r2": -0.014868974685668945
+   },
+   "L18": {
+    "residual_ridge_r2": -0.01674109697341919
+   },
+   "L19": {
+    "residual_ridge_r2": -0.008478403091430664
+   },
+   "L20": {
+    "residual_ridge_r2": 0.00624006986618042
+   },
+   "L21": {
+    "residual_ridge_r2": -0.06420999765396118
+   },
+   "L22": {
+    "residual_ridge_r2": 0.03620713949203491
+   },
+   "L23": {
+    "residual_ridge_r2": 0.07268184423446655
+   },
+   "L24": {
+    "residual_ridge_r2": 0.08279210329055786
+   },
+   "L25": {
+    "residual_ridge_r2": 0.10999423265457153
+   },
+   "L26": {
+    "residual_ridge_r2": 0.12706369161605835
+   },
+   "L27": {
+    "residual_ridge_r2": 0.13523557782173157
+   },
+   "L28": {
+    "residual_ridge_r2": 0.1430974006652832
+   },
+   "L29": {
+    "residual_ridge_r2": 0.12984827160835266
+   },
+   "L30": {
+    "residual_ridge_r2": 0.14073076844215393
+   },
+   "L31": {
+    "residual_ridge_r2": 0.14015880227088928
+   },
+   "L32": {
+    "residual_ridge_r2": 0.13835597038269043
+   },
+   "L33": {
+    "residual_ridge_r2": 0.15417343378067017
+   },
+   "L34": {
+    "residual_ridge_r2": 0.1509912610054016
+   },
+   "L35": {
+    "residual_ridge_r2": 0.1432451605796814
+   },
+   "L36": {
+    "residual_ridge_r2": 0.14207583665847778
+   }
+  }
+ },
+ "_code_md5": {
+  "spatialcells/analyze.py": "bd0658199e7cd2c2283cd684acb8a152",
+  "spatialcells/extract.py": "60003f8009526667557dfa4579585444",
+  "spatialcells/task_record.py": "4596a22669540f38a056cd913a7ff9f2",
+  "spatialcells/task_probe.py": "d807fec5019f986e423b833f827c433f",
+  "spatialcells/e4_internals.py": "db42b885b6aedf524593d43c9b2013a4"
+ }
+}

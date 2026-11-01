@@ -1,0 +1,390 @@
+{
+ "_about": "Two readouts that experiment 14a ran by hand (its \"exploratory\" notes) and the paper quotes,\n             written down here so that every run gets the same computation, run 0 included. From\n             task_record.py's recordings (data/acts_task/<model>/), with task_probe's split (five held-out\n             rooms -> the other five, both ways, averaged; the training rooms' last room validates lambda):\n  answer     Is the distance-difference readout (d_a - d_b) more than the model's answer? R^2 of predicting\n             d_a - d_b from the answer alone (the training rooms' mean for each answer), from the true nearer\n             option alone, and of a ridge readout (task_probe.ridge_fit) of the residual left after the\n             answer, per layer at the last and question tokens. Trials whose recorded answer is neither\n             option are left out (counted). The answer is experiment 10's on the same prompt (meta.json).\n  within     The new view's (x, y) inside each room: five folds of walks (walk index mod 5), ridge per fold\n             (lambda validated on the next fold), median error over the room's trials, mean over rooms;\n             chance predicts the training folds' mean. Per layer at the visual-token mean and the last token.",
+ "qwen8b+qwen8b-proc": {
+  "n_trials": 1920,
+  "n_answer_ok": 1919,
+  "device": "mps (not recorded)",
+  "exp10_devices": [],
+  "behaviour": {
+   "n": 1920,
+   "accuracy": 0.928125,
+   "accuracy_novel": 0.9253271747498075
+  },
+  "answer_only_r2": 0.6889994442462921,
+  "true_sign_r2": 0.874082088470459,
+  "within_room_chance_m": 3.533580684661865,
+  "img_mean": {
+   "L1": {
+    "within_room_m": 1.6520512342453002
+   },
+   "L2": {
+    "within_room_m": 1.5256223201751709
+   },
+   "L3": {
+    "within_room_m": 1.535983920097351
+   },
+   "L4": {
+    "within_room_m": 1.5357250332832337
+   },
+   "L5": {
+    "within_room_m": 1.5335495471954346
+   },
+   "L6": {
+    "within_room_m": 1.542808473110199
+   },
+   "L7": {
+    "within_room_m": 1.5458997249603272
+   },
+   "L8": {
+    "within_room_m": 1.601425576210022
+   },
+   "L9": {
+    "within_room_m": 1.5860428929328918
+   },
+   "L10": {
+    "within_room_m": 1.6034968733787536
+   },
+   "L11": {
+    "within_room_m": 1.6764053344726562
+   },
+   "L12": {
+    "within_room_m": 1.7260967016220092
+   },
+   "L13": {
+    "within_room_m": 1.7574649691581725
+   },
+   "L14": {
+    "within_room_m": 1.8482415795326232
+   },
+   "L15": {
+    "within_room_m": 1.8323455572128295
+   },
+   "L16": {
+    "within_room_m": 1.985552227497101
+   },
+   "L17": {
+    "within_room_m": 1.9687344551086425
+   },
+   "L18": {
+    "within_room_m": 2.0060410022735597
+   },
+   "L19": {
+    "within_room_m": 2.110234320163727
+   },
+   "L20": {
+    "within_room_m": 2.069223439693451
+   },
+   "L21": {
+    "within_room_m": 2.048023819923401
+   },
+   "L22": {
+    "within_room_m": 2.0459994316101073
+   },
+   "L23": {
+    "within_room_m": 2.080182683467865
+   },
+   "L24": {
+    "within_room_m": 1.9501391768455505
+   },
+   "L25": {
+    "within_room_m": 1.9061187624931335
+   },
+   "L26": {
+    "within_room_m": 1.8478435277938843
+   },
+   "L27": {
+    "within_room_m": 1.846161460876465
+   },
+   "L28": {
+    "within_room_m": 1.83692969083786
+   },
+   "L29": {
+    "within_room_m": 1.869923996925354
+   },
+   "L30": {
+    "within_room_m": 1.845099687576294
+   },
+   "L31": {
+    "within_room_m": 1.867113173007965
+   },
+   "L32": {
+    "within_room_m": 1.862574577331543
+   },
+   "L33": {
+    "within_room_m": 1.8386951446533204
+   },
+   "L34": {
+    "within_room_m": 1.7998522162437438
+   },
+   "L35": {
+    "within_room_m": 1.8042835950851441
+   },
+   "L36": {
+    "within_room_m": 1.811377477645874
+   }
+  },
+  "last": {
+   "L1": {
+    "residual_ridge_r2": -0.014766931533813477,
+    "within_room_m": 3.0308362007141114
+   },
+   "L2": {
+    "residual_ridge_r2": -0.028377652168273926,
+    "within_room_m": 2.9380394220352173
+   },
+   "L3": {
+    "residual_ridge_r2": -0.022074401378631592,
+    "within_room_m": 2.932245707511902
+   },
+   "L4": {
+    "residual_ridge_r2": -0.021022319793701172,
+    "within_room_m": 2.9222705602645873
+   },
+   "L5": {
+    "residual_ridge_r2": -0.04244697093963623,
+    "within_room_m": 2.875705671310425
+   },
+   "L6": {
+    "residual_ridge_r2": -0.015592813491821289,
+    "within_room_m": 2.866523814201355
+   },
+   "L7": {
+    "residual_ridge_r2": -0.014010369777679443,
+    "within_room_m": 2.85727117061615
+   },
+   "L8": {
+    "residual_ridge_r2": -0.02446526288986206,
+    "within_room_m": 2.856517958641052
+   },
+   "L9": {
+    "residual_ridge_r2": -0.037698447704315186,
+    "within_room_m": 2.7924514770507813
+   },
+   "L10": {
+    "residual_ridge_r2": -0.037582457065582275,
+    "within_room_m": 2.8531251668930055
+   },
+   "L11": {
+    "residual_ridge_r2": -0.04515659809112549,
+    "within_room_m": 2.7939056158065796
+   },
+   "L12": {
+    "residual_ridge_r2": -0.04613065719604492,
+    "within_room_m": 2.7994246959686278
+   },
+   "L13": {
+    "residual_ridge_r2": -0.04686456918716431,
+    "within_room_m": 2.779931926727295
+   },
+   "L14": {
+    "residual_ridge_r2": -0.044467031955718994,
+    "within_room_m": 2.8095656871795653
+   },
+   "L15": {
+    "residual_ridge_r2": -0.02381354570388794,
+    "within_room_m": 2.5144060134887694
+   },
+   "L16": {
+    "residual_ridge_r2": -0.021438777446746826,
+    "within_room_m": 2.589090871810913
+   },
+   "L17": {
+    "residual_ridge_r2": -0.01598578691482544,
+    "within_room_m": 2.394498181343079
+   },
+   "L18": {
+    "residual_ridge_r2": -0.025894761085510254,
+    "within_room_m": 2.3982519626617433
+   },
+   "L19": {
+    "residual_ridge_r2": -0.020649969577789307,
+    "within_room_m": 2.2716845989227297
+   },
+   "L20": {
+    "residual_ridge_r2": 0.028985708951950073,
+    "within_room_m": 2.3508840799331665
+   },
+   "L21": {
+    "residual_ridge_r2": 0.04000890254974365,
+    "within_room_m": 2.2025049924850464
+   },
+   "L22": {
+    "residual_ridge_r2": 0.06116902828216553,
+    "within_room_m": 2.1843996405601502
+   },
+   "L23": {
+    "residual_ridge_r2": 0.07178661227226257,
+    "within_room_m": 2.0920875787734987
+   },
+   "L24": {
+    "residual_ridge_r2": 0.05468720197677612,
+    "within_room_m": 2.0957216739654543
+   },
+   "L25": {
+    "residual_ridge_r2": 0.05454683303833008,
+    "within_room_m": 2.307917761802673
+   },
+   "L26": {
+    "residual_ridge_r2": 0.06257781386375427,
+    "within_room_m": 2.288781976699829
+   },
+   "L27": {
+    "residual_ridge_r2": 0.06590375304222107,
+    "within_room_m": 2.1865691423416136
+   },
+   "L28": {
+    "residual_ridge_r2": 0.06402981281280518,
+    "within_room_m": 2.1941216707229616
+   },
+   "L29": {
+    "residual_ridge_r2": 0.05932888388633728,
+    "within_room_m": 2.3009197473526
+   },
+   "L30": {
+    "residual_ridge_r2": 0.05566796660423279,
+    "within_room_m": 2.4145444869995116
+   },
+   "L31": {
+    "residual_ridge_r2": 0.043733447790145874,
+    "within_room_m": 2.4897871255874633
+   },
+   "L32": {
+    "residual_ridge_r2": 0.045533567667007446,
+    "within_room_m": 2.5085634708404543
+   },
+   "L33": {
+    "residual_ridge_r2": 0.042504727840423584,
+    "within_room_m": 2.509115147590637
+   },
+   "L34": {
+    "residual_ridge_r2": 0.03770062327384949,
+    "within_room_m": 2.516023910045624
+   },
+   "L35": {
+    "residual_ridge_r2": 0.04410389065742493,
+    "within_room_m": 2.536614382266998
+   },
+   "L36": {
+    "residual_ridge_r2": 0.03922566771507263,
+    "within_room_m": 2.5390769243240356
+   }
+  },
+  "question": {
+   "L1": {
+    "residual_ridge_r2": -0.006226480007171631
+   },
+   "L2": {
+    "residual_ridge_r2": -0.03718382120132446
+   },
+   "L3": {
+    "residual_ridge_r2": -0.02302563190460205
+   },
+   "L4": {
+    "residual_ridge_r2": -0.0067040324211120605
+   },
+   "L5": {
+    "residual_ridge_r2": -0.01170802116394043
+   },
+   "L6": {
+    "residual_ridge_r2": -0.011996269226074219
+   },
+   "L7": {
+    "residual_ridge_r2": -0.013461172580718994
+   },
+   "L8": {
+    "residual_ridge_r2": -0.011948823928833008
+   },
+   "L9": {
+    "residual_ridge_r2": -0.01112067699432373
+   },
+   "L10": {
+    "residual_ridge_r2": -0.00990515947341919
+   },
+   "L11": {
+    "residual_ridge_r2": -0.008306801319122314
+   },
+   "L12": {
+    "residual_ridge_r2": -0.007129848003387451
+   },
+   "L13": {
+    "residual_ridge_r2": -0.008652687072753906
+   },
+   "L14": {
+    "residual_ridge_r2": -0.00934070348739624
+   },
+   "L15": {
+    "residual_ridge_r2": -0.021718084812164307
+   },
+   "L16": {
+    "residual_ridge_r2": -0.020768821239471436
+   },
+   "L17": {
+    "residual_ridge_r2": -0.019412636756896973
+   },
+   "L18": {
+    "residual_ridge_r2": -0.01801818609237671
+   },
+   "L19": {
+    "residual_ridge_r2": -0.015170156955718994
+   },
+   "L20": {
+    "residual_ridge_r2": 0.015495926141738892
+   },
+   "L21": {
+    "residual_ridge_r2": 0.029866576194763184
+   },
+   "L22": {
+    "residual_ridge_r2": 0.05780336260795593
+   },
+   "L23": {
+    "residual_ridge_r2": 0.06786176562309265
+   },
+   "L24": {
+    "residual_ridge_r2": 0.059535980224609375
+   },
+   "L25": {
+    "residual_ridge_r2": 0.05566868185997009
+   },
+   "L26": {
+    "residual_ridge_r2": 0.06301212310791016
+   },
+   "L27": {
+    "residual_ridge_r2": 0.06321632862091064
+   },
+   "L28": {
+    "residual_ridge_r2": 0.0632053017616272
+   },
+   "L29": {
+    "residual_ridge_r2": 0.06097295880317688
+   },
+   "L30": {
+    "residual_ridge_r2": 0.05510076880455017
+   },
+   "L31": {
+    "residual_ridge_r2": 0.05246078968048096
+   },
+   "L32": {
+    "residual_ridge_r2": 0.04928484559059143
+   },
+   "L33": {
+    "residual_ridge_r2": 0.04999798536300659
+   },
+   "L34": {
+    "residual_ridge_r2": 0.04855388402938843
+   },
+   "L35": {
+    "residual_ridge_r2": 0.051874518394470215
+   },
+   "L36": {
+    "residual_ridge_r2": 0.057304203510284424
+   }
+  }
+ },
+ "_code_md5": {
+  "spatialcells/analyze.py": "bd0658199e7cd2c2283cd684acb8a152",
+  "spatialcells/extract.py": "d5ea5a9313839fadee75ee834d4add32",
+  "spatialcells/task_record.py": "891b6a60683fd3eb655016555679fe7d",
+  "spatialcells/task_probe.py": "d807fec5019f986e423b833f827c433f",
+  "spatialcells/e4_internals.py": "db42b885b6aedf524593d43c9b2013a4"
+ }
+}

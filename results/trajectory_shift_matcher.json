@@ -1,0 +1,494 @@
+{
+ "settings": {
+  "registration": "docs/experiments.md, Experiment 30, Visual difficulty; descriptive, no threshold",
+  "checkpoints": {
+   "ordered": [
+    "data/learned_matcher/runs/cls-ordered/L4-d256-p0.3-lr0.0003-s0/model.pt",
+    "data/learned_matcher/runs/cls-ordered/L4-d256-p0.3-lr0.0003-s1/model.pt",
+    "data/learned_matcher/runs/cls-ordered/L4-d256-p0.3-lr0.0003-s2/model.pt",
+    "data/learned_matcher/runs/cls-ordered/L4-d256-p0.3-lr0.0003-s3/model.pt",
+    "data/learned_matcher/runs/cls-ordered/L4-d256-p0.3-lr0.0003-s4/model.pt"
+   ],
+   "orderfree": [
+    "data/learned_matcher/runs/cls-orderfree/L2-d256-p0.1-lr0.001-s0/model.pt",
+    "data/learned_matcher/runs/cls-orderfree/L2-d256-p0.1-lr0.001-s1/model.pt",
+    "data/learned_matcher/runs/cls-orderfree/L2-d256-p0.1-lr0.001-s2/model.pt",
+    "data/learned_matcher/runs/cls-orderfree/L2-d256-p0.1-lr0.001-s3/model.pt",
+    "data/learned_matcher/runs/cls-orderfree/L2-d256-p0.1-lr0.001-s4/model.pt"
+   ]
+  },
+  "units": "fractions; each model's accuracy is the mean over its five seeds",
+  "ties": "0.5, as experiment 28"
+ },
+ "check": {
+  "trials": 119,
+  "identical_share": {
+   "ordered": 1.0,
+   "orderfree": 1.0
+  }
+ },
+ "standard": {
+  "control": {
+   "ordered": {
+    "mean": 0.741026012982823,
+    "ci95": [
+     0.7144515627109326,
+     0.7692701973734946
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625,
+    "lora_minus": {
+     "mean": 0.22336421917714638,
+     "ci95": [
+      0.19608354023262917,
+      0.25026737936200866
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    }
+   },
+   "orderfree": {
+    "mean": 0.7447582260982215,
+    "ci95": [
+     0.7165014280551731,
+     0.7744978331932733
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625,
+    "lora_minus": {
+     "mean": 0.21963200606174788,
+     "ci95": [
+      0.19140600386953716,
+      0.24751560178209223
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    }
+   },
+   "lora": {
+    "mean": 0.9643902321599696,
+    "ci95": [
+     0.9563816705067636,
+     0.9719848978887774
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   }
+  },
+  "long-step": {
+   "ordered": {
+    "mean": 0.738572670006342,
+    "ci95": [
+     0.7080586566931588,
+     0.7678217282672546
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625,
+    "lora_minus": {
+     "mean": 0.21683443354055276,
+     "ci95": [
+      0.18714968505598378,
+      0.24665263831592643
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    }
+   },
+   "orderfree": {
+    "mean": 0.7383501725616729,
+    "ci95": [
+     0.7096789347038992,
+     0.7664363202771115
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625,
+    "lora_minus": {
+     "mean": 0.2170569309852219,
+     "ci95": [
+      0.1889305843891837,
+      0.2464146770207922
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    }
+   },
+   "lora": {
+    "mean": 0.9554071035468947,
+    "ci95": [
+     0.9436677250677259,
+     0.965423079301156
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   }
+  },
+  "low-turn": {
+   "ordered": {
+    "mean": 0.74457678540205,
+    "ci95": [
+     0.7199110734096922,
+     0.7666749193554314
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625,
+    "lora_minus": {
+     "mean": 0.21742204297957007,
+     "ci95": [
+      0.19321087247983498,
+      0.2446552096389873
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    }
+   },
+   "orderfree": {
+    "mean": 0.7503576594946259,
+    "ci95": [
+     0.7318411208449557,
+     0.7674085292184538
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625,
+    "lora_minus": {
+     "mean": 0.2116411688869941,
+     "ci95": [
+      0.19318421509248532,
+      0.23227559776648737
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    }
+   },
+   "lora": {
+    "mean": 0.9619988283816201,
+    "ci95": [
+     0.9581440035519393,
+     0.9662079940578768
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   }
+  },
+  "patrol": {
+   "ordered": {
+    "mean": 0.7369889100007536,
+    "ci95": [
+     0.7141628549665042,
+     0.7592182086059858
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625,
+    "lora_minus": {
+     "mean": 0.23755426520560016,
+     "ci95": [
+      0.21557845784823518,
+      0.2594623813339761
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    }
+   },
+   "orderfree": {
+    "mean": 0.7311960398045114,
+    "ci95": [
+     0.7072311944641957,
+     0.752766677427476
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625,
+    "lora_minus": {
+     "mean": 0.2433471354018423,
+     "ci95": [
+      0.22415094406660624,
+      0.26569757316790693
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    }
+   },
+   "lora": {
+    "mean": 0.9745431752063539,
+    "ci95": [
+     0.9674752396780097,
+     0.9818576796820596
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   }
+  }
+ },
+ "separation": {
+  "control": {
+   "conflict": {
+    "ordered": {
+     "mean": 0.7718288560665215,
+     "ci95": [
+      0.7481455190771962,
+      0.7993889270228189
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625,
+     "lora_minus": {
+      "mean": 0.19900544134693904,
+      "ci95": [
+       0.16773028708338678,
+       0.22899903656378517
+      ],
+      "rooms": 9,
+      "rooms_positive": 9,
+      "rooms_negative": 0,
+      "sign_p": 0.00390625
+     }
+    },
+    "orderfree": {
+     "mean": 0.7693651084603856,
+     "ci95": [
+      0.7475370850681409,
+      0.7911096725628544
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625,
+     "lora_minus": {
+      "mean": 0.201469188953075,
+      "ci95": [
+       0.17214717052200934,
+       0.23121384186777363
+      ],
+      "rooms": 9,
+      "rooms_positive": 9,
+      "rooms_negative": 0,
+      "sign_p": 0.00390625
+     }
+    },
+    "lora": {
+     "mean": 0.9708342974134605,
+     "ci95": [
+      0.9553287918660589,
+      0.9841909747218548
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    }
+   },
+   "agreement": {
+    "ordered": {
+     "mean": 0.7587477908874098,
+     "ci95": [
+      0.6932910822605167,
+      0.8108795829899039
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625,
+     "lora_minus": {
+      "mean": 0.22286320236260712,
+      "ci95": [
+       0.17040759741306225,
+       0.2861152190344737
+      ],
+      "rooms": 9,
+      "rooms_positive": 9,
+      "rooms_negative": 0,
+      "sign_p": 0.00390625
+     }
+    },
+    "orderfree": {
+     "mean": 0.7361853250409752,
+     "ci95": [
+      0.6802257232498802,
+      0.7839580322775596
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625,
+     "lora_minus": {
+      "mean": 0.24542566820904174,
+      "ci95": [
+       0.20224428088263233,
+       0.3004322322381621
+      ],
+      "rooms": 9,
+      "rooms_positive": 9,
+      "rooms_negative": 0,
+      "sign_p": 0.00390625
+     }
+    },
+    "lora": {
+     "mean": 0.981610993250017,
+     "ci95": [
+      0.9681754987590072,
+      0.9932662920240561
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    }
+   }
+  },
+  "patrol": {
+   "conflict": {
+    "ordered": {
+     "mean": 0.786343779677113,
+     "ci95": [
+      0.7403418803418803,
+      0.8350617283950617
+     ],
+     "rooms": 6,
+     "rooms_positive": 6,
+     "rooms_negative": 0,
+     "sign_p": 0.03125,
+     "lora_minus": {
+      "mean": 0.19969230769230764,
+      "ci95": [
+       0.15155555555555553,
+       0.24427350427350425
+      ],
+      "rooms": 6,
+      "rooms_positive": 6,
+      "rooms_negative": 0,
+      "sign_p": 0.03125
+     }
+    },
+    "orderfree": {
+     "mean": 0.7693555826889161,
+     "ci95": [
+      0.7088427621760954,
+      0.8262786596119929
+     ],
+     "rooms": 6,
+     "rooms_positive": 6,
+     "rooms_negative": 0,
+     "sign_p": 0.03125,
+     "lora_minus": {
+      "mean": 0.21668050468050468,
+      "ci95": [
+       0.16144973544973545,
+       0.26769963369963357
+      ],
+      "rooms": 6,
+      "rooms_positive": 6,
+      "rooms_negative": 0,
+      "sign_p": 0.03125
+     }
+    },
+    "lora": {
+     "mean": 0.9860360873694208,
+     "ci95": [
+      0.9706514719848053,
+      0.9986666666666667
+     ],
+     "rooms": 6,
+     "rooms_positive": 6,
+     "rooms_negative": 0,
+     "sign_p": 0.03125
+    }
+   },
+   "agreement": {
+    "ordered": {
+     "mean": 0.6953090418353577,
+     "ci95": [
+      0.6466666666666666,
+      0.7503859649122807
+     ],
+     "rooms": 6,
+     "rooms_positive": 6,
+     "rooms_negative": 0,
+     "sign_p": 0.03125,
+     "lora_minus": {
+      "mean": 0.29561403508771933,
+      "ci95": [
+       0.24600000000000008,
+       0.344280701754386
+      ],
+      "rooms": 6,
+      "rooms_positive": 6,
+      "rooms_negative": 0,
+      "sign_p": 0.03125
+     }
+    },
+    "orderfree": {
+     "mean": 0.6636410256410256,
+     "ci95": [
+      0.6036410256410256,
+      0.7326153846153846
+     ],
+     "rooms": 6,
+     "rooms_positive": 6,
+     "rooms_negative": 0,
+     "sign_p": 0.03125,
+     "lora_minus": {
+      "mean": 0.32728205128205134,
+      "ci95": [
+       0.2631794871794872,
+       0.38728205128205134
+      ],
+      "rooms": 6,
+      "rooms_positive": 6,
+      "rooms_negative": 0,
+      "sign_p": 0.03125
+     }
+    },
+    "lora": {
+     "mean": 0.9909230769230769,
+     "ci95": [
+      0.9781025641025641,
+      1.0
+     ],
+     "rooms": 6,
+     "rooms_positive": 6,
+     "rooms_negative": 0,
+     "sign_p": 0.03125
+    }
+   }
+  }
+ }
+}

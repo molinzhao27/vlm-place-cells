@@ -1,0 +1,1614 @@
+{
+ "runs_complete": [
+  3,
+  4,
+  5,
+  6,
+  7
+ ],
+ "conditions": {
+  "control": {
+   "n_novel": 1461,
+   "lora_per_room": [
+    0.9655629139072848,
+    0.9676646706586827,
+    0.9785714285714285,
+    0.9444444444444444,
+    0.9768292682926829,
+    0.9564102564102565,
+    0.9776470588235294,
+    0.9490909090909091,
+    0.9632911392405064
+   ],
+   "lora": {
+    "mean": 0.9643902321599693,
+    "ci95": [
+     0.9563816705067636,
+     0.9719848978887774
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   },
+   "per_run": {
+    "run 3": 0.960137335027979,
+    "run 4": 0.9683556261114818,
+    "run 5": 0.9635320250535221,
+    "run 6": 0.9643208766908798,
+    "run 7": 0.9656052979159845
+   },
+   "best_rule": "combined",
+   "best_rule_acc": 0.6723566936972938,
+   "best_rule_per_room": [
+    0.6026490066225165,
+    0.6706586826347305,
+    0.7023809523809523,
+    0.6790123456790124,
+    0.7012195121951219,
+    0.7564102564102564,
+    0.6764705882352942,
+    0.6484848484848484,
+    0.6139240506329114
+   ],
+   "best_rule_by_family": {
+    "option similarity": "option similarity | dino-patch",
+    "look-alike then time": "look-alike then time | dino-cls | all 256 | top 1",
+    "window maximum": "window maximum | dino-patch | all 256 | k 32",
+    "window vote": "window vote | dino-patch | all 256 | top 5 | k 32",
+    "combined": "combined"
+   },
+   "margin": {
+    "mean": 0.2920335384626756,
+    "ci95": [
+     0.2613045454985549,
+     0.32096527884557924
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   },
+   "runs_margin": {
+    "run 3": 0.28778064133068526,
+    "run 4": 0.29599893241418795,
+    "run 5": 0.29117533135622814,
+    "run 6": 0.291964182993586,
+    "run 7": 0.29324860421869076
+   }
+  },
+  "long-step": {
+   "n_novel": 1087,
+   "lora_per_room": [
+    0.9543478260869566,
+    0.9721739130434782,
+    0.958273381294964,
+    0.9548387096774194,
+    0.9529411764705882,
+    0.92,
+    0.9773584905660377,
+    0.9391304347826087,
+    0.9696
+   ],
+   "lora": {
+    "mean": 0.9554071035468947,
+    "ci95": [
+     0.9436677250677259,
+     0.965423079301156
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   },
+   "per_run": {
+    "run 3": 0.9525100929555546,
+    "run 4": 0.9598605383976905,
+    "run 5": 0.9578208782195475,
+    "run 6": 0.9565661131847318,
+    "run 7": 0.9502778949769495
+   },
+   "best_rule": "window maximum | dino-patch | all 256 | k 16",
+   "best_rule_acc": 0.6776292741016409,
+   "best_rule_per_room": [
+    0.6630434782608695,
+    0.6304347826086957,
+    0.6798561151079137,
+    0.7056451612903226,
+    0.6911764705882353,
+    0.6481481481481481,
+    0.6179245283018868,
+    0.7304347826086957,
+    0.732
+   ],
+   "best_rule_by_family": {
+    "option similarity": "option similarity | dino-patch",
+    "look-alike then time": "look-alike then time | dino-patch | all 256 | top 1",
+    "window maximum": "window maximum | dino-patch | all 256 | k 16",
+    "window vote": "window vote | dino-cls | all 256 | top 5 | k 16",
+    "combined": "combined"
+   },
+   "margin": {
+    "mean": 0.277777829445254,
+    "ci95": [
+     0.2498937702697434,
+     0.3078160448894213
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   },
+   "runs_margin": {
+    "run 3": 0.27488081885391374,
+    "run 4": 0.28223126429604967,
+    "run 5": 0.2801916041179067,
+    "run 6": 0.27893683908309086,
+    "run 7": 0.2726486208753086
+   },
+   "delta_vs_control": {
+    "mean": -0.008983128613074647,
+    "ci95": [
+     -0.019146594270620834,
+     0.00022185710744850403
+    ],
+    "rooms": 9,
+    "rooms_positive": 3,
+    "rooms_negative": 6,
+    "sign_p": 0.5078125
+   },
+   "verdict": "survives",
+   "runs_survive": 5
+  },
+  "low-turn": {
+   "n_novel": 1665,
+   "lora_per_room": [
+    0.9698324022346368,
+    0.9518324607329843,
+    0.9568421052631579,
+    0.9612903225806452,
+    0.96,
+    0.9626373626373627,
+    0.9740540540540541,
+    0.958659217877095,
+    0.9628415300546448
+   ],
+   "lora": {
+    "mean": 0.9619988283816201,
+    "ci95": [
+     0.9581440035519393,
+     0.9662079940578768
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   },
+   "per_run": {
+    "run 3": 0.9640402357972278,
+    "run 4": 0.9575967202031873,
+    "run 5": 0.963376061209468,
+    "run 6": 0.9640186882607933,
+    "run 7": 0.960962436437424
+   },
+   "best_rule": "combined",
+   "best_rule_acc": 0.6501909626656945,
+   "best_rule_per_room": [
+    0.6480446927374302,
+    0.6387434554973822,
+    0.7052631578947368,
+    0.6774193548387096,
+    0.6526315789473685,
+    0.6263736263736264,
+    0.6270270270270271,
+    0.6368715083798883,
+    0.639344262295082
+   ],
+   "best_rule_by_family": {
+    "option similarity": "option similarity | dino-cls-raw",
+    "look-alike then time": "look-alike then time | dino-patch | 64 shown | top 5",
+    "window maximum": "window maximum | dino-patch | all 256 | k 16",
+    "window vote": "window vote | dino-patch | 64 shown | top 5 | k 32",
+    "combined": "combined"
+   },
+   "margin": {
+    "mean": 0.3118078657159255,
+    "ci95": [
+     0.29242796539443205,
+     0.32797619328892136
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   },
+   "runs_margin": {
+    "run 3": 0.31384927313153316,
+    "run 4": 0.3074057575374927,
+    "run 5": 0.3131850985437734,
+    "run 6": 0.3138277255950988,
+    "run 7": 0.31077147377172953
+   },
+   "delta_vs_control": {
+    "mean": -0.002391403778349319,
+    "ci95": [
+     -0.010728871181892152,
+     0.005569935660496967
+    ],
+    "rooms": 9,
+    "rooms_positive": 4,
+    "rooms_negative": 5,
+    "sign_p": 1.0
+   },
+   "verdict": "survives",
+   "runs_survive": 5
+  },
+  "patrol": {
+   "n_novel": 964,
+   "lora_per_room": [
+    0.9694915254237289,
+    0.975,
+    0.9686956521739131,
+    0.9775700934579439,
+    0.9918032786885246,
+    0.9615384615384616,
+    0.9570093457943926,
+    0.9785714285714285,
+    0.9912087912087912
+   ],
+   "lora": {
+    "mean": 0.9745431752063539,
+    "ci95": [
+     0.9674752396780097,
+     0.9818576796820596
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   },
+   "per_run": {
+    "run 3": 0.9729057768228544,
+    "run 4": 0.975024631439468,
+    "run 5": 0.972027962773356,
+    "run 6": 0.9732953333487109,
+    "run 7": 0.9794621716473796
+   },
+   "best_rule": "combined",
+   "best_rule_acc": 0.6752332412036607,
+   "best_rule_per_room": [
+    0.6949152542372882,
+    0.6136363636363636,
+    0.6347826086956522,
+    0.7009345794392523,
+    0.7459016393442623,
+    0.5961538461538461,
+    0.7102803738317757,
+    0.7321428571428571,
+    0.6483516483516484
+   ],
+   "best_rule_by_family": {
+    "option similarity": "option similarity | dino-cls-raw",
+    "look-alike then time": "look-alike then time | dino-patch | all 256 | top 5",
+    "window maximum": "window maximum | dino-patch | all 256 | k 32",
+    "window vote": "window vote | dino-cls | all 256 | top 5 | k 32",
+    "combined": "combined"
+   },
+   "margin": {
+    "mean": 0.2993099340026932,
+    "ci95": [
+     0.2689610759836805,
+     0.33103753523827995
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   },
+   "runs_margin": {
+    "run 3": 0.29767253561919366,
+    "run 4": 0.2997913902358074,
+    "run 5": 0.2967947215696955,
+    "run 6": 0.2980620921450503,
+    "run 7": 0.3042289304437189
+   },
+   "delta_vs_control": {
+    "mean": 0.010152943046384403,
+    "ci95": [
+     -0.0012542414578322145,
+     0.021037874275874655
+    ],
+    "rooms": 9,
+    "rooms_positive": 7,
+    "rooms_negative": 2,
+    "sign_p": 0.1796875
+   },
+   "verdict": "survives",
+   "runs_survive": 5
+  }
+ },
+ "separation": {
+  "control": {
+   "n_conflict": 412,
+   "n_agreement": 411,
+   "rooms_used": [
+    "P5000",
+    "P5001",
+    "P5002",
+    "P5003",
+    "P5004",
+    "P5006",
+    "P5007",
+    "P5008",
+    "P5009"
+   ],
+   "conflict": {
+    "mean": 0.9708342974134607,
+    "ci95": [
+     0.9553287918660589,
+     0.9841909747218548
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   },
+   "agreement": {
+    "mean": 0.981610993250017,
+    "ci95": [
+     0.9681754987590073,
+     0.9932662920240561
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   },
+   "cost": {
+    "mean": 0.01077669583655632,
+    "ci95": [
+     -0.013313803278460594,
+     0.032762015991829645
+    ],
+    "rooms": 9,
+    "rooms_positive": 6,
+    "rooms_negative": 3,
+    "sign_p": 0.5078125
+   },
+   "midpoint": 0.7408054966250085,
+   "verdict": "geometric proximity wins",
+   "runs_verdicts": {
+    "run 3": "geometric proximity wins",
+    "run 4": "geometric proximity wins",
+    "run 5": "geometric proximity wins",
+    "run 6": "geometric proximity wins",
+    "run 7": "geometric proximity wins"
+   },
+   "per_run": {
+    "run 3": {
+     "conflict": 0.9724642737065098,
+     "agreement": 0.9870535552130845
+    },
+    "run 4": {
+     "conflict": 0.9634404837147132,
+     "agreement": 0.9793876399006946
+    },
+    "run 5": {
+     "conflict": 0.9660361904590195,
+     "agreement": 0.9844080525675819
+    },
+    "run 6": {
+     "conflict": 0.977350806543353,
+     "agreement": 0.9798961575716836
+    },
+    "run 7": {
+     "conflict": 0.9748797326437079,
+     "agreement": 0.9773095609970406
+    }
+   },
+   "conflict_by_frame_order": {
+    "frame order favors near": {
+     "n": 241,
+     "pooled_acc": 0.9800829875518672
+    },
+    "frame order favors far": {
+     "n": 171,
+     "pooled_acc": 0.9590643274853801
+    }
+   },
+   "agreement_by_frame_order": {
+    "frame order favors near": {
+     "n": 292,
+     "pooled_acc": 0.9863013698630136
+    },
+    "frame order favors far": {
+     "n": 119,
+     "pooled_acc": 0.9731092436974791
+    }
+   },
+   "conflict_best_rule": {
+    "rule": "combined",
+    "acc": 0.6504017465578464
+   },
+   "conflict_pixel_window_max_k16": 0.43925155234190744,
+   "conflict_margin_over_best_rule": {
+    "mean": 0.32043255085561423,
+    "ci95": [
+     0.27588179883972686,
+     0.3771815946813017
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   },
+   "agreement_best_rule": {
+    "rule": "window maximum | dino-patch | all 256 | k 16",
+    "acc": 0.8783019610997059
+   },
+   "agreement_pixel_window_max_k16": 0.7246234165516581,
+   "agreement_margin_over_best_rule": {
+    "mean": 0.10330903215031091,
+    "ci95": [
+     0.06610624964693074,
+     0.1429899357208118
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   }
+  },
+  "patrol": {
+   "n_conflict": 194,
+   "n_agreement": 189,
+   "rooms_used": [
+    "P5000",
+    "P5001",
+    "P5002",
+    "P5003",
+    "P5004",
+    "P5008"
+   ],
+   "conflict": {
+    "mean": 0.9860360873694208,
+    "ci95": [
+     0.9706514719848055,
+     0.9986666666666667
+    ],
+    "rooms": 6,
+    "rooms_positive": 6,
+    "rooms_negative": 0,
+    "sign_p": 0.03125
+   },
+   "agreement": {
+    "mean": 0.9909230769230769,
+    "ci95": [
+     0.9781025641025641,
+     1.0
+    ],
+    "rooms": 6,
+    "rooms_positive": 6,
+    "rooms_negative": 0,
+    "sign_p": 0.03125
+   },
+   "cost": {
+    "mean": 0.004886989553656222,
+    "ci95": [
+     -0.0030826210826210474,
+     0.015076923076923043
+    ],
+    "rooms": 6,
+    "rooms_positive": 2,
+    "rooms_negative": 1,
+    "sign_p": 1.0
+   },
+   "midpoint": 0.7454615384615384,
+   "verdict": "geometric proximity wins",
+   "runs_verdicts": {
+    "run 3": "geometric proximity wins",
+    "run 4": "geometric proximity wins",
+    "run 5": "geometric proximity wins",
+    "run 6": "geometric proximity wins",
+    "run 7": "geometric proximity wins"
+   },
+   "per_run": {
+    "run 3": {
+     "conflict": 0.9810066476733144,
+     "agreement": 0.9805128205128205
+    },
+    "run 4": {
+     "conflict": 0.9935897435897436,
+     "agreement": 0.9871794871794872
+    },
+    "run 5": {
+     "conflict": 0.9935897435897436,
+     "agreement": 1.0
+    },
+    "run 6": {
+     "conflict": 0.9748338081671415,
+     "agreement": 0.9935897435897436
+    },
+    "run 7": {
+     "conflict": 0.9871604938271604,
+     "agreement": 0.9933333333333333
+    }
+   },
+   "conflict_by_frame_order": {
+    "frame order favors near": {
+     "n": 103,
+     "pooled_acc": 0.9747572815533981
+    },
+    "frame order favors far": {
+     "n": 91,
+     "pooled_acc": 0.986813186813187
+    }
+   },
+   "agreement_by_frame_order": {
+    "frame order favors near": {
+     "n": 106,
+     "pooled_acc": 0.9867924528301886
+    },
+    "frame order favors far": {
+     "n": 83,
+     "pooled_acc": 0.9903614457831323
+    }
+   },
+   "conflict_best_rule": {
+    "rule": "look-alike then time | dino-cls-raw | all 256 | top 5",
+    "acc": 0.5814462081128747
+   },
+   "conflict_pixel_window_max_k16": 0.35198310948310946,
+   "conflict_margin_over_best_rule": {
+    "mean": 0.40458987925654594,
+    "ci95": [
+     0.3196155202821869,
+     0.4801234567901234
+    ],
+    "rooms": 6,
+    "rooms_positive": 6,
+    "rooms_negative": 0,
+    "sign_p": 0.03125
+   },
+   "agreement_best_rule": {
+    "rule": "window maximum | dino-patch | all 256 | k 16",
+    "acc": 0.8772537112010795
+   },
+   "agreement_pixel_window_max_k16": 0.7202699055330636,
+   "agreement_margin_over_best_rule": {
+    "mean": 0.11366936572199732,
+    "ci95": [
+     0.0701079622132254,
+     0.158
+    ],
+    "rooms": 6,
+    "rooms_positive": 6,
+    "rooms_negative": 0,
+    "sign_p": 0.03125
+   }
+  }
+ },
+ "rules": {},
+ "trials": {
+  "control": {
+   "standard_by_type": {
+    "conflict": {
+     "n": 167,
+     "share": 0.11430527036276524,
+     "pooled_acc": 0.9269461077844312
+    },
+    "agreement": {
+     "n": 95,
+     "share": 0.0650239561943874,
+     "pooled_acc": 1.0
+    },
+    "neither": {
+     "n": 1199,
+     "share": 0.8206707734428473,
+     "pooled_acc": 0.9669724770642203
+    }
+   },
+   "geometry_medians": {
+    "heading gap (deg)": 135.9,
+    "distance margin (m)": 3.5149999999999997,
+    "novelty margin (m)": 1.4039656234092968,
+    "visual overlap": 0.9089620113372803
+   },
+   "geometry_bins": {
+    "heading gap (deg)": {
+     "90 to 120": {
+      "n": 386,
+      "lora": 0.9533678756476683,
+      "best_rule": 0.694300518134715
+     },
+     "120 to 150": {
+      "n": 607,
+      "lora": 0.9686985172981878,
+      "best_rule": 0.6705107084019769
+     },
+     "150 to 180": {
+      "n": 468,
+      "lora": 0.9683760683760685,
+      "best_rule": 0.6581196581196581
+     }
+    },
+    "distance margin (m)": {
+     "2 to 3": {
+      "n": 474,
+      "lora": 0.9379746835443038,
+      "best_rule": 0.6075949367088608
+     },
+     "3 to 4": {
+      "n": 416,
+      "lora": 0.9663461538461539,
+      "best_rule": 0.6394230769230769
+     },
+     "4 to inf": {
+      "n": 571,
+      "lora": 0.9852889667250438,
+      "best_rule": 0.7513134851138353
+     }
+    },
+    "novelty margin (m)": {
+     "1 to 1.25": {
+      "n": 521,
+      "lora": 0.980806142034549,
+      "best_rule": 0.6871401151631478
+     },
+     "1.25 to 1.5": {
+      "n": 309,
+      "lora": 0.963106796116505,
+      "best_rule": 0.7249190938511327
+     },
+     "1.5 to 2": {
+      "n": 358,
+      "lora": 0.9603351955307263,
+      "best_rule": 0.6284916201117319
+     },
+     "2 to inf": {
+      "n": 273,
+      "lora": 0.9406593406593406,
+      "best_rule": 0.6446886446886447
+     }
+    },
+    "visual overlap": {
+     "-inf to 0.8863": {
+      "n": 469,
+      "lora": 0.9518123667377398,
+      "best_rule": 0.7164179104477612
+     },
+     "0.8863 to 0.92202": {
+      "n": 444,
+      "lora": 0.9675675675675676,
+      "best_rule": 0.6351351351351351
+     },
+     "0.92202 to inf": {
+      "n": 548,
+      "lora": 0.972992700729927,
+      "best_rule": 0.666058394160584
+     }
+    }
+   }
+  },
+  "long-step": {
+   "standard_by_type": {
+    "conflict": {
+     "n": 30,
+     "share": 0.027598896044158234,
+     "pooled_acc": 0.9266666666666666
+    },
+    "agreement": {
+     "n": 49,
+     "share": 0.045078196872125116,
+     "pooled_acc": 0.9918367346938776
+    },
+    "neither": {
+     "n": 1008,
+     "share": 0.9273229070837167,
+     "pooled_acc": 0.9537698412698413
+    }
+   },
+   "geometry_medians": {
+    "heading gap (deg)": 134.8,
+    "distance margin (m)": 4.05,
+    "novelty margin (m)": 1.3784055015556735,
+    "visual overlap": 0.9066864848136902
+   },
+   "geometry_bins": {
+    "heading gap (deg)": {
+     "90 to 120": {
+      "n": 328,
+      "lora": 0.9475609756097562,
+      "best_rule": 0.7195121951219512
+     },
+     "120 to 150": {
+      "n": 431,
+      "lora": 0.9545243619489558,
+      "best_rule": 0.6705336426914154
+     },
+     "150 to 180": {
+      "n": 328,
+      "lora": 0.9621951219512196,
+      "best_rule": 0.649390243902439
+     }
+    },
+    "distance margin (m)": {
+     "2 to 3": {
+      "n": 251,
+      "lora": 0.8900398406374502,
+      "best_rule": 0.5597609561752988
+     },
+     "3 to 4": {
+      "n": 282,
+      "lora": 0.948936170212766,
+      "best_rule": 0.6365248226950354
+     },
+     "4 to inf": {
+      "n": 554,
+      "lora": 0.9870036101083032,
+      "best_rule": 0.7545126353790613
+     }
+    },
+    "novelty margin (m)": {
+     "1 to 1.25": {
+      "n": 421,
+      "lora": 0.9467933491686461,
+      "best_rule": 0.666270783847981
+     },
+     "1.25 to 1.5": {
+      "n": 216,
+      "lora": 0.9611111111111111,
+      "best_rule": 0.7083333333333334
+     },
+     "1.5 to 2": {
+      "n": 273,
+      "lora": 0.9575091575091574,
+      "best_rule": 0.673992673992674
+     },
+     "2 to inf": {
+      "n": 177,
+      "lora": 0.9615819209039548,
+      "best_rule": 0.6807909604519774
+     }
+    },
+    "visual overlap": {
+     "-inf to 0.8863": {
+      "n": 373,
+      "lora": 0.9506702412868633,
+      "best_rule": 0.7546916890080428
+     },
+     "0.8863 to 0.92202": {
+      "n": 339,
+      "lora": 0.9581120943952801,
+      "best_rule": 0.6533923303834809
+     },
+     "0.92202 to inf": {
+      "n": 375,
+      "lora": 0.9557333333333333,
+      "best_rule": 0.6266666666666667
+     }
+    }
+   }
+  },
+  "low-turn": {
+   "standard_by_type": {
+    "conflict": {
+     "n": 256,
+     "share": 0.15375375375375375,
+     "pooled_acc": 0.94296875
+    },
+    "agreement": {
+     "n": 284,
+     "share": 0.17057057057057057,
+     "pooled_acc": 0.971830985915493
+    },
+    "neither": {
+     "n": 1125,
+     "share": 0.6756756756756757,
+     "pooled_acc": 0.9637333333333333
+    }
+   },
+   "geometry_medians": {
+    "heading gap (deg)": 127.2,
+    "distance margin (m)": 4.011,
+    "novelty margin (m)": 1.9184437468911124,
+    "visual overlap": 0.8983203768730164
+   },
+   "geometry_bins": {
+    "heading gap (deg)": {
+     "90 to 120": {
+      "n": 667,
+      "lora": 0.9559220389805098,
+      "best_rule": 0.6491754122938531
+     },
+     "120 to 150": {
+      "n": 596,
+      "lora": 0.9624161073825503,
+      "best_rule": 0.639261744966443
+     },
+     "150 to 180": {
+      "n": 402,
+      "lora": 0.9711442786069652,
+      "best_rule": 0.6691542288557214
+     }
+    },
+    "distance margin (m)": {
+     "2 to 3": {
+      "n": 451,
+      "lora": 0.9104212860310422,
+      "best_rule": 0.5676274944567627
+     },
+     "3 to 4": {
+      "n": 378,
+      "lora": 0.9518518518518518,
+      "best_rule": 0.6243386243386243
+     },
+     "4 to inf": {
+      "n": 836,
+      "lora": 0.9942583732057417,
+      "best_rule": 0.7069377990430622
+     }
+    },
+    "novelty margin (m)": {
+     "1 to 1.25": {
+      "n": 292,
+      "lora": 0.9623287671232876,
+      "best_rule": 0.684931506849315
+     },
+     "1.25 to 1.5": {
+      "n": 224,
+      "lora": 0.9553571428571429,
+      "best_rule": 0.6517857142857143
+     },
+     "1.5 to 2": {
+      "n": 363,
+      "lora": 0.9542699724517906,
+      "best_rule": 0.6528925619834711
+     },
+     "2 to inf": {
+      "n": 778,
+      "lora": 0.9668380462724936,
+      "best_rule": 0.6362467866323908
+     }
+    },
+    "visual overlap": {
+     "-inf to 0.8863": {
+      "n": 676,
+      "lora": 0.9686390532544378,
+      "best_rule": 0.6849112426035503
+     },
+     "0.8863 to 0.92202": {
+      "n": 519,
+      "lora": 0.9468208092485548,
+      "best_rule": 0.6473988439306358
+     },
+     "0.92202 to inf": {
+      "n": 470,
+      "lora": 0.9689361702127659,
+      "best_rule": 0.6042553191489362
+     }
+    }
+   }
+  },
+  "patrol": {
+   "standard_by_type": {
+    "conflict": {
+     "n": 111,
+     "share": 0.11514522821576763,
+     "pooled_acc": 0.9747747747747748
+    },
+    "agreement": {
+     "n": 62,
+     "share": 0.06431535269709543,
+     "pooled_acc": 0.9935483870967742
+    },
+    "neither": {
+     "n": 791,
+     "share": 0.8205394190871369,
+     "pooled_acc": 0.9729456384323643
+    }
+   },
+   "geometry_medians": {
+    "heading gap (deg)": 138.14999999999998,
+    "distance margin (m)": 3.1825,
+    "novelty margin (m)": 1.2997062394363144,
+    "visual overlap": 0.916148841381073
+   },
+   "geometry_bins": {
+    "heading gap (deg)": {
+     "90 to 120": {
+      "n": 242,
+      "lora": 0.9818181818181818,
+      "best_rule": 0.6983471074380165
+     },
+     "120 to 150": {
+      "n": 406,
+      "lora": 0.9753694581280788,
+      "best_rule": 0.7093596059113301
+     },
+     "150 to 180": {
+      "n": 316,
+      "lora": 0.9677215189873418,
+      "best_rule": 0.6234177215189873
+     }
+    },
+    "distance margin (m)": {
+     "2 to 3": {
+      "n": 393,
+      "lora": 0.9577608142493638,
+      "best_rule": 0.6106870229007634
+     },
+     "3 to 4": {
+      "n": 312,
+      "lora": 0.9788461538461538,
+      "best_rule": 0.6506410256410257
+     },
+     "4 to inf": {
+      "n": 259,
+      "lora": 0.9945945945945946,
+      "best_rule": 0.8146718146718147
+     }
+    },
+    "novelty margin (m)": {
+     "1 to 1.25": {
+      "n": 430,
+      "lora": 0.9744186046511628,
+      "best_rule": 0.7023255813953488
+     },
+     "1.25 to 1.5": {
+      "n": 221,
+      "lora": 0.9755656108597286,
+      "best_rule": 0.6515837104072398
+     },
+     "1.5 to 2": {
+      "n": 206,
+      "lora": 0.9747572815533981,
+      "best_rule": 0.6699029126213593
+     },
+     "2 to inf": {
+      "n": 107,
+      "lora": 0.9719626168224299,
+      "best_rule": 0.6542056074766355
+     }
+    },
+    "visual overlap": {
+     "-inf to 0.8863": {
+      "n": 260,
+      "lora": 0.9776923076923076,
+      "best_rule": 0.6846153846153846
+     },
+     "0.8863 to 0.92202": {
+      "n": 280,
+      "lora": 0.9757142857142856,
+      "best_rule": 0.6857142857142857
+     },
+     "0.92202 to inf": {
+      "n": 424,
+      "lora": 0.9716981132075472,
+      "best_rule": 0.6698113207547169
+     }
+    }
+   }
+  }
+ },
+ "exp10_by_type": {
+  "conflict": {
+   "n": 145,
+   "pooled_acc": 0.9655172413793104,
+   "room_mean": 0.96923292883587,
+   "room_ci95": [
+    0.9459676547716989,
+    0.9888548951048952
+   ]
+  },
+  "agreement": {
+   "n": 133,
+   "pooled_acc": 0.9804511278195489,
+   "room_mean": 0.9810000000000001,
+   "room_ci95": [
+    0.9635000000000001,
+    0.9960000000000001
+   ]
+  },
+  "neither": {
+   "n": 1021,
+   "pooled_acc": 0.970617042115573,
+   "room_mean": 0.9699967996201468,
+   "room_ci95": [
+    0.9595197396007037,
+    0.9792624832784155
+   ]
+  }
+ },
+ "exp10_reference": {
+  "lora": {
+   "mean": 0.9701700511380107,
+   "ci95": [
+    0.961312976114269,
+    0.9785720265313484
+   ],
+   "rooms": 9,
+   "rooms_positive": 9,
+   "rooms_negative": 0,
+   "sign_p": 0.00390625
+  },
+  "per_room": [
+   0.9815126050420169,
+   0.9615384615384615,
+   0.9586666666666666,
+   0.9742424242424242,
+   0.9666666666666666,
+   0.968421052631579,
+   0.9849056603773585,
+   0.9902777777777778,
+   0.9452991452991453
+  ],
+  "per_run": {
+   "run 3": 0.9731269893837313,
+   "run 4": 0.9730397781200496,
+   "run 5": 0.9729068311323894,
+   "run 6": 0.9608442186185725,
+   "run 7": 0.9709324384353104
+  }
+ },
+ "unparsed": {
+  "run 3": 0.00046999843333855553,
+  "run 4": 0.0,
+  "run 5": 0.0,
+  "run 6": 0.0,
+  "run 7": 0.0
+ },
+ "parity": {
+  "run 3": {
+   "identical": 192,
+   "of": 192
+  },
+  "run 4": {
+   "identical": 192,
+   "of": 192
+  },
+  "run 5": {
+   "identical": 192,
+   "of": 192
+  },
+  "run 6": {
+   "identical": 192,
+   "of": 192
+  },
+  "run 7": {
+   "identical": 192,
+   "of": 192
+  }
+ },
+ "summary": {
+  "status": "complete",
+  "rules_status": "complete",
+  "parity": {
+   "run 3": {
+    "identical": 192,
+    "of": 192
+   },
+   "run 4": {
+    "identical": 192,
+    "of": 192
+   },
+   "run 5": {
+    "identical": 192,
+    "of": 192
+   },
+   "run 6": {
+    "identical": 192,
+    "of": 192
+   },
+   "run 7": {
+    "identical": 192,
+    "of": 192
+   }
+  },
+  "conditions": {
+   "control": {
+    "n_novel": 1461,
+    "lora": {
+     "mean": 0.9643902321599693,
+     "ci95": [
+      0.9563816705067636,
+      0.9719848978887774
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    },
+    "per_run": {
+     "run 3": 0.960137335027979,
+     "run 4": 0.9683556261114818,
+     "run 5": 0.9635320250535221,
+     "run 6": 0.9643208766908798,
+     "run 7": 0.9656052979159845
+    },
+    "best_rule": "combined",
+    "best_rule_acc": 0.6723566936972938,
+    "margin": {
+     "mean": 0.2920335384626756,
+     "ci95": [
+      0.2613045454985549,
+      0.32096527884557924
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    }
+   },
+   "long-step": {
+    "n_novel": 1087,
+    "lora": {
+     "mean": 0.9554071035468947,
+     "ci95": [
+      0.9436677250677259,
+      0.965423079301156
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    },
+    "per_run": {
+     "run 3": 0.9525100929555546,
+     "run 4": 0.9598605383976905,
+     "run 5": 0.9578208782195475,
+     "run 6": 0.9565661131847318,
+     "run 7": 0.9502778949769495
+    },
+    "best_rule": "window maximum | dino-patch | all 256 | k 16",
+    "best_rule_acc": 0.6776292741016409,
+    "margin": {
+     "mean": 0.277777829445254,
+     "ci95": [
+      0.2498937702697434,
+      0.3078160448894213
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    },
+    "delta_vs_control": {
+     "mean": -0.008983128613074647,
+     "ci95": [
+      -0.019146594270620834,
+      0.00022185710744850403
+     ],
+     "rooms": 9,
+     "rooms_positive": 3,
+     "rooms_negative": 6,
+     "sign_p": 0.5078125
+    },
+    "verdict": "survives",
+    "runs_survive": 5
+   },
+   "low-turn": {
+    "n_novel": 1665,
+    "lora": {
+     "mean": 0.9619988283816201,
+     "ci95": [
+      0.9581440035519393,
+      0.9662079940578768
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    },
+    "per_run": {
+     "run 3": 0.9640402357972278,
+     "run 4": 0.9575967202031873,
+     "run 5": 0.963376061209468,
+     "run 6": 0.9640186882607933,
+     "run 7": 0.960962436437424
+    },
+    "best_rule": "combined",
+    "best_rule_acc": 0.6501909626656945,
+    "margin": {
+     "mean": 0.3118078657159255,
+     "ci95": [
+      0.29242796539443205,
+      0.32797619328892136
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    },
+    "delta_vs_control": {
+     "mean": -0.002391403778349319,
+     "ci95": [
+      -0.010728871181892152,
+      0.005569935660496967
+     ],
+     "rooms": 9,
+     "rooms_positive": 4,
+     "rooms_negative": 5,
+     "sign_p": 1.0
+    },
+    "verdict": "survives",
+    "runs_survive": 5
+   },
+   "patrol": {
+    "n_novel": 964,
+    "lora": {
+     "mean": 0.9745431752063539,
+     "ci95": [
+      0.9674752396780097,
+      0.9818576796820596
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    },
+    "per_run": {
+     "run 3": 0.9729057768228544,
+     "run 4": 0.975024631439468,
+     "run 5": 0.972027962773356,
+     "run 6": 0.9732953333487109,
+     "run 7": 0.9794621716473796
+    },
+    "best_rule": "combined",
+    "best_rule_acc": 0.6752332412036607,
+    "margin": {
+     "mean": 0.2993099340026932,
+     "ci95": [
+      0.2689610759836805,
+      0.33103753523827995
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    },
+    "delta_vs_control": {
+     "mean": 0.010152943046384403,
+     "ci95": [
+      -0.0012542414578322145,
+      0.021037874275874655
+     ],
+     "rooms": 9,
+     "rooms_positive": 7,
+     "rooms_negative": 2,
+     "sign_p": 0.1796875
+    },
+    "verdict": "survives",
+    "runs_survive": 5
+   }
+  },
+  "separation": {
+   "control": {
+    "n_conflict": 412,
+    "n_agreement": 411,
+    "rooms_used": [
+     "P5000",
+     "P5001",
+     "P5002",
+     "P5003",
+     "P5004",
+     "P5006",
+     "P5007",
+     "P5008",
+     "P5009"
+    ],
+    "conflict": {
+     "mean": 0.9708342974134607,
+     "ci95": [
+      0.9553287918660589,
+      0.9841909747218548
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    },
+    "agreement": {
+     "mean": 0.981610993250017,
+     "ci95": [
+      0.9681754987590073,
+      0.9932662920240561
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    },
+    "cost": {
+     "mean": 0.01077669583655632,
+     "ci95": [
+      -0.013313803278460594,
+      0.032762015991829645
+     ],
+     "rooms": 9,
+     "rooms_positive": 6,
+     "rooms_negative": 3,
+     "sign_p": 0.5078125
+    },
+    "midpoint": 0.7408054966250085,
+    "verdict": "geometric proximity wins",
+    "runs_verdicts": {
+     "run 3": "geometric proximity wins",
+     "run 4": "geometric proximity wins",
+     "run 5": "geometric proximity wins",
+     "run 6": "geometric proximity wins",
+     "run 7": "geometric proximity wins"
+    },
+    "per_run": {
+     "run 3": {
+      "conflict": 0.9724642737065098,
+      "agreement": 0.9870535552130845
+     },
+     "run 4": {
+      "conflict": 0.9634404837147132,
+      "agreement": 0.9793876399006946
+     },
+     "run 5": {
+      "conflict": 0.9660361904590195,
+      "agreement": 0.9844080525675819
+     },
+     "run 6": {
+      "conflict": 0.977350806543353,
+      "agreement": 0.9798961575716836
+     },
+     "run 7": {
+      "conflict": 0.9748797326437079,
+      "agreement": 0.9773095609970406
+     }
+    },
+    "conflict_best_rule": {
+     "rule": "combined",
+     "acc": 0.6504017465578464
+    },
+    "conflict_pixel_window_max_k16": 0.43925155234190744,
+    "conflict_margin_over_best_rule": {
+     "mean": 0.32043255085561423,
+     "ci95": [
+      0.27588179883972686,
+      0.3771815946813017
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    },
+    "agreement_best_rule": {
+     "rule": "window maximum | dino-patch | all 256 | k 16",
+     "acc": 0.8783019610997059
+    },
+    "agreement_pixel_window_max_k16": 0.7246234165516581,
+    "agreement_margin_over_best_rule": {
+     "mean": 0.10330903215031091,
+     "ci95": [
+      0.06610624964693074,
+      0.1429899357208118
+     ],
+     "rooms": 9,
+     "rooms_positive": 9,
+     "rooms_negative": 0,
+     "sign_p": 0.00390625
+    },
+    "conflict_by_frame_order": {
+     "frame order favors near": {
+      "n": 241,
+      "pooled_acc": 0.9800829875518672
+     },
+     "frame order favors far": {
+      "n": 171,
+      "pooled_acc": 0.9590643274853801
+     }
+    },
+    "agreement_by_frame_order": {
+     "frame order favors near": {
+      "n": 292,
+      "pooled_acc": 0.9863013698630136
+     },
+     "frame order favors far": {
+      "n": 119,
+      "pooled_acc": 0.9731092436974791
+     }
+    }
+   },
+   "patrol": {
+    "n_conflict": 194,
+    "n_agreement": 189,
+    "rooms_used": [
+     "P5000",
+     "P5001",
+     "P5002",
+     "P5003",
+     "P5004",
+     "P5008"
+    ],
+    "conflict": {
+     "mean": 0.9860360873694208,
+     "ci95": [
+      0.9706514719848055,
+      0.9986666666666667
+     ],
+     "rooms": 6,
+     "rooms_positive": 6,
+     "rooms_negative": 0,
+     "sign_p": 0.03125
+    },
+    "agreement": {
+     "mean": 0.9909230769230769,
+     "ci95": [
+      0.9781025641025641,
+      1.0
+     ],
+     "rooms": 6,
+     "rooms_positive": 6,
+     "rooms_negative": 0,
+     "sign_p": 0.03125
+    },
+    "cost": {
+     "mean": 0.004886989553656222,
+     "ci95": [
+      -0.0030826210826210474,
+      0.015076923076923043
+     ],
+     "rooms": 6,
+     "rooms_positive": 2,
+     "rooms_negative": 1,
+     "sign_p": 1.0
+    },
+    "midpoint": 0.7454615384615384,
+    "verdict": "geometric proximity wins",
+    "runs_verdicts": {
+     "run 3": "geometric proximity wins",
+     "run 4": "geometric proximity wins",
+     "run 5": "geometric proximity wins",
+     "run 6": "geometric proximity wins",
+     "run 7": "geometric proximity wins"
+    },
+    "per_run": {
+     "run 3": {
+      "conflict": 0.9810066476733144,
+      "agreement": 0.9805128205128205
+     },
+     "run 4": {
+      "conflict": 0.9935897435897436,
+      "agreement": 0.9871794871794872
+     },
+     "run 5": {
+      "conflict": 0.9935897435897436,
+      "agreement": 1.0
+     },
+     "run 6": {
+      "conflict": 0.9748338081671415,
+      "agreement": 0.9935897435897436
+     },
+     "run 7": {
+      "conflict": 0.9871604938271604,
+      "agreement": 0.9933333333333333
+     }
+    },
+    "conflict_best_rule": {
+     "rule": "look-alike then time | dino-cls-raw | all 256 | top 5",
+     "acc": 0.5814462081128747
+    },
+    "conflict_pixel_window_max_k16": 0.35198310948310946,
+    "conflict_margin_over_best_rule": {
+     "mean": 0.40458987925654594,
+     "ci95": [
+      0.3196155202821869,
+      0.4801234567901234
+     ],
+     "rooms": 6,
+     "rooms_positive": 6,
+     "rooms_negative": 0,
+     "sign_p": 0.03125
+    },
+    "agreement_best_rule": {
+     "rule": "window maximum | dino-patch | all 256 | k 16",
+     "acc": 0.8772537112010795
+    },
+    "agreement_pixel_window_max_k16": 0.7202699055330636,
+    "agreement_margin_over_best_rule": {
+     "mean": 0.11366936572199732,
+     "ci95": [
+      0.0701079622132254,
+      0.158
+     ],
+     "rooms": 6,
+     "rooms_positive": 6,
+     "rooms_negative": 0,
+     "sign_p": 0.03125
+    },
+    "conflict_by_frame_order": {
+     "frame order favors near": {
+      "n": 103,
+      "pooled_acc": 0.9747572815533981
+     },
+     "frame order favors far": {
+      "n": 91,
+      "pooled_acc": 0.986813186813187
+     }
+    },
+    "agreement_by_frame_order": {
+     "frame order favors near": {
+      "n": 106,
+      "pooled_acc": 0.9867924528301886
+     },
+     "frame order favors far": {
+      "n": 83,
+      "pooled_acc": 0.9903614457831323
+     }
+    }
+   }
+  },
+  "exp10_by_type": {
+   "conflict": {
+    "n": 145,
+    "pooled_acc": 0.9655172413793104,
+    "room_mean": 0.96923292883587,
+    "room_ci95": [
+     0.9459676547716989,
+     0.9888548951048952
+    ]
+   },
+   "agreement": {
+    "n": 133,
+    "pooled_acc": 0.9804511278195489,
+    "room_mean": 0.9810000000000001,
+    "room_ci95": [
+     0.9635000000000001,
+     0.9960000000000001
+    ]
+   },
+   "neither": {
+    "n": 1021,
+    "pooled_acc": 0.970617042115573,
+    "room_mean": 0.9699967996201468,
+    "room_ci95": [
+     0.9595197396007037,
+     0.9792624832784155
+    ]
+   }
+  },
+  "exp10_reference": {
+   "lora": {
+    "mean": 0.9701700511380107,
+    "ci95": [
+     0.961312976114269,
+     0.9785720265313484
+    ],
+    "rooms": 9,
+    "rooms_positive": 9,
+    "rooms_negative": 0,
+    "sign_p": 0.00390625
+   },
+   "per_room": [
+    0.9815126050420169,
+    0.9615384615384615,
+    0.9586666666666666,
+    0.9742424242424242,
+    0.9666666666666666,
+    0.968421052631579,
+    0.9849056603773585,
+    0.9902777777777778,
+    0.9452991452991453
+   ],
+   "per_run": {
+    "run 3": 0.9731269893837313,
+    "run 4": 0.9730397781200496,
+    "run 5": 0.9729068311323894,
+    "run 6": 0.9608442186185725,
+    "run 7": 0.9709324384353104
+   }
+  },
+  "unparsed": {
+   "run 3": 0.00046999843333855553,
+   "run 4": 0.0,
+   "run 5": 0.0,
+   "run 6": 0.0,
+   "run 7": 0.0
+  }
+ }
+}

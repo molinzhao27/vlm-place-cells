@@ -1,0 +1,1045 @@
+{
+ "about": "Experiment 23 (docs/experiments.md). Fractions are of squared norm inside position PCA 10; groups are per neuron (strictly invariant / non-invariant place / non-place); intervals are 95% bootstrap (10,000 resamples of neurons within each group, seed 0).",
+ "checks": {
+  "units_reproduce_summary_quadrant": true,
+  "block19_subspace_reproduces_4070": true,
+  "block21_subspace_reproduces_4070": true,
+  "block19_write_check": true,
+  "block21_write_check": true
+ },
+ "units": {
+  "vggt-single_L19": {
+   "device": "cuda",
+   "n_poles_active": 4164,
+   "place_poles": 1502,
+   "strict_invariant_place_poles": 675,
+   "strict_share_of_place_poles": 0.44940079893475365,
+   "neurons": {
+    "invariant": 673,
+    "noninvariant_place": 810,
+    "nonplace": 2613
+   },
+   "strict_invariant_negative_pole_share": 0.9837037037037037,
+   "here": {
+    "frac_place": 0.36071082949638367,
+    "frac_place_heading_invariant_quadrant": 0.16210374236106873
+   },
+   "summary_quadrant": {
+    "frac_place": 0.36071085929870605,
+    "frac_place_heading_invariant_quadrant": 0.16210374236106873
+   },
+   "abs_diff": {
+    "frac_place": 2.9802322387695312e-08,
+    "frac_place_heading_invariant_quadrant": 0.0
+   },
+   "within_0.001": true
+  },
+  "vggt-single_L21": {
+   "device": "cuda",
+   "n_poles_active": 4159,
+   "place_poles": 3376,
+   "strict_invariant_place_poles": 1136,
+   "strict_share_of_place_poles": 0.33649289099526064,
+   "neurons": {
+    "invariant": 1136,
+    "noninvariant_place": 2222,
+    "nonplace": 738
+   },
+   "strict_invariant_negative_pole_share": 0.9973591549295775,
+   "here": {
+    "frac_place": 0.811733603477478,
+    "frac_place_heading_invariant_quadrant": 0.27314257621765137
+   },
+   "summary_quadrant": {
+    "frac_place": 0.811733603477478,
+    "frac_place_heading_invariant_quadrant": 0.27314257621765137
+   },
+   "abs_diff": {
+    "frac_place": 0.0,
+    "frac_place_heading_invariant_quadrant": 0.0
+   },
+   "within_0.001": true
+  },
+  "vggt-walk_L19": {
+   "device": "cuda",
+   "n_poles_active": 4162,
+   "place_poles": 980,
+   "strict_invariant_place_poles": 621,
+   "strict_share_of_place_poles": 0.6336734693877552,
+   "neurons": {
+    "invariant": 616,
+    "noninvariant_place": 348,
+    "nonplace": 3132
+   },
+   "strict_invariant_negative_pole_share": 0.9758454106280193,
+   "here": {
+    "frac_place": 0.2354637235403061,
+    "frac_place_heading_invariant_quadrant": 0.14920711517333984
+   },
+   "summary_quadrant": {
+    "frac_place": 0.2354637235403061,
+    "frac_place_heading_invariant_quadrant": 0.14920711517333984
+   },
+   "abs_diff": {
+    "frac_place": 0.0,
+    "frac_place_heading_invariant_quadrant": 0.0
+   },
+   "within_0.001": true
+  }
+ },
+ "record": {
+  "n_fit": 2048,
+  "n_test": 128,
+  "batch": 2,
+  "clean_error_m": 0.4315018122378109,
+  "fit_clean_error_m": 0.4185824516975437,
+  "target_donor_distance_m": 5.322935250436702
+ },
+ "record_blocks": {
+  "19": {
+   "write_check_median_rel_err": 0.002463490003719926,
+   "acts_vs_stored_median_r": 0.9999626874923706,
+   "acts_vs_stored_median_rel_diff": 0.008626647293567657,
+   "share_pca10": 0.9258939623832703,
+   "token_norm_median": 49.63899230957031,
+   "reproduces_4070": {
+    "share": 0.9258939623832703,
+    "share_ref": 0.9258939623832703,
+    "transfer": 0.4000054934943613,
+    "transfer_ref": 0.4000054934943613,
+    "ok": true
+   },
+   "write_check_ok": true
+  },
+  "21": {
+   "write_check_median_rel_err": 0.0021968227811157703,
+   "acts_vs_stored_median_r": 0.9999631643295288,
+   "acts_vs_stored_median_rel_diff": 0.008695411495864391,
+   "share_pca10": 0.934897243976593,
+   "token_norm_median": 63.40983581542969,
+   "reproduces_4070": {
+    "share": 0.934897243976593,
+    "share_ref": 0.934897243976593,
+    "transfer": 0.853985131158677,
+    "transfer_ref": 0.853985131158677,
+    "ok": true
+   },
+   "write_check_ok": true
+  }
+ },
+ "nulls": {
+  "post19": {
+   "expected": 0.009765625,
+   "median": 0.009130523153070468,
+   "mean": 0.00977570984981779,
+   "p95": 0.01783495167895852
+  },
+  "mid19": {
+   "expected": 0.009765625,
+   "median": 0.009109004008754949,
+   "mean": 0.009749248261807102,
+   "p95": 0.01782643842593572
+  },
+  "post21": {
+   "expected": 0.009765625,
+   "median": 0.009145216506459764,
+   "mean": 0.009783662429859803,
+   "p95": 0.01786515370944984
+  },
+  "mid21": {
+   "expected": 0.009765625,
+   "median": 0.009149852064728117,
+   "mean": 0.009778013655925384,
+   "p95": 0.017805098912777175
+  }
+ },
+ "measures": {
+  "primary_single_block19_write": {
+   "groups": {
+    "nonplace": {
+     "n": 2613,
+     "median": 0.041128428273210026,
+     "median_ci95": [
+      0.03977539390325546,
+      0.04215678200125694
+     ],
+     "mean": 0.04633517757273927,
+     "frac_above_null_p95": 0.9184845005740528
+    },
+    "noninvariant_place": {
+     "n": 810,
+     "median": 0.04365633141480846,
+     "median_ci95": [
+      0.04104682058095932,
+      0.04580904543399811
+     ],
+     "mean": 0.049444944185788146,
+     "frac_above_null_p95": 0.9296296296296296
+    },
+    "invariant": {
+     "n": 673,
+     "median": 0.05749451040718182,
+     "median_ci95": [
+      0.05507541820406914,
+      0.06135490909218788
+     ],
+     "mean": 0.06848820673509862,
+     "frac_above_null_p95": 0.9643387815750372
+    }
+   },
+   "invariant_minus_noninvariant_place": {
+    "diff": 0.013838178992373364,
+    "ci95": [
+     0.010398325510323048,
+     0.018692022189497948
+    ]
+   },
+   "invariant_minus_nonplace": {
+    "diff": 0.016366082133971796,
+    "ci95": [
+     0.01359819620847702,
+     0.020526917651295662
+    ]
+   },
+   "conditions": {
+    "i_at_least_2x_random": true,
+    "ii_above_noninvariant_place": true,
+    "iii_above_nonplace": true
+   },
+   "verdict": "connect",
+   "invariant_over_random": 5.887437865695419
+  },
+  "a_single_block21_write": {
+   "groups": {
+    "nonplace": {
+     "n": 738,
+     "median": 0.02846550955516016,
+     "median_ci95": [
+      0.026395156979560852,
+      0.030573317781090736
+     ],
+     "mean": 0.0363230394177131,
+     "frac_above_null_p95": 0.7452574525745257
+    },
+    "noninvariant_place": {
+     "n": 2222,
+     "median": 0.030734495279653738,
+     "median_ci95": [
+      0.029508866369724274,
+      0.0315091535449028
+     ],
+     "mean": 0.039159195512829474,
+     "frac_above_null_p95": 0.7695769576957696
+    },
+    "invariant": {
+     "n": 1136,
+     "median": 0.0304061799111406,
+     "median_ci95": [
+      0.02870074287056923,
+      0.03178001940250397
+     ],
+     "mean": 0.0394236114266761,
+     "frac_above_null_p95": 0.7588028169014085
+    }
+   },
+   "invariant_minus_noninvariant_place": {
+    "diff": -0.0003283153685131393,
+    "ci95": [
+     -0.0022325345780700445,
+     0.0016743454616516829
+    ]
+   },
+   "invariant_minus_nonplace": {
+    "diff": 0.001940670355980438,
+    "ci95": [
+     -0.0009612127905711532,
+     0.004575344268232584
+    ]
+   },
+   "conditions": {
+    "i_at_least_2x_random": true,
+    "ii_above_noninvariant_place": false,
+    "iii_above_nonplace": false
+   },
+   "verdict": "partial, not specific to invariant units",
+   "invariant_over_random": 3.1135928229007974
+  },
+  "b_walk_block19_write": {
+   "groups": {
+    "nonplace": {
+     "n": 3132,
+     "median": 0.04200841822974721,
+     "median_ci95": [
+      0.040859997272491455,
+      0.042913224548101425
+     ],
+     "mean": 0.04691702311253814,
+     "frac_above_null_p95": 0.9246487867177522
+    },
+    "noninvariant_place": {
+     "n": 348,
+     "median": 0.040977380131599274,
+     "median_ci95": [
+      0.037217624485492706,
+      0.04505572095513344
+     ],
+     "mean": 0.04961414293441542,
+     "frac_above_null_p95": 0.896551724137931
+    },
+    "invariant": {
+     "n": 616,
+     "median": 0.05983619735986642,
+     "median_ci95": [
+      0.055792436003685,
+      0.06349968910217285
+     ],
+     "mean": 0.06981647531027833,
+     "frac_above_null_p95": 0.9642857142857143
+    }
+   },
+   "invariant_minus_noninvariant_place": {
+    "diff": 0.018858817228267148,
+    "ci95": [
+     0.012864068150520325,
+     0.023885048925876617
+    ]
+   },
+   "invariant_minus_nonplace": {
+    "diff": 0.01782777913011921,
+    "ci95": [
+     0.013550342991948128,
+     0.0216204933822155
+    ]
+   },
+   "conditions": {
+    "i_at_least_2x_random": true,
+    "ii_above_noninvariant_place": true,
+    "iii_above_nonplace": true
+   },
+   "verdict": "connect",
+   "invariant_over_random": 6.127226609650322
+  },
+  "c_single_block19_read": {
+   "groups": {
+    "nonplace": {
+     "n": 2613,
+     "median": 0.006898784232967346,
+     "median_ci95": [
+      0.006678488105535507,
+      0.007080897688865662
+     ],
+     "mean": 0.011617376522612272,
+     "frac_above_null_p95": 0.12476081132797551
+    },
+    "noninvariant_place": {
+     "n": 810,
+     "median": 0.007265253790022965,
+     "median_ci95": [
+      0.0068472279235720634,
+      0.007869632914662361
+     ],
+     "mean": 0.019852597620956394,
+     "frac_above_null_p95": 0.21358024691358024
+    },
+    "invariant": {
+     "n": 673,
+     "median": 0.017974901097243725,
+     "median_ci95": [
+      0.016152676194906235,
+      0.019355596974492073
+     ],
+     "mean": 0.029593725361324572,
+     "frac_above_null_p95": 0.5022288261515602
+    }
+   },
+   "invariant_minus_noninvariant_place": {
+    "diff": 0.01070964730722076,
+    "ci95": [
+     0.008747337386012077,
+     0.012278461828827858
+    ]
+   },
+   "invariant_minus_nonplace": {
+    "diff": 0.01107611686427638,
+    "ci95": [
+     0.009246265515685081,
+     0.012533017434179783
+    ]
+   },
+   "conditions": {
+    "i_at_least_2x_random": false,
+    "ii_above_noninvariant_place": true,
+    "iii_above_nonplace": true
+   },
+   "verdict": "partial",
+   "invariant_over_random": 1.8406298723577574
+  },
+  "c_single_block21_read": {
+   "groups": {
+    "nonplace": {
+     "n": 738,
+     "median": 0.017529331413557534,
+     "median_ci95": [
+      0.017036890611052513,
+      0.018354507163167
+     ],
+     "mean": 0.024912951056698936,
+     "frac_above_null_p95": 0.48644986449864497
+    },
+    "noninvariant_place": {
+     "n": 2222,
+     "median": 0.019013558147666677,
+     "median_ci95": [
+      0.018620029091835022,
+      0.019501572474837303
+     ],
+     "mean": 0.026975253860490687,
+     "frac_above_null_p95": 0.5621062106210621
+    },
+    "invariant": {
+     "n": 1136,
+     "median": 0.020438318267670362,
+     "median_ci95": [
+      0.01991858333349228,
+      0.02102081850171089
+     ],
+     "mean": 0.025545895012084176,
+     "frac_above_null_p95": 0.6241197183098591
+    }
+   },
+   "invariant_minus_noninvariant_place": {
+    "diff": 0.0014247601200036847,
+    "ci95": [
+     0.0006302238907665014,
+     0.002145039848983288
+    ]
+   },
+   "invariant_minus_nonplace": {
+    "diff": 0.002908986854112828,
+    "ci95": [
+     0.0019042369676753879,
+     0.003694225335493684
+    ]
+   },
+   "conditions": {
+    "i_at_least_2x_random": true,
+    "ii_above_noninvariant_place": true,
+    "iii_above_nonplace": true
+   },
+   "verdict": "connect",
+   "invariant_over_random": 2.092883790609445
+  },
+  "d_single_block19_write_raw_fc2": {
+   "groups": {
+    "nonplace": {
+     "n": 2613,
+     "median": 0.011282270987570333,
+     "median_ci95": [
+      0.011033596470952034,
+      0.011453601531684399
+     ],
+     "mean": 0.011860245167530996,
+     "frac_above_null_p95": 0.11978568694986605
+    },
+    "noninvariant_place": {
+     "n": 810,
+     "median": 0.010832138323207324,
+     "median_ci95": [
+      0.010483965277671814,
+      0.011339390650391579
+     ],
+     "mean": 0.011365893031636013,
+     "frac_above_null_p95": 0.09382716049382717
+    },
+    "invariant": {
+     "n": 673,
+     "median": 0.01052336879741891,
+     "median_ci95": [
+      0.009907789528369904,
+      0.011080808937549591
+     ],
+     "mean": 0.011145202214482008,
+     "frac_above_null_p95": 0.10104011887072809
+    }
+   },
+   "invariant_minus_noninvariant_place": {
+    "diff": -0.0003087695257884132,
+    "ci95": [
+     -0.001083184266462922,
+     0.00027328234864398837
+    ]
+   },
+   "invariant_minus_nonplace": {
+    "diff": -0.0007589021901514229,
+    "ci95": [
+     -0.0014033839106559753,
+     -0.00021452456712722778
+    ]
+   },
+   "conditions": {
+    "i_at_least_2x_random": false,
+    "ii_above_noninvariant_place": false,
+    "iii_above_nonplace": false
+   },
+   "verdict": "don't connect",
+   "invariant_over_random": 1.0775929648556963
+  },
+  "e_single_block19_write_vs_block21_subspace": {
+   "groups": {
+    "nonplace": {
+     "n": 2613,
+     "median": 0.0361570754033967,
+     "median_ci95": [
+      0.03521633893251419,
+      0.03692637011408806
+     ],
+     "mean": 0.04029422310655929,
+     "frac_above_null_p95": 0.8867202449292002
+    },
+    "noninvariant_place": {
+     "n": 810,
+     "median": 0.03787141190395406,
+     "median_ci95": [
+      0.036288656294345856,
+      0.03957907482981682
+     ],
+     "mean": 0.04393417909770339,
+     "frac_above_null_p95": 0.8777777777777778
+    },
+    "invariant": {
+     "n": 673,
+     "median": 0.04919063174868017,
+     "median_ci95": [
+      0.04616297781467438,
+      0.05205000564455986
+     ],
+     "mean": 0.056653727841770876,
+     "frac_above_null_p95": 0.9271916790490342
+    }
+   },
+   "invariant_minus_noninvariant_place": {
+    "diff": 0.011319219844726114,
+    "ci95": [
+     0.008018219843506813,
+     0.014767594635486603
+    ]
+   },
+   "invariant_minus_nonplace": {
+    "diff": 0.01303355634528347,
+    "ci95": [
+     0.01002402976155281,
+     0.016238873824477196
+    ]
+   },
+   "conditions": {
+    "i_at_least_2x_random": true,
+    "ii_above_noninvariant_place": true,
+    "iii_above_nonplace": true
+   },
+   "verdict": "connect",
+   "invariant_over_random": 5.03712069106485
+  }
+ },
+ "subspace_overlap": {
+  "post19_post21": 0.6912286882479243,
+  "mid19_post19": 0.9925924964086688,
+  "mid21_post21": 0.9887154098501517
+ },
+ "f_magnitude": {
+  "block19": {
+   "incoming_residual_x_mid": 1.013888602032491,
+   "all_neurons": -0.013884528751247942,
+   "nonplace": 0.000948074426855611,
+   "nonplace_per_neuron": 3.6282986102396134e-07,
+   "noninvariant_place": -0.0058570657223220215,
+   "noninvariant_place_per_neuron": -7.230945336200027e-06,
+   "invariant": -0.008975537455781519,
+   "invariant_per_neuron": -1.3336608403835838e-05,
+   "parts_sum_check": 1.0000040732812432,
+   "relative_norm_post_hoc": {
+    "all_neurons": 0.029902315977900367,
+    "nonplace": 0.006382682833268826,
+    "noninvariant_place": 0.012914438056326572,
+    "invariant": 0.020994784306308762
+   },
+   "random_place_sets_same_size": {
+    "median": -0.006748783245756198,
+    "ci95": [
+     -0.01096908905031561,
+     -0.0026244200387057987
+    ],
+    "invariant_percentile": 0.178
+   }
+  },
+  "block21": {
+   "incoming_residual_x_mid": 1.0004483447519954,
+   "all_neurons": -0.00044774178447709427,
+   "nonplace": 0.0005050522464791035,
+   "nonplace_per_neuron": 6.843526375055603e-07,
+   "noninvariant_place": -0.0010414732722228055,
+   "noninvariant_place_per_neuron": -4.6870984348461093e-07,
+   "invariant": 8.867924126660741e-05,
+   "invariant_per_neuron": 7.806271238257694e-08,
+   "parts_sum_check": 1.0000006029675184,
+   "relative_norm_post_hoc": {
+    "all_neurons": 0.025762566754260998,
+    "nonplace": 0.005597889516919658,
+    "noninvariant_place": 0.01872643324053035,
+    "invariant": 0.011681677095342789
+   },
+   "random_place_sets_same_size": {
+    "median": -0.0003485112903002307,
+    "ci95": [
+     -0.0017511447403456134,
+     0.0012651299951997837
+    ],
+    "invariant_percentile": 0.715
+   }
+  }
+ },
+ "diagnostics_post_hoc": {
+  "block19": {
+   "gamma2_abs_median": 1.390542209148407,
+   "gamma2_abs_max": 3.627432346343994,
+   "gamma2_sq_participation_ratio": 846.5615103362217,
+   "subspace_coordinate_participation_ratio": 346.1483631397131,
+   "subspace_share_on_top10_gamma_coords": 0.021500720301620917,
+   "subspace_share_on_top51_gamma_coords": 0.07200539934289252,
+   "corr_gamma2_sq_vs_subspace_coord_share": 0.1450383852439565,
+   "gamma2_negative_share": 0.490234375,
+   "layerscale_null": {
+    "median": 0.009942447604290115,
+    "mean": 0.010653143026670095,
+    "p95": 0.019507849079724374
+   },
+   "mean_write_direction_frac_in_subspace": 0.0721440858302457,
+   "medians_without_mean_write_direction": {
+    "nonplace": 0.03313973620931782,
+    "noninvariant_place": 0.036043277736820235,
+    "invariant": 0.056482735879133814
+   },
+   "top10_output_directions_frac_in_subspace": [
+    0.08009618036371471,
+    0.02512119986141819,
+    0.34788028224875195,
+    0.20124509304057828,
+    0.15870818393111594,
+    0.04926143619678114,
+    0.09100723786295499,
+    0.05265059724683516,
+    0.043906569102535035,
+    0.09097060114518171
+   ]
+  },
+  "block21": {
+   "gamma2_abs_median": 2.112568736076355,
+   "gamma2_abs_max": 5.028441905975342,
+   "gamma2_sq_participation_ratio": 860.1250633550733,
+   "subspace_coordinate_participation_ratio": 342.80151436395784,
+   "subspace_share_on_top10_gamma_coords": 0.021371900565695157,
+   "subspace_share_on_top51_gamma_coords": 0.06079154047740955,
+   "corr_gamma2_sq_vs_subspace_coord_share": 0.11383673259614854,
+   "gamma2_negative_share": 0.4970703125,
+   "layerscale_null": {
+    "median": 0.00977004431032254,
+    "mean": 0.010451282133640454,
+    "p95": 0.01912313678080281
+   },
+   "mean_write_direction_frac_in_subspace": 0.012985233723987709,
+   "medians_without_mean_write_direction": {
+    "nonplace": 0.03090188577458922,
+    "noninvariant_place": 0.032929707041312754,
+    "invariant": 0.03563723040258096
+   },
+   "top10_output_directions_frac_in_subspace": [
+    0.010816344094809274,
+    0.18956087203677852,
+    0.029035258974981083,
+    0.1113833512080322,
+    0.19487165898279643,
+    0.1931969481828382,
+    0.02291901078003504,
+    0.07219155724946656,
+    0.19341350760495782,
+    0.09368453883481387
+   ]
+  }
+ },
+ "causal": {
+  "block19": {
+   "interchange_transfer": {
+    "invariant": {
+     "mean": -0.00025778681956839186,
+     "sem": 0.0005649237123723715,
+     "n_neurons": 673
+    },
+    "noninvariant_place": {
+     "mean": -0.001517399277123032,
+     "sem": 0.0004460639219118216,
+     "n_neurons": 673
+    },
+    "random_place": {
+     "mean": -0.00046374852646094823,
+     "sem": 0.0002959111755173082,
+     "n_neurons": 673
+    },
+    "all_neurons": {
+     "mean": -0.0016841275939605417,
+     "sem": 0.0005304452189139096,
+     "n_neurons": 4096
+    },
+    "position_pca10_reference": {
+     "mean": 0.4000054934943613,
+     "sem": 0.019862362659735754
+    }
+   },
+   "mean_replacement_moved_m_median": {
+    "invariant": 0.01139790231774591,
+    "noninvariant_place": 0.01634787121150356,
+    "random_place": 0.013186366073195548,
+    "all_neurons": 0.02021008735222784
+   },
+   "mean_replacement_error_m_median": {
+    "invariant": 0.4287244312637049,
+    "noninvariant_place": 0.4296252828389195,
+    "random_place": 0.42959836761145087,
+    "all_neurons": 0.42676271298751345
+   },
+   "position_pca10_erased_error_m_median": 1.6453779939537463,
+   "clean_error_m_median": 0.4315018122378109,
+   "invariant_minus": {
+    "noninvariant_place": {
+     "mean": 0.0012596124575546402,
+     "ci95": [
+      -0.00041400259302713403,
+      0.0029332275081364145
+     ]
+    },
+    "random_place": {
+     "mean": 0.00020596170689255632,
+     "ci95": [
+      -0.0006966615987266367,
+      0.0011085850125117493
+     ]
+    }
+   },
+   "verdict": "no measurable causal role at this token",
+   "all_neuron_ceiling_below_0.1": true
+  },
+  "block21": {
+   "interchange_transfer": {
+    "invariant": {
+     "mean": -0.0005219227698069652,
+     "sem": 0.0005454902569618559,
+     "n_neurons": 1136
+    },
+    "noninvariant_place": {
+     "mean": 0.0006810377470852576,
+     "sem": 0.0005974885809745333,
+     "n_neurons": 1136
+    },
+    "random_place": {
+     "mean": -0.0007663888110668413,
+     "sem": 0.0005411555523942014,
+     "n_neurons": 1136
+    },
+    "all_neurons": {
+     "mean": -0.001394510755143557,
+     "sem": 0.0010664127601420028,
+     "n_neurons": 4096
+    },
+    "position_pca10_reference": {
+     "mean": 0.853985131158677,
+     "sem": 0.017559454427930967
+    }
+   },
+   "mean_replacement_moved_m_median": {
+    "invariant": 0.01302096183456087,
+    "noninvariant_place": 0.014338570567401138,
+    "random_place": 0.014498852483559057,
+    "all_neurons": 0.03312695721011688
+   },
+   "mean_replacement_error_m_median": {
+    "invariant": 0.42634899978900553,
+    "noninvariant_place": 0.42826582675883573,
+    "random_place": 0.4313135112131993,
+    "all_neurons": 0.42631214491382197
+   },
+   "position_pca10_erased_error_m_median": 3.38391448756044,
+   "clean_error_m_median": 0.4315018122378109,
+   "invariant_minus": {
+    "noninvariant_place": {
+     "mean": -0.001202960516892223,
+     "ci95": [
+      -0.0021906977928971847,
+      -0.00021522324088726137
+     ]
+    },
+    "random_place": {
+     "mean": 0.000244466041259876,
+     "ci95": [
+      -0.0006368357432744113,
+      0.0011257678257941633
+     ]
+    }
+   },
+   "verdict": "no measurable causal role at this token",
+   "all_neuron_ceiling_below_0.1": true
+  }
+ },
+ "summary": {
+  "experiment": 23,
+  "verdict": "connect",
+  "verdict_conditions": {
+   "i_at_least_2x_random": true,
+   "ii_above_noninvariant_place": true,
+   "iii_above_nonplace": true
+  },
+  "random_expected_frac": 0.009765625,
+  "random_empirical_median_frac": 0.009130523153070468,
+  "invariant_median": 0.05749451040718182,
+  "invariant_median_ci95": [
+   0.05507541820406914,
+   0.06135490909218788
+  ],
+  "noninvariant_place_median": 0.04365633141480846,
+  "noninvariant_place_median_ci95": [
+   0.04104682058095932,
+   0.04580904543399811
+  ],
+  "nonplace_median": 0.041128428273210026,
+  "nonplace_median_ci95": [
+   0.03977539390325546,
+   0.04215678200125694
+  ],
+  "invariant_minus_noninvariant_place_ci95": [
+   0.010398325510323048,
+   0.018692022189497948
+  ],
+  "invariant_minus_nonplace_ci95": [
+   0.01359819620847702,
+   0.020526917651295662
+  ],
+  "invariant_over_random": 5.887437865695419,
+  "n_neurons": {
+   "nonplace": 2613,
+   "noninvariant_place": 810,
+   "invariant": 673
+  },
+  "block21": {
+   "invariant_median": 0.0304061799111406,
+   "invariant_median_ci95": [
+    0.02870074287056923,
+    0.03178001940250397
+   ],
+   "noninvariant_place_median": 0.030734495279653738,
+   "noninvariant_place_median_ci95": [
+    0.029508866369724274,
+    0.0315091535449028
+   ],
+   "nonplace_median": 0.02846550955516016,
+   "nonplace_median_ci95": [
+    0.026395156979560852,
+    0.030573317781090736
+   ],
+   "invariant_minus_noninvariant_place_ci95": [
+    -0.0022325345780700445,
+    0.0016743454616516829
+   ],
+   "invariant_minus_nonplace_ci95": [
+    -0.0009612127905711532,
+    0.004575344268232584
+   ],
+   "invariant_over_random": 3.1135928229007974,
+   "verdict": "partial, not specific to invariant units"
+  },
+  "walk_block19": {
+   "invariant_median": 0.05983619735986642,
+   "invariant_median_ci95": [
+    0.055792436003685,
+    0.06349968910217285
+   ],
+   "noninvariant_place_median": 0.040977380131599274,
+   "noninvariant_place_median_ci95": [
+    0.037217624485492706,
+    0.04505572095513344
+   ],
+   "nonplace_median": 0.04200841822974721,
+   "nonplace_median_ci95": [
+    0.040859997272491455,
+    0.042913224548101425
+   ],
+   "invariant_minus_noninvariant_place_ci95": [
+    0.012864068150520325,
+    0.023885048925876617
+   ],
+   "invariant_minus_nonplace_ci95": [
+    0.013550342991948128,
+    0.0216204933822155
+   ],
+   "invariant_over_random": 6.127226609650322,
+   "verdict": "connect"
+  },
+  "input_side_block19": {
+   "invariant_median": 0.017974901097243725,
+   "invariant_median_ci95": [
+    0.016152676194906235,
+    0.019355596974492073
+   ],
+   "noninvariant_place_median": 0.007265253790022965,
+   "noninvariant_place_median_ci95": [
+    0.0068472279235720634,
+    0.007869632914662361
+   ],
+   "nonplace_median": 0.006898784232967346,
+   "nonplace_median_ci95": [
+    0.006678488105535507,
+    0.007080897688865662
+   ],
+   "invariant_minus_noninvariant_place_ci95": [
+    0.008747337386012077,
+    0.012278461828827858
+   ],
+   "invariant_minus_nonplace_ci95": [
+    0.009246265515685081,
+    0.012533017434179783
+   ],
+   "invariant_over_random": 1.8406298723577574,
+   "verdict": "partial"
+  },
+  "input_side_block21": {
+   "invariant_median": 0.020438318267670362,
+   "invariant_median_ci95": [
+    0.01991858333349228,
+    0.02102081850171089
+   ],
+   "noninvariant_place_median": 0.019013558147666677,
+   "noninvariant_place_median_ci95": [
+    0.018620029091835022,
+    0.019501572474837303
+   ],
+   "nonplace_median": 0.017529331413557534,
+   "nonplace_median_ci95": [
+    0.017036890611052513,
+    0.018354507163167
+   ],
+   "invariant_minus_noninvariant_place_ci95": [
+    0.0006302238907665014,
+    0.002145039848983288
+   ],
+   "invariant_minus_nonplace_ci95": [
+    0.0019042369676753879,
+    0.003694225335493684
+   ],
+   "invariant_over_random": 2.092883790609445,
+   "verdict": "connect"
+  },
+  "raw_fc2_block19": {
+   "invariant_median": 0.01052336879741891,
+   "invariant_median_ci95": [
+    0.009907789528369904,
+    0.011080808937549591
+   ],
+   "noninvariant_place_median": 0.010832138323207324,
+   "noninvariant_place_median_ci95": [
+    0.010483965277671814,
+    0.011339390650391579
+   ],
+   "nonplace_median": 0.011282270987570333,
+   "nonplace_median_ci95": [
+    0.011033596470952034,
+    0.011453601531684399
+   ],
+   "invariant_minus_noninvariant_place_ci95": [
+    -0.001083184266462922,
+    0.00027328234864398837
+   ],
+   "invariant_minus_nonplace_ci95": [
+    -0.0014033839106559753,
+    -0.00021452456712722778
+   ],
+   "invariant_over_random": 1.0775929648556963,
+   "verdict": "don't connect"
+  },
+  "block19_writes_in_block21_subspace": {
+   "invariant_median": 0.04919063174868017,
+   "invariant_median_ci95": [
+    0.04616297781467438,
+    0.05205000564455986
+   ],
+   "noninvariant_place_median": 0.03787141190395406,
+   "noninvariant_place_median_ci95": [
+    0.036288656294345856,
+    0.03957907482981682
+   ],
+   "nonplace_median": 0.0361570754033967,
+   "nonplace_median_ci95": [
+    0.03521633893251419,
+    0.03692637011408806
+   ],
+   "invariant_minus_noninvariant_place_ci95": [
+    0.008018219843506813,
+    0.014767594635486603
+   ],
+   "invariant_minus_nonplace_ci95": [
+    0.01002402976155281,
+    0.016238873824477196
+   ],
+   "invariant_over_random": 5.03712069106485,
+   "verdict": "connect"
+  },
+  "subspace_overlap_block19_block21": 0.6912286882479243,
+  "magnitude_share_block19": {
+   "invariant": -0.008975537455781519,
+   "noninvariant_place": -0.0058570657223220215,
+   "nonplace": 0.000948074426855611,
+   "all_neurons": -0.013884528751247942,
+   "incoming_residual_x_mid": 1.013888602032491
+  },
+  "magnitude_share_block21": {
+   "invariant": 8.867924126660741e-05,
+   "noninvariant_place": -0.0010414732722228055,
+   "nonplace": 0.0005050522464791035,
+   "all_neurons": -0.00044774178447709427,
+   "incoming_residual_x_mid": 1.0004483447519954
+  },
+  "magnitude_relative_size_block19_post_hoc": {
+   "all_neurons": 0.029902315977900367,
+   "nonplace": 0.006382682833268826,
+   "noninvariant_place": 0.012914438056326572,
+   "invariant": 0.020994784306308762
+  },
+  "magnitude_relative_size_block21_post_hoc": {
+   "all_neurons": 0.025762566754260998,
+   "nonplace": 0.005597889516919658,
+   "noninvariant_place": 0.01872643324053035,
+   "invariant": 0.011681677095342789
+  },
+  "medians_without_mean_write_direction_block19_post_hoc": {
+   "nonplace": 0.03313973620931782,
+   "noninvariant_place": 0.036043277736820235,
+   "invariant": 0.056482735879133814
+  },
+  "layerscale_null_median_block19_post_hoc": 0.009942447604290115,
+  "causal_block19": {
+   "interchange_transfer_invariant": -0.00025778681956839186,
+   "interchange_transfer_noninvariant_place": -0.001517399277123032,
+   "interchange_transfer_random_place": -0.00046374852646094823,
+   "interchange_transfer_all_neurons": -0.0016841275939605417,
+   "interchange_transfer_position_pca10": 0.4000054934943613,
+   "mean_replacement_moved_m_invariant": 0.01139790231774591,
+   "mean_replacement_moved_m_all_neurons": 0.02021008735222784,
+   "verdict": "no measurable causal role at this token"
+  },
+  "causal_block21": {
+   "interchange_transfer_invariant": -0.0005219227698069652,
+   "interchange_transfer_noninvariant_place": 0.0006810377470852576,
+   "interchange_transfer_random_place": -0.0007663888110668413,
+   "interchange_transfer_all_neurons": -0.001394510755143557,
+   "interchange_transfer_position_pca10": 0.853985131158677,
+   "mean_replacement_moved_m_invariant": 0.01302096183456087,
+   "mean_replacement_moved_m_all_neurons": 0.03312695721011688,
+   "verdict": "no measurable causal role at this token"
+  }
+ }
+}

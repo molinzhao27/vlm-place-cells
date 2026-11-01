@@ -1,0 +1,1701 @@
+{
+ "scenes": {
+  "P5000-control": {
+   "scene": "P5000-control",
+   "walks": 48,
+   "walk_seed": 30000,
+   "probe_seed": 31000,
+   "frames": 12288,
+   "probes": 3072,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.21955858411356335,
+    "share_steps_moving": 0.847140522875817,
+    "turn_deg_mean": 23.640994001732196,
+    "turn_deg_median": 12.9690640071609,
+    "path_m": 47.42922830569872,
+    "cells_1m_visited": 32.520833333333336,
+    "revisit_gap_steps_median": 27.0,
+    "share_frames_revisited_after_64_steps": 0.3411458333333333
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 151
+    },
+    "nbhd": {
+     "all": 78,
+     "novel": 78,
+     "conflict": 39,
+     "agreement": 39
+    }
+   },
+   "payload": {
+    "frames": 3074,
+    "probes": 203,
+    "md5": "7c13e85f79ea15ec2b474e1c637b7a7c"
+   },
+   "render_s": 353,
+   "total_s": 408
+  },
+  "P5001-control": {
+   "scene": "P5001-control",
+   "walks": 48,
+   "walk_seed": 30010,
+   "probe_seed": 31010,
+   "frames": 12288,
+   "probes": 3072,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.2199758039618205,
+    "share_steps_moving": 0.8441993464052288,
+    "turn_deg_mean": 23.68251240389586,
+    "turn_deg_median": 12.985698560289075,
+    "path_m": 47.35437463203106,
+    "cells_1m_visited": 33.666666666666664,
+    "revisit_gap_steps_median": 23.0,
+    "share_frames_revisited_after_64_steps": 0.2819010416666667
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 167
+    },
+    "nbhd": {
+     "all": 84,
+     "novel": 84,
+     "conflict": 42,
+     "agreement": 42
+    }
+   },
+   "payload": {
+    "frames": 3234,
+    "probes": 207,
+    "md5": "04126b21f9ed165df4b1682ed3d5818b"
+   },
+   "render_s": 332,
+   "total_s": 391
+  },
+  "P5002-control": {
+   "scene": "P5002-control",
+   "walks": 48,
+   "walk_seed": 30020,
+   "probe_seed": 31020,
+   "frames": 12288,
+   "probes": 3072,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.2199774919452464,
+    "share_steps_moving": 0.8529411764705882,
+    "turn_deg_mean": 23.068410605634536,
+    "turn_deg_median": 12.85771730864569,
+    "path_m": 47.845104498091096,
+    "cells_1m_visited": 34.083333333333336,
+    "revisit_gap_steps_median": 20.0,
+    "share_frames_revisited_after_64_steps": 0.314453125
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 168
+    },
+    "nbhd": {
+     "all": 98,
+     "novel": 98,
+     "conflict": 49,
+     "agreement": 49
+    }
+   },
+   "payload": {
+    "frames": 3325,
+    "probes": 223,
+    "md5": "81205cce220507c9857b22b7fb7a80a0"
+   },
+   "render_s": 286,
+   "total_s": 341
+  },
+  "P5003-control": {
+   "scene": "P5003-control",
+   "walks": 48,
+   "walk_seed": 30030,
+   "probe_seed": 31030,
+   "frames": 12288,
+   "probes": 3072,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.21942970073164222,
+    "share_steps_moving": 0.8503267973856209,
+    "turn_deg_mean": 24.175274716302685,
+    "turn_deg_median": 13.257897147780383,
+    "path_m": 47.579673441977754,
+    "cells_1m_visited": 32.625,
+    "revisit_gap_steps_median": 25.0,
+    "share_frames_revisited_after_64_steps": 0.3307291666666667
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 162
+    },
+    "nbhd": {
+     "all": 92,
+     "novel": 92,
+     "conflict": 46,
+     "agreement": 46
+    }
+   },
+   "payload": {
+    "frames": 3226,
+    "probes": 212,
+    "md5": "2b08d241d1fafe45d60f4b04f3b10841"
+   },
+   "render_s": 379,
+   "total_s": 435
+  },
+  "P5004-control": {
+   "scene": "P5004-control",
+   "walks": 48,
+   "walk_seed": 30040,
+   "probe_seed": 31040,
+   "frames": 12288,
+   "probes": 3072,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.21960531121705285,
+    "share_steps_moving": 0.8490196078431372,
+    "turn_deg_mean": 22.48818506182051,
+    "turn_deg_median": 12.741979172669373,
+    "path_m": 47.54454987849194,
+    "cells_1m_visited": 34.166666666666664,
+    "revisit_gap_steps_median": 23.0,
+    "share_frames_revisited_after_64_steps": 0.3359375
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 164
+    },
+    "nbhd": {
+     "all": 98,
+     "novel": 98,
+     "conflict": 49,
+     "agreement": 49
+    }
+   },
+   "payload": {
+    "frames": 3306,
+    "probes": 214,
+    "md5": "48632c2dae4727cef049f5d1d6d15bf1"
+   },
+   "render_s": 336,
+   "total_s": 392
+  },
+  "P5006-control": {
+   "scene": "P5006-control",
+   "walks": 48,
+   "walk_seed": 30060,
+   "probe_seed": 31060,
+   "frames": 12288,
+   "probes": 3072,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.21966022817599806,
+    "share_steps_moving": 0.8494281045751634,
+    "turn_deg_mean": 23.311084114623913,
+    "turn_deg_median": 13.229587285536013,
+    "path_m": 47.57932067387191,
+    "cells_1m_visited": 35.479166666666664,
+    "revisit_gap_steps_median": 16.0,
+    "share_frames_revisited_after_64_steps": 0.25
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 156
+    },
+    "nbhd": {
+     "all": 106,
+     "novel": 106,
+     "conflict": 53,
+     "agreement": 53
+    }
+   },
+   "payload": {
+    "frames": 3309,
+    "probes": 219,
+    "md5": "77b218d3f733c898bc4e8c2ce1328204"
+   },
+   "render_s": 344,
+   "total_s": 405
+  },
+  "P5007-control": {
+   "scene": "P5007-control",
+   "walks": 48,
+   "walk_seed": 30070,
+   "probe_seed": 31070,
+   "frames": 12288,
+   "probes": 3072,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.2195663443553682,
+    "share_steps_moving": 0.8500816993464052,
+    "turn_deg_mean": 23.851679313224096,
+    "turn_deg_median": 13.253911126258183,
+    "path_m": 47.595579437866796,
+    "cells_1m_visited": 33.708333333333336,
+    "revisit_gap_steps_median": 19.5,
+    "share_frames_revisited_after_64_steps": 0.294921875
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 170
+    },
+    "nbhd": {
+     "all": 92,
+     "novel": 92,
+     "conflict": 46,
+     "agreement": 46
+    }
+   },
+   "payload": {
+    "frames": 3222,
+    "probes": 215,
+    "md5": "54d03f3d95b04c0f107a33b475dd1eae"
+   },
+   "render_s": 379,
+   "total_s": 437
+  },
+  "P5008-control": {
+   "scene": "P5008-control",
+   "walks": 48,
+   "walk_seed": 30080,
+   "probe_seed": 31080,
+   "frames": 12288,
+   "probes": 3072,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.21974768965456462,
+    "share_steps_moving": 0.8477941176470588,
+    "turn_deg_mean": 23.85234469204856,
+    "turn_deg_median": 13.064653498576936,
+    "path_m": 47.50670365719619,
+    "cells_1m_visited": 33.6875,
+    "revisit_gap_steps_median": 23.0,
+    "share_frames_revisited_after_64_steps": 0.2786458333333333
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 165
+    },
+    "nbhd": {
+     "all": 98,
+     "novel": 98,
+     "conflict": 49,
+     "agreement": 49
+    }
+   },
+   "payload": {
+    "frames": 3129,
+    "probes": 221,
+    "md5": "1c0602a3440f2a8e1dab580a8cfb5405"
+   },
+   "render_s": 362,
+   "total_s": 398
+  },
+  "P5009-control": {
+   "scene": "P5009-control",
+   "walks": 48,
+   "walk_seed": 30090,
+   "probe_seed": 31090,
+   "frames": 12288,
+   "probes": 3072,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.21914475336377381,
+    "share_steps_moving": 0.8512254901960784,
+    "turn_deg_mean": 23.52066107650794,
+    "turn_deg_median": 13.080473026660389,
+    "path_m": 47.56810802702415,
+    "cells_1m_visited": 34.395833333333336,
+    "revisit_gap_steps_median": 19.0,
+    "share_frames_revisited_after_64_steps": 0.2747395833333333
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 158
+    },
+    "nbhd": {
+     "all": 77,
+     "novel": 77,
+     "conflict": 39,
+     "agreement": 38
+    }
+   },
+   "payload": {
+    "frames": 3135,
+    "probes": 198,
+    "md5": "eb4a6d70386a61073ff84c8247654cc9"
+   },
+   "render_s": 446,
+   "total_s": 513
+  },
+  "P5000-long-step": {
+   "scene": "P5000-long-step",
+   "walks": 16,
+   "walk_seed": 30001,
+   "probe_seed": 31001,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.43667756601079866,
+    "share_steps_moving": 0.8512254901960784,
+    "turn_deg_mean": 28.085333094086646,
+    "turn_deg_median": 13.9451043020671,
+    "path_m": 94.786324172219,
+    "cells_1m_visited": 53.25,
+    "revisit_gap_steps_median": 52.5,
+    "share_frames_revisited_after_64_steps": 0.4609375
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 92
+    }
+   },
+   "payload": {
+    "frames": 1111,
+    "probes": 92,
+    "md5": "b35c124db151fb3ac50be80fb46e31ba"
+   },
+   "render_s": 174,
+   "total_s": 195
+  },
+  "P5001-long-step": {
+   "scene": "P5001-long-step",
+   "walks": 16,
+   "walk_seed": 30011,
+   "probe_seed": 31011,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.43828136863686723,
+    "share_steps_moving": 0.8480392156862745,
+    "turn_deg_mean": 28.19205205076161,
+    "turn_deg_median": 13.775082004526007,
+    "path_m": 94.77834596772254,
+    "cells_1m_visited": 56.625,
+    "revisit_gap_steps_median": 47.0,
+    "share_frames_revisited_after_64_steps": 0.416015625
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 115
+    }
+   },
+   "payload": {
+    "frames": 1147,
+    "probes": 115,
+    "md5": "755d1b394732659c2784f8f3c6f06d33"
+   },
+   "render_s": 166,
+   "total_s": 189
+  },
+  "P5002-long-step": {
+   "scene": "P5002-long-step",
+   "walks": 16,
+   "walk_seed": 30021,
+   "probe_seed": 31021,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.4389928294798095,
+    "share_steps_moving": 0.8448529411764706,
+    "turn_deg_mean": 26.76573045231527,
+    "turn_deg_median": 13.671520985246143,
+    "path_m": 94.57551770105644,
+    "cells_1m_visited": 58.25,
+    "revisit_gap_steps_median": 38.5,
+    "share_frames_revisited_after_64_steps": 0.423828125
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 139
+    }
+   },
+   "payload": {
+    "frames": 1186,
+    "probes": 139,
+    "md5": "4be02bd553c5ec97d1dcef335a88f021"
+   },
+   "render_s": 187,
+   "total_s": 206
+  },
+  "P5003-long-step": {
+   "scene": "P5003-long-step",
+   "walks": 16,
+   "walk_seed": 30031,
+   "probe_seed": 31031,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.4366393398166982,
+    "share_steps_moving": 0.8475490196078431,
+    "turn_deg_mean": 29.28356314629394,
+    "turn_deg_median": 14.4541510194686,
+    "path_m": 94.36867731788392,
+    "cells_1m_visited": 59.9375,
+    "revisit_gap_steps_median": 24.5,
+    "share_frames_revisited_after_64_steps": 0.3203125
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 124
+    }
+   },
+   "payload": {
+    "frames": 1162,
+    "probes": 124,
+    "md5": "cad79608d91ba6ee2d6db5c673c7b18b"
+   },
+   "render_s": 173,
+   "total_s": 195
+  },
+  "P5004-long-step": {
+   "scene": "P5004-long-step",
+   "walks": 16,
+   "walk_seed": 30041,
+   "probe_seed": 31041,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.4380115585301964,
+    "share_steps_moving": 0.8558823529411764,
+    "turn_deg_mean": 26.934576474717883,
+    "turn_deg_median": 13.899570937867034,
+    "path_m": 95.59602264921537,
+    "cells_1m_visited": 59.875,
+    "revisit_gap_steps_median": 34.0,
+    "share_frames_revisited_after_64_steps": 0.388671875
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 136
+    }
+   },
+   "payload": {
+    "frames": 1186,
+    "probes": 136,
+    "md5": "a801e57c646a004150ba502137d1e84a"
+   },
+   "render_s": 159,
+   "total_s": 180
+  },
+  "P5006-long-step": {
+   "scene": "P5006-long-step",
+   "walks": 16,
+   "walk_seed": 30061,
+   "probe_seed": 31061,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.43903947212916206,
+    "share_steps_moving": 0.8519607843137255,
+    "turn_deg_mean": 26.448875242341675,
+    "turn_deg_median": 13.612425824558091,
+    "path_m": 95.38132532006045,
+    "cells_1m_visited": 58.1875,
+    "revisit_gap_steps_median": 55.0,
+    "share_frames_revisited_after_64_steps": 0.478515625
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 135
+    }
+   },
+   "payload": {
+    "frames": 1175,
+    "probes": 135,
+    "md5": "453422979734dcb93235301bd20f148b"
+   },
+   "render_s": 186,
+   "total_s": 207
+  },
+  "P5007-long-step": {
+   "scene": "P5007-long-step",
+   "walks": 16,
+   "walk_seed": 30071,
+   "probe_seed": 31071,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.4387308521773886,
+    "share_steps_moving": 0.8448529411764706,
+    "turn_deg_mean": 28.644746991502412,
+    "turn_deg_median": 14.259165463992952,
+    "path_m": 94.51907796596616,
+    "cells_1m_visited": 56.1875,
+    "revisit_gap_steps_median": 42.0,
+    "share_frames_revisited_after_64_steps": 0.40234375
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 106
+    }
+   },
+   "payload": {
+    "frames": 1136,
+    "probes": 106,
+    "md5": "eb08ee4961e75d7a58710efeb129aa7a"
+   },
+   "render_s": 178,
+   "total_s": 200
+  },
+  "P5008-long-step": {
+   "scene": "P5008-long-step",
+   "walks": 16,
+   "walk_seed": 30081,
+   "probe_seed": 31081,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.4398771449089765,
+    "share_steps_moving": 0.85,
+    "turn_deg_mean": 28.515006087583917,
+    "turn_deg_median": 13.985835112001492,
+    "path_m": 95.34337115902068,
+    "cells_1m_visited": 58.125,
+    "revisit_gap_steps_median": 43.0,
+    "share_frames_revisited_after_64_steps": 0.435546875
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 115
+    }
+   },
+   "payload": {
+    "frames": 1142,
+    "probes": 115,
+    "md5": "374c6c67a9b238e3ae121c7fdecef854"
+   },
+   "render_s": 183,
+   "total_s": 206
+  },
+  "P5009-long-step": {
+   "scene": "P5009-long-step",
+   "walks": 16,
+   "walk_seed": 30091,
+   "probe_seed": 31091,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.4383993223983313,
+    "share_steps_moving": 0.8556372549019607,
+    "turn_deg_mean": 28.92793504163682,
+    "turn_deg_median": 14.23745648543045,
+    "path_m": 95.6532521557859,
+    "cells_1m_visited": 60.1875,
+    "revisit_gap_steps_median": 38.0,
+    "share_frames_revisited_after_64_steps": 0.404296875
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 125
+    }
+   },
+   "payload": {
+    "frames": 1152,
+    "probes": 125,
+    "md5": "402dc91e8cf6032fa3fda8ba6014b2d6"
+   },
+   "render_s": 192,
+   "total_s": 213
+  },
+  "P5000-low-turn": {
+   "scene": "P5000-low-turn",
+   "walks": 16,
+   "walk_seed": 30002,
+   "probe_seed": 31002,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.21864012811583938,
+    "share_steps_moving": 1.0,
+    "turn_deg_mean": 10.401635082965747,
+    "turn_deg_median": 3.5622253083423736,
+    "path_m": 55.75323266953904,
+    "cells_1m_visited": 43.625,
+    "revisit_gap_steps_median": 12.0,
+    "share_frames_revisited_after_64_steps": 0.291015625
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 179
+    }
+   },
+   "payload": {
+    "frames": 1237,
+    "probes": 179,
+    "md5": "888d47682f34089b72084977574fbec7"
+   },
+   "render_s": 146,
+   "total_s": 168
+  },
+  "P5001-low-turn": {
+   "scene": "P5001-low-turn",
+   "walks": 16,
+   "walk_seed": 30012,
+   "probe_seed": 31012,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.2194223104440191,
+    "share_steps_moving": 1.0,
+    "turn_deg_mean": 9.609075291707416,
+    "turn_deg_median": 3.5440236883802485,
+    "path_m": 55.95268916322487,
+    "cells_1m_visited": 42.1875,
+    "revisit_gap_steps_median": 14.0,
+    "share_frames_revisited_after_64_steps": 0.30078125
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 191
+    }
+   },
+   "payload": {
+    "frames": 1253,
+    "probes": 191,
+    "md5": "ddf0022dd7fe7616a4a515001a8f5d0c"
+   },
+   "render_s": 165,
+   "total_s": 187
+  },
+  "P5002-low-turn": {
+   "scene": "P5002-low-turn",
+   "walks": 16,
+   "walk_seed": 30022,
+   "probe_seed": 31022,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.22024402867205672,
+    "share_steps_moving": 1.0,
+    "turn_deg_mean": 9.546363782944443,
+    "turn_deg_median": 3.461792328832994,
+    "path_m": 56.162227311374465,
+    "cells_1m_visited": 47.125,
+    "revisit_gap_steps_median": 6.0,
+    "share_frames_revisited_after_64_steps": 0.2890625
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 190
+    }
+   },
+   "payload": {
+    "frames": 1272,
+    "probes": 190,
+    "md5": "f34c344b1f6f1eac7a6f17dd8db0bc64"
+   },
+   "render_s": 126,
+   "total_s": 138
+  },
+  "P5003-low-turn": {
+   "scene": "P5003-low-turn",
+   "walks": 16,
+   "walk_seed": 30032,
+   "probe_seed": 31032,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.2196109970670844,
+    "share_steps_moving": 1.0,
+    "turn_deg_mean": 10.072744805924925,
+    "turn_deg_median": 3.627333745854517,
+    "path_m": 56.00080425210652,
+    "cells_1m_visited": 44.75,
+    "revisit_gap_steps_median": 8.0,
+    "share_frames_revisited_after_64_steps": 0.279296875
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 186
+    }
+   },
+   "payload": {
+    "frames": 1234,
+    "probes": 186,
+    "md5": "fb00870b7f95678f6cbfa22848e2b1ed"
+   },
+   "render_s": 156,
+   "total_s": 179
+  },
+  "P5004-low-turn": {
+   "scene": "P5004-low-turn",
+   "walks": 16,
+   "walk_seed": 30042,
+   "probe_seed": 31042,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.2195466906716287,
+    "share_steps_moving": 1.0,
+    "turn_deg_mean": 8.92673025185294,
+    "turn_deg_median": 3.5573556180502015,
+    "path_m": 55.98440612126532,
+    "cells_1m_visited": 47.9375,
+    "revisit_gap_steps_median": 4.0,
+    "share_frames_revisited_after_64_steps": 0.25390625
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 190
+    }
+   },
+   "payload": {
+    "frames": 1260,
+    "probes": 190,
+    "md5": "0686162b3297df193fa9199394a8ac2d"
+   },
+   "render_s": 147,
+   "total_s": 169
+  },
+  "P5006-low-turn": {
+   "scene": "P5006-low-turn",
+   "walks": 16,
+   "walk_seed": 30062,
+   "probe_seed": 31062,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.2198255808108836,
+    "share_steps_moving": 1.0,
+    "turn_deg_mean": 9.570127804274819,
+    "turn_deg_median": 3.64814448314472,
+    "path_m": 56.055523106775325,
+    "cells_1m_visited": 44.8125,
+    "revisit_gap_steps_median": 7.0,
+    "share_frames_revisited_after_64_steps": 0.283203125
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 182
+    }
+   },
+   "payload": {
+    "frames": 1251,
+    "probes": 182,
+    "md5": "633557e972307b9d6fa13386b2fa9ac0"
+   },
+   "render_s": 157,
+   "total_s": 177
+  },
+  "P5007-low-turn": {
+   "scene": "P5007-low-turn",
+   "walks": 16,
+   "walk_seed": 30072,
+   "probe_seed": 31072,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.21986179443092488,
+    "share_steps_moving": 1.0,
+    "turn_deg_mean": 9.92957406567971,
+    "turn_deg_median": 3.581406019144337,
+    "path_m": 56.06475757988584,
+    "cells_1m_visited": 44.0,
+    "revisit_gap_steps_median": 9.0,
+    "share_frames_revisited_after_64_steps": 0.275390625
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 185
+    }
+   },
+   "payload": {
+    "frames": 1234,
+    "probes": 185,
+    "md5": "a6544e3d0c15daf143ac39b99ff62b6a"
+   },
+   "render_s": 159,
+   "total_s": 181
+  },
+  "P5008-low-turn": {
+   "scene": "P5008-low-turn",
+   "walks": 16,
+   "walk_seed": 30082,
+   "probe_seed": 31082,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.21954107646307727,
+    "share_steps_moving": 1.0,
+    "turn_deg_mean": 9.707108739524921,
+    "turn_deg_median": 3.619922208012857,
+    "path_m": 55.9829744980847,
+    "cells_1m_visited": 45.5625,
+    "revisit_gap_steps_median": 7.0,
+    "share_frames_revisited_after_64_steps": 0.291015625
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 179
+    }
+   },
+   "payload": {
+    "frames": 1232,
+    "probes": 179,
+    "md5": "8ff2e43bc1ac2f8d2cd29ea0c1663986"
+   },
+   "render_s": 149,
+   "total_s": 170
+  },
+  "P5009-low-turn": {
+   "scene": "P5009-low-turn",
+   "walks": 16,
+   "walk_seed": 30092,
+   "probe_seed": 31092,
+   "frames": 4096,
+   "probes": 1024,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.22006707878449677,
+    "share_steps_moving": 1.0,
+    "turn_deg_mean": 9.973518173080318,
+    "turn_deg_median": 3.6825464198081717,
+    "path_m": 56.11710509004668,
+    "cells_1m_visited": 42.875,
+    "revisit_gap_steps_median": 16.0,
+    "share_frames_revisited_after_64_steps": 0.302734375
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 183
+    }
+   },
+   "payload": {
+    "frames": 1247,
+    "probes": 183,
+    "md5": "8560614d5b606aea9b8ab8f8684e51ac"
+   },
+   "render_s": 151,
+   "total_s": 171
+  },
+  "P5000-patrol": {
+   "scene": "P5000-patrol",
+   "walks": 32,
+   "walk_seed": 30003,
+   "probe_seed": 31003,
+   "frames": 8192,
+   "probes": 2048,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.2198737647789885,
+    "share_steps_moving": 0.8462009803921569,
+    "turn_deg_mean": 28.03463935980268,
+    "turn_deg_median": 18.02411052308517,
+    "path_m": 47.44463580621611,
+    "cells_1m_visited": 24.1875,
+    "revisit_gap_steps_median": 151.0,
+    "share_frames_revisited_after_64_steps": 0.8564453125
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 118
+    },
+    "nbhd": {
+     "all": 51,
+     "novel": 51,
+     "conflict": 26,
+     "agreement": 25
+    }
+   },
+   "payload": {
+    "frames": 1826,
+    "probes": 132,
+    "md5": "aebcd5195c8f50e2233d5bbd8560309f"
+   },
+   "render_s": 278,
+   "total_s": 299
+  },
+  "P5001-patrol": {
+   "scene": "P5001-patrol",
+   "walks": 32,
+   "walk_seed": 30013,
+   "probe_seed": 31013,
+   "frames": 8192,
+   "probes": 2048,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.21927948280144482,
+    "share_steps_moving": 0.8490196078431372,
+    "turn_deg_mean": 28.66261565405588,
+    "turn_deg_median": 18.374314182785216,
+    "path_m": 47.474008026512806,
+    "cells_1m_visited": 21.875,
+    "revisit_gap_steps_median": 150.0,
+    "share_frames_revisited_after_64_steps": 0.896484375
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 88
+    },
+    "nbhd": {
+     "all": 41,
+     "novel": 41,
+     "conflict": 21,
+     "agreement": 20
+    }
+   },
+   "payload": {
+    "frames": 1522,
+    "probes": 103,
+    "md5": "873d1dc93c53266a5787d859cacce5ad"
+   },
+   "render_s": 250,
+   "total_s": 283
+  },
+  "P5002-patrol": {
+   "scene": "P5002-patrol",
+   "walks": 32,
+   "walk_seed": 30023,
+   "probe_seed": 31023,
+   "frames": 8192,
+   "probes": 2048,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.21984422611572296,
+    "share_steps_moving": 0.8424019607843137,
+    "turn_deg_mean": 28.39986959711675,
+    "turn_deg_median": 18.207013899108976,
+    "path_m": 47.225287822483736,
+    "cells_1m_visited": 24.75,
+    "revisit_gap_steps_median": 150.0,
+    "share_frames_revisited_after_64_steps": 0.8662109375
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 115
+    },
+    "nbhd": {
+     "all": 50,
+     "novel": 50,
+     "conflict": 25,
+     "agreement": 25
+    }
+   },
+   "payload": {
+    "frames": 1755,
+    "probes": 130,
+    "md5": "f7cc610ec2cb3dd433ac2956b7d39f08"
+   },
+   "render_s": 257,
+   "total_s": 290
+  },
+  "P5003-patrol": {
+   "scene": "P5003-patrol",
+   "walks": 32,
+   "walk_seed": 30033,
+   "probe_seed": 31033,
+   "frames": 8192,
+   "probes": 2048,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.21932562664596095,
+    "share_steps_moving": 0.8470588235294118,
+    "turn_deg_mean": 29.091322168810112,
+    "turn_deg_median": 18.53116591008246,
+    "path_m": 47.37433535552756,
+    "cells_1m_visited": 23.875,
+    "revisit_gap_steps_median": 152.0,
+    "share_frames_revisited_after_64_steps": 0.84765625
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 107
+    },
+    "nbhd": {
+     "all": 50,
+     "novel": 50,
+     "conflict": 25,
+     "agreement": 25
+    }
+   },
+   "payload": {
+    "frames": 1982,
+    "probes": 120,
+    "md5": "d5fe079fc69fc5ff332de3027e7558ed"
+   },
+   "render_s": 265,
+   "total_s": 300
+  },
+  "P5004-patrol": {
+   "scene": "P5004-patrol",
+   "walks": 32,
+   "walk_seed": 30043,
+   "probe_seed": 31043,
+   "frames": 8192,
+   "probes": 2048,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.22027325718881716,
+    "share_steps_moving": 0.8560049019607843,
+    "turn_deg_mean": 27.379913334603767,
+    "turn_deg_median": 17.7095855589287,
+    "path_m": 48.08152192074649,
+    "cells_1m_visited": 25.5,
+    "revisit_gap_steps_median": 151.0,
+    "share_frames_revisited_after_64_steps": 0.8330078125
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 122
+    },
+    "nbhd": {
+     "all": 53,
+     "novel": 53,
+     "conflict": 27,
+     "agreement": 26
+    }
+   },
+   "payload": {
+    "frames": 2022,
+    "probes": 139,
+    "md5": "132732dd637b49ff3c87c238f8e6e5b8"
+   },
+   "render_s": 241,
+   "total_s": 279
+  },
+  "P5006-patrol": {
+   "scene": "P5006-patrol",
+   "walks": 32,
+   "walk_seed": 30063,
+   "probe_seed": 31063,
+   "frames": 8192,
+   "probes": 2048,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.21968012082233737,
+    "share_steps_moving": 0.8509803921568627,
+    "turn_deg_mean": 27.31634892847103,
+    "turn_deg_median": 17.66513637543916,
+    "path_m": 47.67058621844721,
+    "cells_1m_visited": 24.59375,
+    "revisit_gap_steps_median": 153.0,
+    "share_frames_revisited_after_64_steps": 0.8564453125
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 104
+    },
+    "nbhd": {
+     "all": 32,
+     "novel": 32,
+     "conflict": 16,
+     "agreement": 16
+    }
+   },
+   "payload": {
+    "frames": 1965,
+    "probes": 111,
+    "md5": "00b924b547ec2cd21b69f47dce637bd4"
+   },
+   "render_s": 184,
+   "total_s": 215
+  },
+  "P5007-patrol": {
+   "scene": "P5007-patrol",
+   "walks": 32,
+   "walk_seed": 30073,
+   "probe_seed": 31073,
+   "frames": 8192,
+   "probes": 2048,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.22027675060086102,
+    "share_steps_moving": 0.8482843137254902,
+    "turn_deg_mean": 28.174070253746116,
+    "turn_deg_median": 18.15037173602471,
+    "path_m": 47.64861461434875,
+    "cells_1m_visited": 23.125,
+    "revisit_gap_steps_median": 151.0,
+    "share_frames_revisited_after_64_steps": 0.884765625
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 107
+    },
+    "nbhd": {
+     "all": 29,
+     "novel": 29,
+     "conflict": 15,
+     "agreement": 14
+    }
+   },
+   "payload": {
+    "frames": 1890,
+    "probes": 112,
+    "md5": "16e3e8a626385e98af6182acddc06f3d"
+   },
+   "render_s": 275,
+   "total_s": 313
+  },
+  "P5008-patrol": {
+   "scene": "P5008-patrol",
+   "walks": 32,
+   "walk_seed": 30083,
+   "probe_seed": 31083,
+   "frames": 8192,
+   "probes": 2048,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.22040265343049267,
+    "share_steps_moving": 0.85,
+    "turn_deg_mean": 28.026262612861178,
+    "turn_deg_median": 17.714883405716684,
+    "path_m": 47.77227513105929,
+    "cells_1m_visited": 24.375,
+    "revisit_gap_steps_median": 152.0,
+    "share_frames_revisited_after_64_steps": 0.8671875
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 112
+    },
+    "nbhd": {
+     "all": 39,
+     "novel": 39,
+     "conflict": 20,
+     "agreement": 19
+    }
+   },
+   "payload": {
+    "frames": 1853,
+    "probes": 122,
+    "md5": "9a9380a194892b757ed63b9029958afb"
+   },
+   "render_s": 267,
+   "total_s": 303
+  },
+  "P5009-patrol": {
+   "scene": "P5009-patrol",
+   "walks": 32,
+   "walk_seed": 30093,
+   "probe_seed": 31093,
+   "frames": 8192,
+   "probes": 2048,
+   "walk_stats": {
+    "step_m_mean_when_moving": 0.2191969558419611,
+    "share_steps_moving": 0.845343137254902,
+    "turn_deg_mean": 30.22985882726187,
+    "turn_deg_median": 19.08110416890053,
+    "path_m": 47.25064379368274,
+    "cells_1m_visited": 23.125,
+    "revisit_gap_steps_median": 148.0,
+    "share_frames_revisited_after_64_steps": 0.837890625
+   },
+   "trials": {
+    "standard": {
+     "all": 192,
+     "novel": 91
+    },
+    "nbhd": {
+     "all": 38,
+     "novel": 38,
+     "conflict": 19,
+     "agreement": 19
+    }
+   },
+   "payload": {
+    "frames": 1696,
+    "probes": 97,
+    "md5": "431444bebfa16db339da2b0d68976e96"
+   },
+   "render_s": 269,
+   "total_s": 303
+  }
+ },
+ "counts": {
+  "control": {
+   "P5000": {
+    "standard": {
+     "all": 192,
+     "novel": 151
+    },
+    "nbhd": {
+     "all": 78,
+     "novel": 78,
+     "conflict": 39,
+     "agreement": 39
+    }
+   },
+   "P5001": {
+    "standard": {
+     "all": 192,
+     "novel": 167
+    },
+    "nbhd": {
+     "all": 84,
+     "novel": 84,
+     "conflict": 42,
+     "agreement": 42
+    }
+   },
+   "P5002": {
+    "standard": {
+     "all": 192,
+     "novel": 168
+    },
+    "nbhd": {
+     "all": 98,
+     "novel": 98,
+     "conflict": 49,
+     "agreement": 49
+    }
+   },
+   "P5003": {
+    "standard": {
+     "all": 192,
+     "novel": 162
+    },
+    "nbhd": {
+     "all": 92,
+     "novel": 92,
+     "conflict": 46,
+     "agreement": 46
+    }
+   },
+   "P5004": {
+    "standard": {
+     "all": 192,
+     "novel": 164
+    },
+    "nbhd": {
+     "all": 98,
+     "novel": 98,
+     "conflict": 49,
+     "agreement": 49
+    }
+   },
+   "P5006": {
+    "standard": {
+     "all": 192,
+     "novel": 156
+    },
+    "nbhd": {
+     "all": 106,
+     "novel": 106,
+     "conflict": 53,
+     "agreement": 53
+    }
+   },
+   "P5007": {
+    "standard": {
+     "all": 192,
+     "novel": 170
+    },
+    "nbhd": {
+     "all": 92,
+     "novel": 92,
+     "conflict": 46,
+     "agreement": 46
+    }
+   },
+   "P5008": {
+    "standard": {
+     "all": 192,
+     "novel": 165
+    },
+    "nbhd": {
+     "all": 98,
+     "novel": 98,
+     "conflict": 49,
+     "agreement": 49
+    }
+   },
+   "P5009": {
+    "standard": {
+     "all": 192,
+     "novel": 158
+    },
+    "nbhd": {
+     "all": 77,
+     "novel": 77,
+     "conflict": 39,
+     "agreement": 38
+    }
+   }
+  },
+  "long-step": {
+   "P5000": {
+    "standard": {
+     "all": 192,
+     "novel": 92
+    }
+   },
+   "P5001": {
+    "standard": {
+     "all": 192,
+     "novel": 115
+    }
+   },
+   "P5002": {
+    "standard": {
+     "all": 192,
+     "novel": 139
+    }
+   },
+   "P5003": {
+    "standard": {
+     "all": 192,
+     "novel": 124
+    }
+   },
+   "P5004": {
+    "standard": {
+     "all": 192,
+     "novel": 136
+    }
+   },
+   "P5006": {
+    "standard": {
+     "all": 192,
+     "novel": 135
+    }
+   },
+   "P5007": {
+    "standard": {
+     "all": 192,
+     "novel": 106
+    }
+   },
+   "P5008": {
+    "standard": {
+     "all": 192,
+     "novel": 115
+    }
+   },
+   "P5009": {
+    "standard": {
+     "all": 192,
+     "novel": 125
+    }
+   }
+  },
+  "low-turn": {
+   "P5000": {
+    "standard": {
+     "all": 192,
+     "novel": 179
+    }
+   },
+   "P5001": {
+    "standard": {
+     "all": 192,
+     "novel": 191
+    }
+   },
+   "P5002": {
+    "standard": {
+     "all": 192,
+     "novel": 190
+    }
+   },
+   "P5003": {
+    "standard": {
+     "all": 192,
+     "novel": 186
+    }
+   },
+   "P5004": {
+    "standard": {
+     "all": 192,
+     "novel": 190
+    }
+   },
+   "P5006": {
+    "standard": {
+     "all": 192,
+     "novel": 182
+    }
+   },
+   "P5007": {
+    "standard": {
+     "all": 192,
+     "novel": 185
+    }
+   },
+   "P5008": {
+    "standard": {
+     "all": 192,
+     "novel": 179
+    }
+   },
+   "P5009": {
+    "standard": {
+     "all": 192,
+     "novel": 183
+    }
+   }
+  },
+  "patrol": {
+   "P5000": {
+    "standard": {
+     "all": 192,
+     "novel": 118
+    },
+    "nbhd": {
+     "all": 51,
+     "novel": 51,
+     "conflict": 26,
+     "agreement": 25
+    }
+   },
+   "P5001": {
+    "standard": {
+     "all": 192,
+     "novel": 88
+    },
+    "nbhd": {
+     "all": 41,
+     "novel": 41,
+     "conflict": 21,
+     "agreement": 20
+    }
+   },
+   "P5002": {
+    "standard": {
+     "all": 192,
+     "novel": 115
+    },
+    "nbhd": {
+     "all": 50,
+     "novel": 50,
+     "conflict": 25,
+     "agreement": 25
+    }
+   },
+   "P5003": {
+    "standard": {
+     "all": 192,
+     "novel": 107
+    },
+    "nbhd": {
+     "all": 50,
+     "novel": 50,
+     "conflict": 25,
+     "agreement": 25
+    }
+   },
+   "P5004": {
+    "standard": {
+     "all": 192,
+     "novel": 122
+    },
+    "nbhd": {
+     "all": 53,
+     "novel": 53,
+     "conflict": 27,
+     "agreement": 26
+    }
+   },
+   "P5006": {
+    "standard": {
+     "all": 192,
+     "novel": 104
+    },
+    "nbhd": {
+     "all": 32,
+     "novel": 32,
+     "conflict": 16,
+     "agreement": 16
+    }
+   },
+   "P5007": {
+    "standard": {
+     "all": 192,
+     "novel": 107
+    },
+    "nbhd": {
+     "all": 29,
+     "novel": 29,
+     "conflict": 15,
+     "agreement": 14
+    }
+   },
+   "P5008": {
+    "standard": {
+     "all": 192,
+     "novel": 112
+    },
+    "nbhd": {
+     "all": 39,
+     "novel": 39,
+     "conflict": 20,
+     "agreement": 19
+    }
+   },
+   "P5009": {
+    "standard": {
+     "all": 192,
+     "novel": 91
+    },
+    "nbhd": {
+     "all": 38,
+     "novel": 38,
+     "conflict": 19,
+     "agreement": 19
+    }
+   }
+  }
+ },
+ "walk_stats": {
+  "control": {
+   "step_m_mean_when_moving": 0.21962954527989223,
+   "share_steps_moving": 0.849128540305011,
+   "turn_deg_mean": 23.510127331754475,
+   "turn_deg_median": 13.048997903730772,
+   "path_m": 47.55584917247218,
+   "cells_1m_visited": 33.81481481481481,
+   "revisit_gap_steps_median": 21.72222222222222,
+   "share_frames_revisited_after_64_steps": 0.3002748842592593
+  },
+  "long-step": {
+   "step_m_mean_when_moving": 0.4382943837875809,
+   "share_steps_moving": 0.85,
+   "turn_deg_mean": 27.977535397915574,
+   "turn_deg_median": 13.982256903906428,
+   "path_m": 95.00021271210339,
+   "cells_1m_visited": 57.84722222222222,
+   "revisit_gap_steps_median": 41.611111111111114,
+   "share_frames_revisited_after_64_steps": 0.4144965277777778
+  },
+  "low-turn": {
+   "step_m_mean_when_moving": 0.2196399650511123,
+   "share_steps_moving": 1.0,
+   "turn_deg_mean": 9.748541999772804,
+   "turn_deg_median": 3.5871944243967135,
+   "path_m": 56.008191088033634,
+   "cells_1m_visited": 44.763888888888886,
+   "revisit_gap_steps_median": 9.222222222222221,
+   "share_frames_revisited_after_64_steps": 0.28515625
+  },
+  "patrol": {
+   "step_m_mean_when_moving": 0.21979475980295404,
+   "share_steps_moving": 0.8483660130718955,
+   "turn_deg_mean": 28.368322304081044,
+   "turn_deg_median": 18.161965084452405,
+   "path_m": 47.54910096544719,
+   "cells_1m_visited": 23.93402777777778,
+   "revisit_gap_steps_median": 150.88888888888889,
+   "share_frames_revisited_after_64_steps": 0.8606770833333334
+  }
+ },
+ "pixel_rule_on_nbhd": {
+  "control": {
+   "conflict": {
+    "room_mean": 0.43925155234190744,
+    "per_room": [
+     0.41025641025641024,
+     0.36904761904761907,
+     0.3979591836734694,
+     0.45652173913043476,
+     0.47959183673469385,
+     0.6132075471698113,
+     0.4673913043478261,
+     0.4387755102040816,
+     0.32051282051282054
+    ]
+   },
+   "agreement": {
+    "room_mean": 0.7246234165516581,
+    "per_room": [
+     0.6923076923076923,
+     0.8809523809523809,
+     0.6836734693877551,
+     0.6956521739130435,
+     0.5918367346938775,
+     0.7830188679245284,
+     0.7065217391304348,
+     0.7244897959183674,
+     0.7631578947368421
+    ]
+   },
+   "opposes_pixels_as_intended": true,
+   "rooms_below_min_conflict": []
+  },
+  "patrol": {
+   "conflict": {
+    "room_mean": 0.3490803575891295,
+    "per_room": [
+     0.3076923076923077,
+     0.40476190476190477,
+     0.42,
+     0.26,
+     0.4444444444444444,
+     0.5,
+     0.26666666666666666,
+     0.275,
+     0.2631578947368421
+    ]
+   },
+   "agreement": {
+    "room_mean": 0.7261333622517833,
+    "per_room": [
+     0.82,
+     0.8,
+     0.64,
+     0.76,
+     0.5384615384615384,
+     0.78125,
+     0.6428571428571429,
+     0.7631578947368421,
+     0.7894736842105263
+    ]
+   },
+   "opposes_pixels_as_intended": true,
+   "rooms_below_min_conflict": [
+    {
+     "room": "P5006",
+     "conflict_trials": 16
+    },
+    {
+     "room": "P5007",
+     "conflict_trials": 15
+    },
+    {
+     "room": "P5009",
+     "conflict_trials": 19
+    }
+   ]
+  }
+ },
+ "totals": {
+  "control": {
+   "standard_novel": 1461,
+   "conflict": 412,
+   "agreement": 411
+  },
+  "long-step": {
+   "standard_novel": 1087
+  },
+  "low-turn": {
+   "standard_novel": 1665
+  },
+  "patrol": {
+   "standard_novel": 964,
+   "conflict": 194,
+   "agreement": 189
+  }
+ }
+}

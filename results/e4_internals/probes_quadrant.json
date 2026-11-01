@@ -1,0 +1,1326 @@
+{
+ "_about": "analyze_probes --quadrant's per-model scores (analyze.decoding_suite with quadrant=True) for the runs recorded by the four-epoch internals experiment; baselines (pixels, recall) are in results/probes_quadrant.json. _best_layer: the layer with the lowest cross_quadrant.",
+ "qwen8b-ft-rerun-probes-walk": {
+  "L3": {
+   "all": 1.8084664344787598,
+   "within_heading": 1.5913367569446564,
+   "cross_heading": 3.249710738658905,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3777380883693695,
+   "cross_quadrant": 4.288334906101227,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.4389969110488892,
+   "within_heading": 1.1974902153015137,
+   "cross_heading": 3.4412811994552612,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0334786623716354,
+   "cross_quadrant": 4.866195559501648,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.4311811923980713,
+   "within_heading": 1.2309938669204712,
+   "cross_heading": 3.416768252849579,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0017722845077515,
+   "cross_quadrant": 4.816369950771332,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.52839195728302,
+   "within_heading": 1.3636371195316315,
+   "cross_heading": 3.056322932243347,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.1584101617336273,
+   "cross_quadrant": 4.432359755039215,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.6092017889022827,
+   "within_heading": 1.5129996836185455,
+   "cross_heading": 2.8115063905715942,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3427030444145203,
+   "cross_quadrant": 3.9289119839668274,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.6534559726715088,
+   "within_heading": 1.6101043820381165,
+   "cross_heading": 2.854907989501953,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.4409979283809662,
+   "cross_quadrant": 3.8434603214263916,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.7861524820327759,
+   "within_heading": 1.6671383082866669,
+   "cross_heading": 2.7510170936584473,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.5618357956409454,
+   "cross_quadrant": 3.5954514741897583,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-rerun-probes-shuffled": {
+  "L3": {
+   "all": 1.7280616760253906,
+   "within_heading": 1.5927198827266693,
+   "cross_heading": 3.2109126448631287,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3268975019454956,
+   "cross_quadrant": 4.381227970123291,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.3674224615097046,
+   "within_heading": 1.1781452298164368,
+   "cross_heading": 3.4332770705223083,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9840347468852997,
+   "cross_quadrant": 4.933182954788208,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.3219107389450073,
+   "within_heading": 1.137225866317749,
+   "cross_heading": 3.4460538029670715,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9861088395118713,
+   "cross_quadrant": 4.8163028955459595,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.4726951122283936,
+   "within_heading": 1.2881538271903992,
+   "cross_heading": 3.1238556504249573,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.124974101781845,
+   "cross_quadrant": 4.474410057067871,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.6913820505142212,
+   "within_heading": 1.4210353195667267,
+   "cross_heading": 2.830722212791443,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.259986162185669,
+   "cross_quadrant": 4.024879097938538,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.7310622930526733,
+   "within_heading": 1.5256404876708984,
+   "cross_heading": 2.808865547180176,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3511583507061005,
+   "cross_quadrant": 3.918518841266632,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.8096801042556763,
+   "within_heading": 1.6137154698371887,
+   "cross_heading": 2.8843613862991333,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.419162094593048,
+   "cross_quadrant": 3.7510721683502197,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-rerun-probes-only": {
+  "L3": {
+   "all": 1.7799369096755981,
+   "within_heading": 1.5948631167411804,
+   "cross_heading": 3.276232063770294,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.351654589176178,
+   "cross_quadrant": 4.389533042907715,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.4578231573104858,
+   "within_heading": 1.2534953355789185,
+   "cross_heading": 3.437923491001129,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0927057266235352,
+   "cross_quadrant": 4.835646212100983,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.4497567415237427,
+   "within_heading": 1.2600950002670288,
+   "cross_heading": 3.428817868232727,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0615686774253845,
+   "cross_quadrant": 4.8214393854141235,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.682246446609497,
+   "within_heading": 1.490644931793213,
+   "cross_heading": 3.2046123147010803,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.300305724143982,
+   "cross_quadrant": 4.43396782875061,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.991750717163086,
+   "within_heading": 1.76931893825531,
+   "cross_heading": 3.224637985229492,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.5268352329730988,
+   "cross_quadrant": 4.236376702785492,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 2.0376546382904053,
+   "within_heading": 1.8760588467121124,
+   "cross_heading": 3.1213498711586,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.688107967376709,
+   "cross_quadrant": 4.037713885307312,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 2.2542355060577393,
+   "within_heading": 2.069502592086792,
+   "cross_heading": 3.1958045959472656,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.903779774904251,
+   "cross_quadrant": 3.9699584245681763,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "_best_layer": {
+  "qwen8b-ft-rerun-probes-walk": "L35",
+  "qwen8b-ft-rerun-probes-shuffled": "L35",
+  "qwen8b-ft-rerun-probes-only": "L35",
+  "qwen8b-ft-e4-s5-probes-walk": "L35",
+  "qwen8b-ft-e4-s5-probes-shuffled": "L35",
+  "qwen8b-ft-e4-s5-probes-only": "L35",
+  "qwen8b-ft-e4-s7-probes-walk": "L35",
+  "qwen8b-ft-e4-s7-probes-shuffled": "L35",
+  "qwen8b-ft-e4-s7-probes-only": "L35",
+  "qwen8b-ft-e4-s3-probes-walk": "L35",
+  "qwen8b-ft-e4-s3-probes-shuffled": "L35",
+  "qwen8b-ft-e4-s3-probes-only": "L35",
+  "qwen8b-ft-e4-s4-probes-walk": "L35",
+  "qwen8b-ft-e4-s4-probes-shuffled": "L35",
+  "qwen8b-ft-e4-s4-probes-only": "L35",
+  "qwen8b-ft-e4-s6-probes-walk": "L35",
+  "qwen8b-ft-e4-s6-probes-shuffled": "L35",
+  "qwen8b-ft-e4-s6-probes-only": "L35"
+ },
+ "_code_md5": {
+  "spatialcells/analyze.py": "bd0658199e7cd2c2283cd684acb8a152",
+  "spatialcells/extract.py": "d5ea5a9313839fadee75ee834d4add32",
+  "spatialcells/task_record.py": "891b6a60683fd3eb655016555679fe7d",
+  "spatialcells/task_probe.py": "d807fec5019f986e423b833f827c433f",
+  "spatialcells/e4_internals.py": "db42b885b6aedf524593d43c9b2013a4"
+ },
+ "qwen8b-ft-e4-s5-probes-walk": {
+  "L3": {
+   "all": 1.7694718837738037,
+   "within_heading": 1.5631220936775208,
+   "cross_heading": 3.2861098051071167,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3592270016670227,
+   "cross_quadrant": 4.293462634086609,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.3359050750732422,
+   "within_heading": 1.1389761567115784,
+   "cross_heading": 3.466078042984009,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9577196687459946,
+   "cross_quadrant": 4.939090967178345,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.2810428142547607,
+   "within_heading": 1.0850040018558502,
+   "cross_heading": 3.1914442777633667,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9098107814788818,
+   "cross_quadrant": 4.7195597887039185,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.4047139883041382,
+   "within_heading": 1.2061758041381836,
+   "cross_heading": 2.821039915084839,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0775715708732605,
+   "cross_quadrant": 4.233762085437775,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.4356791973114014,
+   "within_heading": 1.289581298828125,
+   "cross_heading": 2.4306704998016357,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.1905321180820465,
+   "cross_quadrant": 3.6379807591438293,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.4090144634246826,
+   "within_heading": 1.3468573689460754,
+   "cross_heading": 2.304339051246643,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.243512362241745,
+   "cross_quadrant": 3.3014501333236694,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.5658159255981445,
+   "within_heading": 1.4824169278144836,
+   "cross_heading": 2.3510767221450806,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3401860296726227,
+   "cross_quadrant": 3.180420696735382,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-e4-s5-probes-shuffled": {
+  "L3": {
+   "all": 1.7415786981582642,
+   "within_heading": 1.5551812946796417,
+   "cross_heading": 3.2611292004585266,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3484903872013092,
+   "cross_quadrant": 4.322503328323364,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.3056612014770508,
+   "within_heading": 1.1246713697910309,
+   "cross_heading": 3.4428523182868958,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.8745472729206085,
+   "cross_quadrant": 4.879285097122192,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.204866886138916,
+   "within_heading": 1.0291122198104858,
+   "cross_heading": 3.2556976079940796,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.8883366584777832,
+   "cross_quadrant": 4.631673455238342,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.2913604974746704,
+   "within_heading": 1.1614243388175964,
+   "cross_heading": 2.928038537502289,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0143171101808548,
+   "cross_quadrant": 4.356172502040863,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.413009762763977,
+   "within_heading": 1.3037870824337006,
+   "cross_heading": 2.6889176964759827,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.1627398431301117,
+   "cross_quadrant": 3.962081491947174,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.4713190793991089,
+   "within_heading": 1.3248564302921295,
+   "cross_heading": 2.6069474816322327,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.2109445631504059,
+   "cross_quadrant": 3.759200155735016,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.493196725845337,
+   "within_heading": 1.432598501443863,
+   "cross_heading": 2.522035598754883,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3327276110649109,
+   "cross_quadrant": 3.6397400498390198,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-e4-s5-probes-only": {
+  "L3": {
+   "all": 1.7769771814346313,
+   "within_heading": 1.5251392126083374,
+   "cross_heading": 3.2994255423545837,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3601090013980865,
+   "cross_quadrant": 4.359582364559174,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.3813446760177612,
+   "within_heading": 1.1960063576698303,
+   "cross_heading": 3.458627760410309,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9840656369924545,
+   "cross_quadrant": 4.895126461982727,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.3302801847457886,
+   "within_heading": 1.1702319383621216,
+   "cross_heading": 3.223263204097748,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9811211824417114,
+   "cross_quadrant": 4.657808780670166,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.525831699371338,
+   "within_heading": 1.3455946743488312,
+   "cross_heading": 2.944416880607605,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.1905256807804108,
+   "cross_quadrant": 4.216717422008514,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.8289157152175903,
+   "within_heading": 1.590518295764923,
+   "cross_heading": 2.94587504863739,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.4265637695789337,
+   "cross_quadrant": 4.088292241096497,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.8782885074615479,
+   "within_heading": 1.667238712310791,
+   "cross_heading": 2.7963587641716003,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.5065240561962128,
+   "cross_quadrant": 3.751003324985504,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.9174902439117432,
+   "within_heading": 1.8355903029441833,
+   "cross_heading": 2.8310449719429016,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.6085948646068573,
+   "cross_quadrant": 3.5482624173164368,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-e4-s7-probes-walk": {
+  "L3": {
+   "all": 1.8266290426254272,
+   "within_heading": 1.6082040071487427,
+   "cross_heading": 3.263220965862274,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3825302124023438,
+   "cross_quadrant": 4.425690591335297,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.4131953716278076,
+   "within_heading": 1.211770385503769,
+   "cross_heading": 3.345527946949005,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0404647290706635,
+   "cross_quadrant": 4.843160033226013,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.4247902631759644,
+   "within_heading": 1.1858435273170471,
+   "cross_heading": 3.1911526918411255,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0509016513824463,
+   "cross_quadrant": 4.50822389125824,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.4862126111984253,
+   "within_heading": 1.340581238269806,
+   "cross_heading": 2.9168184399604797,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.2124091386795044,
+   "cross_quadrant": 4.213409602642059,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.4936561584472656,
+   "within_heading": 1.3624270856380463,
+   "cross_heading": 2.539155662059784,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.2906903624534607,
+   "cross_quadrant": 3.738803803920746,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.5042587518692017,
+   "within_heading": 1.4785334765911102,
+   "cross_heading": 2.489082396030426,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3865511417388916,
+   "cross_quadrant": 3.473944067955017,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.685319185256958,
+   "within_heading": 1.6212307214736938,
+   "cross_heading": 2.5350623726844788,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.487749844789505,
+   "cross_quadrant": 3.3433040976524353,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-e4-s7-probes-shuffled": {
+  "L3": {
+   "all": 1.7563222646713257,
+   "within_heading": 1.5923552811145782,
+   "cross_heading": 3.2057842016220093,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3486253917217255,
+   "cross_quadrant": 4.3109583258628845,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.3846744298934937,
+   "within_heading": 1.1761586964130402,
+   "cross_heading": 3.453872263431549,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9928685128688812,
+   "cross_quadrant": 4.8283305168151855,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.3541069030761719,
+   "within_heading": 1.1969283521175385,
+   "cross_heading": 3.2719807624816895,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0126778185367584,
+   "cross_quadrant": 4.444384574890137,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.3981047868728638,
+   "within_heading": 1.289147824048996,
+   "cross_heading": 2.9209010004997253,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.1531127393245697,
+   "cross_quadrant": 4.279864072799683,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.4854198694229126,
+   "within_heading": 1.3926621079444885,
+   "cross_heading": 2.6221458315849304,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.2176862061023712,
+   "cross_quadrant": 3.8824771642684937,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.564609408378601,
+   "within_heading": 1.4580489695072174,
+   "cross_heading": 2.5963180661201477,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.32710799574852,
+   "cross_quadrant": 3.660239338874817,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.655066967010498,
+   "within_heading": 1.5756153762340546,
+   "cross_heading": 2.5813226103782654,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.5047372877597809,
+   "cross_quadrant": 3.5218384861946106,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-e4-s7-probes-only": {
+  "L3": {
+   "all": 1.8124668598175049,
+   "within_heading": 1.6127368807792664,
+   "cross_heading": 3.2752187848091125,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3670725524425507,
+   "cross_quadrant": 4.276433765888214,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.448582649230957,
+   "within_heading": 1.278031200170517,
+   "cross_heading": 3.40564888715744,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0806427896022797,
+   "cross_quadrant": 4.810243487358093,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.5406566858291626,
+   "within_heading": 1.2861419916152954,
+   "cross_heading": 3.302550971508026,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0823363959789276,
+   "cross_quadrant": 4.539338052272797,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.6989237070083618,
+   "within_heading": 1.5088321566581726,
+   "cross_heading": 3.0068072080612183,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3384226560592651,
+   "cross_quadrant": 4.103725790977478,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.8534759283065796,
+   "within_heading": 1.7091296911239624,
+   "cross_heading": 2.939443051815033,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.5001641511917114,
+   "cross_quadrant": 4.025765120983124,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.941285252571106,
+   "within_heading": 1.853655457496643,
+   "cross_heading": 2.9086422324180603,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.6467083990573883,
+   "cross_quadrant": 3.838818371295929,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 2.095130205154419,
+   "within_heading": 2.0887570083141327,
+   "cross_heading": 3.0351449251174927,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.8803459107875824,
+   "cross_quadrant": 3.759847402572632,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-e4-s3-probes-walk": {
+  "L3": {
+   "all": 1.7880194187164307,
+   "within_heading": 1.5959438681602478,
+   "cross_heading": 3.233448028564453,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3606925904750824,
+   "cross_quadrant": 4.363752782344818,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.3502711057662964,
+   "within_heading": 1.1519003212451935,
+   "cross_heading": 3.378585398197174,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9675976634025574,
+   "cross_quadrant": 5.008857488632202,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.3152525424957275,
+   "within_heading": 1.1397344172000885,
+   "cross_heading": 3.2383651733398438,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9483700394630432,
+   "cross_quadrant": 4.708084762096405,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.3549647331237793,
+   "within_heading": 1.2012293338775635,
+   "cross_heading": 2.7351170778274536,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0634258836507797,
+   "cross_quadrant": 4.052969217300415,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.2915489673614502,
+   "within_heading": 1.243317574262619,
+   "cross_heading": 2.3713950514793396,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.168607085943222,
+   "cross_quadrant": 3.5791985988616943,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.392288327217102,
+   "within_heading": 1.328609436750412,
+   "cross_heading": 2.3680668473243713,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.2149775326251984,
+   "cross_quadrant": 3.3909971117973328,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.5010844469070435,
+   "within_heading": 1.4214070737361908,
+   "cross_heading": 2.365536689758301,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3944105505943298,
+   "cross_quadrant": 3.278717875480652,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-e4-s3-probes-shuffled": {
+  "L3": {
+   "all": 1.729701280593872,
+   "within_heading": 1.6004279553890228,
+   "cross_heading": 3.200698971748352,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3729078769683838,
+   "cross_quadrant": 4.367761731147766,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.2988440990447998,
+   "within_heading": 1.1440830826759338,
+   "cross_heading": 3.465259552001953,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9272350966930389,
+   "cross_quadrant": 4.865904331207275,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.2830133438110352,
+   "within_heading": 1.0912723541259766,
+   "cross_heading": 3.326763391494751,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.940334364771843,
+   "cross_quadrant": 4.678776383399963,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.219482421875,
+   "within_heading": 1.1105582416057587,
+   "cross_heading": 2.74633127450943,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9937592893838882,
+   "cross_quadrant": 4.107836663722992,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.2968921661376953,
+   "within_heading": 1.1852298080921173,
+   "cross_heading": 2.537245273590088,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0724783539772034,
+   "cross_quadrant": 3.773943245410919,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.4826796054840088,
+   "within_heading": 1.2664703726768494,
+   "cross_heading": 2.5225964784622192,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.1874232590198517,
+   "cross_quadrant": 3.7027129530906677,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.4389314651489258,
+   "within_heading": 1.3633503019809723,
+   "cross_heading": 2.426593065261841,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.2743108868598938,
+   "cross_quadrant": 3.5255004167556763,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-e4-s3-probes-only": {
+  "L3": {
+   "all": 1.793591022491455,
+   "within_heading": 1.575950562953949,
+   "cross_heading": 3.2786548137664795,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3536896407604218,
+   "cross_quadrant": 4.3634461760520935,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.4304665327072144,
+   "within_heading": 1.2212553918361664,
+   "cross_heading": 3.4443018436431885,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0495267659425735,
+   "cross_quadrant": 4.9287461042404175,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.4307302236557007,
+   "within_heading": 1.2182329595088959,
+   "cross_heading": 3.2607582211494446,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9974099844694138,
+   "cross_quadrant": 4.766873121261597,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.4921520948410034,
+   "within_heading": 1.319629728794098,
+   "cross_heading": 2.855383574962616,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.188209056854248,
+   "cross_quadrant": 4.043613910675049,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.657961130142212,
+   "within_heading": 1.5184471309185028,
+   "cross_heading": 2.735252261161804,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3643216788768768,
+   "cross_quadrant": 3.8076248168945312,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.7475156784057617,
+   "within_heading": 1.602362871170044,
+   "cross_heading": 2.726207137107849,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.4491559565067291,
+   "cross_quadrant": 3.6731924414634705,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.8103214502334595,
+   "within_heading": 1.698937565088272,
+   "cross_heading": 2.74332058429718,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.5966196060180664,
+   "cross_quadrant": 3.507928729057312,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-e4-s4-probes-walk": {
+  "L3": {
+   "all": 1.7818588018417358,
+   "within_heading": 1.602268934249878,
+   "cross_heading": 3.2348915338516235,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3858415484428406,
+   "cross_quadrant": 4.4464486837387085,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.362928867340088,
+   "within_heading": 1.1497136354446411,
+   "cross_heading": 3.4543960094451904,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0099808722734451,
+   "cross_quadrant": 4.968868970870972,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.2359306812286377,
+   "within_heading": 1.0467814207077026,
+   "cross_heading": 3.2672849893569946,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.8699339777231216,
+   "cross_quadrant": 4.855469524860382,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.3297135829925537,
+   "within_heading": 1.1242083609104156,
+   "cross_heading": 2.869124174118042,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0219776928424835,
+   "cross_quadrant": 4.402714669704437,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.337914228439331,
+   "within_heading": 1.2473288178443909,
+   "cross_heading": 2.343324840068817,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.1654365062713623,
+   "cross_quadrant": 3.5708637833595276,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.4626188278198242,
+   "within_heading": 1.3376513421535492,
+   "cross_heading": 2.290146589279175,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.2249775230884552,
+   "cross_quadrant": 3.3972058296203613,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.4982622861862183,
+   "within_heading": 1.4273086488246918,
+   "cross_heading": 2.3269336223602295,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.2997114658355713,
+   "cross_quadrant": 3.326298236846924,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-e4-s4-probes-shuffled": {
+  "L3": {
+   "all": 1.730583906173706,
+   "within_heading": 1.580745667219162,
+   "cross_heading": 3.2341941595077515,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3579047620296478,
+   "cross_quadrant": 4.34655886888504,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.3193566799163818,
+   "within_heading": 1.1644830405712128,
+   "cross_heading": 3.4589732885360718,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9103262275457382,
+   "cross_quadrant": 4.955634593963623,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.2088580131530762,
+   "within_heading": 1.0219281613826752,
+   "cross_heading": 3.382078766822815,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9025212377309799,
+   "cross_quadrant": 4.764979958534241,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.2423292398452759,
+   "within_heading": 1.100994735956192,
+   "cross_heading": 2.969709873199463,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.940159410238266,
+   "cross_quadrant": 4.430773675441742,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.3550653457641602,
+   "within_heading": 1.1936188340187073,
+   "cross_heading": 2.468918740749359,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0942758619785309,
+   "cross_quadrant": 3.8754628896713257,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.3730913400650024,
+   "within_heading": 1.2828148305416107,
+   "cross_heading": 2.479693353176117,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.183344304561615,
+   "cross_quadrant": 3.608532667160034,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.4378886222839355,
+   "within_heading": 1.3681026995182037,
+   "cross_heading": 2.4213677644729614,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.2647613883018494,
+   "cross_quadrant": 3.4190107583999634,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-e4-s4-probes-only": {
+  "L3": {
+   "all": 1.7779440879821777,
+   "within_heading": 1.592432677745819,
+   "cross_heading": 3.2657408714294434,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.382635772228241,
+   "cross_quadrant": 4.29862779378891,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.4703291654586792,
+   "within_heading": 1.2427433729171753,
+   "cross_heading": 3.4797123670578003,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0274412482976913,
+   "cross_quadrant": 4.845703959465027,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.3932136297225952,
+   "within_heading": 1.1597663164138794,
+   "cross_heading": 3.372093975543976,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9658678025007248,
+   "cross_quadrant": 4.866610527038574,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.5033345222473145,
+   "within_heading": 1.3058466613292694,
+   "cross_heading": 2.9978765845298767,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.1639280021190643,
+   "cross_quadrant": 4.360520303249359,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.6502172946929932,
+   "within_heading": 1.517930269241333,
+   "cross_heading": 2.77617084980011,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3194514214992523,
+   "cross_quadrant": 3.9687657952308655,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.7893483638763428,
+   "within_heading": 1.670856922864914,
+   "cross_heading": 2.8371822237968445,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.4544597864151,
+   "cross_quadrant": 3.7924169301986694,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.9387668371200562,
+   "within_heading": 1.8205386400222778,
+   "cross_heading": 2.8539671897888184,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.6588129997253418,
+   "cross_quadrant": 3.7006086707115173,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-e4-s6-probes-walk": {
+  "L3": {
+   "all": 1.7898917198181152,
+   "within_heading": 1.5633955895900726,
+   "cross_heading": 3.250372588634491,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3438146710395813,
+   "cross_quadrant": 4.3881202936172485,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.329117774963379,
+   "within_heading": 1.1014406085014343,
+   "cross_heading": 3.449056386947632,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9455419778823853,
+   "cross_quadrant": 4.89717972278595,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.2700272798538208,
+   "within_heading": 1.039400041103363,
+   "cross_heading": 3.284527540206909,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9069865942001343,
+   "cross_quadrant": 4.770465552806854,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.3188362121582031,
+   "within_heading": 1.1779386401176453,
+   "cross_heading": 2.780669391155243,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.049418330192566,
+   "cross_quadrant": 4.293294668197632,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.313408374786377,
+   "within_heading": 1.2437044978141785,
+   "cross_heading": 2.4949657917022705,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.1242143213748932,
+   "cross_quadrant": 3.741186261177063,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.4173758029937744,
+   "within_heading": 1.3304301798343658,
+   "cross_heading": 2.424000561237335,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.223786860704422,
+   "cross_quadrant": 3.5888513326644897,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.5042433738708496,
+   "within_heading": 1.4334655106067657,
+   "cross_heading": 2.4406923055648804,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3521549105644226,
+   "cross_quadrant": 3.4156811237335205,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-e4-s6-probes-shuffled": {
+  "L3": {
+   "all": 1.6971551179885864,
+   "within_heading": 1.5716645121574402,
+   "cross_heading": 3.2186174988746643,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3765389323234558,
+   "cross_quadrant": 4.383092105388641,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.3042124509811401,
+   "within_heading": 1.1146444976329803,
+   "cross_heading": 3.390565514564514,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.8837682455778122,
+   "cross_quadrant": 4.8975852727890015,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.2053366899490356,
+   "within_heading": 1.004539430141449,
+   "cross_heading": 3.3221200704574585,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.8568977564573288,
+   "cross_quadrant": 4.774931311607361,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.305564045906067,
+   "within_heading": 1.1483757197856903,
+   "cross_heading": 2.8470510244369507,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.0311794877052307,
+   "cross_quadrant": 4.305321156978607,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.3175431489944458,
+   "within_heading": 1.2257923483848572,
+   "cross_heading": 2.5474522709846497,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.1042606979608536,
+   "cross_quadrant": 3.944803297519684,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.3959347009658813,
+   "within_heading": 1.3292198777198792,
+   "cross_heading": 2.501017987728119,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.2159335315227509,
+   "cross_quadrant": 3.822556257247925,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.507934331893921,
+   "within_heading": 1.404856652021408,
+   "cross_heading": 2.512190878391266,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3244039416313171,
+   "cross_quadrant": 3.6277658939361572,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ },
+ "qwen8b-ft-e4-s6-probes-only": {
+  "L3": {
+   "all": 1.7574862241744995,
+   "within_heading": 1.5534600615501404,
+   "cross_heading": 3.334414064884186,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3734139204025269,
+   "cross_quadrant": 4.4314069747924805,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L8": {
+   "all": 1.3847929239273071,
+   "within_heading": 1.1906743347644806,
+   "cross_heading": 3.4185768365859985,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9907598942518234,
+   "cross_quadrant": 4.925874352455139,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L13": {
+   "all": 1.341059923171997,
+   "within_heading": 1.127287119626999,
+   "cross_heading": 3.3751484751701355,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 0.9334217011928558,
+   "cross_quadrant": 4.838093400001526,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L18": {
+   "all": 1.589199185371399,
+   "within_heading": 1.3536912202835083,
+   "cross_heading": 2.905024766921997,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.174851804971695,
+   "cross_quadrant": 4.219292640686035,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L23": {
+   "all": 1.6201435327529907,
+   "within_heading": 1.5174295008182526,
+   "cross_heading": 2.8679001927375793,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.3949020504951477,
+   "cross_quadrant": 3.9724170565605164,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L29": {
+   "all": 1.734856367111206,
+   "within_heading": 1.6448605954647064,
+   "cross_heading": 2.8942970633506775,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.4836831092834473,
+   "cross_quadrant": 3.8140434622764587,
+   "cross_quadrant_chance": 3.6216806769371033
+  },
+  "L35": {
+   "all": 1.93617844581604,
+   "within_heading": 1.815577208995819,
+   "cross_heading": 2.9008354544639587,
+   "chance": 3.6243855953216553,
+   "cross_heading_chance": 3.6186850666999817,
+   "within_quadrant": 1.5899944603443146,
+   "cross_quadrant": 3.6020249724388123,
+   "cross_quadrant_chance": 3.6216806769371033
+  }
+ }
+}

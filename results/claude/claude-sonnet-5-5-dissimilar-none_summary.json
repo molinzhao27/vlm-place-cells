@@ -2,31 +2,31 @@
  "choice/reasoning/familiar": {
   "n": 90,
   "valid": 1.0,
-  "accuracy": 0.5888888888888889,
+  "accuracy": 0.6444444444444445,
   "pixel_match_accuracy": 0.4666666666666667,
-  "accuracy_when_pixels_favour_far": 0.6041666666666666,
-  "picked_option_facing_like_probe": 0.5,
+  "accuracy_when_pixels_favour_far": 0.7291666666666666,
+  "picked_option_facing_like_probe": 0.5333333333333333,
   "human_page_trials": [
    0,
    0
   ],
   "median_output_tokens": 343,
-  "accuracy_when_frame_order_favours_far": 0.29411764705882354,
+  "accuracy_when_frame_order_favours_far": 0.4117647058823529,
   "cost_usd": 0.6
  },
  "choice/reasoning/novel": {
   "n": 102,
   "valid": 1.0,
-  "accuracy": 0.5,
+  "accuracy": 0.5882352941176471,
   "pixel_match_accuracy": 0.5294117647058824,
-  "accuracy_when_pixels_favour_far": 0.5208333333333334,
-  "picked_option_facing_like_probe": 0.5098039215686274,
+  "accuracy_when_pixels_favour_far": 0.6458333333333334,
+  "picked_option_facing_like_probe": 0.5784313725490197,
   "human_page_trials": [
-   21,
+   25,
    43
   ],
   "median_output_tokens": 343,
-  "accuracy_when_frame_order_favours_far": 0.6285714285714286,
+  "accuracy_when_frame_order_favours_far": 0.5142857142857142,
   "cost_usd": 1.77
  }
 }

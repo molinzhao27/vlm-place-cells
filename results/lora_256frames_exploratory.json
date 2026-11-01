@@ -58,8 +58,8 @@
   "trials_3plus_runs_wrong_256": 105,
   "trials_3plus_runs_wrong_64": 31,
   "trials_all_runs_wrong_256": 46,
-  "opus_wrong_overall": 0.30331023864511164,
-  "opus_wrong_on_3plus_256": 0.6571428571428571
+  "opus_wrong_overall": 0.2678983833718245,
+  "opus_wrong_on_3plus_256": 0.6952380952380952
  },
  "drop_by_option_gap": [
   {

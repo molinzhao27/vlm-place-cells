@@ -27,7 +27,7 @@ Registration appendix lists when each rule was logged and first committed public
 Accuracies are on novel-view trials unless stated; chance is 50%.
 
 1. **Units that pass rodent place-cell criteria are everywhere, so on their own they mean little.**
-   Raw pixels produce 72% place units and random-weight networks 79-81%. What separates a place
+   Raw pixels produce 72% place units and random-weight networks 61-81%. What separates a place
    code from a view code is heading invariance. We call a place unit strictly invariant when its
    rate maps agree (correlation above 0.5) across all six pairs of 90° heading sectors.
    Path-integrating RNNs pass at 97-100%, which validates the test, whereas VLM units on single
@@ -38,12 +38,12 @@ Accuracies are on novel-view trials unless stated; chance is 50%.
    at chance across ten held-out rooms (52%). On trials where only the far frame shares a landmark
    with the new view, removing that landmark changes only 4 of 38 answers. Neither scale nor a
    published spatial fine-tune fixes this.
-3. **A small fine-tuned model solves the task in procedural rooms.** LoRA on 1,200 procedural rooms
+3. **A small fine-tuned model solves the task in procedural rooms.** LoRA on 1,136 procedural rooms
    (about 0.5% of the weights, answer-only loss) with a four-epoch recipe reaches 97.1% across ten
    held-out rooms (96.3-97.4% over five runs; an earlier two-epoch schedule was unreliable, at
    69-93%).
    - It beats all 149 retrieval rules we tested, the highest of which reaches 67.7%, by at least
-     26.7 points in every difficulty bin. A trained sequence matcher reaches 73.3%.
+     26.0 points in every difficulty bin. A trained sequence matcher reaches 73.3%.
    - It depends on the walk's order: ordered beats shuffled by 15.1-42.9 points, depending on the run.
    - It holds on walks unlike the training walks (95.5-97.5%, 27.8-31.2 points above retrieval).
 4. **The photoreal scenes do not settle the question.** The four-epoch mean is 94.4% across all 34
@@ -57,19 +57,22 @@ Accuracies are on novel-view trials unless stated; chance is 50%.
    (0.39-0.49). No position code carries across rooms.
 6. **The decision depends more on where frames were taken than on what they show.** When we
    re-render the eight shown frames around the near option, changing the place costs 21.1-22.4
-   points and changing the view 5.2-5.6 (runs 5 and 7). Moving frames the decision does not depend
-   on costs about nothing, while moving the far option's frames next to the new view pulls the
-   decision by 10.2-11.1 points. The pull is partial: accuracy stays at 87.9% and 86.6%.
-7. **Claude Opus 5.5 gains from the walk but stays at retrieval level in the procedural rooms.** It
-   gains 6.4 points [4.1, 8.2] in the ten held-out rooms and 26.2 [24.3, 28.4] in eight HSSD houses,
-   yet in the held-out rooms it does no better than retrieval (69.2%). Matched on frames, order, labels
-   and question, the fine-tuned model leads it by 22.2 points [19.6, 25.2]. GPT-6 Astra also gains
-   from the walk in room A; Kimi K3, DeepSeek V4.1 Flash and the open models we could screen do not.
+   points and changing the view 5.2-5.6 (runs 5 and 7). Moving a block of frames away from both
+   options, or moving the far option's frames elsewhere, costs about nothing, while moving the far
+   option's frames next to the new view pulls the decision by 10.2-11.1 points. The pull is partial:
+   accuracy stays at 87.9% and 86.6%.
+7. **Claude Opus 5.5 gains from the walk but is not clearly above retrieval in the procedural
+   rooms.** It gains 9.7 points [7.0, 12.1] in the ten held-out rooms and 28.0 [26.2, 30.5] in eight
+   HSSD houses. In the held-out rooms it reaches 72.9%, which is 5.2 points [-0.3, 10.9] above
+   retrieval. Matched on frames, order, labels and question, the fine-tuned model leads it by 18.6
+   points [16.6, 20.8]. GPT-6 Astra also gains from the walk in room A; Kimi K3, DeepSeek V4.1 Flash
+   and the open models we could screen do not. API replies are scored by the answer they state
+   (`spatialcells/answers.py`; see "Scoring correction" in the experiment notes).
 8. **VGGT, the positive control, has a causal pose code.** Its heading invariance is intermediate
    (34% of place units on single frames with anchors). Copying the camera token's ten main
-   directions from one frame to another at block 21 moves the reported position 0.85 of the way to
-   the donor, ordinary PCA with no position labels recovers them (0.86), and no 2-d subspace we
-   tested comes close. Heading and camera-frame parts are both needed and split the head's outputs.
+   directions from one frame to another at block 21 moves the reported position 0.86 of the way to
+   the donor. These come from ordinary PCA with no position labels; a position-labeled subspace
+   gives 0.85 and overlaps them 0.85, and no 2-d subspace we tested comes close. Heading and camera-frame parts are both needed and split the head's outputs.
 9. **The result rests on one model family.** The same recipe on Gemma 4 12B did not meet the bar in
    three runs (54.7-81.3% on held-out validation rooms).
 10. **The grid-cell scorer works, and no model has grid cells.** A path-integrating RNN trained
@@ -84,7 +87,7 @@ Novel-view trials, with the walk. Lure-free trials; chance 50%.
 |---|---|---|
 | Qwen3-VL-8B + LoRA, four-epoch mean (64-frame walk) | **97.1%** | **88.1%** |
 | The same, on Opus's 256-frame walk | 91.4% | not run |
-| Claude Opus 5.5 (256-frame walk) | 69.2% | 84.5% |
+| Claude Opus 5.5 (256-frame walk) | 72.9% | 85.0% |
 | Trained sequence matcher | 73.3% | 47.8% |
 | Highest of 149 retrieval rules, on these trials | 67.7% | 74.9% |
 
@@ -108,6 +111,7 @@ spatialcells/            the package (run modules with python -m spatialcells.<m
   dissimilar_trials.py   the lure-free trial set
   two_choice.py          two-choice test for any Hugging Face VLM (optionally a LoRA adapter)
   claude_test.py         the same test through the Anthropic API; api_test.py for other providers
+  answers.py             the answer a free-text API reply states
   std_bench.py           VSI-Bench and MindCube
   task_record.py, task_probe.py, e4_internals.py      the fine-tuned model recorded during the task
   lure_edit.py           lure trials re-rendered without the shared landmark
@@ -153,7 +157,7 @@ produced it. The GPU experiments ran on a 96 GB RTX PRO 6000, a 32 GB RTX 5090, 
 
 ## Data and adapters
 
-- Walk frames, the training rooms and every per-trial answer:
+- Walk frames, the training rooms and every model's per-trial answer:
   [molinzhao/vlm-place-cells](https://huggingface.co/datasets/molinzhao/vlm-place-cells).
 - LoRA adapters (runs 0-2, the GPU control and the four-epoch runs 3-7):
   [molinzhao/vlm-place-cells-lora](https://huggingface.co/molinzhao/vlm-place-cells-lora).

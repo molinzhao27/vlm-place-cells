@@ -35,6 +35,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 
 from . import claude_test as ct
+from .answers import stated_answer
 
 OUT = "results/api"
 PROVIDERS = {"moonshot": "https://api.moonshot.ai/v1", "deepinfra": "https://api.deepinfra.com/v1/openai",
@@ -270,8 +271,7 @@ def run(args):
         m = r.choices[0].message
         text = m.content or ""
         reasoning = getattr(m, "reasoning_content", None) or (m.model_extra or {}).get("reasoning_content") or ""
-        nums = [int(x) for x in re.findall(r"\d+", text)]
-        ans = next((x for x in nums if x in (t["a"], t["b"])), -1)
+        ans = stated_answer(text, t["a"], t["b"])
         u = usage(r)
         return {"id": t["id"], "walk": t["walk"], "probe": t["probe"], "familiar": t["familiar"], "near": t["near"],
                 "far": t["far"], "a": t["a"], "b": t["b"], "answer": ans, "correct": ans == t["near"], "text": text[-600:],

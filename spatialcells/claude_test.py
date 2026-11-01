@@ -47,6 +47,8 @@ import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 
+from .answers import stated_answer
+
 EXPORT = "results/export/claude"          # walk frames (and the original trials' probes); set from --trials
 TRIAL_SETS = {"original": "results/export/claude", "dissimilar": "results/export/dissimilar"}
 
@@ -204,11 +206,11 @@ def run(args):
         text = "".join(b.text for b in r.content if b.type == "text")
         thinking = "".join(b.thinking for b in r.content if b.type == "thinking")
         u = r.usage.model_dump() if hasattr(r.usage, "model_dump") else dict(r.usage)
-        nums = [int(x) for x in re.findall(r"\d+", text)]
         if lab:                                                  # back to original frame numbers
             back = {lab[t["a"]]: t["a"], lab[t["b"]]: t["b"]}
-            nums = [back[x] for x in nums if x in back]
-        ans = next((x for x in nums if x in (t["a"], t["b"])), -1)
+            ans = back.get(stated_answer(text, lab[t["a"]], lab[t["b"]]), -1)
+        else:
+            ans = stated_answer(text, t["a"], t["b"])
         rec = {"id": t["id"], "walk": t["walk"], "probe": t["probe"], "familiar": t["familiar"], "near": t["near"],
                "far": t["far"], "a": t["a"], "b": t["b"], "answer": ans, "correct": ans == t["near"],
                "text": text, "thinking": thinking, "stop_reason": r.stop_reason, "usage": u,

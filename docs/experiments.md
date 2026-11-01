@@ -7332,6 +7332,182 @@ registered analysis. It works against this paper: Opus scores higher and the fin
 Replies are stored in full for Claude, so no API call is repeated. `scripts/rescore_api.py` rewrites `answer` and `correct`
 in place and keeps the old value as `answer_first`. Earlier entries in this file keep the numbers as first reported.
 
+### Scoring correction: results (2026-11-01 13:44 PST)
+
+`scripts/rescore_api.py` changed 1,044 of the 22,423 stored replies, in 93 of the 153 files: 684 went from wrong to right,
+353 from right to wrong, and 7 are now unparsed (4 of them had been scored right). No reply needed a
+new API call, and every other field is as it was.
+
+| Model | Replies | Changed | To right | To wrong | Now unparsed |
+|---|---|---|---|---|---|
+| Opus 5.5 | 16,471 | 461 | 344 | 117 | 0 |
+| Sonnet 5.5 | 1,536 | 482 | 284 | 198 | 0 |
+| Haiku 5.5 | 1,536 | 39 | 20 | 19 | 1 |
+| DeepSeek V4.1 Flash | 384 | 16 | 12 | 4 | 0 |
+| MiniMax-M3 | 384 | 22 | 14 | 7 | 1 |
+| MiMo-V2.6-Pro | 384 | 18 | 8 | 10 | 1 |
+| Muse Spark Open | 384 | 5 | 2 | 2 | 3 |
+| Qwen3.5-397B | 384 | 1 | 0 | 0 | 1 |
+| Kimi K3 | 384 | 0 | 0 | 0 | 0 |
+| GPT-6 Astra | 576 | 0 | 0 | 0 | 0 |
+
+"To wrong" counts every reply that had been right, so it includes the unparsed ones that had been right.
+
+**Checks.** Before the rewrite, the old rule, reimplemented, reproduced every stored answer on the 22,285 replies stored in
+full (0 mismatches), the one relabeled run included. A second run of the script changes no byte. Every answer is a, b or -1,
+`correct` equals `answer == near` on every record, and no bare-number reply changed. `results/two_choice` is byte-identical.
+On the 1,299 held-out novel trials with the walk, the rule changes 110 replies; the note above's 116 is the count that differ
+from the last option mentioned, and the other 6 open with their answer.
+
+**Baseline.** Before any change, each analysis ran on the stored replies and was compared key by key with its stored JSON.
+50 of 52 outputs reproduced exactly: all the per-run `--score` summaries, `claude_grid_table.py`, the gains in
+`or_screen.json`, `heldout_analysis.py`, `photoreal_analysis.py`, `hssd_analysis.py`, `lure_edit_analysis.py`,
+`seed_scenes_analysis.py`, `gemma_scenes_analysis.py`, `exp19_analysis.py`, `retrieval_baselines.py analyze`,
+`learned_matcher.py analyze`, `lora256_analysis.py`, `lora256_exploratory.py` and `e4_internals_analysis.py`. `make_facts.py`
+reproduced `facts.tex` byte for byte. The two exceptions are stale, not wrong: `appearance_cue.json` and `review_stats.json`
+predate the newest reply files, so a rerun only adds keys, and every value they already held stands (the 67 positions that
+differ in `review_stats.json` are its flag list, which grew from 34 to 344 entries). Containment for these two was measured
+against a fresh pre-correction rerun.
+- `results/api/or_screen.json`: `or_screen.py`'s main loop calls the API, so it was not run. The gains came from its own
+  `gain()`, which reproduced the stored values first.
+- `results/claude/shuffled_walk.json` has no script. A rebuild reproduced it exactly before the correction and refreshed it after.
+- `results/review/preprint-audit-2026-10-23.json` is dated evidence from before Exp 10's rerun and does not reproduce (98
+  leaves, all from the missing walks). It stays as it is, so `review_stats.json` now reports four Opus contrasts as
+  disagreeing with it.
+
+**Containment.** The regeneration ran as gq mac:154 (12 minutes). 29 summary files changed. Every changed key comes from Claude
+or API answers. Exp 14c and every Opus run at high effort do not move, since those replies are bare numbers. In the regenerated JSON no key
+for a LoRA run, the base model, Gemma, VGGT, the matcher or a retrieval rule moved. The keys that name no model were read by
+hand: Exp 14b's Opus shuffled arm, the leads over Opus, and the positional flag list, where only 9 entries differ, all Claude
+runs. 988 of the 10,904 facts macros change (840 without their bare-number twins), all Opus or API derived, with one frozen
+`make_facts.py` on both sides.
+
+**Corrected values** (old -> new; points; "lead" is the four-epoch LoRA minus Opus, as a mean over runs with the range over
+runs).
+
+| Held-out rooms, novel trials, room means | Old | New |
+|---|---|---|
+| Opus, walk | 69.2 [66.2, 71.7] | **72.9** [70.4, 75.0] |
+| Opus, no walk | 62.8 [59.7, 65.6] | 63.2 [60.1, 65.9] |
+| Opus walk gain | +6.4 [+4.1, +8.2], 9/10 rooms | **+9.7** [+7.0, +12.1], 10/10 rooms |
+| Opus walk gain, trials better/worse | 282/200 | 296/172 |
+| Opus, shuffled walk | 77.0 [75.5, 78.8] | 78.8 [77.2, 80.7] |
+| Opus ordered minus shuffled | -7.8 [-11.6, -4.8] | -5.9 [-8.2, -3.9], shuffled ahead in 10/10 rooms in both |
+| Lead with matched 256-frame walks | +22.2 [+19.6, +25.2] (+21.3 to +23.5) | **+18.6** [+16.6, +20.8] (+17.7 to +19.8), 10/10 rooms |
+| Lead at 64 frames | +27.9 (+27.0 to +28.2) | +24.2 (+23.4 to +24.6) |
+| Share of the 64-frame lead retained at 256 | 0.80 | 0.77 |
+| Run 0 minus Opus | +23.3 [+20.8, +26.2] | +19.6 [+17.4, +22.1], 10/10 rooms |
+
+| Leads by scene set | Old | New |
+|---|---|---|
+| Apartments 0-2, all trials | +7.4 (+6.8 to +8.2) | +5.2 (+4.6 to +6.0) |
+| Apartments 0-2, novel | -4.1 (-5.2 to -1.7) | unchanged |
+| Houses 1-8, all, house mean | +6.6 (+6.0 to +7.1) | +4.5 (+3.9 to +5.0) |
+| Houses 1-8, novel, house mean | +5.4 (+4.5 to +6.3) | +4.8 (+3.9 to +5.7) |
+| New houses (Exp 19), all, scene mean | +8.9 (+7.6 to +9.6) | +5.7 (+4.4 to +6.4) |
+| New houses, novel, scene mean | +10.9 (+10.5 to +11.2) | +7.5 (+7.2 to +7.9) |
+| All 13 Opus houses, all, scene mean | +7.5 (+7.3 to +8.0) | +5.0 (+4.7 to +5.4) |
+| FRL apartments, all, pooled | +0.3 (-0.3 to +0.7) | -1.0 (-1.7 to -0.7), Opus 99.3, no run significant |
+| All apartments, all, pooled | +4.7 (+4.2 to +5.2) | +2.9 (+2.4 to +3.4) |
+| All apartments, novel, pooled (67 trials) | -3.6 (-4.5 to -1.5) | unchanged, Opus 91.0 |
+
+| Opus minus the best retrieval rule, novel, scene means | Old | New |
+|---|---|---|
+| Held-out rooms | +1.6 [-3.9, +7.3] | **+5.2** [-0.3, +10.9] |
+| Photoreal | +9.6 [+2.5, +16.2] | +10.1 [+2.8, +16.9] |
+| Houses | +12.1 [+6.9, +17.1] | +12.7 [+7.3, +18.1] |
+| Apartments | +3.2 [-16.7, +26.2] | unchanged |
+
+| Opus elsewhere | Old | New |
+|---|---|---|
+| Room A, low effort, novel: walk / no walk | 74.5 / 60.8 | 76.5 / 60.8 |
+| Room A, walk gain (bootstrap over walks) | +13.7 [-1.3, +28.2], 26/12, p 0.034 | +15.7 [+1.0, +29.6], 25/9, p 0.009 |
+| Room A: shuffled / relabeled / familiar with walk | 81.4 / 75.5 / 78.9 | 80.4 / 79.4 / 83.3 |
+| Room B, low effort, novel: walk / no walk | 64.2 / 63.2 | 68.9 / 61.3 |
+| Room B, walk gain (bootstrap over walks) | +0.9 [-11.0, +12.5], 22/21, p 1.0 | +7.5 [-5.1, +19.7], 25/17, p 0.28 |
+| Room B, run 0 against Opus, better/worse trials | 36 better, p 4e-8 | 31 better, p 8e-7 |
+| Apartments 0-2, all: walk / no walk / shuffled | 84.1 / 55.7 / 88.1 | 86.3 / 55.7 / 89.9 |
+| Apartments 0-2, walk gain | +28.4, 174/31 | +30.6, 179/25 |
+| Apartments 0-2, ordered minus shuffled | -4.0, 18/38, p 0.01 | -3.6, 9/27, p 0.004 |
+| Apartments 0-2, run 0 minus Opus | +2.6, 62/49, p 0.25 | +0.4, 52/50, p 0.92 |
+| Houses 1-8, all: walk (house mean) / no walk / shuffled | 87.7 (87.9) / 61.7 / 89.2 | 89.8 (90.0) / 61.8 / 90.8 |
+| Houses 1-8, walk gain | +26.1, 453/75 | +28.0, 463/57 |
+| Houses 1-8, run 0 minus Opus, house mean | +4.1 [+2.5, +5.7] | +2.0 [-0.2, +4.1] |
+| Exp 19 Opus scenes, walk / no walk | 88.4 / 61.2 | 91.1 / 61.8 |
+| Exp 19, Opus walk gain | +27.1, 380/63 | +29.3, 382/40 |
+
+| Room A, novel, 102 trials (effort none / low / medium / high) | Old | New |
+|---|---|---|
+| Sonnet, walk | 50.0 / 52.0 / 52.0 / 69.6 | **58.8 / 66.7 / 69.6** / 69.6 |
+| Sonnet, no walk | 55.9 / 52.0 / 53.9 / 63.7 | 59.8 / 61.8 / 52.9 / 63.7 |
+| Haiku, walk | 59.8 / 52.9 / 53.9 / 55.9 | unchanged |
+| Haiku, no walk | 62.7 / 58.8 / 61.8 / 66.7 | 67.6 / 58.8 / 61.8 / 66.7 |
+| Opus, walk (low / medium / high) | 74.5 / 74.5 / 74.5 | 76.5 / 74.5 / 74.5 |
+| Opus, no walk (low / medium / high) | 60.8 / 65.7 / 62.7 | unchanged |
+
+| Other providers, room A, novel: walk / no walk, walk better/worse, p | Old | New |
+|---|---|---|
+| Kimi K3 | 57.8 / 60.8, p 0.70 | unchanged |
+| DeepSeek V4.1 Flash | 56.9 / 58.8, 24/26, p 0.89 | 56.9 / **63.7**, 19/26, p 0.37 |
+| GPT-6 Astra (shuffled 77.5) | 71.6 / 51.0, p 0.004 | unchanged |
+| MiniMax-M3 | 52.9 / 58.8, 21/27, p 0.47 | 55.9 / 60.8, 23/28, p 0.58 |
+| MiMo-V2.6-Pro | 53.9 / 56.9, 20/23, p 0.76 | 51.0 / 56.9, 19/25, p 0.45 |
+| Muse Spark Open | 64.7 / 59.8, 21/16, p 0.51 | 64.7 / 58.8, 21/15, p 0.41 |
+| Qwen3.5-397B, 160 frames | 52.9 / 56.9 | unchanged (one more unparsed reply, 30 vs 29) |
+
+No model in the screen reaches its threshold (p < 0.00625).
+
+**Registered verdicts, recomputed on the corrected scores.**
+
+| Experiment | Registered test | Result |
+|---|---|---|
+| 10 | Opus walk gain: CI of the mean excludes 0 | **Holds**, stronger: +9.7 [+7.0, +12.1], 10/10 rooms |
+| 12 | Questions, no thresholds | **Holds.** The LoRA and base answers don't change. Opus gains +30.6, and with run 0 is now level on all trials (+0.4, p 0.92) |
+| 14b | "Opus does not use the walk's order" only if the CI of ordered minus shuffled lies within +/-3 | **Holds: still not claimed.** [-8.2, -3.9]. Shuffled stays ahead in 10/10 rooms and in the apartments (p 0.004) |
+| 16 | Opus walk gain; at least as good shuffled as ordered | **Holds.** +28.0, house CI [+26.2, +30.5]; shuffled minus ordered +1.0, 69/54, p 0.21 |
+| 19 | 1, LoRA transfers; 2, Opus gain, pooled sign p < 0.05; 3, reported, no threshold | **Holds.** Criterion 1 has no Opus in it and is met. Criterion 2 is met, p 4e-71. Criterion 3 is in the tables above |
+| 20 | Procedural pass, photoreal fail; Opus has no threshold | **Holds.** LoRA and rule values don't change: procedural passes, photoreal fails, the retrieval account is not rejected |
+| 24 | Lead at least 10 and CI excludes 0 | **Holds: survives.** +18.6 [+16.6, +20.8], 5 of 5 runs |
+| 28 | D at least 15 points | **Holds: falls short.** D +23.8 [+21.0, +26.8], unchanged because Opus is not in it |
+
+**What the correction does change.** These readings in earlier entries, or in the papers, no longer stand as written.
+- *Sonnet.* All 482 changes are replies that end on a bare number after reasoning that names both options. Sonnet with the
+  walk scores 58.8-69.6% at every effort, not 50-52% below high effort, so Exp 5's reading that it barely does the task at low
+  and medium effort was the bug. Its first-listed rates of 70-91% were the bug too; they are 44-63%. The small-model comparison
+  and the effort analysis need rewriting.
+- *Opus and retrieval.* Exp 20's "Opus at the rules' level" in the held-out rooms is weaker: +5.2 [-0.3, +10.9], still including 0.
+- *The matcher.* Exp 28's order-free matcher no longer leads Opus in the held-out rooms: +0.4 [-3.0, +4.0], was +4.0 [-0.0, +8.5].
+- *Rooms A and B.* Opus's walk gain in room B was +0.9, read as no gain. It is now +7.5, still not significant. Room A's
+  low-effort gain now has a walk-clustered CI that excludes 0.
+- *Run 0 in the houses.* Its lead's house CI now includes 0. The four-epoch runs' CIs do not: +3.9 to +5.0, lowest bound +1.5.
+- *FRL apartments.* Every four-epoch run is now behind Opus by 0.7-1.7 points on all trials, none significantly, near the ceiling.
+- *Smaller.* DeepSeek's familiar walk gain, flagged as exploratory, is gone (p 0.047 -> 0.12). Exp 6's familiar drop when
+  relabeled becomes significant (p 0.17 -> 0.035). Haiku's walk minus no walk over efforts turns significantly negative
+  (27/48, p 0.16 -> 0.020).
+
+**Exp 14b's position breakdown** is printed only here and in six hard-coded `make_facts.py` macros, so a rerun does not update
+it. Recomputed from the replies (the same code first reproduced all 18 documented numbers): by fifths, ordered 81 / 71 / 68 /
+70 / 75%, shuffled 82 / 79 / 76 / 79 / 78%; by quarters, ordered 66 / 76 / 81 / 86%, shuffled 74 / 81 / 83 / 85%. The
+mid-walk gap falls from 13 points to 8.
+
+**Replies the rule reads differently from a human reader** (reported, `answers.py` not changed). Only the first affects a score.
+- `meta_muse-spark-open-dissimilar-nowalk-low` w08p0542, novel: ends "*Answer $138$.*", the near option. The leading `*` reads as
+  a bullet, so it is unparsed and wrong. Read by hand, Muse's no-walk score is 59.8, not 58.8, and no verdict changes.
+- `xiaomi_mimo-v2.6-pro-dissimilar-low` w14p0916: its last sentence favors frame 193, the far option, but the rule leaves it
+  unparsed. Wrong either way.
+- `xiaomi_mimo-v2.6-pro-dissimilar-low` w13p0838: cut off by the output cap before stating anything; the rule takes the last bold
+  frame, 192, the far option. It should be unparsed. Wrong either way.
+
+**Denominator.** `claude_test.py --score`, `claude_grid_table.py` and `make_facts.py`'s `valid_only` accuracies leave unparsed
+answers out, while the rule counts them wrong. One Claude reply is now unparsed (Haiku, no walk, effort none, familiar), so that
+cell reads 45/89 = 50.6% and not 45/90 = 50.0%. No other Claude cell has an unparsed reply.
+
+**Left for later.** This correction did not edit `writeup/`. The paper's own round rebuilt `kit/facts.tex` from the corrected
+results at 13:43 PST, and it matches the stand-in macro for macro. The six hard-coded Exp 14b macros, the figures in `figs_r3/`
+and the prose around the readings above still need their pass. The Hugging Face staging folder holds the old replies and
+summaries, and upload mac:153 failed on a network error at 13:09 PST, so both need `stage.py` and a new upload.
+`results/heldout_summary_incomplete.json` is an old interim file and was left as it is.
+
 ## Prior work this builds on
 
 - Luo, Mok & Love 2024, *The inevitability and superfluousness of cell types in

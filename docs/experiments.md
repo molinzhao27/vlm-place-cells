@@ -7282,6 +7282,34 @@ head's two outputs at both blocks and the second-order part is not read. The roo
 papers give the numbers with no verdict. The decline from block 19 to 21 runs with the room-frame share of the token's variance (19.8% to
 9.9%, descriptive) and the strict invariant share (34% to 19%), over two blocks only.
 
+## Scoring correction for API models (2026-11-01 13:05 PST)
+
+*Written before any stored result was changed. Corrected values follow in "Scoring correction: results".*
+
+An error audit found that `claude_test.py` and `api_test.py` scored each reply by the first number in it that matched an
+option. `two_choice.py` takes the last. For a model that reasons in its visible reply, the first option mentioned is often
+not the answer. One Opus reply on room P5000 (trial w00p0042, near frame 207, far 132) ends "so it is closer to 207.
+
+**207**" and was stored as 132, wrong. On the 1,299 held-out novel trials with the walk, the stored answer and the last
+option mentioned differ on 116 replies. The bug applies to every experiment with Claude or other API models (5, 6, 10, 11,
+12, 14b, 14c, 16, 19, 20's Opus columns, 24, 28's Opus comparison) and to the Sonnet effort analysis. Open and fine-tuned
+models are unaffected. Opus at high effort in room A is too: those replies are bare numbers.
+
+**New rule** (`spatialcells/answers.py`, `stated_answer`), in order: the last line is only an option number; an `<answer>`
+tag; the first line opens with an option number, bare or bold; the last line says "closer to", "nearer to" or "close to",
+then the first option after it; the options in bold, the only one or the last one; the last line, unless a bullet, names
+exactly one option; the reply names exactly one option. Anything else is unparsed and counts as wrong, as before.
+`api_test.py` stores only the last 600 characters, so the first-line step is skipped on truncated replies.
+
+The rule was set by reading replies, not accuracies. 22,423 replies were classed by form: 16,518 are bare numbers, 4,573
+end on a bare number, 1,064 open with one, and 155 name both options with no bare line. Those 155, and the steps they
+need, were read with near, far and correct hidden, which is how the opening-bold and `<answer>` steps were added. The
+audit had already computed outcomes under a similar rule, though, so this is a correction after seeing results, not a
+registered analysis. It works against this paper: Opus scores higher and the fine-tuned model's lead shrinks.
+
+Replies are stored in full for Claude, so no API call is repeated. `scripts/rescore_api.py` rewrites `answer` and `correct`
+in place and keeps the old value as `answer_first`. Earlier entries in this file keep the numbers as first reported.
+
 ## Prior work this builds on
 
 - Luo, Mok & Love 2024, *The inevitability and superfluousness of cell types in

@@ -5287,6 +5287,28 @@ not have, and it mostly does not need the walk's order. This assay is within one
 the code carries between rooms; experiment 22's cross-room readout does. Choosing the wording is left to the supervisor and
 the user. Run 0's claim about new views should not be stated for the four-epoch model.
 
+### Exp 25 amendment 1: four-epoch shuffled-walk frames (registered 2026-11-01 13:32 PST, before the assay ran on them)
+
+The paper's error audit found that the four-epoch runs' shuffled-walk activations were recorded (gq vast3:305,
+`data/acts/qwen8b-ft-e4-s<k>-shuffled`) but never scored: `exp25_vast3_e4.sh` listed only `walk` and `single`. So the
+statement that the late-layer walk code's order dependence is untested need not stand. No result on these tags has been
+computed or seen.
+
+**Question.** Does the four-epoch runs' heading-general position signal on walk frames depend on the walk's order?
+
+**Method.** `population_assay.py real --group conditions_e4`, unchanged, on `qwen8b-ft-e4-s<k>-shuffled` for runs 3-7
+(`scripts/exp25_shuffled_e4.sh`): the same primary assay, heading-held-out gain HG with the 45-degree gap, with the same
+layers, resamples and thresholds as the walk condition. Output `results/population_assay_e4_shuffled.json`, kept apart from
+`population_assay.json`. Primary layer 35, as for the walk tags.
+
+**Reading, fixed now.** D = HG(walk) - HG(shuffled) at layer 35, per run; calls use the assay's existing thresholds.
+- *Depends on order*: in every run D is at least 0.25 and shuffled HG is not called positive.
+- *Does not depend on order*: in every run D is under 0.10 and shuffled HG is called positive.
+- *Mixed*: anything else, reported run by run with no conclusion.
+Best-layer HG is description only.
+
+**Limits.** Room A only, as in the walk condition, and thresholds were validated on walk frames.
+
 ## Experiment 26 (pre-registered 2026-10-28 10:10 PDT, before any walk-relative readout was fit): is the new view's position coded in the walk's own coordinates?
 
 **Why.** Experiment 14a read the residual stream of the base Qwen3-VL-8B and of run 0 (the original two-epoch

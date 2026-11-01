@@ -2380,7 +2380,7 @@ correlates 0.66 with them, so the test can tell a turned map from a kept one). M
 | (ii) reordered | 0.68 | 0.85 | 0.03 | 71% | 43% (22%) |
 | (iii) rotated 45 | 0.68 | 0.95 | -0.01 | 96% | 72% (31%) |
 
-The strictly heading-invariant place units (957) give the same picture (rotated: 0.97 vs turned +45,
+The place units passing the older 180-degree halves test (957) give the same picture (rotated: 0.97 vs turned +45,
 99% closer to it). Position decoders trained on one set fail on another (2.7-3.8 m; within a set
 0.13-0.15 m). So the maps move with the anchors: rotating the anchor poses turns the maps by the same
 45 degrees, and reordering alone, which changes only the first anchor (from the centre facing east to
@@ -3350,7 +3350,7 @@ runs, including the paper's run 0, change nothing. The four-epoch recipe's +4.1 
 "transfers" rule, and it depends on the images. But every model, base and fine-tuned, is at or below
 chance there, so the gain shows the model losing some of its biases, not learning to reason about space.
 
-## Experiment 19 (pre-registered 2026-10-27 22:00 PDT, before any new scene was rendered or shown to a model): more photoreal scenes
+## Experiment 19 (pre-registered 2026-10-27 22:00 PDT, before any new scene was shown to a model; the first render, pc:588, had started at 21:54): more photoreal scenes
 
 **Why.** The photoreal results rest on three Replica apartments (experiment 12) and eight HSSD houses
 (experiment 16), and a reviewer can fairly call that thin. This experiment adds six Replica apartments
@@ -4539,7 +4539,7 @@ the limit of 0.10, so the units check fails narrowly. As registered, the four-ep
 re-record, and both sets of run-0 numbers are in the summary. The stored run-0 values do not change, and probe decoding
 errors are descriptions only, so the cause was not pursued further.
 
-## Experiment 23 (pre-registered 2026-10-28 01:40 PDT, before any unit's weights were projected or any residual re-recorded): do VGGT's strictly invariant place units write into the causal position subspace?
+## Experiment 23 (pre-registered 2026-10-28 01:40 PDT, before any unit's weights were projected and before the main recording; smoke job pc:611 had started at 01:33): do VGGT's strictly invariant place units write into the causal position subspace?
 
 **Why.** The neuroscience reviewer of round R0f (issue W3,
 `writeup/paper/kit/paperscorer/rounds/R0f/reviews/conference_neuro.json`) points out that the paper's VGGT
@@ -5265,7 +5265,7 @@ HG at each condition's best layer (chance 3.74 m for walk frames, 3.67 m for pro
   model has 0.58, run 0 has 0.68 and the four-epoch runs 0.77-0.85. The population-vector index at that layer is 0.15-0.29
   (permutation p 0.005), against 0.00 for run 0 at its best layer. The 8-step moving average still reaches the walk's HG
   in every run (0.99 against 0.77-0.85), as the registration asked to describe. Four-epoch shuffled-walk frames were not
-  recorded, so this experiment cannot say whether the late-layer code needs the walk's order.
+  recorded, so this entry cannot say whether the late-layer code needs the walk's order. (Corrected 2026-11-01: the activations were recorded by vast3:305 but not scored. Amendment 1 below scores them.)
 - *New views: this differs from run 0.* Every new-view condition of run 0 and the base model is negative. After the walk,
   all five four-epoch runs are partial: HG 0.39-0.49 at layer 35 (2.57-2.84 m on unseen headings, 1.38-1.58 m on seen).
   A synthetic population with the same HG has 17-23% invariant place units. The sentence in the results above, "for a

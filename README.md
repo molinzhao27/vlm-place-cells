@@ -54,7 +54,8 @@ Accuracies are on novel-view trials unless stated; chance is 50%.
    its place units pass the strict test (18-31% on a weaker mean of two sector pairs), which is an
    undercount at that layer's stability. Within a room, its population carries position across
    headings on walk frames (heading-held-out gain 0.77-0.85; RNNs 0.98), and partly for the new view
-   (0.39-0.49). No position code carries across rooms.
+   (0.39-0.49). That late-layer walk code depends on order: on shuffled walks the gain falls to
+   0.28-0.35. No position code carries across rooms.
 6. **The decision depends more on where frames were taken than on what they show.** When we
    re-render the eight shown frames around the near option, changing the place costs 21.1-22.4
    points and changing the view 5.2-5.6 (runs 5 and 7). Moving a block of frames away from both

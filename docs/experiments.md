@@ -7134,3 +7134,83 @@ is the wrong floor for run 7.
 - Gurnee & Tegmark 2024: linear space and time representations in Llama-2.
 - Park et al. 2025: in-context random walks on a grid reorganise LLM token
   representations into the grid.
+
+## Experiment 32 (pre-registered 2026-10-31 23:44 PDT, before any pair was patched): which parts of VGGT's ten pose directions does the camera depend on?
+
+**Why.** Experiment 27 found that the camera token's ten directions of largest variance, fit with no labels, carry the causal
+pose signal (transfer 0.86 at block 21, 0.41 at block 19), but it did not ask what those ten directions are. An unregistered,
+descriptive analysis of its recordings (`scripts/vggt_token_pca.py`, `results/vggt_token_pca.json`, no model run) did: on
+frames the PCA did not see, six pose features explain 84.5% of the token's variance at block 21, in pairs. Directions 1-2 follow
+heading, 3-4 position in the camera's axes, 5-6 position in the room's axes, and 7-10 are second order. The room-frame pair is the
+place-like part: its gradient stays put as the camera turns, and the heading-invariant neurons load on it more. The camera
+head outputs rotation and camera-frame translation, not room-frame position. So the place-like pair may be present in the token
+without the camera depending on it. Patching has not tested this: the rank sweep's subspaces are nested and mix the pairs.
+The user approved the run on 2026-10-31.
+
+**Already seen, before this registration.** The PCA analysis above, and experiment 27's rank sweep at block 21: ordinary PCA 2
+transfers 0.28 (closing 0.78 of the heading gap), ordinary PCA 4 0.66, ordinary PCA 10 0.86, position PCA 2 0.18 (a bit over half of
+it in the room-frame pair). No run has patched any subspace defined below.
+
+**Setup (unchanged from experiment 27).** VGGT-1B in single mode (the 8 anchors of room A plus one walk frame), the RTX 4070
+through gq, batch 2, bf16 autocast. Experiment 27's 128 targets and donors, in the same order. The patch point is the residual at
+the walk frame's camera token right after global block g (g = 21, primary; g = 19, secondary). A condition writes h_t + w, where w
+is part of the difference h_d - h_t. The clean targets and donors are rerun and their residuals compared with the stored ones.
+
+**Label-free subspaces.** Experiment 27's own ordinary PCA (`Qord30`, fit on the 2,048 fit frames). The families are fixed here, by
+which feature family explains each direction better in `scripts/vggt_token_pca.py`:
+
+| family | block 21 directions | block 19 directions |
+|---|---|---|
+| heading | 1, 2 | 1, 2 |
+| camera frame | 3, 4 | 3, 6 |
+| room frame | 5, 6 | 4, 5 |
+| second order | 7-10 | 7-10 |
+
+Nine conditions at each block: the ten; each family alone; the ten without each family.
+
+**Feature-fit subspaces, against mixing between PCA directions.** The PCA directions are not pure: on block 21's held-out
+frames, the room features explain 9-18% of directions 3-4. So the test is repeated along regression directions. The 2,048 fit
+frames' residuals are regressed on the six features (cos t, sin t; x, y; x cos t + y sin t, x sin t - y cos t; (x, y) from the room
+center, true pose). With A the coefficient matrix (1024 x 6) and A+ its pseudo-inverse, a condition writes the donor's values
+for the kept features along their own directions, w = A_keep (A+ d)_keep, leaving the other families' codes as they were. This
+is an oblique projection, so the parts add up to the whole. Seven conditions at each block: all six; each family alone; all six
+without each family.
+
+**Measures.** Experiment 27's, unchanged: position transfer (fraction of the target-donor line, in room coordinates, mean over
+pairs), distance to the donor, error off the line, heading change, heading gap closed. New: translation transfer, the same fraction
+for the walk frame's camera-from-world translation (in the camera's axes, scaled to meters by each run's own anchor fit). Heading
+gap closed and translation transfer read the head's two outputs separately. This matters because position comes from both (C = -R^T t),
+so a patch that only turns the camera still moves the predicted position. All intervals are 95% percentile bootstraps over the 128
+pairs (10,000 resamples, seed 0), paired across conditions.
+
+**Decision rule.** For a family F, with T the mean position transfer:
+- L(F) = 1 - T(ten without F) / T(ten), the share of the transfer lost when F is left out.
+- A(F) = T(F alone) / T(ten), the share F reaches alone.
+
+| verdict | condition |
+|---|---|
+| needed | L >= 0.25 and its CI above 0 |
+| not read | L < 0.10 with CI upper end < 0.25, and A < 0.12 with CI upper end < 0.25 |
+| read but redundant | L < 0.10 with CI upper end < 0.25, and A >= 0.25 with CI above 0 |
+| unclear | anything else |
+
+The ratios keep block 19's lower ceiling (0.41) comparable with block 21's. The rule runs on both arms, with the feature-fit arm using
+T(all six) in place of T(ten). The headline is the room-frame family at block 21, in the label-free arm. If the two arms
+disagree, the claim follows the weaker verdict and the disagreement is reported. Second order has no feature-fit counterpart.
+
+**Reading, fixed now.**
+- *Not read:* the place-like pair is in the token, but the camera does not depend on it at this point in the network.
+- *Needed:* the room-frame code is read.
+- *Read but redundant:* the pair can move the camera alone, but the rest of the ten can do without it.
+- *Unclear:* the numbers are reported with no verdict in the text.
+
+None of these shows what VGGT computes in general: this is one room, one anchor set and two blocks, and it says nothing about the
+fine-tuned VLM.
+
+**Expected, not part of the rule.** Heading alone closes the heading gap and leaves translation nearly unmoved. Camera frame alone
+moves translation and leaves heading nearly unmoved. Room frame is less needed than the other two.
+
+**Checks.** The ten must reproduce experiment 27's ordinary PCA 10 within 0.01 at each block (0.857, 0.406), or nothing is
+reported. The residual comparison above is reported. The smoke run (the first 8 pairs, `--smoke`) checks only that the code runs; any
+change after it is an amendment here. Code: `scripts/vggt_pair_patch.py` -> `data/pair_patch/raw.{npz,json}`,
+`results/vggt_pair_patch.json` (`summary`).

@@ -5309,6 +5309,23 @@ Best-layer HG is description only.
 
 **Limits.** Room A only, as in the walk condition, and thresholds were validated on walk frames.
 
+### Exp 25 amendment 1 results (2026-11-01 13:51 PST; gq vast3:357, 18 minutes; `results/population_assay_e4_shuffled.json`)
+
+Registered reading: **depends on order**, in all five runs. At layer 35, with `guard45` as the primary assay:
+
+| Run | Walk HG | Shuffled HG [95%] | Call | D |
+|---|---|---|---|---|
+| 3 | 0.81 | 0.33 [0.29, 0.36] | partial | 0.48 |
+| 4 | 0.83 | 0.35 [0.32, 0.38] | partial | 0.47 |
+| 5 | 0.85 | 0.35 [0.32, 0.38] | partial | 0.50 |
+| 6 | 0.77 | 0.28 [0.25, 0.31] | partial | 0.49 |
+| 7 | 0.81 | 0.31 [0.28, 0.34] | partial | 0.50 |
+
+D is at least 0.25 in every run and no shuffled HG is called positive. Layer 35 is also each shuffled tag's best layer.
+Shuffling does not remove the signal entirely: shuffled HG stays in the partial range, close to the new-view values
+(0.39-0.49), whose own shuffled drop is small. So the late-layer walk code needs order, while the part left after shuffling
+is about what the new-view readout shows. Run on the copy of `population_assay.py` that made the walk numbers. Room A only.
+
 ## Experiment 26 (pre-registered 2026-10-28 10:10 PDT, before any walk-relative readout was fit): is the new view's position coded in the walk's own coordinates?
 
 **Why.** Experiment 14a read the residual stream of the base Qwen3-VL-8B and of run 0 (the original two-epoch

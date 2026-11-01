@@ -166,10 +166,12 @@ def main():
     ap.add_argument("--models", nargs="+", help="folders under data/acts_task (default: all)")
     ap.add_argument("--sites", nargs="+", default=["img_end", "img_mean", "question", "last"])
     ap.add_argument("--no-mlp", action="store_true", help="ridge only")
+    ap.add_argument("--out", default=OUT, help=f"results file (default {OUT}; other runs' readouts go elsewhere)")
     args = ap.parse_args()
+    out = args.out
     models = args.models or sorted(m for m in os.listdir("data/acts_task") if os.path.exists(f"data/acts_task/{m}/meta.json"))
     readouts = ["ridge"] if args.no_mlp else ["ridge", "mlp"]
-    res = json.load(open(OUT)) if os.path.exists(OUT) else {}
+    res = json.load(open(out)) if os.path.exists(out) else {}
     res["_about"] = __doc__.split("\n\n", 2)[2].strip()
     t0 = time.time()
     for model in models:
@@ -193,10 +195,10 @@ def main():
             for j, layer in enumerate(meta["layers"]):
                 X = torch.from_numpy(np.asarray(A[rows, j], np.float32))
                 res[model][site][f"L{layer}"] = {ro: mean_dicts([evaluate(X, M, s, ro) for s in splits]) for ro in readouts}
-            json.dump(res, open(OUT, "w"), indent=1)
+            json.dump(res, open(out, "w"), indent=1)
             print(f"{model} {site}: {len(meta['layers'])} layers, {time.time() - t0:.0f}s", flush=True)
     res["_reference_earlier_recording"] = earlier_recording()
-    json.dump(res, open(OUT, "w"), indent=1)
+    json.dump(res, open(out, "w"), indent=1)
     summary(res, models, args.sites, readouts)
 
 

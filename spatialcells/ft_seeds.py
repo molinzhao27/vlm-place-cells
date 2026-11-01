@@ -1,6 +1,6 @@
-"""Room B and training seeds for the fine-tuned Qwen3-VL-8B (experiment 9b).
+"""Room B and training seeds for the fine-tuned Qwen3-VL-8B (experiment 9b), and Gemma 4 (experiment 18).
 
-    python -m spatialcells.ft_seeds
+    python -m spatialcells.ft_seeds [--family gemma]
 
 Reads two_choice.py's per-trial results for base Qwen3-VL-8B and the LoRA adapters
 (data/ft/qwen8b-proc = seed 0, qwen8b-proc-s1, -s2) on room A's and room B's lure-free trials,
@@ -16,9 +16,13 @@ Experiment 9c's four-epoch runs (seeds 3-7, qwen8b-proc-e4-s<seed>) are reported
 separately ("runs4ep/<cond>"), never pooled with the two-epoch seeds. "training" holds each run's training
 checks from results/two_choice/ft_seed_logs/train_log_<run>.json, and "decision_rule_9c" evaluates
 experiment 9c's registered rule once all five runs are in.
+--family gemma does the same for experiment 18: base Gemma-4-12B-it and its four-epoch runs 3-5
+(amendment 2 stopped it before runs 6-7; gemma12b-proc-e4-s<seed>, training logs train_log_gemma12b-e4-s<seed>.json), with the same rule
+("decision_rule_18"), into results/two_choice/ft_seeds_gemma.json. Qwen's output is unchanged.
 """
 from __future__ import annotations
 
+import argparse
 import json
 import math
 import os
@@ -32,6 +36,9 @@ SEEDS = {0: "qwen8b-proc", 1: "qwen8b-proc-s1", 2: "qwen8b-proc-s2"}
 CONTROL = {"0-5090": "qwen8b-proc-s0-5090"}
 E4 = {f"e4-s{k}": f"qwen8b-proc-e4-s{k}" for k in range(3, 8)}       # experiment 9c
 LOGS = {"0": "s0", "1": "s1", "2": "s2", "0-5090": "s0-5090", **{k: k for k in E4}}
+GEMMA = {"base": "gemma-4-12B-it", "e4": {f"e4-s{k}": f"gemma12b-proc-e4-s{k}" for k in range(3, 6)},
+         "logs": {f"e4-s{k}": f"gemma12b-e4-s{k}" for k in range(3, 6)}, "rule": "decision_rule_18",
+         "json": "ft_seeds_gemma.json"}                                 # experiment 18
 ROOMS = {"A": "dissimilar", "B": "roomB"}
 CONDS = {"walk": "-max64", "nowalk": "-nowalk", "shuffled": "-max64-shuffled"}
 
@@ -52,10 +59,10 @@ def sign_test(x, y, ids):
     return {"better": b, "worse": w, "p": p}
 
 
-def training_checks():
+def training_checks(logs=LOGS):
     """Per run: first update with loss < 0.15, the last logged loss, held-out accuracy before and at the end."""
     out = {}
-    for run, name in LOGS.items():
+    for run, name in logs.items():
         p = f"{OUT}/ft_seed_logs/train_log_{name}.json"
         if not os.path.exists(p):
             continue
@@ -70,8 +77,9 @@ def training_checks():
     return out
 
 
-def decision_rule(res):
-    """Experiment 9c's registered rule: every run ends >= 85% held-out, five-run room-A novel mean >= 85%, none < 80%."""
+def decision_rule(res, E4=E4, label="9c"):
+    """Experiment 9c's registered rule (also experiment 18's, over its three runs): every run ends >= 85% held-out,
+    the runs' room-A novel mean >= 85%, none < 80%."""
     tr = res["training"]
     if not all(k in tr for k in E4) or not all(f"{k}/walk" in res["A"]["novel"] for k in E4):
         return None
@@ -81,11 +89,16 @@ def decision_rule(res):
          "room_a_novel_mean_at_least_85": float(np.mean(list(room_a.values()))) >= 0.85,
          "no_run_below_80_room_a": min(room_a.values()) >= 0.80}
     c.update({"held_out_end": held, "room_a_novel_walk": room_a, "met": all(c.values())})
-    print(f"experiment 9c decision rule met: {c['met']} ({', '.join(k for k, v in c.items() if v is True or v is False)})")
+    print(f"experiment {label} decision rule met: {c['met']} ({', '.join(k for k, v in c.items() if v is True or v is False)})")
     return c
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--family", choices=["qwen", "gemma"], default="qwen")
+    gemma = ap.parse_args().family == "gemma"
+    BASE, SEEDS, CONTROL, E4 = (GEMMA["base"], {}, {}, GEMMA["e4"]) if gemma else (globals()["BASE"], globals()["SEEDS"],
+                                                                                globals()["CONTROL"], globals()["E4"])
     res = {}
     for room, trials in ROOMS.items():
         runs, tags = {}, {}
@@ -133,12 +146,13 @@ def main():
                         extra += f", same answer as seed 0 on {v['same_answer_as_seed0']}/{v['n']}"
                     mps = " [mps]" if v["tag"].endswith("-mps") else ""
                     print(f"  {key:16s} {v['acc']:.0%} ({v['k']}/{v['n']}, p={v['p_above_chance']:.2g}){extra}{mps}")
-    res["training"] = training_checks()
-    rule = decision_rule(res)
+    res["training"] = training_checks(GEMMA["logs"] if gemma else LOGS)
+    rule = decision_rule(res, E4, "18" if gemma else "9c")
     if rule:
-        res["decision_rule_9c"] = rule
-    json.dump(res, open(f"{OUT}/ft_seeds.json", "w"), indent=1)
-    print(f"-> {OUT}/ft_seeds.json")
+        res[GEMMA["rule"] if gemma else "decision_rule_9c"] = rule
+    name = GEMMA["json"] if gemma else "ft_seeds.json"
+    json.dump(res, open(f"{OUT}/{name}", "w"), indent=1)
+    print(f"-> {OUT}/{name}")
 
 
 if __name__ == "__main__":

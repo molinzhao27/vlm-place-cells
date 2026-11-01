@@ -6,15 +6,17 @@
 # another GPU without touching experiment 9's adapter: run_ft_seed.sh 0 data/ft/qwen8b-proc-s0-5090
 # EPOCHS (default 2, experiment 9's schedule) sets the training length, e.g. experiment 9c:
 #   gq submit ... --env EPOCHS=4 -- /bin/bash scripts/run_ft_seed.sh 3 data/ft/qwen8b-proc-e4-s3
+# MODEL (default Qwen/Qwen3-VL-8B-Instruct) trains another model the same way, e.g. experiment 18:
+#   gq submit ... --env EPOCHS=4 --env MODEL=google/gemma-4-12B-it -- /bin/bash scripts/run_ft_seed.sh 3 data/ft/gemma12b-proc-e4-s3
 set -uo pipefail
 S=${1:?usage: run_ft_seed.sh SEED [ADAPTER_DIR]}
 P=.venv/bin/python
-B=Qwen/Qwen3-VL-8B-Instruct
+B=${MODEL:-Qwen/Qwen3-VL-8B-Instruct}
 A=${2:-data/ft/qwen8b-proc-s$S}
 E=${EPOCHS:-2}
 N=$(basename $A)
 echo "RUN_START=$(date -u +%FT%TZ) seed $S, $E epochs -> $A"
-$P -m spatialcells.finetune --seed $S --epochs $E --out $A > data/logs/finetune_$N.log 2>&1 || { echo "FINETUNE FAILED"; exit 1; }
+$P -m spatialcells.finetune --model $B --seed $S --epochs $E --out $A > data/logs/finetune_$N.log 2>&1 || { echo "FINETUNE FAILED"; exit 1; }
 echo "FINETUNE_DONE=$(date -u +%FT%TZ)"
 for T in dissimilar roomB; do
   $P -m spatialcells.two_choice --model $B --adapter $A --trials $T --max-images 64 > data/logs/tc_${N}_${T}_max64.log 2>&1

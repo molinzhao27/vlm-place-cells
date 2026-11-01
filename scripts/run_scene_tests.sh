@@ -4,17 +4,22 @@
 # (scripts/mac/run_heldout.sh). Each run skips trials already answered, so it can be restarted.
 #   gq submit --on vast3 --project mechinterp --name e4_s3_scenes --gpu --est 1h45m \
 #     --env A=data/ft/qwen8b-proc-e4-s3 -- /bin/bash scripts/run_scene_tests.sh
+# MODEL (default Qwen/Qwen3-VL-8B-Instruct) tests another model's adapter; A=base tests the model without
+# one. ROOMS may include A (room A's lure-free trials, --trials dissimilar) and B, e.g. experiment 18's base:
+#   gq submit ... --env MODEL=google/gemma-4-12B-it --env A=base --env ROOMS="A B HSSD1 ..." -- /bin/bash scripts/run_scene_tests.sh
 set -u
 P=.venv/bin/python
-B=Qwen/Qwen3-VL-8B-Instruct
-A=${A:?set A to the adapter folder}
+B=${MODEL:-Qwen/Qwen3-VL-8B-Instruct}
+A=${A:?set A to the adapter folder, or base}
 ROOMS=${ROOMS:-"HSSD1 HSSD4 HSSD5 HSSD6 HSSD7 HSSD8 P5000 P5001 P5002 P5003 P5004 P5006 P5007 P5008 P5009"}
 echo "RUN_START=$(date -u +%FT%TZ) $A"
+ad=(); [[ $A == base ]] || ad=(--adapter "$A")
 for R in $ROOMS; do
+  T=room$R; [[ $R == A ]] && T=dissimilar
   for C in "--max-images 64" "--no-walk" "--max-images 64 --shuffle-walk"; do
-    echo "$(date -u +%T) room$R $A $C"
+    echo "$(date -u +%T) $T $A $C"
     # shellcheck disable=SC2086
-    $P -m spatialcells.two_choice --model $B --adapter "$A" --trials "room$R" $C || exit 1
+    $P -m spatialcells.two_choice --model $B "${ad[@]}" --trials "$T" $C || exit 1
   done
 done
 echo "RUN_END=$(date -u +%FT%TZ)"

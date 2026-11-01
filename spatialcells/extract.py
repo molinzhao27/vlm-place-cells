@@ -2,6 +2,7 @@
 
     python -m spatialcells.extract --model dinov2 [--random]
     python -m spatialcells.extract --model qwen|qwen8b|qwen32b|qwen38|sn8b|qwen8b-ft --mode single|walk|shuffled|probes-only [--random]
+    (also qwen8b-ft-e4-s3 ... qwen8b-ft-e4-s7, the four-epoch runs, and qwen8b-ft-rerun, run 0 under another name)
 
 DINOv2: post-GELU MLP neurons at the CLS token, all 12 layers.
 Qwen VLMs: SwiGLU MLP neurons (the input to down_proj) in 7 language-model layers
@@ -38,6 +39,10 @@ QWEN_IDS = {
 }
 # Fine-tuned models: name -> (base model, LoRA adapter merged in after loading; finetune.py)
 FINETUNED = {"qwen8b-ft": ("Qwen/Qwen3-VL-8B-Instruct", "data/ft/qwen8b-proc")}
+# The four-epoch runs (experiment 9c), and run 0 again under its own name so that a re-recording on
+# another host (the four-epoch internals experiment's parity check) never mixes with the original's files.
+FINETUNED.update({f"qwen8b-ft-e4-s{s}": ("Qwen/Qwen3-VL-8B-Instruct", f"data/ft/qwen8b-proc-e4-s{s}") for s in range(3, 8)})
+FINETUNED["qwen8b-ft-rerun"] = ("Qwen/Qwen3-VL-8B-Instruct", "data/ft/qwen8b-proc")
 # Same relative depths as the 2B model's layers 2, 6, ..., 27 (of 28).
 DEPTHS = [2 / 27, 6 / 27, 10 / 27, 14 / 27, 18 / 27, 22 / 27, 1.0]
 PROMPT = "These are consecutive first-person views as you walk around a room."

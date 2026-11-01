@@ -1,6 +1,7 @@
-"""Teach Qwen3-VL-8B the two-choice task on procedural rooms with LoRA (experiment 9).
+"""Teach Qwen3-VL-8B (experiment 9) or Gemma 4 (experiment 18) the two-choice task on procedural rooms with LoRA.
 
     python -m spatialcells.finetune [--data data/proc] [--out data/ft/qwen8b-proc] [--epochs 2] [--seed 0]
+        [--model Qwen/Qwen3-VL-8B-Instruct | google/gemma-4-12B-it] [--max-updates N]
 
 Each training sequence is one procedural room (procedural_data.py): two_choice.py's prompt with
 the walk's 64 shown frames, labelled with their real frame numbers ("Frame 001:", "Frame 005:",
@@ -17,6 +18,17 @@ initialisation, dropout and room order but not the data or the held-out rooms; s
 original run. Seed 0 does not seed torch (as the original run), and torch 2.14 seeds its default
 generator differently in every process, so a seed-0 run's initialisation and dropout are not
 reproducible; only its room order is. Non-zero seeds are reproducible.
+
+Gemma 4 (--model google/gemma-4-12B-it, experiment 18) gets the same recipe. Its images are
+--image-tokens 70 soft tokens at most, as in two_choice.py, which is 64 tokens for a 256-px frame. The
+12B has no vision encoder: a frozen linear embedder projects 48-px pixel patches into the language
+model, whose projections get the LoRA (the same regex; Gemma's global-attention layers have no
+v_proj). Its generation prompt ends with an empty thought channel ("<|turn>model\n<|channel>thought\n
+<channel|>"), which the chat template leaves out of earlier model turns, so every training answer is
+put after that exact prompt; the first turn is then exactly two_choice.py's prompt. The loss is the
+same mean over the answer tokens (and their <turn|>), computed from the logits at those positions
+only: logits for Gemma's 262k-token vocabulary over the whole ~6k-token sequence would need ~10 GB.
+--max-updates stops after that many updates (memory and smoke tests), with nothing else changed.
 """
 from __future__ import annotations
 
@@ -34,6 +46,7 @@ from .two_choice import QUESTION, WALK_PROMPT, parse
 
 MODEL = "Qwen/Qwen3-VL-8B-Instruct"
 TARGETS = r".*language_model\.layers\.\d+\.(self_attn\.(q|k|v|o)_proj|mlp\.(gate|up|down)_proj)"
+GEMMA_KW = dict(enable_thinking=False, reasoning_effort="medium")      # two_choice.py's chat-template arguments
 
 
 def room_messages(room, trials, data):
@@ -55,13 +68,32 @@ def room_messages(room, trials, data):
     return msgs, images
 
 
-def encode(proc, msgs, images):
-    """Token inputs with labels on the assistant answers (and their <|im_end|>) only."""
-    text = proc.apply_chat_template(msgs, tokenize=False)
+def gemma_text(proc, msgs):
+    """Gemma 4: each answer and its <turn|> after the generation prompt two_choice.py ends with; the
+    generation prompt itself."""
+    text = ""
+    for i in range(0, len(msgs), 2):
+        turn = proc.apply_chat_template(msgs[i:i + 1], tokenize=False, add_generation_prompt=True, **GEMMA_KW)
+        if i == 0:
+            gen = turn[len(proc.apply_chat_template(msgs[:1], tokenize=False, **GEMMA_KW)):]
+        else:
+            turn = turn.removeprefix(proc.tokenizer.bos_token)
+        text += turn + msgs[i + 1]["content"][0]["text"] + "<turn|>\n"
+    return text, gen
+
+
+def encode(proc, msgs, images, gemma=False):
+    """Token inputs with labels on the assistant answers (and their <|im_end|>, or Gemma's <turn|>) only."""
+    if gemma:
+        text, gen = gemma_text(proc, msgs)
+        first = proc.apply_chat_template(msgs[:1], tokenize=False, add_generation_prompt=True, **GEMMA_KW)
+        assert text.startswith(first), "the first turn must be two_choice.py's prompt"
+    else:
+        text = proc.apply_chat_template(msgs, tokenize=False)
     inputs = proc(text=[text], images=images, return_tensors="pt")
     ids = inputs["input_ids"][0]
-    head = torch.tensor(proc.tokenizer.encode("<|im_start|>assistant\n", add_special_tokens=False))
-    end = proc.tokenizer.convert_tokens_to_ids("<|im_end|>")
+    head = torch.tensor(proc.tokenizer.encode(gen if gemma else "<|im_start|>assistant\n", add_special_tokens=False))
+    end = proc.tokenizer.convert_tokens_to_ids("<turn|>" if gemma else "<|im_end|>")
     labels = torch.full_like(ids, -100)
     starts = [i + len(head) for i in range(len(ids) - len(head) + 1) if torch.equal(ids[i:i + len(head)], head)]
     for s in starts:
@@ -73,14 +105,24 @@ def encode(proc, msgs, images):
     return inputs
 
 
+def answer_loss(model, inputs):
+    """Mean cross-entropy over the labelled tokens from the logits at their positions only: the value
+    the model's own loss gives, without the whole sequence's logits (Gemma)."""
+    labels = inputs.pop("labels")[0]
+    pos = (labels[1:] != -100).nonzero()[:, 0]
+    logits = model(**inputs, logits_to_keep=pos, use_cache=False).logits[0]
+    return torch.nn.functional.cross_entropy(logits.float(), labels[pos + 1])
+
+
 @torch.no_grad()
-def validate(model, proc, rooms, by_room, data):
+def validate(model, proc, rooms, by_room, data, gemma=False):
     model.eval()
     right = 0
     for r in rooms:
         t = by_room[r][0]
         msgs, images = room_messages(r, [t], data)
-        text = proc.apply_chat_template(msgs[:1], tokenize=False, add_generation_prompt=True)
+        text = proc.apply_chat_template(msgs[:1], tokenize=False, add_generation_prompt=True,
+                                        **(GEMMA_KW if gemma else {}))
         inputs = proc(text=[text], images=images, return_tensors="pt").to("cuda")
         out = model.generate(**inputs, max_new_tokens=6, do_sample=False)
         right += parse(proc.decode(out[0, inputs["input_ids"].shape[1]:], skip_special_tokens=True), t["a"], t["b"]) == t["near"]
@@ -100,7 +142,11 @@ def main():
     ap.add_argument("--eval-every", type=int, default=25, help="updates between validation runs")
     ap.add_argument("--max-rooms", type=int, help="train on only this many rooms (smoke test)")
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--model", default=MODEL, help="Qwen/Qwen3-VL-8B-Instruct or a Gemma 4 model (google/gemma-4-12B-it)")
+    ap.add_argument("--image-tokens", type=int, default=70, help="Gemma: soft tokens per image, as two_choice.py")
+    ap.add_argument("--max-updates", type=int, help="stop after this many updates (memory and smoke tests)")
     args = ap.parse_args()
+    gemma = "gemma" in args.model.lower()
     if args.seed:                       # seed 0 keeps torch's default generator (random per process in torch 2.14), as the original run
         torch.manual_seed(args.seed)
     from peft import LoraConfig, get_peft_model
@@ -114,9 +160,13 @@ def main():
     val, train = rooms[-args.val:], rooms[:-args.val][:args.max_rooms]
     print(f"{len(train)} training rooms ({sum(len(by_room[r]) for r in train)} questions), {len(val)} held out", flush=True)
 
-    proc = AutoProcessor.from_pretrained(MODEL)
-    proc.image_processor.size = {"shortest_edge": 256 * 256, "longest_edge": 256 * 256}
-    model = AutoModelForImageTextToText.from_pretrained(MODEL, dtype=torch.bfloat16, device_map="cuda",
+    proc = AutoProcessor.from_pretrained(args.model)
+    if gemma:                           # as two_choice.py: 70 soft tokens at most, 64 for a 256-px frame
+        ip = proc.image_processor
+        ip.max_soft_tokens = ip.image_seq_length = proc.image_seq_length = args.image_tokens
+    else:
+        proc.image_processor.size = {"shortest_edge": 256 * 256, "longest_edge": 256 * 256}
+    model = AutoModelForImageTextToText.from_pretrained(args.model, dtype=torch.bfloat16, device_map="cuda",
                                                         attn_implementation="sdpa")
     model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
     model.enable_input_require_grads()
@@ -130,7 +180,7 @@ def main():
         opt, lambda s: min(1, (s + 1) / 30) * 0.5 * (1 + math.cos(math.pi * min(s, total) / total)))
     os.makedirs(args.out, exist_ok=True)
     def val_log(update, **extra):
-        log.append({"update": update, "val_acc": validate(model, proc, val, by_room, args.data), **extra})
+        log.append({"update": update, "val_acc": validate(model, proc, val, by_room, args.data, gemma), **extra})
         print(f"update {update}: held-out first-question accuracy {log[-1]['val_acc']:.0%}", flush=True)
     log = []
     val_log(0)
@@ -140,8 +190,8 @@ def main():
         order = train[:]
         random.Random(ep + 1000 * args.seed).shuffle(order)
         for i, r in enumerate(order):
-            inputs = encode(proc, *room_messages(r, by_room[r], args.data)).to("cuda")
-            loss = model(**inputs).loss
+            inputs = encode(proc, *room_messages(r, by_room[r], args.data), gemma).to("cuda")
+            loss = answer_loss(model, inputs) if gemma else model(**inputs).loss
             (loss / args.accum).backward()
             run_loss, run_n = run_loss + loss.item(), run_n + 1
             if (i + 1) % args.accum and i + 1 < len(order):    # update every accum rooms and at the epoch's end
@@ -160,6 +210,9 @@ def main():
             if step % args.eval_every == 0:
                 val_log(step)
                 json.dump(log, open(f"{args.out}/train_log.json", "w"))
+            if args.max_updates and step >= args.max_updates:
+                print(f"stopped after {step} updates (--max-updates); nothing saved", flush=True)
+                return
         model.save_pretrained(args.out)
         val_log(step, epoch_end=ep)
         print(f"epoch {ep} done ({time.time() - t0:.0f}s); saved {args.out}", flush=True)

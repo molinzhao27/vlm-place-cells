@@ -47,13 +47,24 @@ def tc_args(room, adapter, device):
                            window_shuffle=None, renumber=False, irrelevant_walk=None, device=device)
 
 
+def exp10_file(room, adapter, device):
+    """Experiment 10's run of the same prompts: this device's file if there is one, else the other device's
+    (the four-epoch runs were tested on CUDA except P5005 on MPS; prompts and token counts do not depend on
+    the device, answers can differ slightly). Returns (path or None, the device it was run on)."""
+    for dev in [device] + [d for d in ("cuda", "mps") if d != device]:
+        path = f"{TC_OUT}/{default_tag(tc_args(room, adapter, dev))}.jsonl"
+        if os.path.exists(path):
+            return path, dev
+    return None, None
+
+
 def trial_table(rooms, adapter, device):
     """Every trial in row order, with its targets and experiment 10's answer on the same prompt."""
     rows = []
     for R in rooms:
         pm = dict(np.load(f"data/walks-room{R}/probes_meta.npz"))
-        path = f"{TC_OUT}/{default_tag(tc_args(R, adapter, device))}.jsonl"
-        beh = {r["id"]: r for r in map(json.loads, open(path))} if os.path.exists(path) else {}
+        path, beh_dev = exp10_file(R, adapter, device)
+        beh = {r["id"]: r for r in map(json.loads, open(path))} if path else {}
         for t in json.load(open(trials_file(f"room{R}"))):
             p = t["probe"]
             d_a, d_b = ((t["near_dist_m"], t["far_dist_m"]) if t["a"] == t["near"]
@@ -63,7 +74,7 @@ def trial_table(rooms, adapter, device):
                          "a": t["a"], "b": t["b"], "near": t["near"], "x": float(pm["x"][p]), "y": float(pm["y"][p]),
                          "theta": float(pm["theta"][p]), "d_a": d_a, "d_b": d_b, "d_a_minus_d_b": round(d_a - d_b, 3),
                          "a_nearer": t["a"] == t["near"], "answer": b.get("answer"), "correct": b.get("correct"),
-                         "exp10_prompt_tokens": b.get("prompt_tokens")})
+                         "exp10_prompt_tokens": b.get("prompt_tokens"), "exp10_device": beh_dev if b else None})
     return rows
 
 
@@ -200,7 +211,7 @@ def main():
             f"{meta_path} was written for other trials or layers"
     meta = {k: [r[k] for r in rows] for k in rows[0]}
     meta.update(id=[f"{r['room']}/{r['id']}" for r in rows], trial_id=[r["id"] for r in rows], layers=keep,
-                sites=list(SITES), model=MODEL, adapter=args.adapter)
+                sites=list(SITES), model=MODEL, adapter=args.adapter, device=args.device)
     json.dump(meta, open(meta_path, "w"))
     shape = (len(rows), len(keep), hidden)
     arrs = {s: np.lib.format.open_memmap(f"{out}/{s}.npy", mode="r+" if os.path.exists(f"{out}/{s}.npy") else "w+",

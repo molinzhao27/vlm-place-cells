@@ -68,8 +68,8 @@ def main():
         counts[f"frames/room{r}"] = link_tree(f"{exp}/claude-room{r}", f"{ds}/frames/room{r}", trials_only)
         counts[f"two_choice_trials/room{r}"] = link_tree(f"{exp}/dissimilar-room{r}", f"{ds}/two_choice_trials/room{r}", trials_only)
     counts["walks/roomP5005"] = link_tree(f"{ROOT}/data/walks-roomP5005", f"{ds}/walks/roomP5005")
-    for r in RESULTS:
-        counts[f"results/{r}"] = link_tree(f"{ROOT}/results/{r}", f"{ds}/results/{r}")
+    for r in RESULTS:   # std_bench/failed_nan holds the runs a vast-3 GPU fault spoiled (rerun clean): not released
+        counts[f"results/{r}"] = link_tree(f"{ROOT}/results/{r}", f"{ds}/results/{r}", lambda p: "/failed_nan/" not in p)
     for p in glob.glob(f"{ROOT}/results/*.json"):
         link(p, f"{ds}/results/{os.path.basename(p)}")
     counts["results/*.json"] = len(glob.glob(f"{ROOT}/results/*.json"))

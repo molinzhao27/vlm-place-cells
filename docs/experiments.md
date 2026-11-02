@@ -7525,6 +7525,148 @@ and the prose around the readings above still need their pass. The Hugging Face 
 summaries, and upload mac:153 failed on a network error at 13:09 PST, so both need `stage.py` and a new upload.
 `results/heldout_summary_incomplete.json` is an old interim file and was left as it is.
 
+## Experiment 34 (pre-registered 2026-11-02 02:38 PST, before any model saw a walk reversed at one level only): where the cost of reversing the walk lies, inside 8-frame stretches or in their order, on four-epoch runs 5 and 7
+
+**Why.** In experiment 31, shuffling the 64-frame walk's blocks of 8 shown frames kept 0.80 and 0.74 of the order effect
+in runs 5 and 7 (about half on the log-odds scale), while reversing the walk kept 0.52 and 0.53 (reversal shares 0.48 and
+0.47). The run-0 appendix reads the reversal's larger cost as use of "longer-range order in the direction of travel", and
+the main text says that these controls "do not separate longer-range order from direction". An external review (GPT-6
+Astra) gave the reason: reversal flips the direction of every adjacent step of the walk, while the block shuffle keeps
+the steps inside each block forward and breaks order only at the seven block edges. A model that reads only short
+stretches of forward motion would therefore also lose more under reversal than under the block shuffle. This experiment
+runs the reviewer's design: reverse the order of the blocks while playing each block forward, and reverse the frames
+inside each block while keeping the blocks in order.
+
+**Conditions.** Everything matches experiment 31's 31a except the order of the frames.
+- *Shown frames and blocks.* `two_choice.py --max-images 64` shows 61-63 frames: 61 evenly spaced, about 4.25 walk steps
+  apart, plus the two options when they are not among them (of the 1,299 novel trials, 751 show 63 frames, 473 show 62
+  and 75 show 61). They are cut into consecutive blocks of 8 exactly as `--window-shuffle 8` cuts them, counted from the
+  walk's start: seven full blocks, each spanning about 30 walk steps, and a last block of 5-7 frames that holds the
+  walk's final frames.
+- *B, blocks reversed* (`--reverse-blocks 8`, tag `-revblocks8`): the blocks last to first, each in time order. The last,
+  shorter block is shown first.
+- *I, reversed within blocks* (`--reverse-within-blocks 8`, tag `-revwithin8`): the blocks first to last, each in reverse
+  time order. The last, shorter block is reversed like the others and shown last.
+- *Labels and options.* Both are labelled 1, 2, ... as shown, as experiment 31's reversed (V), window-shuffled (W) and
+  relabeled-shuffle (R) walks were; the ordered walk keeps its real frame numbers. The two options are always among the
+  shown frames, the question names them by their labels in the usual order, and answers are stored as real frame
+  numbers. Nothing is drawn at random: B and I are fixed functions of the shown frames.
+- *How B and I relate to the existing conditions.* B read backward is I, as V read backward is O. B, I and W break the
+  walk at the same seven block edges (W keeps 0.8 of them in time order on average, by chance); O and V break it nowhere.
+  Inside the blocks, B and W step forward, and I and V step backward. So B against W changes only the arrangement of the
+  blocks (reversed against shuffled), and B against I changes which level is reversed, with the same edges broken. In
+  20.6% of the novel trials an option lies in the last block, and in 4.4% both options lie in one block. The near option
+  is shown after the far one in about half of the novel trials in every condition (O 50.9%, W 50.3%, V 49.1%, B 48.1%,
+  I 51.9%).
+- *Trials, models and device.* All 192 trials of each held-out room P5000-P5009, as in 31a, analyzed on the 1,299 novel
+  trials. `data/ft/qwen8b-proc-e4-s5` and `data/ft/qwen8b-proc-e4-s7` on vast-3 (RTX 5090, CUDA, bf16, adapter merged,
+  greedy decoding), the device of every experiment-31 answer used here.
+- *Reused, not rerun:* O (experiment 9c's ordered walk, with P5005 from experiment 31's CUDA rerun), R (31c's relabeled
+  shuffle, the floor), W and V (31a), read with experiment 31's loaders.
+
+**Checks.**
+- *Before registration (no model; 2026-11-02 02:12-02:35 PST).*
+  - The new flags leave every existing prompt unchanged. Dry runs of the seven existing presentations (ordered, reversed,
+    window-shuffled, renumbered, shuffled, shuffled and relabeled, no walk) on all 192 trials of each held-out room give
+    byte-identical output before and after the change (70 files, 26,950 lines). `present()` returns identical frames and
+    labels in the committed and the new code on 41,472 (trial, setting) pairs (P5000-P5009, room B and room A's
+    dissimilar trials, with and without `--max-images 64`), and on 32,256 pairs with argument sets that lack the new
+    flags, as `task_record.py` and `retrieval_baselines.py` build them.
+  - In every trial, B is I read backward, and B, I and V show exactly O's frames.
+  - The trial lists, all ten walks (frames, probes and metadata), both adapters, `two_choice.py` (before the change),
+    `exp31_analysis.py`, experiment 31's P5005 reruns and its P5000 window-shuffled and reversed answers have the same
+    MD5s on the Mac and in the vast-3 container (53 files).
+  - `scripts/exp34_analysis.py` reproduces experiment 31's stored values for O, R, W and V exactly (9 of 9 entries per
+    run, means and CIs), because it replays experiment 31's bootstrap resamples. With stand-in files, B read from W's
+    answers and I from V's, it gives "short-range direction" in both runs; with B read from V's and I from W's, "longer-
+    range direction". Nothing was written to `results/`.
+- *Parity, in each job before any new presentation:* the job reruns P5000's window-shuffled and reversed walks (192 trials
+  each) and stops unless each matches experiment 31's stored answers on at least 98% of trials. Experiment 31's own parity
+  reruns matched on 192/192 and 191/192.
+- *After each job:* `scripts/check_replies.py` checks every reply file the job wrote (each reply a bare number of at most
+  4 tokens), and the job fails otherwise.
+
+**Measures.** Experiment 31's (31a): novel-trial accuracy per room (unparsed answers count as wrong), means over the ten
+rooms, 95% bootstrap CIs over rooms (10,000 resamples; each run reuses experiment 31's resamples for that run, so its
+stored values reproduce exactly), ratios as ratios of resampled means, paired per-room differences, and room-level and
+pooled trial-level sign tests. Everything is also computed on the log-odds scale, from each room's empirical logit. The
+order effect is D = O - R. The retained share of a condition X is (X - R)/D, for W, V, B and I (experiment 31's local
+share is W's retained share, and its reversal share is 1 minus V's). The registered contrasts are shares of D:
+- BI = (B - I)/D: which level's reversal costs more, with the same block edges broken (the reviewer's comparison);
+- BW = (B - W)/D: the block sequence reversed against shuffled, each block played forward, the same edges broken;
+- IV = (I - V)/D: with the frames inside each block reversed, what putting the blocks back in forward order is worth,
+  against the walk reversed throughout.
+
+The labels play no part in these contrasts: B, I, W and V are all labelled 1, 2, ... as shown, and O enters only through
+D (renumbering the ordered walk cost nothing in experiment 31).
+
+*What the two accounts predict*, from experiment 31's shares, if costs add on the accuracy scale (run 5 / run 7):
+
+| contrast | direction inside short stretches only (the block sequence unused) | direction of the block sequence only (direction inside blocks unused) |
+|---|---|---|
+| BI | +0.28 to +0.48 / +0.21 to +0.47 | -0.48 to -0.28 / -0.47 to -0.21 |
+| BW | about 0 (slightly below, since W keeps 0.8 edges) | -0.48 to -0.28 / -0.47 to -0.21 |
+| IV | -0.20 to 0 / -0.26 to 0 | +0.28 to +0.48 / +0.21 to +0.47 |
+
+The ranges cover the unknown cost of breaking the walk at the block edges, which experiment 31 bounds by W's whole loss
+(0.20 and 0.26 of D): from a cost that adds to B and I alike, to one paid only where a broken stretch is one the model
+reads.
+
+**Decision rule, set now (for each run).** The threshold T is 0.10 of the order effect: 4.4 and 3.9 points, and on the
+log-odds scale 0.10 of D's log-odds (0.34 and 0.33). That is about a fifth of the reversal's cost, a little above
+experiment 31's 3-point margin for "no effect", and well inside the gap between the two accounts' predictions. Each
+contrast is *above* if its CI lies above +0.10, *below* if it lies below -0.10, *within* if it lies inside +-0.10, and
+*unresolved* otherwise.
+- *Gate:* experiment 31's (D at least 10 points with its CI above 0; the stored files give +44.4 and +39.0 points), and
+  the job's parity check. Otherwise the run is inconclusive.
+- *Short-range direction:* BI above, BW within, and IV's CI below +0.10. Reversing inside the blocks costs clearly more
+  than reversing their order; reversing the order of the blocks, each played forward, costs about what shuffling them
+  costs; and putting the blocks back in order does not recover what reversing inside them loses. BW above (a reversed
+  block sequence keeping more than a shuffled one) also counts, flagged: the arrangement of the blocks then matters, but
+  not its direction.
+- *Longer-range direction:* BI below, BW below, and IV above. A reversed block sequence costs clearly more than a
+  shuffled one and more than reversing inside the blocks, and putting the blocks back in forward order recovers much of
+  what reversing inside them loses.
+- *Both:* BW below, and BI's CI not below -0.10. The direction of the block sequence is used, and reversing inside the
+  blocks costs at least about as much. Labeled "mostly short-range" if BI is above, "comparable" otherwise.
+- Otherwise *inconclusive*, naming each contrast's state.
+- Verdicts come from points; a log-odds reading that differs is marked *scale-dependent*, as in experiment 31.
+- *Recipe level:* the reading that runs 5 and 7 share (without its label); if they differ, *mixed*, with each run's
+  reading.
+
+*Reported, not part of any verdict:* every condition's accuracy and retained share on both scales, next to experiment
+31's; the 2 x 2 main effects m_within = ((O + B) - (I + V))/2D and m_blocks = ((O + I) - (B + V))/2D, which add up to
+experiment 31's reversal share exactly but separate cleanly only if the edge cost adds alike to B and I, and the edge
+term ((O + V) - (B + I))/2D; all pairwise differences in points with sign tests; parse rates; how often each condition's
+answer is the option shown later; the parity agreement.
+
+**What each outcome means for the paper.**
+- *Short-range direction (recipe):* Section 3.3's sentence "These controls do not separate longer-range order from
+  direction" is replaced by the result: reversing the frames inside each 8-frame block costs at least as much as
+  reversing the whole walk, while reversing the order of the blocks costs about what shuffling them costs. The
+  reversal's cost then comes from the direction of travel within short stretches of the walk (8 shown frames, about 30
+  walk steps), and in these two runs nothing shows use of the direction of longer-range order.
+- *Longer-range direction:* the paper may say that the model uses the direction of travel across the sequence of 8-frame
+  stretches, with the numbers: reversing the order of the blocks, each played forward, costs clearly more than shuffling
+  them or reversing inside them.
+- *Both:* the direction of travel matters at both scales; with "mostly short-range", most of the reversal's cost lies
+  inside 8-frame stretches.
+- *Inconclusive or mixed:* the current sentence stays, and this experiment's numbers go to the appendix run by run, with
+  the reason.
+
+**Cost and time.** No API cost. On vast-3, per run: the two parity reruns about 5 min; B and I, 20 runs of 192 trials at
+about 2 min 20 s each including model loading (experiment 31's job vast3:337 took 122-134 s per 192 trials, plus about
+15 s to load), about 47 min. About 52 min per run, 1 h 45 min for both, at the project's default priority.
+
+**Files.** `spatialcells/two_choice.py` (`--reverse-blocks K`, `--reverse-within-blocks K`; every existing presentation
+unchanged), `scripts/run_exp34.sh` (the vast-3 job), `scripts/exp34_analysis.py` -> `results/exp34_summary.json`, with a
+top-level `summary`; its `--parity` is the job's gate, `--smoke short|long` runs the stand-in check, and `--fetch` copies
+only this experiment's answer files from vast-3. Outputs:
+`results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s{5,7}-roomP50xx-256px-max64-{revblocks8,revwithin8}.jsonl`;
+`results/two_choice/exp34/` (the parity reruns, kept out of `two_choice --score`).
+
+**Status.** Registered before any model saw a B or I walk; committed and pushed docs-only (the commit's hash and time are in git log).
+
 ## Prior work this builds on
 
 - Luo, Mok & Love 2024, *The inevitability and superfluousness of cell types in

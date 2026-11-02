@@ -32,7 +32,12 @@ K with the blocks in a fixed random order (seeded by the walk), both labelled 1,
 --renumber (-renumbered) in time order, labelled with sorted, distinct random numbers from 1-999
 (seeded by the walk); --irrelevant-walk ROOM (-irrelevant-ROOM) puts the frame at the same position
 of ROOM's walk with the same index (data/walks-ROOM) in place of every frame but the two options,
-labels unchanged. The options are always shown and named by their labels.
+labels unchanged. Experiment 34 cuts the shown frames into --window-shuffle's blocks of K (counted from
+the walk's start, so a last, shorter block holds its final frames) and reverses one level only:
+--reverse-blocks K (-revblocksK) shows the blocks last to first, each in time order;
+--reverse-within-blocks K (-revwithinK) shows the blocks first to last, each in reverse time order;
+both labelled 1, 2, ... as shown. Applying both levels at once gives --reverse-walk's order.
+The options are always shown and named by their labels.
 --dry-run N prints what the first N prompts show (frame:label, * for another room's frame) and
 their questions, without loading the model.
 --device mps runs on Apple silicon (bf16, as on CUDA); a non-CUDA device joins the tag, so its
@@ -80,6 +85,8 @@ def default_tag(args):
             + ("-shuffled" if args.shuffle_walk else "") + ("-relabel" if args.relabel else "")
             + ("-reversed" if args.reverse_walk else "")
             + (f"-window{args.window_shuffle}" if args.window_shuffle else "")
+            + (f"-revblocks{args.reverse_blocks}" if getattr(args, "reverse_blocks", None) else "")
+            + (f"-revwithin{args.reverse_within_blocks}" if getattr(args, "reverse_within_blocks", None) else "")
             + ("-renumbered" if args.renumber else "")
             + (f"-irrelevant-{args.irrelevant_walk}" if args.irrelevant_walk else "")
             + (f"-{args.device}" if args.device != "cuda" else ""))
@@ -111,6 +118,9 @@ def present(t, n, args):
         if args.max_images and len(shown) >= args.max_images:     # evenly spaced, always with a and b
             keep = np.linspace(1, n, args.max_images - 3).round().astype(int)
             shown = sorted(set(keep.tolist()) | {t["a"], t["b"]})
+    # experiment 34's flags, read with getattr: callers that build their own args (task_record.py,
+    # retrieval_baselines.py, ...) do not have them
+    rev_blocks, rev_within = getattr(args, "reverse_blocks", None), getattr(args, "reverse_within_blocks", None)
     if args.shuffle_walk and not args.no_walk:
         random.Random(t["walk"]).shuffle(shown)
     elif args.reverse_walk:
@@ -120,7 +130,12 @@ def present(t, n, args):
         blocks = [shown[i:i + K] for i in range(0, len(shown), K)]
         random.Random(t["walk"]).shuffle(blocks)
         shown = [k for block in blocks for k in block]
-    relabel = args.relabel or args.reverse_walk or args.window_shuffle
+    elif rev_blocks or rev_within:                  # experiment 34: the same blocks, one level reversed
+        K = rev_blocks or rev_within
+        blocks = [shown[i:i + K] for i in range(0, len(shown), K)]
+        blocks = blocks[::-1] if rev_blocks else [block[::-1] for block in blocks]
+        shown = [k for block in blocks for k in block]
+    relabel = args.relabel or args.reverse_walk or args.window_shuffle or rev_blocks or rev_within
     lab = {k: (i + 1 if relabel else k) for i, k in enumerate(shown)}
     if args.renumber:                               # time order kept; label differences no longer count steps
         lab = dict(zip(shown, sorted(random.Random(t["walk"]).sample(range(1, 1000), len(shown)))))
@@ -338,6 +353,12 @@ def main():
     order_opts.add_argument("--window-shuffle", type=int, metavar="K",
                             help="walk frames in consecutive blocks of K, the blocks in a fixed random order, "
                                  "labelled 1, 2, ... as shown")
+    order_opts.add_argument("--reverse-blocks", type=int, metavar="K",
+                            help="walk frames in --window-shuffle's blocks of K, the blocks last to first, each in "
+                                 "time order, labelled 1, 2, ... as shown")
+    order_opts.add_argument("--reverse-within-blocks", type=int, metavar="K",
+                            help="walk frames in --window-shuffle's blocks of K, the blocks first to last, each in "
+                                 "reverse time order, labelled 1, 2, ... as shown")
     order_opts.add_argument("--renumber", action="store_true",
                             help="walk frames in time order, labelled with sorted random numbers from 1-999")
     ap.add_argument("--irrelevant-walk", metavar="ROOM", help="every frame but the options from ROOM's walk "
@@ -350,8 +371,10 @@ def main():
     ap.add_argument("--device", default="cuda", help="cuda, or mps on Apple silicon")
     ap.add_argument("--score", action="store_true")
     args = ap.parse_args()
-    if args.no_walk and (args.reverse_walk or args.window_shuffle or args.renumber or args.irrelevant_walk):
-        ap.error("--reverse-walk, --window-shuffle, --renumber and --irrelevant-walk need the walk")
+    if args.no_walk and (args.reverse_walk or args.window_shuffle or args.reverse_blocks or args.reverse_within_blocks
+                         or args.renumber or args.irrelevant_walk):
+        ap.error("--reverse-walk, --window-shuffle, --reverse-blocks, --reverse-within-blocks, --renumber and "
+                 "--irrelevant-walk need the walk")
     score(args) if args.score else run(args)
 
 

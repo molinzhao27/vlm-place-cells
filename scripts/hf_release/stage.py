@@ -24,7 +24,7 @@ RUNS = {"run0": "qwen8b-proc", "run1": "qwen8b-proc-s1", "run2": "qwen8b-proc-s2
         **{f"e4-run{k}": f"qwen8b-proc-e4-s{k}" for k in range(3, 8)}}
 PROCEDURAL = ["B"] + [f"P50{i:02d}" for i in range(10)]
 PHOTOREAL = [f"HSSD{i}" for i in range(1, 27)] + [f"ReplicaApt{i}" for i in range(3)] + [f"ReplicaFRL{i}" for i in (0, 1, 3, 4, 5)]
-RESULTS = ["two_choice", "claude", "api", "std_bench", "behave", "frame_cut", "vlm_intervention", "e4_internals"]
+RESULTS = ["two_choice", "claude", "api", "std_bench", "behave", "frame_cut", "vlm_intervention", "e4_internals", "exp33"]
 SPOILED = ("/failed_nan/", "/failed_garbled/")   # runs a vast-3 GPU fault damaged (each rerun clean): not released
 
 
@@ -71,6 +71,7 @@ def main():
         counts[f"two_choice_trials/room{r}"] = link_tree(f"{exp}/dissimilar-room{r}", f"{ds}/two_choice_trials/room{r}", trials_only)
     counts["walks/roomP5005"] = link_tree(f"{ROOT}/data/walks-roomP5005", f"{ds}/walks/roomP5005")
     counts["two_choice_trials/roomE30"] = link_tree(f"{exp}/dissimilar-roomE30", f"{ds}/two_choice_trials/roomE30")
+    counts["two_choice_trials/roomA_single_query"] = link_tree(f"{exp}/single_query", f"{ds}/two_choice_trials/roomA_single_query")   # Exp 33: one trial per teleport view
     # shifted walks: the images their prompts showed (the 256-frame renders are 63 GB and re-render from seeds)
     counts["walks/shifted"] = link_tree(f"{OUT}/e30_payload", f"{ds}/walks/shifted")   # rsync'd from vast-3
     for d in sorted(glob.glob(f"{ROOT}/data/e30/P*")):
@@ -78,9 +79,10 @@ def main():
             link(f"{d}/{f}", f"{ds}/walks/shifted/{os.path.basename(d)}/{f}")
     for r in RESULTS:
         counts[f"results/{r}"] = link_tree(f"{ROOT}/results/{r}", f"{ds}/results/{r}", lambda p: not any(s in p for s in SPOILED))
-    for p in glob.glob(f"{ROOT}/results/*.json"):
+    top = glob.glob(f"{ROOT}/results/*.json") + glob.glob(f"{ROOT}/results/vggt_*.npz")   # VGGT's per-trial answers are arrays
+    for p in top:
         link(p, f"{ds}/results/{os.path.basename(p)}")
-    counts["results/*.json"] = len(glob.glob(f"{ROOT}/results/*.json"))
+    counts["results/*.json, vggt_*.npz"] = len(top)
     counts["training/proc"] = link_tree(f"{OUT}/training/proc", f"{ds}/training/proc")   # rsync'd from vast-3
     for k, v in counts.items():
         print(f"{k:40s} {v}")

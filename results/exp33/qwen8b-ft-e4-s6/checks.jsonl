@@ -1,0 +1,8 @@
+{"cond": "walk", "id": "w00p0000", "min_cos_view": 0.9990696907043457, "min_cos_walkframes": 0.9994300603866577, "max_dlogit": 0.21875, "logit_scale": 31.25, "gap": 0.0, "argmax_same": true}
+{"cond": "walk", "id": "w00p0001", "min_cos_view": 0.9985032677650452, "min_cos_walkframes": 0.9994300603866577, "max_dlogit": 0.19921875, "logit_scale": 30.625, "gap": 0.0, "argmax_same": true}
+{"cond": "walk", "id": "w01p0064", "min_cos_view": 0.9976271986961365, "min_cos_walkframes": 0.9987166523933411, "max_dlogit": 0.140625, "logit_scale": 30.375, "gap": 0.0, "argmax_same": true}
+{"cond": "walk", "id": "w01p0065", "min_cos_view": 0.9990233182907104, "min_cos_walkframes": 0.9987166523933411, "max_dlogit": 0.25, "logit_scale": 26.25, "gap": 0.0, "argmax_same": true}
+{"cond": "shuffled", "id": "w00p0000", "min_cos_view": 0.9991310238838196, "min_cos_walkframes": 0.9985294938087463, "max_dlogit": 0.375, "logit_scale": 31.25, "gap": 0.0, "argmax_same": true}
+{"cond": "shuffled", "id": "w00p0001", "min_cos_view": 0.9983975887298584, "min_cos_walkframes": 0.9985294938087463, "max_dlogit": 0.4375, "logit_scale": 28.375, "gap": 0.0, "argmax_same": true}
+{"cond": "shuffled", "id": "w01p0064", "min_cos_view": 0.9983861446380615, "min_cos_walkframes": 0.9990119934082031, "max_dlogit": 0.25, "logit_scale": 29.125, "gap": 0.0, "argmax_same": true}
+{"cond": "shuffled", "id": "w01p0065", "min_cos_view": 0.9994751811027527, "min_cos_walkframes": 0.9990119934082031, "max_dlogit": 0.125, "logit_scale": 25.75, "gap": 0.0, "argmax_same": true}

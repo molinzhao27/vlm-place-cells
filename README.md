@@ -2,6 +2,8 @@
 
 *Novel-view behavior and heading invariance in vision-language models*
 
+**Paper:** [paper.pdf](paper.pdf)
+
 **Do neurons in a vision-language model act like hippocampal place cells when the model watches a
 first-person walk through a room? And can the model tell where a new view was taken, when it faces
 a way it never faced from that spot?**
@@ -169,7 +171,7 @@ included.
 
 ## Citation
 
-A preprint is in preparation. Until then:
+The preprint is [paper.pdf](paper.pdf). Until it is on arXiv:
 
 ```bibtex
 @misc{zhao2026localizing,
@@ -183,4 +185,5 @@ A preprint is in preparation. Until then:
 
 ## License
 
-Code: [MIT](LICENSE). Figures and trial data in `results/`: CC BY 4.0.
+Code: [MIT](LICENSE). Figures and trial data in `results/`: CC BY 4.0. `paper.pdf` is not covered by
+these licenses; its photoreal images are Replica renders and follow the Replica license.

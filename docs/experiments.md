@@ -7676,6 +7676,43 @@ This absolute verdict is the registered primary. The *calibrated verdict* applie
 
 **Status.** Registered before any model saw a single-query teleport prompt, and committed docs-only.
 
+### Exp 33 results (2026-11-02 06:27 PST; gq vast3:371 smoke, vast3:372 recording (1 h 57 min), vast3:373 assay (12 min); `results/exp33_single_query.json`, `summary`, md5 3f576008...)
+
+**Gate failure and its cause, recorded before the paper uses any result.** `gates.pipeline_ok` is false for one reason: the base model's parity answers agree with its stored room-A runs on 96.4% (walk) and 96.9% (no walk) of the 192 trials, below the registered 98%.
+- Every other gate passes:
+  - the recordings are complete;
+  - 0 token-count mismatches;
+  - cache checks: min cosine 0.9951 at the view, 0.9985 at the walk frames, logits within tolerance;
+  - the per-row assay path is identical to `population_assay`'s;
+  - experiment 25's stored teleport-view HG is reproduced exactly (max |diff| 0.0 over 60 values);
+  - no non-finite or clipped values;
+  - all five four-epoch runs agree with their stored answers on 100% of trials in all three conditions.
+- *Cause.* The stored base runs were made on another device, and the base model answers near chance with small margins. Its two existing stored runs of the same trials, CUDA and MPS, agree with each other on only 96.9% (walk) and 96.4% (no walk). That is the same level, so the shortfall is device-level flipping of low-margin answers, not a pipeline fault.
+- *Consequence.* The base model enters only described comparisons, never the primary, so the primary is read. Base-model numbers carry this caveat.
+- *Disclosure.* The hub's fetch script printed the primary verdicts in the same output that reported `pipeline_ok = false`, so the result was seen before the cause was established. The cause was established from the stored files above, which do not depend on the result.
+
+**Primary (MLP neurons, query's image-end token, layer 35, ordered walk, 382 novel views): holds, on both the absolute and the calibrated thresholds.** HG by run, 3 / 4 / 5 / 6 / 7: 0.44 [0.30, 0.58] / 0.37 [0.27, 0.51] / 0.38 [0.27, 0.50] / 0.37 [0.24, 0.53] / 0.42 [0.32, 0.55]. The five-run mean is 0.40 [0.30, 0.51].
+- Every run is partial on the absolute thresholds and positive on the calibrated novel-view thresholds (-0.11 / 0.28). The equivalent invariant share is 0.29-0.33 on novel views and 0.19-0.27 on all views.
+- All-view HG under the single-query protocol is 0.44-0.54.
+
+**Residual stream, same site and layer: holds** (both verdicts). HG by run: 0.45 / 0.38 / 0.46 / 0.34 / 0.44; mean 0.42 [0.33, 0.54]. The residual stream carries about the same partial code as the MLP neurons, so no stronger heading-general code sits there for novel queries.
+
+**Base model** (MLP / residual): novel-view HG -0.88 / -1.00 (all views -0.42 / -0.46). There is no heading-general code for the task's views; with the parity caveat above.
+
+**Order (novel views, layer 35).** D = ordered minus shuffled.
+- MLP: 0.19 [0.05, 0.33], 0.10 [0.03, 0.21], 0.05 [-0.07, 0.16], 0.10 [-0.04, 0.27], 0.10 [-0.06, 0.20], with shuffled HG 0.25-0.33.
+- Residual: 0.20, 0.18, 0.19, 0.01, 0.06.
+- Reading: **mixed** for both. Two to three runs show a reliable drop, the others don't. This is more order dependence than experiment 25's multi-query teleport views (0.03-0.11).
+
+**Walk frames of the task prompt** (2,928 frames, layer 35). MLP HG 0.69-0.76 (experiment 25's recording of the same frames 0.69-0.80); residual 0.74-0.78. **Positive in every run.** Shuffled walk 0.28-0.34: **depends on order** (amendment 1's rule). Base model 0.08 (MLP) / 0.16 (residual) at layer 35 with the 61-frame task walk.
+
+**Protocol (single-query minus experiment 25's multi-query, MLP, layer 35).**
+- After the walk: all views 0.44-0.54 against 0.39-0.49, about the same; novel views 0.37-0.44 against 0.17-0.33, higher under single queries.
+- No walk: all views 0.05-0.18 against 0.20-0.30; novel views -0.24 to -0.08 against -0.20 to 0.10.
+- So the multi-query "no walk" partial code (0.20-0.30) came largely from the other teleport views in the prompt, and the walk is what produces the novel-view code.
+
+**Reading, as registered.** "MLP holds": the paper's population claim can be stated for the task's own novel queries, with the novel-view HG range under the task prompt (0.37-0.44). The residual stream gives the same partial code, so the population-level "no full place code" applies to both readouts. The no-walk teleport result in the paper must change: it was a batch artifact.
+
 ## Experiment 34 (pre-registered 2026-11-02 02:38 PST, before any model saw a walk reversed at one level only): where the cost of reversing the walk lies, inside 8-frame stretches or in their order, on four-epoch runs 5 and 7
 
 **Why.** In experiment 31, shuffling the 64-frame walk's blocks of 8 shown frames kept 0.80 and 0.74 of the order effect

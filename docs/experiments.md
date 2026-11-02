@@ -7818,6 +7818,34 @@ only this experiment's answer files from vast-3. Outputs:
 
 **Status.** Registered before any model saw a B or I walk; committed and pushed docs-only (the commit's hash and time are in git log).
 
+### Exp 34 results (2026-11-02 04:17 PST; gq vast3:369 (run 5) and vast3:370 (run 7); `results/exp34_summary.json`, `summary`)
+
+**Registered verdict: short-range direction, in both runs and so for the recipe.** Run 7's log-odds reading is inconclusive (BW's interval reaches +0.11), so its verdict is marked scale-dependent, as the rule requires. Run 5 reads short-range direction on both scales.
+
+**Gates and checks.** The order effect D (ordered minus the relabeled-shuffle floor) is +44.4 and +39.0 points, the gate's experiment-31 values. The parity reruns of P5000's window-shuffled and reversed walks match experiment 31's stored answers on 192/192 trials each, in both runs. The analysis reproduces experiment 31's stored O, R, W and V values exactly (9 of 9 per run), and the identity error is below 1e-15. Parse rates are at least 99.1% in every condition. No room is incomplete.
+
+**Accuracy** on the 1,299 novel trials (mean over the ten rooms, 95% bootstrap CI over rooms), run 5 / run 7:
+- in order 97.3 / 97.2;
+- relabeled shuffle (floor R) 52.9 / 58.2;
+- 8-frame blocks shuffled (W) 88.4 / 87.2;
+- reversed (V) 75.9 / 78.8;
+- **blocks reversed, each played forward (B) 87.4 [85.6, 89.2] / 87.8 [85.9, 89.7];**
+- **reversed within blocks, blocks in order (I) 75.6 [73.7, 77.5] / 79.1 [77.2, 81.2].**
+
+**Retained shares of D** (points scale), run 5 / run 7: W 0.80 / 0.74; V 0.52 / 0.53; B 0.78 [0.74, 0.82] / 0.76 [0.70, 0.81]; I 0.51 [0.46, 0.56] / 0.53 [0.47, 0.60].
+
+**Registered contrasts** (shares of D; threshold 0.10), run 5 / run 7:
+- BI = (B - I)/D: +0.27 [0.21, 0.32] / +0.22 [0.17, 0.29], both above.
+- BW = (B - W)/D: -0.02 [-0.06, 0.02] / +0.02 [-0.05, 0.09], both within.
+- IV = (I - V)/D: -0.01 [-0.05, 0.03] / +0.01 [-0.03, 0.05], both within.
+- On the log-odds scale: BI +0.24 / +0.20 (above); BW -0.02 [-0.07, 0.02] (within) / +0.02 [-0.05, 0.11] (unresolved); IV -0.01 / +0.01 (within).
+
+**Reported only (points).** m_within 0.37 / 0.35; m_blocks 0.11 / 0.12; edge term 0.11 / 0.12.
+
+**Reading, as registered.** Reversing the frames inside each 8-frame block costs as much as reversing the whole walk (I = V within 0.01 of D), while reversing the order of the blocks, each played forward, costs about what shuffling them costs (B = W within 0.02 of D). The reversal's cost therefore comes from the direction of travel within short stretches of the walk: 8 shown frames, about 30 walk steps. In these two runs, nothing shows use of the direction of the longer-range block sequence. Breaking the walk at the block edges still costs about a fifth to a quarter of D (W's loss), so adjacency across stretches matters too, but its direction does not.
+
+**For the paper.** Section 3.3's sentence "These controls do not separate longer-range order from direction" is replaced by this result, and the run-0 appendix's inference stays withdrawn.
+
 ## Prior work this builds on
 
 - Luo, Mok & Love 2024, *The inevitability and superfluousness of cell types in

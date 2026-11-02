@@ -7525,6 +7525,157 @@ and the prose around the readings above still need their pass. The Hugging Face 
 summaries, and upload mac:153 failed on a network error at 13:09 PST, so both need `stage.py` and a new upload.
 `results/heldout_summary_incomplete.json` is an old interim file and was left as it is.
 
+## Experiment 33 (pre-registered 2026-11-02 03:02 PST, before any model saw a single-query teleport prompt): the population code for the task's own novel queries, in MLP neurons and the residual stream
+
+**Why.** The abstract says the fine-tuned model's "population code for views off the walk is partial". That rests on experiment 25's four-epoch result: HG 0.39-0.49 at layer 35 for teleport views after the walk, with the base model at −0.27. An external review (GPT-6 Astra), checked by the hub, found two gaps between that number and the task.
+- *Protocol.* `extract.py` put each walk's 64 teleport views into one prompt after the walk, in random order and with no question, so each view could attend to the views before it. The task shows one new view per prompt, under the two-choice question, after 61-63 labeled walk frames.
+- *Test set.* `population_assay.py real` scored all 3,072 room-A teleport views. Only 382 of them are novel by the paper's definition (no frame of the view's walk within 1 m faced within 45 degrees of it); 2,690 are familiar.
+
+So the paper does not yet know whether the population code holds for the task's own novel queries. A second review, also checked, adds that the unit test and the assay read only MLP neurons, while VGGT showed that a causal pose code can sit in the residual stream with almost none of it in the MLP. This experiment therefore reads both, and also reads the walk frames of the task's own prompt.
+
+**Question.** Under the task's prompt, one view at a time, does the four-epoch model's population carry a view's position across headings for novel views? Does that depend on the walk's order, on training, or on the readout (MLP neurons or residual stream)? And does experiment 25's walk-frame code hold for the walk frames of the task prompt?
+
+**Done before this registration.** No model forward pass and no recorded activation were involved.
+- *Trials.* Built from geometry and pixels only (`single_query.py trials`, `results/export/single_query/trials.json`, md5 `80f67d01...`, deterministic). There is one trial per teleport view (3,072). They follow `dissimilar_trials.py`'s room-A rules, with both options taken from the 61 evenly spaced frames that `two_choice.py --max-images 64` always shows, as `procedural_data.py` did for training:
+  - the near option within 1 m of the view and the far one more than 3 m away;
+  - both facing more than 90 degrees away from the view and within 45 degrees of each other's turn;
+  - neither showing a poster or pillar the view shows;
+  - the pair whose pixel similarities to the view are closest, with the sign of the difference alternating from trial to trial (the other sign when only that one exists);
+  - a and b ordered by a coin (seed 33).
+- *Trial counts.* 2,770 views get a valid trial: 368 of the 382 novel views and 2,402 of the 2,690 familiar ones. The other 302 (14 of them novel) get a fallback pair, flagged `valid = false`: the nearest shown frame, and the frame more than 3 m away whose turn is closest to it. In valid trials, pixel similarity favors the near option in 50.1%, the near option is listed first in 51.1%, and frame order favors it in 74.1% (room A's 192 existing trials: 72.9%; room A does not balance this cue). Novel views per walk: 1 to 18, median 7, no walk without one.
+- *Tokenization dry run* (`single_query.py dry-run`, with `two_choice.py` md5 `fe90c4e4...`, the version on vast-3, which carries experiment 34's flags and leaves existing prompts byte-identical). Walk prompts have 4,542 tokens: a 4,416-token walk prefix plus a 126-token suffix holding "New view:", the view and the question. The no-walk prompt has 291 tokens.
+  - On the first 130 views, in both walk orders, the prefix is identical for every view of a walk. Prefix ids plus suffix ids equal the processor's ids for the whole prompt, and the walk frames' `<|vision_end|>` positions are the same.
+  - All 192 existing trials, in all three conditions, match the stored two_choice runs' token counts for runs 3-7 and for the base model (whose only stored runs are with the walk and without it): 0 mismatches.
+- *Analysis self-test* (`exp33_analysis.py selftest`, synthetic populations in a scratch folder). It runs the whole pipeline. Its per-row readout path gives HG and intervals bit-identical to `population_assay.heldout_decoding`.
+- *Synthetic calibration of the novel subset* (`exp33_analysis.py calibrate`, `results/exp33_calibration.json`, md5 `826f7a62...`). A pilot with experiment 25's pilot seed, 1000, showed that a population with a fixed code scores lower on the novel views than on all views. The registered calibration then ran with seeds 2400-2404 (table below).
+- Nothing was computed on any model's activations, including experiment 25's stored teleport-view recordings on the novel subset.
+
+**Inputs.** Room A's 48 walks and their 3,072 teleport views (`data/walks`, the same files and md5s on the Mac and vast-3). Models: base Qwen3-VL-8B (`qwen8b`) and the four-epoch runs 3-7 (`qwen8b-ft-e4-s3` ... `-s7`, adapters `data/ft/qwen8b-proc-e4-s<k>`, the same md5s on both machines). bf16 on vast-3's RTX 5090.
+
+**Prompts and conditions.** Every prompt is exactly the one `two_choice.py` builds: 256 px, the chat template with the generation prompt, real frame numbers as labels.
+- *walk*: the 61 shown frames in time order, then "New view:", the view and the question (`--max-images 64`).
+- *shuffled*: the same frames in `--shuffle-walk`'s order (`random.Random(walk)`, real labels). This is the paper's behavioral shuffled condition, not `extract.py`'s.
+- *nowalk*: `--no-walk`, so only the two options, then the view and the question.
+- *parity*: room A's 192 existing trials in each condition, the exact prompts of the stored runs.
+
+Because both options are among the 61 frames, every view of a walk has the same walk context. The view's own tokens are the only thing that differs before its `<|vision_end|>`.
+
+**Recording** (`spatialcells/single_query.py record`).
+- *Prefill and views.* Each walk is prefilled once per condition. Each view continues from that cache, which is rewound after it (`behave.py`'s Rewind), so no view sees another. Positions are M-RoPE's for the whole prompt.
+- *What is read.* Two kinds of unit:
+  - *mlp*: the SwiGLU MLP neurons, i.e. the input to `down_proj` (12,288), as `extract.py` records them; values beyond float16 set to 0.
+  - *resid*: the residual stream, i.e. the decoder layer's output (4,096; at layer 35, before the final norm); values beyond float16 clipped and counted.
+- *Where.* At the view's `<|vision_end|>` (img_end, the token experiment 25's teleport views used) and at the last prompt token (last).
+- *Walk frames.* In walk and shuffled, also each shown walk frame's `<|vision_end|>`: 61 × 48 = 2,928 rows. These are recorded once per walk, during the prefill. Under causal attention a walk frame's tokens cannot depend on the view and question that follow, so the first prompt of each walk is enough.
+- *Layers.* 3, 23, 29 and 35. Of `extract.py`'s seven layers, 8, 13 and 18 are dropped: in experiment 25 they were never the best layer of any four-epoch or base-model condition (walk, shuffled walk, or teleport views). This keeps disk at about 20 GB instead of 35. The activations can be regenerated from the committed code and inputs, and nobody deletes them without the user.
+- *Answers.* Greedy, at most 16 new tokens, parsed as `two_choice.py` does.
+
+**Checks that stop the run.**
+- (a) Every parity prompt's token count must equal the stored run's.
+- (b) For the first view of every walk, prefix plus suffix ids must equal the processor's ids for the whole prompt.
+- (c) For the first two views of the first two walks of each walk condition, a full recompute without the cache must match the cached path: cosine ≥ 0.99 for every layer and both kinds, at the view's two sites and at all 61 walk frames. The walk frames are compared with the prefill, which saw no view; this asserts that they do not depend on the query. The first-token logits must also agree within `behave.py`'s tolerance.
+- (d) Fewer than 90% of a condition's parity answers matching the stored run's.
+
+A smoke job (`--smoke`: 8 parity trials per condition, 8 views from each of walks 0-1 in both walk orders, 8 no-walk views, written to `data/acts_sq_smoke/`) runs these checks before the main job.
+
+**Assay** (`scripts/exp33_analysis.py`). Experiment 25's primary assay (guard45), imported from `population_assay.py` unchanged:
+- units z-scored over all rows of the source;
+- kernel ridge of (x, y) trained on the training walks' rows that face at least 90 degrees from the test sector's center (unseen) or within 90 degrees of it (seen);
+- penalty picked on half of the training walks;
+- every row tested once, by its fold (even or odd walks) and its sector.
+
+The readouts are trained on all rows of the training walks, as in experiment 25. HG is then taken over a test subset of the same fits: novel views (382, the primary), all views (as in experiment 25), familiar views, and views with a valid trial (for the last token). Training on novel views alone is not possible: there are about 95 per arc per fold against 12,288 units. Intervals come from 1,000 resamples of the 48 walks (seed 0, experiment 25's resamples). Every source uses the same resamples, so differences between two sources on the same rows get paired intervals. Calls follow experiment 25: positive HG ≥ 0.5, partial 0.25-0.5, negative ("below partial") < 0.25, and "no position code" if the seen-heading readout beats chance by less than 0.5 m.
+
+Sources:
+- the single-query recordings: 3 conditions × 2 sites × 2 kinds, for each of the 6 models;
+- the task prompt's walk frames;
+- img_end with the 192 existing trials' prompts substituted for their views' new trials;
+- experiment 25's own teleport-view recordings of runs 3-7 (after the walk, after the shuffled walk, and alone), MLP only;
+- experiment 25's walk-frame recordings of runs 3-7 (`<model>-walk` and `-shuffled`), restricted to the same 2,928 frames.
+
+There is no multi-query comparison for the base model.
+
+**Calibration, fixed now** (synthetic only). Experiment 25's synthetic mixtures: a share p of heading-invariant place units, the rest conjunctive, view and head-direction units; 2,000 units; noise k = 3 times each unit's SD, independent per row because each view is its own prompt. They are built on the teleport views' and walk frames' poses and scored with the same readout. HG is the mean over seeds 2400-2404:
+
+| p | 0 | 0.01 | 0.02 | 0.05 | 0.1 | 0.2 | 0.5 | 1 |
+|---|---|---|---|---|---|---|---|---|
+| all 3,072 views | −0.37 | −0.25 | −0.21 | −0.04 | 0.18 | 0.46 | 0.82 | 1.00 |
+| 382 novel views | −1.29 | −0.92 | −0.77 | −0.60 | −0.22 | 0.22 | 0.72 | 0.97 |
+| 2,928 walk frames | −0.32 | −0.27 | −0.15 | −0.04 | 0.12 | 0.45 | 0.82 | 1.01 |
+
+- On all views, HG 0.25 corresponds to p = 0.125 and HG 0.5 to p = 0.234, close to experiment 25's walk-frame mapping (11% and 24%).
+- At those shares the novel views score −0.11 and 0.28. These are the *calibrated novel-view thresholds*.
+- The walk frames score 0.20 and 0.49 at those shares, within 0.05 of the absolute thresholds, so walk frames use the absolute thresholds.
+- The reason for the gap: novel views sit nearer the room's center (chance 2.81 m against 3.66 m), so the seen-heading gain in HG's denominator is smaller, and heading-dependent units push the unseen-heading error further below chance relative to it.
+- The seed-to-seed SD on novel views is 0.05-0.07 for p from 0.1 to 0.5.
+
+**Gates (applied before any reading).**
+- Every recording is complete.
+- Every parity prompt's token count matches its stored run (0 mismatches).
+- Parity answers agree with the stored run's in at least 98% of trials for each model and condition that has one (runs 3-7 × 3 conditions, base × 2).
+- The cache checks pass.
+- The per-row assay path is bit-identical to `population_assay`'s.
+- Experiment 25's stored all-view teleport HG for runs 3-7 at layers 3, 23, 29 and 35 is reproduced within 0.005.
+
+If any gate fails, `pipeline_ok` is false, the failure is reported, and the primary is not read until the cause is found.
+
+**Primary measure and decision rule.** HG on the 382 novel views, at layer 35, at the view's image-end token, with the ordered walk, in each of runs 3-7. It is called separately for MLP neurons and for the residual stream; the MLP verdict is the one the paper's claim rests on.
+- **Holds** if every run is partial or better.
+- **Does not hold** if every run is below partial (negative or no position code; the count of each is reported).
+- **Mixed** otherwise, reported run by run.
+
+This absolute verdict is the registered primary. The *calibrated verdict* applies the same rule with the calibrated novel-view thresholds (−0.11 and 0.28) and decides the paper's wording, as set out below. The five-run mean, with its interval over the same walk resamples, is reported beside both verdicts. The same rule at each run's best layer (among 3, 23, 29 and 35, with a position code) is reported as a description.
+
+**Secondary readings, fixed now.**
+- *Order:* D = ordered minus shuffled novel-view HG at layer 35, per run, with a paired interval.
+  - "Needs order" if, in every run, D ≥ 0.10 and its interval excludes 0.
+  - "Little order dependence" if every run has D < 0.10.
+  - "Mixed" otherwise.
+- *Walk frames of the task prompt* (2,928 frames, layer 35, each kind).
+  - "Positive in every run", "below positive in every run", or mixed.
+  - Order dependence by amendment 1's rule. It "depends on order" if every run has D ≥ 0.25 and its shuffled HG is not positive. It "does not depend on order" if every run has D < 0.10 and its shuffled HG is positive. Mixed otherwise.
+  - Beside it, experiment 25's recording of the same frames, with a paired difference.
+
+*Described only, with no rule:*
+- fine-tuned minus base (paired, per run);
+- residual minus MLP (paired);
+- single-query minus experiment 25's multi-query HG on the same views, all and novel (paired; runs 3-7 only);
+- ordered minus no walk;
+- familiar views, and novel minus familiar;
+- the substitution with the existing trials;
+- last-token HG on valid trials;
+- equivalent invariant shares (all views and novel views);
+- behavior: accuracy on valid trials (novel, familiar, and trials where frame order favors the far option), plus parity agreement.
+
+**What each outcome would mean for the abstract's claim.**
+- *MLP holds* (absolute): the claim can be stated for the task's own novel queries, with the novel-view HG range under the task prompt beside or instead of experiment 25's 0.39-0.49.
+- *MLP does not hold, but the calibrated verdict holds:* the novel-view HG is lower than on all views by about what the novel subset does to a code of fixed strength. The paper may say that the code for novel queries is consistent with the partial code on teleport views, giving both equivalent invariant shares. It must not report "partial" for novel queries at experiment 25's thresholds.
+- *Both MLP verdicts do not hold:* the claim cannot be stated for the task's novel queries. The abstract's sentence is restricted to teleport views recorded many at a time, mostly familiar ones, and the paper says that a linear readout finds no heading-general code for novel queries under the task prompt. If runs lack a position code, it says instead that the readout cannot place novel views even on seen headings.
+- *Mixed:* the paper gives the range and how many runs reach partial, with no general statement.
+- *Residual positive in every run while the MLP is partial or below:* the task's novel queries carry a heading-general code in the residual stream that the MLP neurons largely miss, as in VGGT. The abstract's "partial" then understates the residual stream. Every population claim must name its readout, and the unit-level "few invariant units" claim (MLP) cannot be extended to the residual stream.
+- *Residual holds and MLP does not (both at partial level):* the claim holds for the residual stream only, and the paper says so.
+- *MLP holds and residual does not:* reported as found, with the claim tied to MLP neurons.
+- *Walk frames positive in every run:* experiment 25's walk-frame code (0.77-0.85) carries over to the task prompt. *Below positive in every run:* that code belongs to experiment 25's 256-frame unlabeled walk, and the walk-frame claim is qualified.
+- *Order:* "needs order" would differ from experiment 25's multi-query result (0.03-0.11). "Little order dependence" repeats it: the novel-view code mostly does not depend on what the task needs.
+- *Protocol:* if single-query minus multi-query on all views is negative with an interval excluding 0, part of experiment 25's teleport-view code came from the other teleport views in context.
+
+**Known limits.**
+- *Thresholds.* They were validated on walk frames. The novel-view calibration rests on one synthetic generator, whose heading-dependent background sets how far below zero a population without invariant units falls on the novel subset. So the absolute verdict stays the registered primary, and the calibrated one decides the wording, as above.
+- *Sample size.* 382 novel views, 1-18 per walk (median 7). In the calibration, novel-view 95% intervals are about ±0.25 near HG 0.2 and ±0.14 near 0.7, against ±0.04 on all views. Synthetic seen-heading errors (1.5-2.2 m) are larger than the four-epoch runs' on teleport views (about 1.4 m), so the real intervals may be narrower. A run whose true novel-view HG is 0.40 lands below 0.25 roughly 5-10% of the time. The five runs share views and walks, so their sampling errors move together, and unanimity is only somewhat conservative. Paired differences are tighter than single HGs.
+- *Walk frames.* 61 of 256 per walk, about 4 steps apart. The calibration shows the 61-frame sample keeps experiment 25's mapping (within 0.05) and gives intervals of about ±0.04-0.06. A "memory of recent views", though, now spans frames about 0.9 m apart.
+- *Scope.* Room A only, one render, and one trial per view with options among the shown frames. The existing trials, some with options outside the 61 frames, are recorded as the parity set.
+- *Frame order.* In room A it favors the near option in 74% of valid trials, which matters for behavior only.
+- *No-walk condition.* Its context holds the two options, one within 1 m of the view, so it is described only.
+- *Last token.* It carries the decision, and the near option lies within 1 m of the view, so last-token HG can come from the answer. It is described only.
+- *Base model.* It has no stored shuffled run in room A, so its shuffled parity has no reference.
+
+**Jobs and files** (vast-3, through gq).
+- *Smoke* (GPU, about 5 min), then *record* after it (GPU, about 25-30 min per model, about 3 h in all, about 20 GB in `data/acts_sq/`), then *analysis* after it (CPU, about 2.5 h).
+- Output: `results/exp33_single_query.json` (top-level `summary`), with per-row errors in `data/exp33/errors/`.
+- Code: `spatialcells/single_query.py`, `scripts/exp33_analysis.py`, `scripts/exp33_record.sh`, `scripts/exp33_analysis.sh` (all new). `population_assay.py` is unchanged.
+
+**Status.** Registered before any model saw a single-query teleport prompt, and committed docs-only.
+
 ## Experiment 34 (pre-registered 2026-11-02 02:38 PST, before any model saw a walk reversed at one level only): where the cost of reversing the walk lies, inside 8-frame stretches or in their order, on four-epoch runs 5 and 7
 
 **Why.** In experiment 31, shuffling the 64-frame walk's blocks of 8 shown frames kept 0.80 and 0.74 of the order effect

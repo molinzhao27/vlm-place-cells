@@ -4876,7 +4876,7 @@ from the Mac, and Opus answered through the API.
   verdict is restated once all five finish. No run is dropped or repeated because of its result. A job that
   crashes is restarted, and it resumes where it stopped.
 
-**Status.** Registered (committed and pushed as efbf81d, 09:52 PDT). Jobs queued 2026-10-28 09:52 PDT through
+**Status.** Registered (committed and pushed as 7f44efc, 09:52 PDT). Jobs queued 2026-10-28 09:52 PDT through
 gq on the Mac at priority 150, behind experiment 19's Mac jobs (none can start before about Thu 21:40 PDT),
 one per run: mac:130 (run 5), mac:131 (run 7),
 mac:132 (run 3), mac:133 (run 4) and mac:134 (run 6), each with an estimate of 9 h 15 min. Projected starts
@@ -6226,7 +6226,7 @@ bootstrap CIs, room-level sign tests, and pooled trial-level sign tests. With A(
 `specs.json` (every swap frame's pose and MD5), `stimulus_check.json`, and one JSONL per run and condition.
 `frame_cut.py`, `task_record.py` and `two_choice.py` are imported and not changed.
 
-**Status.** Registered at 10:26 PDT (committed and pushed as 1ecfd03). The stimulus build is queued on the Mac as a
+**Status.** Registered at 10:26 PDT (committed and pushed as 2dd055d). The stimulus build is queued on the Mac as a
 CPU job (gq mac:138).
 
 *Note (2026-10-28 10:40 PDT, before any model saw a swapped walk; implementation, no design change).* Checks so far:
@@ -6727,7 +6727,7 @@ unpack and parity steps); `scripts/mac/trajectory_shift_prep.sh` (Mac: render, b
 `results/two_choice/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s<k>-roomE30-256px-max64.jsonl`. `two_choice.py`,
 `dissimilar_trials.py`, `room.py` and `retrieval_baselines.py` are imported and not changed.
 
-**Status.** Registered at 12:53 PDT; committed and pushed as 3791578 (12:54 PDT, docs only).
+**Status.** Registered at 12:53 PDT; committed and pushed as dd23f2d (12:54 PDT, docs only).
 
 *Note (2026-10-28 13:10 PDT; implementation, no design change; nothing of the new walks rendered before the commit).*
 Checks so far:
@@ -7045,7 +7045,7 @@ a top-level `summary`; its `--test` reproduces run 0's experiment-13a and experi
 `results/two_choice/exp31/` (the parity rerun and P5005's CUDA reruns, kept out of `two_choice --score`);
 `results/frame_cut/Qwen3-VL-8B-Instruct+qwen8b-proc-e4-s{5,7}-<condition>[-layersLO-HI].jsonl`.
 
-**Status.** The registration was committed and pushed as e5abf39 (12:52 PDT).
+**Status.** The registration was committed and pushed as 85ddac1 (12:52 PDT).
 
 *Note (2026-10-28 12:58 PDT, before any model run; implementation, no design change).*
 - *Checks before submission (no model).*

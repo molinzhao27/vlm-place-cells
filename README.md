@@ -47,6 +47,9 @@ Accuracies are on novel-view trials unless stated; chance is 50%.
    - It beats all 149 retrieval rules we tested, the highest of which reaches 67.7%, by at least
      26.0 points in every difficulty bin. A trained sequence matcher reaches 73.3%.
    - It depends on the walk's order: ordered beats shuffled by 15.1-42.9 points, depending on the run.
+     In the two runs tested, what matters is the direction of travel within short stretches of the
+     walk. Reversing each 8-frame block costs as much as reversing the whole walk, while reversing
+     only the order of the blocks costs about what shuffling them does.
    - It holds on walks unlike the training walks (95.5-97.5%, 27.8-31.2 points above retrieval).
 4. **The photoreal scenes do not settle the question.** The four-epoch mean is 94.4% across all 34
    scenes on all trials. But on the novel trials of the first 11 scenes, it reaches 88.1% against
@@ -55,9 +58,11 @@ Accuracies are on novel-view trials unless stated; chance is 50%.
 5. **The fine-tuned model's units fall short of a place code.** With the walk at layer 35, 8-17% of
    its place units pass the strict test (18-31% on a weaker mean of two sector pairs), which is an
    undercount at that layer's stability. Within a room, its population carries position across
-   headings on walk frames (heading-held-out gain 0.77-0.85; RNNs 0.98), and partly for the new view
-   (0.39-0.49). That late-layer walk code depends on order: on shuffled walks the gain falls to
-   0.28-0.35. No position code carries across rooms.
+   headings on walk frames (heading-held-out gain 0.77-0.85; RNNs 0.98). Asked about one novel view
+   at a time under the task's own prompt, it carries position across headings only partly
+   (0.37-0.44 in MLP neurons, 0.34-0.46 in the residual stream), and the base model not at all. The
+   late-layer walk code depends on order: on shuffled walks the gain falls to 0.28-0.35. No
+   position code carries across rooms.
 6. **The decision depends more on where frames were taken than on what they show.** When we
    re-render the eight shown frames around the near option, changing the place costs 21.1-22.4
    points and changing the view 5.2-5.6 (runs 5 and 7). Moving a block of frames away from both

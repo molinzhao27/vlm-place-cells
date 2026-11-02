@@ -7883,6 +7883,204 @@ only this experiment's answer files from vast-3. Outputs:
 
 **For the paper.** Section 3.3's sentence "These controls do not separate longer-range order from direction" is replaced by this result, and the run-0 appendix's inference stays withdrawn.
 
+## Experiment 35 (pre-registered 2026-11-02 14:13 PST, before any model saw a copied activation): do activations inside the fine-tuned VLM carry the new view's location in a form the decision reads, and in how many dimensions?
+
+**Why.** The paper is about novel-view localization in vision-language models and whether the VLM holds causal activations for location. VGGT is the positive control: copying the camera token's component in any 10-d subspace that holds most of its frame-to-frame variation moves the predicted camera 0.86 of the way to the donor at block 21. Position-bin PCA 10 and ordinary PCA 10 do this equally (0.85 and 0.86), they overlap 0.85, and a random 10-d subspace moves nothing (experiments 27 and 32).
+
+For the fine-tuned Qwen3-VL-8B (four-epoch runs 3-7), every causal result so far acts on the input or on attention:
+- experiment 29 re-renders the walk frames;
+- experiments 15 and 31 cut attention to walk frames;
+- experiment 14a's linear readout places the decision around layers 18-20;
+- experiment 33 finds a partial position code for single novel queries at the view's `<|vision_end|>` (HG 0.37-0.44 in MLP neurons, 0.34-0.46 in the residual stream), but a readout does not show that the decision uses it.
+
+Nothing has yet copied internal activations between trials. This experiment is the VLM counterpart of VGGT's patching, with its measures and controls wherever the two can be compared.
+
+**Question.** In the four-epoch model, does copying the residual stream at a new view's tokens, from a view taken near the other option, move the decision toward that option? Up to which layer does the view's own position carry this, and from which layer does the question carry it? Is the effect carried by a low-dimensional subspace that position labels pick out? Is it about location rather than view content, so that a view from the same place facing elsewhere does not move the decision?
+
+**Done before this registration.** No forward pass of any Qwen model and no Qwen activation was involved.
+- *Pairs* (`vlm_patch.py pairs`, `results/export/vlm_patch/pairs.json`, md5 `6c8adc06...`). They are deterministic, built from experiment 33's trials (md5 `80f67d01...`) and room A's view and frame poses.
+- *Tokenization dry run* (`vlm_patch.py dry-run -n 40`). Every donor's suffix ids equal its recipient's, so only the pixels behind the 64 image tokens differ. The labels are three single-digit tokens. The suffix is 126 tokens: "New view:" (3), `<|vision_start|>`, 64 image tokens, `<|vision_end|>` and 57 question and template tokens.
+- *CPU selftest* (`vlm_patch.py selftest`). It uses a random 6-layer Qwen3-VL with DeepStack after layers 0-2, the real processor and the real token ids, in float32. It runs all three stages on 4 recipients, and every check that stops the run (below) holds within 1e-3. With the DeepStack swap removed, the check at L = 0 fails, as it should.
+- *Analysis selftest* (`exp35_analysis.py selftest`). Synthetic done files built for each account give that account's verdict, and every gate passes on them.
+- Experiment 33's stored answers were used for one count only: the runs answer 326-332 of the 337 run recipients correctly, and the base model 184.
+
+**Inputs.**
+- Room A's 48 walks and 3,072 teleport views (`data/walks`), and experiment 33's trials.
+- Four-epoch runs 3-7 (`data/ft/qwen8b-proc-e4-s<k>`) and the base model (`qwen8b`).
+- bf16 on vast-3's RTX 5090, as in experiment 33.
+
+**Prompts.** Experiment 33's walk condition, unchanged: the 61 shown frames in time order with their real frame numbers, "New view:", one view and the question. Every prompt of a walk starts with the same 4,416-token walk prefix. It is prefilled once per walk, and every forward continues from that cache and is rewound after it.
+
+A donor is shown under the recipient's question. Its prompt is the recipient's except for the view's pixels, so every position lines up token for token.
+
+**Recipients and donors.** Donors are other teleport views of the recipient's walk.
+- *Recipients.* Experiment 33's valid novel views (368), each with its own trial: the near option i within 1 m, the far option j more than 3 m away. The 337 that have a place donor are run. They come from 46 walks (1-16 per walk, median 7): 144 on even walks and 193 on odd.
+- *Place donor:* within 1 m of j's position and more than 3 m from i's. All 337 have one, and 116 of these donors are novel (median 4 candidates; median 0.59 m from j and 4.5 m from i).
+- *Same-place donor:* within 1 m of the recipient, facing more than 90 degrees away from it. 269 of the 337 have one (median 0.60 m from the recipient, turned a median 139 degrees).
+- *Random-place donor:* more than 3 m from both options. 336 have one. It lies nearer the far option in 47% of pairs.
+- *Choice.* One donor of each kind is drawn uniformly (`default_rng([35, probe, kind])`):
+  - the place donor among the novel candidates if there are any;
+  - each control among the candidates whose familiarity matches the place donor's if there are any (matched in 67% of same-place and 92% of random-place donors), else among all candidates.
+- 268 recipients have all three donors.
+
+**Score.** S = log P(near label) − log P(far label). Each label is its three digit tokens ("%03d"), teacher-forced after the generation prompt. S > 0 picks the near option. The near label's first two digits run in the same forward as the suffix. The far label's run after the cache is cropped back to the end of the suffix.
+
+**Sites and copies.**
+- *Layer.* Layer L (0-35) is the residual stream after decoder layer L, including DeepStack's addition of the vision tower's features to the image tokens after layers 0-2. It is the hidden state entering layer L + 1; for L = 35, the state entering the final norm.
+- *Copy.* A copy replaces the recipient's hidden state at chosen suffix positions with the donor's. The donor's states come from its own clean run under the recipient's question.
+- *Positions.*
+  - *(a) view*: the 64 image tokens and `<|vision_end|>`. `<|vision_start|>` comes before the image, so it is the same in both runs. At L = 0 and 1 the copy also gives the image tokens the donor's DeepStack features for the later layers, so from L on the view's tokens are exactly the donor's.
+  - *(b) view_end*: `<|vision_end|>` only, the site of experiment 33's population code.
+  - *(c) question*: every token after `<|vision_end|>`, through the last prompt token (57).
+  - *(c′) last*: the last prompt token only.
+- *Label tokens.* The teacher-forced label tokens are never copied. At layers up to L they read the recipient's states.
+- *Structural facts, used as checks.* A copy of (a) or (b) at L = 35 changes nothing, because no later token reads those states. Copying (a) and (c) together at any L makes the first label digit's log-odds the donor's.
+- *Reading.* Copying the whole view at early layers swaps the image, so its effect there is about 1 under every account. The informative parts are:
+  - the layer after which copying the view stops moving the decision, set against where (c) starts to;
+  - the same-place control;
+  - place donors against random-place donors;
+  - the subspace copies.
+
+**Stage 1, sweep** (per recipient).
+- The clean runs: the recipient and its donors, batched, with their suffix states recorded at every layer.
+- The recipient's greedy answer, decoded step for step as experiment 33 decoded it.
+- The copies:
+  - place donor (a), (b), (c) and (c′) at every L (144 rows);
+  - same-place and random-place donors (a) and (b) at every L (72 rows each);
+  - one row with the hooks on and nothing copied.
+
+**Layers for the subspace copies, by a rule fixed now** (`choose_layers`, per run). F_view(L) is the mean fraction moved by the place donor's view copy (a) over included pairs (Measures). For each mark, the layer is the last one from 2 to 34 at which F_view reaches it:
+- 0.9 (L_hi);
+- 0.5 (L_d, the primary);
+- 0.25 (L_lo).
+
+If no layer from 2 on reaches 0.5, L_d = 2 and the run's verdict is "unclear". The rule reads the full view copy only, never a subspace result.
+
+**Stage 2, fit.**
+- All 3,072 teleport views run once each (walk prefix, "New view:" and the view; the view's tokens cannot depend on the question). The 65 view tokens are read at the chosen layers.
+- Every subspace U is fit separately on even and on odd walks. A recipient uses the U fit on the other parity's walks: the 144 even-walk recipients use the odd fit, the 193 odd-walk recipients the even fit.
+- *Position PCA k*: the top k directions of the mean, over the views in each 1 m position bin, of each view's token mean (bins with at least 5 views: 92 and 91 per half), centered over bins. This is `vggt_patch.py`'s position subspace with the view's token mean in place of the camera token. Teleport views face uniformly random headings, so the bin means average over heading. VGGT's walk frames needed a heading-balanced variant for this; here it holds by construction.
+- *Ordinary PCA k*: the top k eigenvectors of the view tokens' covariance across views, each of the 65 token slots centered on its own mean. These are the directions along which a view token changes most from view to view, found with no labels: VGGT's ordinary PCA.
+- *Random k*: the QR of a Gaussian matrix, seeds 0-2, the same for every model and half.
+- *Readout*: the 2-d span of a ridge readout of the view's (x, y) from its token mean, with the penalty set by 4-fold cross-validation over the fit half's walks. Copying it makes that linear readout read the donor's position.
+- *Recorded for description*: each U's share of the fit half's variance; the overlap of position and ordinary PCA (the mean squared cosine of the principal angles, experiment 27's measure; VGGT gave 0.85 at k = 10); the overlap between the two halves; and the readout's error on the other half.
+
+**Stage 3, subspace copies,** at each chosen layer, with k = 2, 10 and 50.
+- *Copy:* h_r + (h_d − h_r) U Uᵀ at every view token.
+- *Place donor (19 rows per layer):* the full view; position PCA k; ordinary PCA k; random k (three seeds); the readout; and the view without position-U, h_r + (h_d − h_r)(I − U Uᵀ), for k = 10 and 50.
+- *Same-place donor (10 rows):* the full view; position PCA k; ordinary PCA k; random k (seed 0).
+- *Random-place donor (5 rows):* the full view; position PCA k; ordinary PCA 10.
+- *Recorded with each copy:* the pair's share of the view-token difference that each U holds (experiment 27's share).
+
+**Models.**
+- *Runs 3-7:* all three stages.
+- *Base model:* view copies (a) only, for all three donor kinds at every layer, and the fit at the union of the runs' layers. Its decisions are near chance on these recipients (184 of 337), so it has no reliable place gap and no fractions are computed. It is reported in nats (S_r − S_X), with place minus same-place, as a calibration of what the contrasts look like when the decision does not use location. An example is a place donor that pushes the decision toward the far option only because it shares visible surfaces with it. It gets no subspace copies.
+
+**Checks that stop the run** (`checks.jsonl`).
+- *Recipients checked:* the first two of each of the first two walks, and every recipient in the smoke job.
+- *Cache:* a forward of the whole prompt without the cache equals the cached path, clean and with the place donor's view copied at L = 17.
+- *Donor's image whole:* the place donor's image, fed whole into the recipient's prompt (image and DeepStack features), gives the place donor's clean S.
+- *(a) with (c):* copying the view and the question together at L = 0, 2, 17 and 34 gives the first label digit's log-odds of the place donor.
+- *Self-copy:* copying the recipient's own states into itself at those layers leaves S unchanged.
+- *Every recipient:* the hooks-on, nothing-copied row is compared with the clean S. The run stops if more than 1% differ, once 50 recipients are done.
+- *Experiment 33's answers:* the run stops if fewer than 90% of the first 20 greedy answers match them.
+- *Tolerance:* |ΔS| ≤ max(0.5 nats, 0.03 G), with G = S_r − S_place. The smoke job reports the actual differences. If they exceed the tolerance, the cause is found before the main job, and any change is registered as an amendment.
+
+**Gates (applied before any reading).** `pipeline_ok` requires, for each run:
+- all 337 recipients in both stages;
+- greedy answers equal to experiment 33's stored ones on at least 99%, and the sign of S_r agreeing with the greedy answer on at least 99%;
+- the hooks-on rows, and the (a) and (b) copies at L = 35, within tolerance on at least 99%;
+- no failed stop check;
+- `layers.json` equal to the rule recomputed from the sweep;
+- the subspace stage's clean S within tolerance of the sweep's on at least 99%, and its full view copy equal to the sweep's at the same layer (mean |ΔF| ≤ 0.02).
+
+For the base model, completeness and the structural checks only; its agreement with experiment 33 is reported. If any gate fails, the failure is reported and the primary is not read until the cause is found.
+
+**Measures.**
+- *Included pairs* (per run): S_r > 0 and S_place < 0, that is, the clean model places both views. G = S_r − S_place.
+- *Movement.* For a copy X, m_X = (S_r − S_X)/G.
+  - For the place donor this is F, the fraction of the way to the donor: experiment 27's transfer, with the donor's S under the recipient's question as the end point.
+  - The same-place and random-place donors are measured in the same pair's place gap, because their own gaps are near 0 or of either sign.
+  - For the same-place donor, |m| is the primary form, because a copy that changes only the view can push the decision either way.
+- *Flips:* the share of included pairs whose copied S is below 0.
+- *Statistics.* Means of the per-pair values, as experiment 27. Intervals are 95% percentile intervals from 10,000 resamples of the walks (seed 0), because a walk's recipients share its prefix and its donor pool. Every contrast is paired on the same resamples.
+- *R(k)* = mean F_pos(k) / mean F_view(L_d): the share of the full view copy's move that position-U carries (the ratio of the resampled means).
+
+**Primary rule** (per run, at L_d; for each k in 2, 10 and 50):
+- (i) R(k) ≥ 0.5: position-U carries at least half of the full view copy's move.
+- (ii) E_rand(k) = F_pos(k) − F_rand(k) (the mean of the three seeds) is at least 0.2, with its interval above 0.
+- (iii) C1(k) = F_pos(k) − mean |m_same,pos(k)| is at least 0.2, with its interval above 0. The same subspace from a view at the same place, facing elsewhere, barely moves the decision.
+- (iv) C2(k) = F_pos(k) − m_random,pos(k) is at least 0.1, with its interval above 0. The move goes toward the donor's place, not away from the near option whatever the donor.
+
+Verdicts:
+- *Low-dimensional location code* at k*, the smallest k that meets (i)-(iv). It is labeled *position-specific* if E_pca(k*) = F_pos − F_pca is at least 0.2 with its interval above 0. Otherwise it is labeled *not specific to position labels*, because the top-variance directions do about as well (VGGT's "generic").
+- *Moves the decision, not specifically by location*: some k meets (i) and (ii), and (iii) fails at every such k.
+- *Not low-dimensional*: no k meets (i). F_view(L_d) is at least 0.5 by the layer rule.
+- *Unclear*: anything else, for example (i) without (ii), or (i)-(iii) without (iv), or no layer from 2 on reaching 0.5.
+- *Recipe*: the verdict that all five runs share, with the range of k*. Otherwise *mixed*, run by run.
+
+The 0.2 margin is experiment 27's. C2's margin is 0.1, because under the location account a random-place donor, which lies nearer the far option in 47% of pairs, should move the decision about half as far as a place donor (C2 ≈ F_pos/2).
+
+**What each account predicts.**
+
+| measure | causal location activations | only view features | copy only disrupts | distributed |
+|---|---|---|---|---|
+| (a) at early L, place donor | ≈ 1 | ≈ 1 | ≈ 1 | ≈ 1 |
+| R(k) at L_d | ≥ 0.5 at some k ≤ 50 | can be ≥ 0.5 | can be ≥ 0.5 | < 0.5 at every k |
+| E_rand(k) | ≥ 0.2 | ≥ 0.2 | about 0 | < 0.2 |
+| \|m\| same-place, position-U | small: the donor is 0.6 m away, so about a third of F_pos at most | about F_pos | about F_pos | — |
+| m random-place, position-U | about F_pos/2 | about F_pos/2 | about F_pos | — |
+| verdict | low-dimensional location code | moves, not by location | unclear | not low-dimensional |
+
+Whether position PCA beats ordinary PCA (E_pca) is asked under the first account only. It is about 0 if the location code is the view tokens' main variation, as in VGGT.
+
+**Secondary readings, fixed now** (described; no verdict).
+- *Profile.* The last layer at which (a) reaches 0.9 and 0.5, the first at which (c) and (c′) reach 0.5, and the peak of (b). The reading "the decision takes the view's location from the view's tokens until about layer L_d, and from the question tokens after about layer L_q" is used if the two marks lie within 4 layers of each other.
+- *Full view copy at L_d.* Same-place m and |m|. The reading "the move comes from the donor's place, not from mixing two views" is used if |m| < 0.1 with its interval's upper end below 0.2. C2 on the full copy is also reported.
+- *(b) alone.* If its peak F reaches 0.25, the `<|vision_end|>` token, where experiment 33 found the population code, carries part of what the decision reads. Otherwise the paper says that code is not, on its own, what the decision reads.
+- *Necessity.* The share lost without position-U, 1 − F_notpos(k)/F_view, as experiment 32's L.
+- *Also reported:* the readout's F; the shares of the difference; overlaps; the readout error; everything again at L_hi and L_lo; the base model in nats; flips; and the place-donor results split by donor familiarity.
+
+**What each outcome would mean for the paper.**
+- *Low-dimensional location code:* the paper states the VGGT counterpart. "Copying a k*-dimensional subspace of a new view's residual stream at layer L_d, from a view taken near the other option, moves the fine-tuned model's decision F of the way there (R of what copying the whole view does); the same subspace from a view at the same place facing elsewhere moves it by |m|." *Position-specific* adds that position labels pick these directions out. *Not specific to position labels* takes VGGT's wording: the view tokens' main variation is the location code.
+- *Moves the decision, not specifically by location:* "copying the view's position-related directions moves the decision, but a view from the same place moves it as much; the copy acts through view content, and we find no causal location code in the view's tokens."
+- *Not low-dimensional:* "the view's tokens carry what the decision reads until layer L_d, but no subspace of up to 50 dimensions found by position labels carries it. Unlike VGGT's 10-d pose code, the VLM's code, if there is one, is not low-dimensional in these directions."
+- *Unclear or mixed:* the numbers go to the appendix, run by run, with no claim.
+- *In every case,* the profile may give the layer at which the location leaves the view's tokens, beside experiment 14a's layers 18-20.
+
+**Known limits.**
+- *Scope.* Room A, one render. 337 recipients in 46 walks; same-place controls for 269 of them.
+- *Donor distances.* Donors lie within 1 m of their target, not at it. A location code therefore predicts a small move for same-place donors (0.6 m away, median).
+- *Location and appearance.* Position PCA averages over heading, but it can still pick up the appearance of a place that is visible from many headings. This test cannot separate that from location, and a place code is built from such cues anyway.
+- *One layer at a time.* "Carries" means that the decision depends on that part at that layer.
+- *Label tokens* read the recipient's states at layers up to L. This matters most for (c) at the last layers: at L = 35, (c) makes only the first digit the donor's.
+- *Token means.* Position and ordinary PCA come from token means and across-view variance, so position structure that differs between image patches is averaged.
+- *Layer choice* depends on each run's sweep, by a rule fixed now that reads only the full view copy.
+- *Base model.* It cannot test the decision, because its answers are near chance.
+- *Numerical noise.* bf16 noise is bounded by the tolerance and the gates.
+
+**Cost and time.** No API cost. vast-3 through gq.
+- *Rows.* About 92,000 copied rows per run in the sweep (337 × about 274) and up to 34,000 in the subspace stage (337 × up to 34 per layer × up to 3 layers). The base model has about 34,000.
+- *Rate.* Eight rows go in each forward, over the cache expanded to 8 (128 tokens each, then 2 for the far label). At experiment 31's rate (a 4.5k-token prompt in about 0.5 s, about 150 TFLOP/s), that is about 15-20 ms per row. The fit runs 3,072 views once per model, about 2 minutes.
+- *Time.* About 40 minutes per run and 15 for the base model: about 4 h in all (gq `--est 5h`). It could reach 7 h if batching gains nothing; the smoke job prints rows per second first.
+- *Disk.* About 1 GB in `data/vlm_patch/` (token means of 3,072 views at up to 3 layers, the subspaces, the done files).
+
+**Jobs and files.**
+- *Smoke job:* `gq submit --on vast3 --project mechinterp --name e35_smoke --gpu --est 20m --env SMOKE=1 --env PAIRS_MD5=6c8adc0682878a45f03366127a244920 -- /bin/bash scripts/exp35_run.sh`. It runs 4 recipients with every check (`data/vlm_patch_smoke/`).
+- *Main job:* the same command with `--name e35_run --est 5h --after <smoke id>` and without SMOKE.
+- *Pairs on vast-3.* The job rebuilds the pairs there (`results/` is not synced) and stops unless their md5 is the committed one.
+- *Outputs:* per model, `data/vlm_patch/<model>/` holds `done_sweep.jsonl`, `layers.json`, `subspaces.npz`, `fit_report.json`, `fit_tokmean.npz`, `done_subspace.jsonl`, `checks.jsonl` and `meta.json`. The summary is `results/exp35_summary.json`, with a top-level `summary`. `exp35_analysis.py --fetch` copies the small files to `results/exp35/<model>/`, and rerunning it on the Mac must give the same summary.
+- *Code (all new; no existing file changed):* `spatialcells/vlm_patch.py`, `scripts/exp35_analysis.py`, `scripts/exp35_run.sh`, and `results/export/vlm_patch/pairs.json`.
+
+**Status.** Registered before any model saw a copied activation, and committed docs-only.
+
+**Implementation note.**
+- `vlm_patch.py` imports experiment 33's prompt, split, site and data functions from `single_query.py` unchanged, so the prompts are byte-identical to experiment 33's.
+- *Batching.* Copied rows run eight per forward. The walk cache is expanded to the batch, and every row gets its own image features through the model's `mm_encoder_outputs` input, which is how the view copy at L = 0 and 1 also swaps the DeepStack features.
+- *Hooks.* They are forward pre-hooks on decoder layer L + 1 (the final norm for L = 35), so they see the state after DeepStack's addition.
+- *Fit statistics.* The fit stage accumulates the view tokens' slot-centered covariance in float64 on the GPU, at the chosen layers only. No per-token array is stored.
+- *Resuming and smoke.* Each stage resumes from its done file. `--smoke` takes two recipients from each of the first two walks that have one, and fits on walks 0-3 with bins of at least 2 views.
+
 ## Prior work this builds on
 
 - Luo, Mok & Love 2024, *The inevitability and superfluousness of cell types in

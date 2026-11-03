@@ -56,13 +56,16 @@ Accuracies are on novel-view trials unless stated; chance is 50%.
    options, or moving the far option's frames elsewhere, costs about nothing, while moving the far
    option's frames next to the new view pulls the decision by 10.2-11.1 points. The pull is partial:
    accuracy stays at 87.9% and 86.6%.
-5. **VGGT, the positive control, has a causal pose code.** Its heading invariance is intermediate
+5. **VGGT, a 3D pose model trained to estimate camera pose, carries location in a far more compact
+   causal code.** It is the reference for what a location code looks like in a model built for it, and it
+   also shows that the transplant method finds such a code. Its heading invariance is intermediate
    (34% of place units on single frames with anchors). Copying the camera token's ten main
    directions from one frame to another at block 21 moves the reported position 0.86 of the way to
    the donor. These come from ordinary PCA with no position labels; a position-labeled subspace
    gives 0.85 and overlaps them 0.85, and no 2-d subspace we tested comes close. Heading and camera-frame parts are both needed and split the head's outputs.
-   VGGT's code is more compact than the VLM's: there 10 directions carry nearly all of the whole token's
-   transfer, while the VLM's 10 carry 0.18-0.34 of the way.
+   Ten directions carry nearly all of the whole token's transfer (0.86 of 0.87), while the fine-tuned VLM's
+   ten carry 0.18-0.34 of the way and its top 50 carry most of the effect. The models also differ in architecture and
+   training data, so this compares them and does not show that pose training causes the difference.
 6. **The fine-tuned model's units fall short of a place code.** With the walk at layer 35, 8-17% of
    its place units pass the strict test (18-31% on a weaker mean of two sector pairs), which is an
    undercount at that layer's stability. Within a room, its population carries position across

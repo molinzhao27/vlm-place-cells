@@ -8090,6 +8090,41 @@ Whether position PCA beats ordinary PCA (E_pca) is asked under the first account
 - *How large the noise is.* Across the base model's five checked recipients, the cached and recomputed S differ by 0, 0.25, 0.50, 0.50 and 0.75 nats. Across the four-epoch runs' 20 checked recipients the differences never exceed 0.25. The base model's place gaps on those recipients are 2.75-10.25 nats, so its noise is a sizable share of the effects its arm was meant to calibrate. This matches experiment 33, where only the base model's answers differed between devices (96-97% parity).
 - *Change.* The base model's arm (view copies in nats, as a calibration) is dropped from experiment 35. It has no part in the verdict rule, which reads runs 3-7 only, so `pipeline_ok` now covers the five four-epoch runs; the base model's gates and its partial files are reported only. No other part of the design, the rule, the gates or the measures changes.
 
+*Result (2026-11-02 20:10 PST; jobs vast3:374 smoke, vast3:375 main, vast3:376 resumed; `scripts/exp35_analysis.py` -> `results/exp35_summary.json`, md5 95a5a39c; small per-run files in `results/exp35/<model>/`).*
+- *Gates.* All five four-epoch runs pass every gate (`pipeline_ok` true under amendment 2):
+  - sweep and subspace stages complete on all 337 recipients;
+  - greedy answers equal experiment 33's on 337/337 in every run;
+  - the sign of S matches the greedy answer on 336-337;
+  - the hooks-on rows and the copies at L = 35 are within tolerance on at least 99.7%;
+  - no stop check failed (4 recipients per run);
+  - the layers recompute from the sweep;
+  - the subspace stage's full view copy matches the sweep's (mean |dF| at most 0.0005).
+- *Pairs.* 319-326 of 337 pairs per run are included (the clean model places both views). The recipients are answered correctly in 97-99%.
+- *Primary layer (L_d, rule fixed in advance).* 21, 21, 20, 20, 19 for runs 3-7. There the full view copy moves the decision F = 0.63, 0.50, 0.56, 0.51, 0.67 of the way to the place donor.
+- *Registered verdict.* **Low-dimensional location code in all five runs**, recipe verdict the same, k* = 50 in every run, labeled **not specific to position labels**: ordinary PCA does as well or better (E_pca -0.14 to -0.21). At k = 50, runs 3-7:
+
+| | run 3 | run 4 | run 5 | run 6 | run 7 |
+|---|---|---|---|---|---|
+| F, position PCA-50 | 0.40 | 0.28 | 0.30 | 0.27 | 0.39 |
+| R = F_pos / F_view | 0.64 | 0.56 | 0.53 | 0.54 | 0.58 |
+| F, ordinary PCA-50 | 0.56 | 0.43 | 0.46 | 0.41 | 0.60 |
+| F_pca / F_view | 0.88 | 0.85 | 0.83 | 0.81 | 0.90 |
+| F, random 50-d (3 seeds) | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| C1 (vs same-place) | 0.33 | 0.23 | 0.24 | 0.23 | 0.30 |
+| C2 (vs random-place) | 0.23 | 0.16 | 0.16 | 0.14 | 0.20 |
+| same-place abs m, position-50 | 0.08 | 0.06 | 0.07 | 0.06 | 0.10 |
+
+  Every interval is narrow (bootstrap over walks; e.g. run 5's F_pos-50 0.30 [0.28, 0.32]). At k = 10, position 0.18-0.27 and PCA 0.21-0.34 (R below 0.5, so k = 10 fails (i)); at k = 2, at most 0.09.
+- *Secondary readings (fixed in advance).*
+  - *Profile.* The view's tokens carry at least 0.9 through layer 17-18 and at least 0.5 through 19-21. The question tokens carry at least 0.5 from layer 20-21, and the last prompt token from 23. By layer 23, copying the view moves nothing (at most 0.02). The two marks lie within 4 layers of each other, so the registered reading holds: the decision takes the view's location from the view's tokens until about layer 20, and from the question tokens after it.
+  - *Full view copy at L_d, same-place donor.* |m| 0.07-0.09, with the upper CI ends at or below 0.11 and signed m about 0. So the move comes from the donor's place, not from mixing two views. Across all layers, the same-place view copy's signed m stays within 0.03 of 0. The random-place donor moves the decision 0.20-0.29 (C2 on the full copy: positive in every run).
+  - *(b) `<|vision_end|>` alone.* It peaks at 0.02-0.04 (layer 19-22), below 0.25. So the population code experiment 33 measured at that token is not, on its own, what the decision reads.
+  - *Necessity.* The full copy without position-50 loses 75-87% of its move.
+  - *Readout.* The 2-d span of a ridge (x, y) readout moves the decision 0.00 in every run, although that readout decodes the view's position (median test error 1.18 m, against 3.6 m by chance, at layer 17).
+  - *By donor familiarity.* The full view copy with novel place donors (110-111 per run) moves the decision 0.49-0.66, in line with all donors.
+- *Reading for the paper.* Inside the fine-tuned model, the new view's tokens carry a place-specific signal that the decision uses. Copying it from a view taken near the other option moves the decision most of the way, while a view from about the same place facing elsewhere barely moves it. The signal leaves the view's tokens between layers 18 and 23. Around layer 20 it lies mostly in the 50 directions along which the view's activations vary most (81-90% of the full copy), not in random directions and not in a linear position readout's directions. VGGT's pose code is more compact: 10 directions carry 0.86 there, against 0.18-0.34 for the VLM's 10.
+- *Limits.* Room A only, one render, 337 recipients in 46 walks; the same-place control covers 269. Donors lie within 1 m of their target, not at it. The base model's arm was dropped (amendment 2).
+
 ## Prior work this builds on
 
 - Luo, Mok & Love 2024, *The inevitability and superfluousness of cell types in

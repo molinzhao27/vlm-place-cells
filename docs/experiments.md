@@ -8081,6 +8081,11 @@ Whether position PCA beats ordinary PCA (E_pca) is asked under the first account
 - *Fit statistics.* The fit stage accumulates the view tokens' slot-centered covariance in float64 on the GPU, at the chosen layers only. No per-token array is stored.
 - *Resuming and smoke.* Each stage resumes from its done file. `--smoke` takes two recipients from each of the first two walks that have one, and fits on walks 0-3 with bins of at least 2 views.
 
+*Amendment 1 (2026-11-02 19:58 PST, after the main job and before any of its results was read; the only numbers seen are the stop checks below and the completeness counts).* Job vast3:375 finished all three stages on all 337 recipients for the five four-epoch runs; every stop check on them passed (4 checked recipients per run, no failure). It then stopped on the base model's second checked recipient (w00p0003): the full recompute gave S = 2.2500 against the cached 2.7500, and the place donor's view copied at layer 17 gave -1.7500 against the cached path. Each difference is 0.500002 nats, against a tolerance of max(0.5, 0.03 G) = 0.5 (G = 4.25).
+- *Cause.* The model computes its logits in bf16, so every S in this run lies on a 0.25-nat grid. The same check's self-copies of that recipient read 2.75, 2.50, 2.50 and 2.50; the first recipient's checks read 9.50 and 9.75. A difference of two grid steps is exactly the 0.5-nat tolerance, and float32 rounding (2e-6) puts it just outside. The checks found no difference larger than two grid steps.
+- *Change.* Every tolerance comparison, in the stop checks and in the gates, becomes |dS| <= max(0.5, 0.03 G) + 1e-4 nats. This covers the rounding only. The CPU selftest (float32, tolerance 1e-3) is unchanged and passes.
+- *Rerun.* The job is resubmitted unchanged. The five runs resume from their complete done files and do no new work; the base model resumes from its first recipient. The analysis then runs as registered. Nothing else in the design, the rule or the gates changes.
+
 ## Prior work this builds on
 
 - Luo, Mok & Love 2024, *The inevitability and superfluousness of cell types in

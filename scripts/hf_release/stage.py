@@ -24,7 +24,7 @@ RUNS = {"run0": "qwen8b-proc", "run1": "qwen8b-proc-s1", "run2": "qwen8b-proc-s2
         **{f"e4-run{k}": f"qwen8b-proc-e4-s{k}" for k in range(3, 8)}}
 PROCEDURAL = ["B"] + [f"P50{i:02d}" for i in range(10)]
 PHOTOREAL = [f"HSSD{i}" for i in range(1, 27)] + [f"ReplicaApt{i}" for i in range(3)] + [f"ReplicaFRL{i}" for i in (0, 1, 3, 4, 5)]
-RESULTS = ["two_choice", "claude", "api", "std_bench", "behave", "frame_cut", "vlm_intervention", "e4_internals", "exp33"]
+RESULTS = ["two_choice", "claude", "api", "std_bench", "behave", "frame_cut", "vlm_intervention", "e4_internals", "exp33", "exp35"]
 SPOILED = ("/failed_nan/", "/failed_garbled/")   # runs a vast-3 GPU fault damaged (each rerun clean): not released
 
 
@@ -72,6 +72,7 @@ def main():
     counts["walks/roomP5005"] = link_tree(f"{ROOT}/data/walks-roomP5005", f"{ds}/walks/roomP5005")
     counts["two_choice_trials/roomE30"] = link_tree(f"{exp}/dissimilar-roomE30", f"{ds}/two_choice_trials/roomE30")
     counts["two_choice_trials/roomA_single_query"] = link_tree(f"{exp}/single_query", f"{ds}/two_choice_trials/roomA_single_query")   # Exp 33: one trial per teleport view
+    counts["two_choice_trials/roomA_transplant_pairs"] = link_tree(f"{exp}/vlm_patch", f"{ds}/two_choice_trials/roomA_transplant_pairs")   # Exp 35: recipients and donors
     # shifted walks: the images their prompts showed (the 256-frame renders are 63 GB and re-render from seeds)
     counts["walks/shifted"] = link_tree(f"{OUT}/e30_payload", f"{ds}/walks/shifted")   # rsync'd from vast-3
     for d in sorted(glob.glob(f"{ROOT}/data/e30/P*")):

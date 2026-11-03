@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this code or the trial sets, please cite it as below."
-title: "Localizing without a full place code: novel-view behavior and heading invariance in vision-language models"
+title: "Causal location activations in a vision-language model that learns to localize novel views"
 type: software
 authors:
   - family-names: Zhao
@@ -12,6 +12,8 @@ date-released: "2026-11-01"
 keywords:
   - mechanistic interpretability
   - vision-language models
+  - localization
+  - activation patching
   - place cells
   - grid cells
   - spatial cognition

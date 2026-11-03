@@ -1,12 +1,10 @@
-# Localizing without a full place code
-
-*Novel-view behavior and heading invariance in vision-language models*
+# Causal location activations in a vision-language model that learns to localize novel views
 
 **Paper:** [paper.pdf](paper.pdf)
 
-**Do neurons in a vision-language model act like hippocampal place cells when the model watches a
-first-person walk through a room? And can the model tell where a new view was taken, when it faces
-a way it never faced from that spot?**
+**After watching a first-person walk through a room, can a vision-language model tell where a new
+view was taken, when that view faces away from every walk frame taken nearby? And if it can, are there
+activations inside it that carry the location and that its decision uses?**
 
 ![One two-choice trial](results/example_trial.png)
 
@@ -14,10 +12,10 @@ a way it never faced from that spot?**
 asked whether it was taken nearer Frame 130 or Frame 149. Frame 130 is 0.1 m away but faces
 another way. Qwen3.8-27B picks Frame 149, 3.3 m away, which shows the same posters.*
 
-This project applies rodent-style single-unit analysis (rate maps, spatial information, gridness,
-heading invariance, all against shuffle nulls), population tests, linear probes, behavioral tests
-and causal interventions (activation patching, attention cuts, re-rendering the frames a model is
-shown) to Qwen3-VL 2B/8B/32B, Qwen3.8-27B, Qwen3.6-35B-A3B, Gemma 4, SenseNova-SI, DINOv2, the 3D
+This project applies behavioral tests, causal interventions (copying activations between trials,
+attention cuts, re-rendering the frames a model is shown), population tests, linear probes and
+rodent-style single-unit analysis (rate maps, spatial information, gridness, heading invariance, all
+against shuffle nulls) to Qwen3-VL 2B/8B/32B, Qwen3.8-27B, Qwen3.6-35B-A3B, Gemma 4, SenseNova-SI, DINOv2, the 3D
 pose model VGGT, and, through their APIs, Claude Haiku, Sonnet and Opus 5.5, GPT-6 Astra, Kimi K3
 and DeepSeek V4.1 Flash. Most experiments run in ray-cast rooms, where every frame's true position
 and heading are known; 34 photoreal Replica and HSSD scenes are rendered with Habitat. Each
@@ -28,19 +26,11 @@ Registration appendix lists when each rule was logged and first committed public
 
 Accuracies are on novel-view trials unless stated; chance is 50%.
 
-1. **Units that pass rodent place-cell criteria are everywhere, so on their own they mean little.**
-   Raw pixels produce 72% place units and random-weight networks 61-81%. What separates a place
-   code from a view code is heading invariance. We call a place unit strictly invariant when its
-   rate maps agree (correlation above 0.5) across all six pairs of 90° heading sectors.
-   Path-integrating RNNs pass at 97-100%, which validates the test, whereas VLM units on single
-   frames pass at no more than 0.3%. With the walk in context the share rises to 2-29%, but a moving
-   average of single-frame activations does better (82-88%), so that rise needs nothing beyond
-   temporal smoothing.
-2. **At the inputs we tested, open VLMs pick the frame that looks right.** The base Qwen3-VL-8B stays
+1. **Open VLMs pick the frame that looks right.** The base Qwen3-VL-8B stays
    at chance across ten held-out rooms (52%). On trials where only the far frame shares a landmark
    with the new view, removing that landmark changes only 4 of 38 answers. Neither scale nor a
    published spatial fine-tune fixes this.
-3. **A small fine-tuned model solves the task in procedural rooms.** LoRA on 1,136 procedural rooms
+2. **A small fine-tuned model solves the task in procedural rooms.** LoRA on 1,136 procedural rooms
    (about 0.5% of the weights, answer-only loss) with a four-epoch recipe reaches 97.1% across ten
    held-out rooms (96.3-97.4% over five runs; an earlier two-epoch schedule was unreliable, at
    69-93%).
@@ -51,11 +41,29 @@ Accuracies are on novel-view trials unless stated; chance is 50%.
      walk. Reversing each 8-frame block costs as much as reversing the whole walk, while reversing
      only the order of the blocks costs about what shuffling them does.
    - It holds on walks unlike the training walks (95.5-97.5%, 27.8-31.2 points above retrieval).
-4. **The photoreal scenes do not settle the question.** The four-epoch mean is 94.4% across all 34
-   scenes on all trials. But on the novel trials of the first 11 scenes, it reaches 88.1% against
-   74.9% for retrieval, a lead of 13.2 points [5.6, 19.4]. That is under the 15-point margin we
-   require, so these scenes do not separate localization from retrieval.
-5. **The fine-tuned model's units fall short of a place code.** With the walk at layer 35, 8-17% of
+3. **Inside the fine-tuned model, the new view's activations carry its location, and the decision
+   uses them.** Around layer 20 (19-21 by run), copying the residual stream at the new view's tokens from
+   a view taken near the other option moves the decision 0.50-0.67 of the way there. A view from about
+   the same place facing elsewhere moves it 0.07-0.09 (mean absolute move), and a view from a random place
+   0.20-0.29. The view's tokens carry the location through layer 17-18 and pass it to the question tokens
+   by layers 20-23. The 50 directions along which the view's activations vary most (of 4,096) carry
+   81-90% of the whole copy's move. Fifty random directions carry nothing, and so does the 2-d span of a
+   linear position readout, although that readout decodes position (1.1-1.2 m error, against 3.7 m by
+   chance). Room A only, 337 trials per run, all five four-epoch runs.
+4. **The decision depends more on where frames were taken than on what they show.** When we
+   re-render the eight shown frames around the near option, changing the place costs 21.1-22.4
+   points and changing the view 5.2-5.6 (runs 5 and 7). Moving a block of frames away from both
+   options, or moving the far option's frames elsewhere, costs about nothing, while moving the far
+   option's frames next to the new view pulls the decision by 10.2-11.1 points. The pull is partial:
+   accuracy stays at 87.9% and 86.6%.
+5. **VGGT, the positive control, has a causal pose code.** Its heading invariance is intermediate
+   (34% of place units on single frames with anchors). Copying the camera token's ten main
+   directions from one frame to another at block 21 moves the reported position 0.86 of the way to
+   the donor. These come from ordinary PCA with no position labels; a position-labeled subspace
+   gives 0.85 and overlaps them 0.85, and no 2-d subspace we tested comes close. Heading and camera-frame parts are both needed and split the head's outputs.
+   VGGT's code is more compact than the VLM's: there 10 directions carry nearly all of the whole token's
+   transfer, while the VLM's 10 carry 0.18-0.34 of the way.
+6. **The fine-tuned model's units fall short of a place code.** With the walk at layer 35, 8-17% of
    its place units pass the strict test (18-31% on a weaker mean of two sector pairs), which is an
    undercount at that layer's stability. Within a room, its population carries position across
    headings on walk frames (heading-held-out gain 0.77-0.85; RNNs 0.98). Asked about one novel view
@@ -63,27 +71,28 @@ Accuracies are on novel-view trials unless stated; chance is 50%.
    (0.37-0.44 in MLP neurons, 0.34-0.46 in the residual stream), and the base model not at all. The
    late-layer walk code depends on order: on shuffled walks the gain falls to 0.28-0.35. No
    position code carries across rooms.
-6. **The decision depends more on where frames were taken than on what they show.** When we
-   re-render the eight shown frames around the near option, changing the place costs 21.1-22.4
-   points and changing the view 5.2-5.6 (runs 5 and 7). Moving a block of frames away from both
-   options, or moving the far option's frames elsewhere, costs about nothing, while moving the far
-   option's frames next to the new view pulls the decision by 10.2-11.1 points. The pull is partial:
-   accuracy stays at 87.9% and 86.6%.
-7. **Claude Opus 5.5 gains from the walk but is not clearly above retrieval in the procedural
+7. **Units that pass rodent place-cell criteria are everywhere, so on their own they mean little.**
+   Raw pixels produce 72% place units and random-weight networks 61-81%. What separates a place
+   code from a view code is heading invariance. We call a place unit strictly invariant when its
+   rate maps agree (correlation above 0.5) across all six pairs of 90° heading sectors.
+   Path-integrating RNNs pass at 97-100%, which validates the test, whereas VLM units on single
+   frames pass at no more than 0.3%. With the walk in context the share rises to 2-29%, but a moving
+   average of single-frame activations does better (82-88%), so that rise needs nothing beyond
+   temporal smoothing.
+8. **The photoreal scenes do not settle the question.** The four-epoch mean is 94.4% across all 34
+   scenes on all trials. But on the novel trials of the first 11 scenes, it reaches 88.1% against
+   74.9% for retrieval, a lead of 13.2 points [5.6, 19.4]. That is under the 15-point margin we
+   require, so these scenes do not separate localization from retrieval.
+9. **Claude Opus 5.5 gains from the walk but is not clearly above retrieval in the procedural
    rooms.** It gains 9.7 points [7.0, 12.1] in the ten held-out rooms and 28.0 [26.2, 30.5] in eight
    HSSD houses. In the held-out rooms it reaches 72.9%, which is 5.2 points [-0.3, 10.9] above
    retrieval. Matched on frames, order, labels and question, the fine-tuned model leads it by 18.6
    points [16.6, 20.8]. GPT-6 Astra also gains from the walk in room A; Kimi K3, DeepSeek V4.1 Flash
    and the open models we could screen do not. API replies are scored by the answer they state
    (`spatialcells/answers.py`; see "Scoring correction" in the experiment notes).
-8. **VGGT, the positive control, has a causal pose code.** Its heading invariance is intermediate
-   (34% of place units on single frames with anchors). Copying the camera token's ten main
-   directions from one frame to another at block 21 moves the reported position 0.86 of the way to
-   the donor. These come from ordinary PCA with no position labels; a position-labeled subspace
-   gives 0.85 and overlaps them 0.85, and no 2-d subspace we tested comes close. Heading and camera-frame parts are both needed and split the head's outputs.
-9. **The result rests on one model family.** The same recipe on Gemma 4 12B did not meet the bar in
-   three runs (54.7-81.3% on held-out validation rooms).
-10. **The grid-cell scorer works, and no model has grid cells.** A path-integrating RNN trained
+10. **The result rests on one model family.** The same recipe on Gemma 4 12B did not meet the bar in
+    three runs (54.7-81.3% on held-out validation rooms).
+11. **The grid-cell scorer works, and no model has grid cells.** A path-integrating RNN trained
     following Sorscher et al. grows hexagonal grids, and the unchanged pipeline flags 93% of the
     strong ones. No grids with spacing of 2 m or more appear in pixels, DINOv2, Qwen or VGGT.
 
@@ -125,6 +134,7 @@ spatialcells/            the package (run modules with python -m spatialcells.<m
   lure_edit.py           lure trials re-rendered without the shared landmark
   trajectory_shift.py    walks unlike the training walks
   vlm_intervention.py    re-rendering the frames a model is shown, and its broken-walk control
+  single_query.py, vlm_patch.py   one novel view per prompt; copying activations between trials
   vggt_*.py              VGGT control, unit recording, patching, remapping, anchors, steering
   grid_rnn.py            grid-cell positive control (Sorscher-style RNN, synthetic grids)
   finetune.py, ft_seeds.py, adjacency_baseline.py     LoRA fine-tuning and its baselines
@@ -134,7 +144,7 @@ scripts/                 the exact job scripts and analyses behind each experime
   vast1/, rtx4070/, mac/ helpers for the GPU hosts and Apple silicon (docs/gpu_host.md)
 results/                 summaries (JSON/CSV), per-trial answers (JSONL) and figures
   export/dissimilar/     the 192 lure-free trials (probes + trials.json)
-docs/experiments.md      full write-up of experiments 1-32, with their rules
+docs/experiments.md      full write-up of experiments 1-35, with their rules
 ```
 
 ## Reproducing
@@ -180,8 +190,8 @@ The preprint is [paper.pdf](paper.pdf). Until it is on arXiv:
 
 ```bibtex
 @misc{zhao2026localizing,
-  title  = {Localizing without a full place code: novel-view behavior and heading invariance in
-            vision-language models},
+  title  = {Causal location activations in a vision-language model that learns to localize
+            novel views},
   author = {Zhao, Molin},
   year   = {2026},
   url    = {https://github.com/molinzhao27/vlm-place-cells}

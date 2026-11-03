@@ -8086,6 +8086,10 @@ Whether position PCA beats ordinary PCA (E_pca) is asked under the first account
 - *Change.* Every tolerance comparison, in the stop checks and in the gates, becomes |dS| <= max(0.5, 0.03 G) + 1e-4 nats. This covers the rounding only. The CPU selftest (float32, tolerance 1e-3) is unchanged and passes.
 - *Rerun.* The job is resubmitted unchanged. The five runs resume from their complete done files and do no new work; the base model resumes from its first recipient. The analysis then runs as registered. Nothing else in the design, the rule or the gates changes.
 
+*Amendment 2 (2026-11-02 20:00 PST; written after the five runs' results were read, and about an arm that has no part in the verdict rule).* The resubmitted job (vast3:376) found the five runs complete and stopped again on the base model, at its fifth checked recipient (w01p0094). There the full recompute gave S = -2.50 against the cached -3.25, a difference of 0.75 nats, or three bf16 grid steps; the place gap there is 7.0.
+- *How large the noise is.* Across the base model's five checked recipients, the cached and recomputed S differ by 0, 0.25, 0.50, 0.50 and 0.75 nats. Across the four-epoch runs' 20 checked recipients the differences never exceed 0.25. The base model's place gaps on those recipients are 2.75-10.25 nats, so its noise is a sizable share of the effects its arm was meant to calibrate. This matches experiment 33, where only the base model's answers differed between devices (96-97% parity).
+- *Change.* The base model's arm (view copies in nats, as a calibration) is dropped from experiment 35. It has no part in the verdict rule, which reads runs 3-7 only, so `pipeline_ok` now covers the five four-epoch runs; the base model's gates and its partial files are reported only. No other part of the design, the rule, the gates or the measures changes.
+
 ## Prior work this builds on
 
 - Luo, Mok & Love 2024, *The inevitability and superfluousness of cell types in

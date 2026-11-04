@@ -1,4 +1,4 @@
-# Causal location activations in a vision-language model that learns to localize novel views
+# A Causal Location Code Forms in a Vision-Language Model Fine-Tuned to Localize Through First-Person Walks
 
 **Paper:** [paper.pdf](paper.pdf)
 
@@ -193,8 +193,8 @@ The preprint is [paper.pdf](paper.pdf). Until it is on arXiv:
 
 ```bibtex
 @misc{zhao2026localizing,
-  title  = {Causal location activations in a vision-language model that learns to localize
-            novel views},
+  title  = {A Causal Location Code Forms in a Vision-Language Model Fine-Tuned to Localize
+            Through First-Person Walks},
   author = {Zhao, Molin},
   year   = {2026},
   url    = {https://github.com/molinzhao27/vlm-place-cells}

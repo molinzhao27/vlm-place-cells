@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this code or the trial sets, please cite it as below."
-title: "Causal location activations in a vision-language model that learns to localize novel views"
+title: "A Causal Location Code Forms in a Vision-Language Model Fine-Tuned to Localize Through First-Person Walks"
 type: software
 authors:
   - family-names: Zhao
